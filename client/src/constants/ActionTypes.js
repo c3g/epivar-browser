@@ -1,0 +1,5 @@
+export const SET_SEARCH = 'SET_SEARCH'
+
+export const REQUEST_SAMPLES = 'REQUEST_SAMPLES'
+export const RECEIVE_SAMPLES = 'RECEIVE_SAMPLES'
+export const RECEIVE_ERROR   = 'RECEIVE_ERROR'
