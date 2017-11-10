@@ -38,8 +38,7 @@ export function mergeTracks() {
         hubClear: `${window.location.origin}/api/ucsc/hub/${session}`,
         db: 'hg19',
       }
-      window.open(params.hubClear)
-      //window.open('http://ucscbrowser.genap.ca/cgi-bin/hgTracks?' + queryString(params))
+      window.open('http://ucscbrowser.genap.ca/cgi-bin/hgTracks?' + queryString(params))
     })
     .catch(err => dispatch(receiveError(err)))
   }
