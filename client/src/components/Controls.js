@@ -1,8 +1,9 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Input, Button } from 'reactstrap'
+import { Container, Input, Button } from 'reactstrap'
 
+import Icon from './Icon.js'
 import { setSearch, fetchSamples, mergeTracks } from '../actions.js'
 
 const mapStateToProps = state => ({
@@ -33,26 +34,31 @@ class Controls extends React.Component {
   }
 
   render() {
-    const { search, samples, setSearch } = this.props
+    const { isLoading, search, samples, setSearch } = this.props
 
     return (
       <div className='Controls'>
-        <Input
-          className='Controls__input'
-          onChange={this.onChange}
-          value={search}
-        />
-        <Button className='Controls__search'
-          onClick={this.onClickSearch}
-        >
-          Search
-        </Button>
-        <Button className='Controls__merge'
-          onClick={this.onClickMerge}
-          disabled={samples.length === 0}
-        >
-          View Merged
-        </Button>
+        <Container>
+          <div className='d-flex'>
+            <Input
+              className='Controls__input'
+              onChange={this.onChange}
+              value={search}
+            />
+            <Button className='Controls__search'
+              onClick={this.onClickSearch}
+              disabled={isLoading}
+            >
+              <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
+            </Button>
+            <Button className='Controls__merge'
+              onClick={this.onClickMerge}
+              disabled={samples.length === 0}
+            >
+              <Icon name='compress' /> Merge
+            </Button>
+          </div>
+        </Container>
       </div>
     )
   }

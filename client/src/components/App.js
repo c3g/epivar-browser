@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Table } from 'reactstrap';
 
 import Controls from './Controls.js'
 
@@ -23,45 +23,47 @@ class App extends Component {
 
         <Controls />
 
-        <table className='Params'>
-        <thead>
-          <tr>
-            <th>Chrom</th>
-            <th>Start</th>
-            <th>End</th>
-            <th>Reference</th>
-            <th>Results</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{ first.chrom }</td>
-            <td>{ first.start }</td>
-            <td>{ first.end }</td>
-            <td>{ first.ref }</td>
-            <td>{ samples.length }</td>
-          </tr>
-        </tbody>
-        </table>
+        <Container>
+          <Table className='Params'>
+            <thead>
+              <tr>
+                <th>Chrom</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Reference</th>
+                <th>Results</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{ first.chrom }</td>
+                <td>{ first.start }</td>
+                <td>{ first.end }</td>
+                <td>{ first.ref }</td>
+                <td>{ samples.length }</td>
+              </tr>
+            </tbody>
+          </Table>
 
-        <table className='Samples'>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-        {
-          samples.map(sample =>
-            <tr>
-              <td>{ sample.name }</td>
-              <td>{ sample.value }</td>
-            </tr>
-          )
-        }
-        </tbody>
-        </table>
+          <Table className='Samples' bordered>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                samples.map(sample =>
+                <tr>
+                  <td>{ sample.name }</td>
+                  <td>{ sample.value }</td>
+                </tr>
+                )
+              }
+            </tbody>
+          </Table>
+      </Container>
 
       </div>
     )
