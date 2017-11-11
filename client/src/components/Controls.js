@@ -42,6 +42,7 @@ class Controls extends React.Component {
           className='Controls__input'
           onChange={this.onChange}
           value={search}
+          placeHolder='chr1:10000'
         />
         <Button className='Controls__search'
           onClick={this.onClickSearch}

@@ -177,16 +177,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #b529ce 0%,#af66c1 100%);
+  background: linear-gradient(135deg, #7249AD 0%,#7E50BF 100%);
   color: white;
 }
 .Header__title {
   text-align: center;
-  font-size: 80px;
+  font-size: 70px;
+  line-height: 60px;
+  font-family: 'Roboto Slab', sans-serif;
 }
 .Header__subtitle {
   text-align: center;
-  font-size: 18px;
+  font-size: 30px;
+  font-weight: 300;
+  color: #B388FF;
 }
 
 
