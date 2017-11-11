@@ -19,6 +19,9 @@ class Controls extends React.Component {
   onClickSearch = () => {
     const { search, fetchSamples } = this.props
 
+    if (!/\w+:\d+/.test(search))
+      return
+
     const [chrom, position] = search.split(':')
     const [start, end] = position.split('-')
 
