@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 import { Container, Row, Col, Table } from 'reactstrap';
 
+import Header from './Header.js'
 import Controls from './Controls.js'
 
 const mapStateToProps = state => ({
@@ -21,9 +22,9 @@ class App extends Component {
     return (
       <div className='App'>
 
-        <Controls />
+        <Header>
+          <Controls />
 
-        <Container>
           <Table className='Params'>
             <thead>
               <tr>
@@ -45,6 +46,9 @@ class App extends Component {
             </tbody>
           </Table>
 
+        </Header>
+
+        <Container>
           <Table className='Samples' bordered>
             <thead>
               <tr>

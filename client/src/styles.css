@@ -172,13 +172,35 @@ body {
  * Components
  */
 
-.Controls {
-  background: linear-gradient(135deg, #b529ce 0%,#af66c1 100%);
-  height: 300px;
+.Header {
+  height: 350px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(135deg, #b529ce 0%,#af66c1 100%);
+  color: white;
 }
-.Controls .d-flex > *:not(:last-child) {
+.Header__title {
+  text-align: center;
+  font-size: 80px;
+}
+.Header__subtitle {
+  text-align: center;
+  font-size: 18px;
+}
+
+
+.Controls {
+  padding: 1em 4em;
+}
+.Controls > *:not(:last-child) {
   margin-right: 1em;
+}
+
+.Params th {
+  border-top: 0;
+}
+.Params th,
+.Params td {
+  text-align: center;
 }

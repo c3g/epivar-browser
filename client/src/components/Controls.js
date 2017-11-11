@@ -37,28 +37,24 @@ class Controls extends React.Component {
     const { isLoading, search, samples, setSearch } = this.props
 
     return (
-      <div className='Controls'>
-        <Container>
-          <div className='d-flex'>
-            <Input
-              className='Controls__input'
-              onChange={this.onChange}
-              value={search}
-            />
-            <Button className='Controls__search'
-              onClick={this.onClickSearch}
-              disabled={isLoading}
-            >
-              <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
-            </Button>
-            <Button className='Controls__merge'
-              onClick={this.onClickMerge}
-              disabled={samples.length === 0}
-            >
-              <Icon name='compress' /> Merge
-            </Button>
-          </div>
-        </Container>
+      <div className='Controls d-flex'>
+        <Input
+          className='Controls__input'
+          onChange={this.onChange}
+          value={search}
+        />
+        <Button className='Controls__search'
+          onClick={this.onClickSearch}
+          disabled={isLoading}
+        >
+          <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
+        </Button>
+        <Button className='Controls__merge'
+          onClick={this.onClickMerge}
+          disabled={samples.length === 0}
+        >
+          <Icon name='compress' /> Merge
+        </Button>
       </div>
     )
   }
