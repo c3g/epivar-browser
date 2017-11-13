@@ -19,13 +19,15 @@ class App extends Component {
     const { isLoading, samples } = this.props
     const first = samples[0] || {}
 
+    const showParams = !isLoading && samples.length > 0
+
     return (
       <div className='App'>
 
         <Header>
           <Controls />
 
-          <Table className='Params'>
+          <Table className={ 'Params ' + ( showParams ? 'visible' : '' ) }>
             <thead>
               <tr>
                 <th>Chrom</th>

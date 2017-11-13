@@ -19,6 +19,9 @@ class Controls extends React.Component {
   onClickSearch = () => {
     const { search, fetchSamples } = this.props
 
+    if (!/\w+:\d+/.test(search))
+      return
+
     const [chrom, position] = search.split(':')
     const [start, end] = position.split('-')
 
@@ -42,6 +45,7 @@ class Controls extends React.Component {
           className='Controls__input'
           onChange={this.onChange}
           value={search}
+          placeHolder='chr1:10000'
         />
         <Button className='Controls__search'
           onClick={this.onClickSearch}
