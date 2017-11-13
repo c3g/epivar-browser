@@ -36,7 +36,7 @@ export function mergeTracks() {
     requests.createSession(samples.list.map(s => s.name))
     .then(session => {
       const params = {
-        hubClear: `${window.location.origin}/api/ucsc/hub/${session}`,
+        hubClear: `${window.location.origin}${process.env.PUBLIC_URL || ''}/api/ucsc/hub/${session}`,
         db: 'hg19',
       }
       window.open('http://ucscbrowser.genap.ca/cgi-bin/hgTracks?' + queryString(params))
