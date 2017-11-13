@@ -21,5 +21,6 @@ function create(samples) {
 }
 
 function get(hash) {
-  return db.get(`SELECT samples FROM sessions WHERE hash = $hash`, { $hash: hash }).then(res => JSON.parse(res.samples))
+  return db.get(`SELECT samples FROM sessions WHERE hash = $hash`, { $hash: hash })
+    .then(res => res ? JSON.parse(res.samples) : undefined)
 }
