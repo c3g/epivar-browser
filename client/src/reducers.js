@@ -1,5 +1,3 @@
-import { prop } from 'ramda';
-
 import * as k from './constants/ActionTypes.js';
 import { createDefaultUI, createDefaultSamples } from './models';
 

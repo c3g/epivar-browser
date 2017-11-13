@@ -2,8 +2,6 @@
  * models.js
  */
 
-const { keys, values } = Object
-
 
 export function createDefaultUI() {
   return {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Container, Input, Button } from 'reactstrap'
+import { Input, Button } from 'reactstrap'
 
 import Icon from './Icon.js'
 import { setSearch, fetchSamples, mergeTracks } from '../actions.js'
@@ -43,7 +43,7 @@ class Controls extends React.Component {
   }
 
   render() {
-    const { isLoading, search, samples, setSearch } = this.props
+    const { isLoading, search, samples } = this.props
 
     return (
       <div className='Controls d-flex'>
@@ -52,7 +52,7 @@ class Controls extends React.Component {
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           value={search}
-          placeHolder='chr1:10000'
+          placeholder='chr1:10000'
         />
         <Button className='Controls__search'
           onClick={this.onClickSearch}

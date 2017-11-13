@@ -6,12 +6,11 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 
 import './styles.css';
 import registerServiceWorker from './registerServiceWorker';
 import { rootReducer } from './reducers';
-import { fetchSamples } from './actions';
 import App from './components/App';
 
 
