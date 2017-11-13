@@ -9,6 +9,7 @@ const child_process = require('child_process')
 const { promisify } = require('util')
 const exec = promisify(child_process.exec)
 const writeFile = promisify(fs.writeFile)
+const cuid = require('cuid')
 const remove = filename => new Promise((resolve, reject) =>
   fs.unlink(filename, (err) => err ? reject(err) : resolve()))
 
@@ -22,7 +23,6 @@ const defaultOptions = {
   bedGraph: false,
   bin: '',
   output: path.join(os.tmpdir(), 'out.bw'),
-  sizeFile: path.join(os.tmpdir(), 'chrom.sizes'),
 }
 
 // Command generation
@@ -78,7 +78,10 @@ const bedGraphToBigWigCommand = (file, options) => ({
 
 
 function sliceAndMerge(files, userOptions) {
-  const options = { ...defaultOptions, ...userOptions }
+  const options = { ...defaultOptions, ...userOptions, id: cuid() }
+
+  options.sizeFile = path.join(os.tmpdir(), `chrom-${options.id}.sizes`)
+  options.bedFile  = path.join(os.tmpdir(), `out-${options.id}.bedGraph`)
 
   log(options, '\n')
 
@@ -118,7 +121,7 @@ function sliceAndMerge(files, userOptions) {
 
     tempFiles.push(...files)
 
-    const output = options.bedGraph ? options.output : path.join(os.tmpdir(), 'out.bedGraph')
+    const output = options.bedGraph ? options.output : options.bedFile
     const merge = mergeCommand(files, output, options)
 
     log(' Running:', merge.command)
