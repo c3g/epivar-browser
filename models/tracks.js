@@ -22,8 +22,9 @@ function get(donors) {
 
   const query = `
     SELECT *
+         , track.id      AS id
          , assembly.name AS assembly
-         , assay.name AS assay
+         , assay.name    AS assay
      FROM dataset_track AS track
      JOIN dataset      ON dataset.id      = track.dataset_id
      JOIN assay        ON assay.id        = dataset.assay_id
