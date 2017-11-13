@@ -38,9 +38,9 @@ export function mergeTracks() {
     session.samples = samples.list.map(s => s.name)
 
     requests.createSession(session)
-    .then(session => {
+    .then(sessionID => {
       const params = {
-        hubClear: `${window.location.origin}${process.env.PUBLIC_URL || ''}/api/ucsc/hub/${session}`,
+        hubClear: `${window.location.origin}${process.env.PUBLIC_URL || ''}/api/ucsc/hub/${sessionID}`,
         db: 'hg19',
         position: `${session.chrom}:${session.start}-${session.end}`,
       }
