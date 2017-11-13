@@ -16,6 +16,11 @@ const mapDispatchToProps = (dispatch) =>
 
 class Controls extends React.Component {
 
+  onKeyDown = ev => {
+    if (ev.which === 13 /* Enter */)
+      this.onClickSearch()
+  }
+
   onClickSearch = () => {
     const { search, fetchSamples } = this.props
 
@@ -45,6 +50,7 @@ class Controls extends React.Component {
         <Input
           className='Controls__input'
           onChange={this.onChange}
+          onKeyDown={this.onKeyDown}
           value={search}
           placeHolder='chr1:10000'
         />
