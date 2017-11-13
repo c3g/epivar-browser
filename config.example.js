@@ -17,4 +17,7 @@ module.exports = {
     password: 'secret',
     database: 'edcc',
   },
+  merge: {
+    bin: ''
+  },
 }

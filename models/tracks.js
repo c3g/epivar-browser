@@ -52,7 +52,7 @@ function merge(tracks) {
     const mergePath = path.join(config.paths.mergedTracks, mergeName)
 
     return exists(mergePath)
-      .then(yes => yes ? true : sliceAndMerge(paths, { output: mergePath }))
+      .then(yes => yes ? true : sliceAndMerge(paths, { output: mergePath, ...config.merge }))
       .then(() => ({ assay, tracks, path: mergePath, url }))
   }))
 }
