@@ -61,7 +61,7 @@ function merge(tracks) {
 function getLocalPath(track) {
   return path.join(
     config.paths.tracks,
-    track.short_name.toLowerCase(),
+    track.short_name,
     track.assembly,
     [
       track.id,
