@@ -42,6 +42,7 @@ export function mergeTracks() {
       const params = {
         hubClear: `${window.location.origin}${process.env.PUBLIC_URL || ''}/api/ucsc/hub/${session}`,
         db: 'hg19',
+        position: `${session.chrom}:${session.start}-${session.end}`,
       }
       window.open('http://ucscbrowser.genap.ca/cgi-bin/hgTracks?' + queryString(params))
     })

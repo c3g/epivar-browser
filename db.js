@@ -12,12 +12,13 @@ const db = new sqlite3.Database(config.paths.db)
 db.get(`SELECT name FROM main.sqlite_master WHERE type='table'`, (err, row) => {
   if (!row)
     db.run(`CREATE TABLE sessions (
-      hash    varchar(32) not null,
-      samples text        not null,
-      chrom   varchar(5)  not null,
-      start   integer     not null,
-      end     integer     null
-    )`)
+      hash     varchar(32) not null,
+      samples  text        not null,
+      chrom    varchar(5)  not null,
+      position integer     not null,
+      start    integer     not null,
+      end      integer     not null
+    );`)
 })
 
 

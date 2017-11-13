@@ -23,7 +23,8 @@ class Controls extends React.Component {
       return
 
     const [chrom, position] = search.split(':')
-    const [start, end] = position.split('-')
+    const start = Number(position)
+    const end   = start + 1
 
     fetchSamples({ chrom, start, end })
   }
