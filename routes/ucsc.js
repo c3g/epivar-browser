@@ -25,8 +25,10 @@ router.use('/genome/:session', (req, res) => {
 router.use('/track-db/:session', (req, res) => {
 
   Sessions.get(req.params.session)
-  .then(Tracks.get)
-  .then(Tracks.merge)
+  .then(session =>
+    Tracks.get(session.samples)
+      .then(tracks => Tracks.merge(tracks, session))
+  )
   .then(UCSC.generateTracks)
   .then(textHandler(res))
   .catch(errorHandler(res))

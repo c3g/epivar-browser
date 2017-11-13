@@ -41,7 +41,7 @@ function get(donors) {
   })
 }
 
-function merge(tracks) {
+function merge(tracks, options) {
 
   const tracksByAssay = groupBy(prop('assay'), tracks)
 
@@ -53,7 +53,7 @@ function merge(tracks) {
     const mergePath = path.join(config.paths.mergedTracks, mergeName)
 
     return exists(mergePath)
-      .then(yes => yes ? true : sliceAndMerge(paths, { output: mergePath, ...config.merge }))
+      .then(yes => yes ? true : sliceAndMerge(paths, { output: mergePath, ...options, ...config.merge }))
       .then(() => ({ assay, tracks, path: mergePath, url }))
   }))
 }

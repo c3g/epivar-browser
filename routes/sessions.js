@@ -10,9 +10,7 @@ const Sessions = require('../models/sessions.js')
 
 router.post('/create', (req, res) => {
 
-  const samples = req.body
-
-  Sessions.create(samples)
+  Sessions.create(req.body)
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })

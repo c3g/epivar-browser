@@ -37,6 +37,6 @@ export function fetchSamples(params) {
   return fetchAPI('/samples', params)
 }
 
-export function createSession(samples) {
-  return fetchAPI('/sessions/create', samples, { method: 'post' })
+export function createSession(params) {
+  return fetchAPI('/sessions/create', params, { method: 'post' })
 }

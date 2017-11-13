@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions'
 
 import queryString from './helpers/queryString.js'
+import parseLocation from './helpers/parseLocation.js'
 import * as requests from './requests'
 import * as k from './constants/ActionTypes.js'
 
@@ -28,12 +29,15 @@ export function fetchSamples(options) {
 
 export function mergeTracks() {
   return (dispatch, getState) => {
-    const { samples } = getState()
+    const { ui, samples } = getState()
 
     if (samples.isLoading || samples.list.length === 0)
       return
 
-    requests.createSession(samples.list.map(s => s.name))
+    const session = parseLocation(ui.search)
+    session.samples = samples.list.map(s => s.name)
+
+    requests.createSession(session)
     .then(session => {
       const params = {
         hubClear: `${window.location.origin}${process.env.PUBLIC_URL || ''}/api/ucsc/hub/${session}`,
