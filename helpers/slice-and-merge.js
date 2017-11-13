@@ -66,6 +66,17 @@ const mergeCommand = (files, output, options) => {
   }
 }
 
+const bigWigToBedGraphCommand = (file, output, options) => {
+  return {
+    output: output,
+    command: [
+      path.join(options.bin, `bigWigToBedGraph`),
+      file,
+      output
+    ].join(' ')
+  }
+}
+
 const bedGraphToBigWigCommand = (file, options) => ({
     output: options.output,
     command: [
@@ -122,7 +133,13 @@ function sliceAndMerge(files, userOptions) {
     tempFiles.push(...files)
 
     const output = options.bedGraph ? options.output : options.bedFile
-    const merge = mergeCommand(files, output, options)
+    let merge
+
+    if (files.length > 1) {
+      merge = mergeCommand(files, output, options)
+    } else {
+      merge = bigWigToBedGraphCommand(files[0], output, options)
+    }
 
     log(' Running:', merge.command)
 
