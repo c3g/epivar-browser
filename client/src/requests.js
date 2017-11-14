@@ -34,7 +34,20 @@ function fetchAPI(url, params, options = {}) {
 }
 
 export function fetchSamples(params) {
-  return fetchAPI('/samples', params)
+  return fetchAPI('/samples/query', params)
+}
+
+export function fetchChroms() {
+  return fetchAPI('/samples/chroms')
+  .then(chroms => {
+    const parse = string => +string.slice(3)
+    chroms.sort((a, b) => parse(a) - parse(b))
+    return chroms
+  })
+}
+
+export function fetchPositions(params) {
+  return fetchAPI('/samples/positions', params)
 }
 
 export function createSession(params) {

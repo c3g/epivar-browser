@@ -5,11 +5,12 @@
 
 export function createDefaultUI() {
   return {
-    search: '',
+    chrom: '',
+    position: '',
   }
 }
 
-export function createDefaultSamples() {
+export function createDefaultList() {
   return {
     isLoading: false,
     list: [],

@@ -5,25 +5,28 @@ import parseLocation from './helpers/parseLocation.js'
 import * as requests from './requests'
 import * as k from './constants/ActionTypes.js'
 
+export const setSearch   = createAction(k.SET_SEARCH)
+export const setChrom    = createAction(k.SET_CHROM)
+export const setPosition = createAction(k.SET_POSITION)
+export const handleError = createAction(k.HANDLE_ERROR)
 
-export const setSearch = createAction(k.SET_SEARCH)
+export const samples   = createFetchActions(k.SAMPLES)
+export const chroms    = createFetchActions(k.CHROMS)
+export const positions = createFetchActions(k.POSITIONS)
 
-export const requestSamples = createAction(k.REQUEST_SAMPLES)
-export const receiveSamples = createAction(k.RECEIVE_SAMPLES)
-export const receiveError   = createAction(k.RECEIVE_ERROR)
+export const fetchSamples   = createFetchFunction(requests.fetchSamples, samples, 'samples')
+export const fetchChroms    = createFetchFunction(requests.fetchChroms, chroms, 'chroms')
+export const fetchPositions = createFetchFunction(requests.fetchPositions, positions, 'positions')
 
-export function fetchSamples(options) {
+
+export function changePosition(value) {
   return (dispatch, getState) => {
-    const { samples } = getState()
+    const { ui: { chrom } } = getState()
 
-    if (samples.isLoading)
-      return
+    dispatch(setPosition(value))
 
-    dispatch(requestSamples())
-
-    requests.fetchSamples(options)
-    .then(samples => dispatch(receiveSamples(samples)))
-    .catch(err => dispatch(receiveError(err)))
+    if (chrom)
+      dispatch(fetchPositions({ chrom, start: value }))
   }
 }
 
@@ -46,6 +49,32 @@ export function mergeTracks() {
       }
       window.open('http://ucscbrowser.genap.ca/cgi-bin/hgTracks?' + queryString(params))
     })
-    .catch(err => dispatch(receiveError(err)))
+    .catch(err => dispatch(handleError(err)))
+  }
+}
+
+
+function createFetchActions(namespace) {
+  return {
+    request: createAction(namespace.REQUEST),
+    receive: createAction(namespace.RECEIVE),
+    error: createAction(namespace.ERROR),
+  }
+}
+
+function createFetchFunction(fn, actions, prop) {
+  return function (...args) {
+    return (dispatch, getState) => {
+      const state = getState()
+
+      if (state[prop].isLoading)
+        return
+
+      dispatch(actions.request())
+
+      fn(...args)
+      .then(result => dispatch(actions.receive(result)))
+      .catch(err =>   dispatch(actions.error(err)))
+    }
   }
 }

@@ -1,37 +1,77 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Input, Button } from 'reactstrap'
+import { Input, Button, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 import Icon from './Icon.js'
-import { setSearch, fetchSamples, mergeTracks } from '../actions.js'
+import { setChrom, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError } from '../actions.js'
 
 const mapStateToProps = state => ({
     isLoading: state.samples.isLoading
   , samples: state.samples.list
-  , search: state.ui.search
+  , chroms: state.chroms
+  , chrom: state.ui.chrom
+  , positions: state.positions
+  , position: state.ui.position
 })
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ setSearch, fetchSamples, mergeTracks }, dispatch)
+  bindActionCreators({ setChrom, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError }, dispatch)
 
 class Controls extends React.Component {
 
+  state = {
+    index: 0,
+    open: false,
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.chrom !== this.props.chrom) {
+      const { chrom } = props
+      const { position } = this.props
+      this.props.fetchPositions({ chrom, position: '' })
+    }
+    if (props.positions !== this.props.positions) {
+      this.setState({ index: 0 })
+    }
+  }
+
+  onFocus = () => {
+    setTimeout(() => this.setState({ open: true }), 100)
+  }
+
+  onBlur = () => {
+    setTimeout(() => this.setState({ open: false }), 100)
+  }
+
   onKeyDown = ev => {
-    if (ev.which === 13 /* Enter */)
-      this.onClickSearch()
+    if (ev.which === 13 /* Enter */) {
+      if (this.props.positions.list.length > 0)
+        this.selectItem(this.state.index)
+      else
+        this.doSearch(this.props.chrom, this.props.position)
+
+      if (document.activeElement.tagName === 'INPUT')
+        document.activeElement.blur()
+    }
+
+    if (ev.which === 9 /* Tab */) {
+      ev.preventDefault()
+      if (ev.shiftKey)
+        this.moveSelection(-1)
+      else
+        this.moveSelection(+1)
+    }
+    if (ev.which === 38 /* ArrowUp */) {
+      this.moveSelection(-1)
+    }
+    if (ev.which === 40 /* ArrowDown */) {
+      this.moveSelection(+1)
+    }
   }
 
   onClickSearch = () => {
-    const { search, fetchSamples } = this.props
-
-    if (!/\w+:\d+/.test(search))
-      return
-
-    const [chrom, position] = search.split(':')
-    const start = Number(position)
-    const end   = start + 1
-
-    fetchSamples({ chrom, start, end })
+    const { chrom, position } = this.props
+    this.doSearch(chrom, position)
   }
 
   onClickMerge = () => {
@@ -39,21 +79,122 @@ class Controls extends React.Component {
   }
 
   onChange = (ev) => {
-    this.props.setSearch(ev.target.value)
+    this.props.changePosition(ev.target.value)
   }
 
-  render() {
-    const { isLoading, search, samples } = this.props
+  moveSelection = n => {
+    const { length } = this.props.positions.list
+    let index = this.state.index + n
+
+    if (index < 0)
+      index = index + length
+    else if (index > length - 1)
+      index = index % length
+
+    this.setState({ index })
+    console.log(index)
+  }
+
+  doSearch = (chrom, position) => {
+    const { fetchSamples } = this.props
+
+    if (!/(^\d+$)|(^$)/.test(position)) {
+      this.props.handleError('Position must be a number')
+      return
+    }
+
+    if (!chrom) {
+      this.props.handleError('Select a chromosome first')
+      return
+    }
+
+    const start = Number(position)
+    const end   = start + 1
+
+    fetchSamples({ chrom, start, end })
+  }
+
+  selectItem = index => {
+    const { open } = this.state
+    const { chrom, changePosition, positions: { isLoading, list } } = this.props
+
+    const position = list[index]
+    changePosition(position)
+
+    this.doSearch(chrom, position)
+  }
+
+  renderChroms() {
+    const { chrom, chroms: { isLoading, list }, setChrom } = this.props
 
     return (
-      <div className='Controls d-flex'>
+      <UncontrolledDropdown>
+        <DropdownToggle caret disabled={isLoading}>
+          { isLoading &&
+            <span><Icon name='spinner' spin/> Loading</span>
+          }
+          {
+            !isLoading &&
+              (chrom || 'Chromosome')
+          }
+        </DropdownToggle>
+        <DropdownMenu>
+          {
+            list.map(chrom =>
+              <DropdownItem onClick={() => setChrom(chrom)}>{ chrom }</DropdownItem>
+            )
+          }
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    )
+  }
+
+  renderPosition() {
+    const { open, index } = this.state
+    const { position, positions: { isLoading, list } } = this.props
+
+    return (
+      <div className='autocomplete'>
         <Input
           className='Controls__input'
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
-          value={search}
-          placeholder='chr1:10000'
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          value={position}
+          placeholder='10000'
         />
+        {
+          open &&
+            <div className='autocomplete__dropdown-menu'>
+              {
+                list.length === 0 &&
+                  <div className={ 'autocomplete__item autocomplete__item--empty' }>
+                    <span>No results</span>
+                  </div>
+              }
+              {
+                list.map((item, i) =>
+                  <div className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
+                    onClick={() => this.selectItem(i)}
+                  >
+                    { highlight(item, position) }
+                  </div>
+                )
+              }
+            </div>
+        }
+      </div>
+    )
+  }
+
+  render() {
+    const { isLoading, position, samples } = this.props
+
+    return (
+      <div className='Controls d-flex'>
+        { this.renderChroms() }
+        { this.renderPosition() }
         <Button className='Controls__search'
           onClick={this.onClickSearch}
           disabled={isLoading}
@@ -71,6 +212,18 @@ class Controls extends React.Component {
   }
 }
 
+function highlight(item, prefix) {
+  if (!item.startsWith(prefix))
+    return <span>{ item }</span>
+
+  const rest = item.replace(prefix, '')
+  return (
+    <span>
+      <span className='highlight'>{ prefix }</span>
+      { rest }
+    </span>
+  )
+}
 
 export default connect(
   mapStateToProps,

@@ -12,6 +12,7 @@ import './styles.css';
 import registerServiceWorker from './registerServiceWorker';
 import { rootReducer } from './reducers';
 import App from './components/App';
+import { fetchChroms } from './actions.js'
 
 
 const initialState = {}
@@ -27,6 +28,8 @@ render(
   </Provider>,
   document.querySelector('#root')
 )
+
+store.dispatch(fetchChroms())
 
 
 // Register service worker

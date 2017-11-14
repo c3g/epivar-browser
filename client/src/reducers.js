@@ -1,5 +1,6 @@
-import * as k from './constants/ActionTypes.js';
-import { createDefaultUI, createDefaultSamples } from './models';
+import { combineReducers } from 'redux'
+import * as k from './constants/ActionTypes.js'
+import { createDefaultUI, createDefaultList } from './models'
 
 
 function uiReducer(state = createDefaultUI(), action, data) {
@@ -7,20 +8,26 @@ function uiReducer(state = createDefaultUI(), action, data) {
     case k.SET_SEARCH: {
       return { ...state, search: action.payload }
     }
+    case k.SET_CHROM: {
+      return { ...state, chrom: action.payload }
+    }
+    case k.SET_POSITION: {
+      return { ...state, position: action.payload }
+    }
     default:
       return state;
   }
 }
 
-function samplesReducer(state = createDefaultSamples(), action, ui) {
+function samplesReducer(state = createDefaultList(), action) {
   switch (action.type) {
-    case k.REQUEST_SAMPLES: {
+    case k.SAMPLES.REQUEST: {
       return { ...state, isLoading: true }
     }
-    case k.RECEIVE_SAMPLES: {
+    case k.SAMPLES.RECEIVE: {
       return { ...state, isLoading: false, list: action.payload }
     }
-    case k.RECEIVE_ERROR: {
+    case k.SAMPLES.ERROR: {
       return { ...state, isLoading: false }
     }
     default:
@@ -28,9 +35,41 @@ function samplesReducer(state = createDefaultSamples(), action, ui) {
   }
 }
 
-export const rootReducer = (state = {}, action) => {
-  const samples = samplesReducer(state.samples, action)
-  const ui = uiReducer(state.ui, action)
-
-  return { ui, samples }
+function chromsReducer(state = createDefaultList(), action) {
+  switch (action.type) {
+    case k.CHROMS.REQUEST: {
+      return { ...state, isLoading: true }
+    }
+    case k.CHROMS.RECEIVE: {
+      return { ...state, isLoading: false, list: action.payload }
+    }
+    case k.CHROMS.ERROR: {
+      return { ...state, isLoading: false }
+    }
+    default:
+      return state;
+  }
 }
+
+function positionsReducer(state = createDefaultList(), action) {
+  switch (action.type) {
+    case k.POSITIONS.REQUEST: {
+      return { ...state, isLoading: true }
+    }
+    case k.POSITIONS.RECEIVE: {
+      return { ...state, isLoading: false, list: action.payload }
+    }
+    case k.POSITIONS.ERROR: {
+      return { ...state, isLoading: false }
+    }
+    default:
+      return state;
+  }
+}
+
+export const rootReducer = combineReducers({
+  ui: uiReducer,
+  samples: samplesReducer,
+  chroms: chromsReducer,
+  positions: positionsReducer,
+})

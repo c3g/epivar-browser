@@ -11,24 +11,51 @@ const config = require('../config.js')
 
 module.exports = {
   query,
+  getChroms,
+  getPositions,
 }
 
 function query(chrom, start, end = start + 1) {
-  const command =
-    `gemini query ${config.paths.gemini} \
-        --header \
-        --show-samples \
-        --format sampledetail \
-        -q "SELECT chrom, start, end, ref, alt, (gts).(*)
-              FROM variants
-             WHERE chrom = '${chrom}'
-               AND start >= ${start}
-               AND end   <= ${end}
-           "`
+  const params = `--header --show-samples --format sampledetail`
 
-  return exec(command).then(res =>
+  const query = escape`
+    SELECT chrom, start, end, ref, alt, (gts).(*)
+      FROM variants
+     WHERE chrom = ${chrom}
+       AND start >= ${start}
+       AND end   <= ${end}
+  `
+
+  return gemini(query, params).then(res =>
     normalizeSamples(parseCSV(res.stdout))
   )
+}
+
+function getChroms() {
+  return gemini(`SELECT DISTINCT(chrom) FROM variants`)
+    .then(parseLines)
+}
+
+function getPositions(chrom, start) {
+  return gemini(escape`
+    SELECT DISTINCT(start)
+      FROM variants
+     WHERE chrom = ${chrom}
+       AND start LIKE ${(start || '') + '%'}
+     LIMIT 15
+  `)
+  .then(parseLines)
+}
+
+
+
+function gemini(query, params = '') {
+  const command =
+    `gemini query ${config.paths.gemini} \
+        ${params} \
+        -q "${query.replace(/"/g, '\\"')}"`
+
+  return exec(command)
 }
 
 function normalizeSamples(samples) {
@@ -44,6 +71,34 @@ function normalizeSamples(samples) {
   return samples
 }
 
+function parseLines({ stdout }) {
+  return stdout.split('\n').filter(Boolean)
+}
+
 function parseCSV(string) {
   return csvParse(string, { delimiter: '\t', columns: true })
 }
+
+function escape(strings, ...args) {
+  let result = ''
+  for (let i = 0; i < strings.length; i++) {
+    result += strings[i]
+    if (i < args.length)
+      result += escapeValue(args[i])
+  }
+  return result
+}
+
+function escapeValue(value) {
+  switch (typeof value) {
+    case 'number':
+      return value
+    case 'string':
+      return "'" + value.replace(/'/g, "''") + "'"
+    case 'object':
+      return value === null ? 'NULL' : "'" + (''+value).replace(/'/g, "''") + "'"
+    default:
+      throw new Error(`Unrecognized value: ${value}`)
+  }
+}
+
