@@ -40,7 +40,7 @@ class Controls extends React.Component {
   }
 
   onBlur = () => {
-    setTimeout(() => this.setState({ open: false }), 100)
+    setTimeout(() => this.setState({ open: false }), 200)
   }
 
   onKeyDown = ev => {
@@ -192,7 +192,7 @@ class Controls extends React.Component {
     const { isLoading, position, samples } = this.props
 
     return (
-      <div className='Controls d-flex'>
+      <div className='Controls d-flex justify-content-center'>
         { this.renderChroms() }
         { this.renderPosition() }
         <Button className='Controls__search'
