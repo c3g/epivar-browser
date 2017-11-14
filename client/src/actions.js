@@ -1,7 +1,6 @@
 import { createAction } from 'redux-actions'
 
 import queryString from './helpers/queryString.js'
-import parseLocation from './helpers/parseLocation.js'
 import * as requests from './requests'
 import * as k from './constants/ActionTypes.js'
 
@@ -37,8 +36,17 @@ export function mergeTracks() {
     if (samples.isLoading || samples.list.length === 0)
       return
 
-    const session = parseLocation(ui.search)
-    session.samples = samples.list.map(s => s.name)
+    const position = Number(ui.position)
+    const start = Math.max(position - 100000, 0)
+    const end   = position + 100000
+
+    const session = {
+      samples: samples.list.map(s => s.name),
+      chrom: ui.chrom,
+      position,
+      start,
+      end
+    }
 
     requests.createSession(session)
     .then(sessionID => {
