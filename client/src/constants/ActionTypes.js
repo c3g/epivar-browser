@@ -6,6 +6,7 @@ export const HANDLE_ERROR = 'HANDLE_ERROR'
 export const SAMPLES   = createFetchConstants('SAMPLES')
 export const CHROMS    = createFetchConstants('CHROMS')
 export const POSITIONS = createFetchConstants('POSITIONS')
+export const VALUES    = createFetchConstants('VALUES')
 
 
 function createFetchConstants(namespace) {

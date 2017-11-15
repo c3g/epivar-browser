@@ -16,3 +16,10 @@ export function createDefaultList() {
     list: [],
   }
 }
+
+export function createDefaultMap() {
+  return {
+    isLoading: false,
+    map: {},
+  }
+}

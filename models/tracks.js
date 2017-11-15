@@ -48,7 +48,6 @@ function get(chrom, position) {
        WHERE donor IN (${samples.map(dbIHEC.escape).join(', ')})
               AND track_type = 'bigWig'
     `
-
   return Samples.queryMap(chrom, position).then(info =>
     dbIHEC.query(makeQuery(Object.keys(info.samples)))
     .then(tracks => {

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import * as k from './constants/ActionTypes.js'
-import { createDefaultUI, createDefaultList } from './models'
+import { createDefaultUI, createDefaultList, createDefaultMap } from './models'
 
 
 function uiReducer(state = createDefaultUI(), action, data) {
@@ -67,9 +67,26 @@ function positionsReducer(state = createDefaultList(), action) {
   }
 }
 
+function valuesReducer(state = createDefaultMap(), action) {
+  switch (action.type) {
+    case k.VALUES.REQUEST: {
+      return { ...state, isLoading: true }
+    }
+    case k.VALUES.RECEIVE: {
+      return { ...state, isLoading: false, map: action.payload }
+    }
+    case k.VALUES.ERROR: {
+      return { ...state, isLoading: false }
+    }
+    default:
+      return state;
+  }
+}
+
 export const rootReducer = combineReducers({
   ui: uiReducer,
   samples: samplesReducer,
   chroms: chromsReducer,
   positions: positionsReducer,
+  values: valuesReducer,
 })

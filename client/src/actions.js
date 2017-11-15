@@ -12,10 +12,12 @@ export const handleError = createAction(k.HANDLE_ERROR)
 export const samples   = createFetchActions(k.SAMPLES)
 export const chroms    = createFetchActions(k.CHROMS)
 export const positions = createFetchActions(k.POSITIONS)
+export const values    = createFetchActions(k.VALUES)
 
 export const fetchSamples   = createFetchFunction(requests.fetchSamples, samples, 'samples')
 export const fetchChroms    = createFetchFunction(requests.fetchChroms, chroms, 'chroms')
 export const fetchPositions = createFetchFunction(requests.fetchPositions, positions, 'positions')
+export const fetchValues    = createFetchFunction(requests.fetchValues, values, 'values')
 
 
 export function changePosition(value) {
@@ -26,6 +28,17 @@ export function changePosition(value) {
 
     if (chrom)
       dispatch(fetchPositions({ chrom, start: value }))
+  }
+}
+
+export function doSearch() {
+  return (dispatch, getState) => {
+    const { ui: { chrom, position } } = getState()
+
+    if (chrom && position) {
+      dispatch(fetchSamples({ chrom, position }))
+      dispatch(fetchValues({ chrom, position }))
+    }
   }
 }
 

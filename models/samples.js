@@ -7,7 +7,7 @@ const csvParse = require('csv-parse/lib/sync')
 
 const exec = command =>
   new Promise((resolve, reject) =>
-    child_process.exec(command, { maxBuffer: 1024 * 2000 }, (err, stdout, stderr) =>
+    child_process.exec(command, { maxBuffer: 1024 * 10000 }, (err, stdout, stderr) =>
       err ? reject(err) : resolve({ stdout, stderr })))
 
 const config = require('../config.js')

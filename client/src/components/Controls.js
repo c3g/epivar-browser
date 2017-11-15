@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Input, Button, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 import Icon from './Icon.js'
-import { setChrom, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError } from '../actions.js'
+import { setChrom, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError } from '../actions.js'
 
 const mapStateToProps = state => ({
     isLoading: state.samples.isLoading
@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
   , position: state.ui.position
 })
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ setChrom, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError }, dispatch)
+  bindActionCreators({ setChrom, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError }, dispatch)
 
 class Controls extends React.Component {
 
@@ -48,7 +48,7 @@ class Controls extends React.Component {
       if (this.props.positions.list.length > 0)
         this.selectItem(this.state.index)
       else
-        this.doSearch(this.props.chrom, this.props.position)
+        this.props.doSearch()
 
       if (document.activeElement.tagName === 'INPUT')
         document.activeElement.blur()
@@ -70,8 +70,7 @@ class Controls extends React.Component {
   }
 
   onClickSearch = () => {
-    const { chrom, position } = this.props
-    this.doSearch(chrom, position)
+    this.props.doSearch()
   }
 
   onClickMerge = () => {
@@ -95,33 +94,13 @@ class Controls extends React.Component {
     console.log(index)
   }
 
-  doSearch = (chrom, position) => {
-    const { fetchSamples } = this.props
-
-    if (!/(^\d+$)|(^$)/.test(position)) {
-      this.props.handleError('Position must be a number')
-      return
-    }
-
-    if (!chrom) {
-      this.props.handleError('Select a chromosome first')
-      return
-    }
-
-    const start = Number(position)
-    const end   = start + 1
-
-    fetchSamples({ chrom, start, end })
-  }
-
   selectItem = index => {
     const { open } = this.state
-    const { chrom, changePosition, positions: { isLoading, list } } = this.props
+    const { chrom, changePosition, doSearch, positions: { isLoading, list } } = this.props
 
     const position = list[index]
     changePosition(position)
-
-    this.doSearch(chrom, position)
+    doSearch()
   }
 
   renderChroms() {

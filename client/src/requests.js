@@ -50,6 +50,10 @@ export function fetchPositions(params) {
   return fetchAPI('/samples/positions', params)
 }
 
+export function fetchValues(params) {
+  return fetchAPI('/tracks/values', params)
+}
+
 export function createSession(params) {
   return fetchAPI('/sessions/create', params, { method: 'post' })
 }

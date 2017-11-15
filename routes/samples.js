@@ -10,9 +10,9 @@ const Samples = require('../models/samples.js')
 
 router.use('/query', (req, res) => {
 
-  const { chrom, start, end } = req.query
+  const { chrom, position } = req.query
 
-  Samples.query(chrom, start, end)
+  Samples.query(chrom, Number(position))
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
