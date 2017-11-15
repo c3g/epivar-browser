@@ -37,7 +37,9 @@ export function doSearch() {
 
     if (chrom && position) {
       dispatch(fetchSamples({ chrom, position }))
-      dispatch(fetchValues({ chrom, position }))
+      // We create a 1s delay here to allow the first request to finish sooner
+      dispatch(values.request())
+      setTimeout(() => dispatch(fetchValues({ chrom, position })), 1000)
     }
   }
 }
