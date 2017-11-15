@@ -109,7 +109,7 @@ function YAxis({ domain, step, x, y, height }) {
               {
                 Math.abs(lastY - y) > FONT_SIZE &&
                   <text x={5} y={scale(point)} dy={FONT_SIZE / 4} fontSize={FONT_SIZE}>
-                    { Number(point).toPrecision(3) }
+                    { Number(Number(point).toPrecision(3)) }
                   </text>
               }
             </g>
