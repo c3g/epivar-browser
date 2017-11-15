@@ -91,7 +91,6 @@ class Controls extends React.Component {
       index = index % length
 
     this.setState({ index })
-    console.log(index)
   }
 
   selectItem = index => {

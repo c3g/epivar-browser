@@ -55,9 +55,6 @@ function Bar({ data = [], x, y, height, domain }) {
   const xScale = scaleLinear().range([xMin, xMax]).domain([0, data.length])
   const yScale = scaleLinear().range([height, y]).domain(domain)
 
-  console.log(dataPoints, stats)
-  Object.entries(stats).forEach(([key, value]) => console.log(key, value, yScale(value)))
-
   return (
     <g>
       <Line position={[[x, yScale(min)], [x, yScale(max)]]} />
