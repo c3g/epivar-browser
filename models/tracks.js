@@ -18,6 +18,7 @@ const Samples = require('./samples.js')
 module.exports = {
   get,
   values,
+  group,
   merge,
 }
 
@@ -77,13 +78,19 @@ function values(chrom, position) {
     )))
 }
 
+function group(tracks) {
+  const tracksByAssay = {}
+  Object.entries(groupBy(prop('assay'), tracks)).forEach(([assay, tracks]) => {
+    tracksByAssay[assay] = groupBy(prop('type'), tracks)
+  })
+  return tracksByAssay
+}
+
 function merge(tracks, { chrom, start, end }) {
 
-  const tracksByAssay = groupBy(prop('assay'), tracks)
+  const tracksByAssay = group(tracks)
 
-  return Promise.all(Object.entries(tracksByAssay).map(([assay, tracks]) => {
-
-    const tracksByType = groupBy(prop('type'), tracks)
+  return Promise.all(Object.entries(tracksByAssay).map(([assay, tracksByType]) => {
 
     if (tracksByType.HET === undefined && tracksByType.HOM === undefined)
       return undefined
