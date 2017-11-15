@@ -41,7 +41,7 @@ function get(chrom, position) {
         JOIN data_release on data_release.id = dataset.data_release_id
         JOIN assembly on assembly.id = data_release.assembly_id
         JOIN institution on institution.id = data_release.provider_institution_id
-      WHERE donor IN (${samples.map(dbIHEC.escape).join(', ')})
+       WHERE donor IN (${samples.map(dbIHEC.escape).join(', ')})
               AND track_type = 'bigWig'
     `
 
