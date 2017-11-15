@@ -26,7 +26,7 @@ class Charts extends Component {
                 data={Object.entries(valuesByType).map(([name, data]) => ({ name, data }))}
                 width={width}
                 height={300}
-                padding={35}
+                padding={40}
                 domain={getDomain(valuesByType)}
               />
             )
