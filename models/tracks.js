@@ -66,7 +66,7 @@ function values(chrom, position) {
   .then(tracks =>
     Promise.all(tracks.map(track =>
       valueAt(track.path, { chrom, position, ...config.merge })
-      .then(data => ({
+      .then(data => (data === undefined ? undefined : {
         id: track.id,
         donor: track.donor,
         assay: track.assay,
@@ -75,7 +75,9 @@ function values(chrom, position) {
         value: track.value,
         data,
       }))
-    )))
+    ))
+    .then(values => values.filter(v => v !== undefined))
+  )
 }
 
 function group(tracks) {
