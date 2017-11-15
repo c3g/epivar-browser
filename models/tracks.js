@@ -60,13 +60,20 @@ function get(chrom, position) {
 }
 
 function values(chrom, position) {
-  return get(chrom, position).then(tracks =>
+  return get(chrom, position)
+  .then(tracks => tracks.filter(t => fs.existsSync(t.path)))
+  .then(tracks =>
     Promise.all(tracks.map(track =>
       valueAt(track.path, { chrom, position, ...config.merge })
-        .then(value => {
-          track.value = value
-          return track
-        })
+      .then(data => ({
+        id: track.id,
+        donor: track.donor,
+        assay: track.assay,
+        variant: track.variant,
+        type: track.type,
+        value: track.value,
+        data,
+      }))
     )))
 }
 
