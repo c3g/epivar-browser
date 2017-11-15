@@ -10,12 +10,14 @@ const md5 = require('md5')
 const { prop, groupBy } = require('ramda')
 
 const sliceAndMerge = require('../helpers/slice-and-merge.js')
+const valueAt = require('../helpers/value-at.js')
 const dbIHEC = require('../db-ihec.js')
 const config = require('../config.js')
 const Samples = require('./samples.js')
 
 module.exports = {
   get,
+  values,
   merge,
 }
 
@@ -55,6 +57,17 @@ function get(chrom, position) {
       return tracks
     })
   )
+}
+
+function values(chrom, position) {
+  return get(chrom, position).then(tracks =>
+    Promise.all(tracks.map(track =>
+      valueAt(track.path, { chrom, position, ...config.merge })
+        .then(value => {
+          track.value = value
+          return track
+        })
+    )))
 }
 
 function merge(tracks, { chrom, start, end }) {

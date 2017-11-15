@@ -7,9 +7,14 @@ const Tracks = require('../models/tracks')
 router.use('/get', (req, res) => {
 
   Tracks.get(req.query.chrom, req.query.position)
-  .then(res => console.log('RES', res) || res)
   .then(dataHandler(res))
-  .catch(err => console.log(err))
+  .catch(errorHandler(res))
+})
+
+router.use('/values', (req, res) => {
+
+  Tracks.values(req.query.chrom, req.query.position)
+  .then(dataHandler(res))
   .catch(errorHandler(res))
 })
 

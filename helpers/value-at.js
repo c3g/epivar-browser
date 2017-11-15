@@ -3,6 +3,7 @@
  */
 
 
+const path = require('path')
 const child_process = require('child_process')
 
 const exec = command =>
@@ -28,7 +29,14 @@ const valueCommand = (file, options) => [
   ].join(' ')
 
 function valueAt(file, options) {
+
+  if (options.position !== undefined) {
+    options.start = options.position
+    options.end   = options.position + 1
+  }
+
   const command = valueCommand(file, options)
+
   return exec(command).then(({ stdout }) => {
     const output = stdout.trim()
     if (output.startsWith('no data in region'))
