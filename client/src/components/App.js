@@ -55,7 +55,7 @@ class App extends Component {
         <Container>
           <Row>
             <Col sm='6' className={isLoading ? 'loading' : ''}>
-              <Table className='Samples' bordered size='sm'>
+              <Table className='Samples' size='sm'>
                 <thead>
                   <tr>
                     <th>Name</th>
