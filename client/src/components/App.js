@@ -81,7 +81,7 @@ class App extends Component {
                 {
                   ({ width }) =>
                     Object.entries(values.map).map(([assay, valuesByType]) =>
-                      <BoxPlot title={'H3K27me3'}
+                      <BoxPlot title={assay}
                         data={Object.entries(valuesByType).map(([name, data]) => ({ name, data }))}
                         width={width}
                         height={300}
