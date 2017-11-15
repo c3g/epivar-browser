@@ -14,6 +14,7 @@ router.use('/get', (req, res) => {
 router.use('/values', (req, res) => {
 
   Tracks.values(req.query.chrom, req.query.position)
+  .then(Tracks.group)
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })
