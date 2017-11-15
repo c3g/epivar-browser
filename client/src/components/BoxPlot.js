@@ -23,7 +23,7 @@ export default function BoxPlot({ title, data, width, height, padding, domain })
   return (
     <svg width={width} height={height}>
       <YAxis domain={domain} step={0.5} {...dimension} />
-      <XAxis values={data.map(d => d.name)} scale={xScale} {...dimension} />
+      <XAxis data={data} scale={xScale} {...dimension} />
       <text x={dimension.width / 2} y={dimension.y} textAnchor='middle'
         style={{
           fontWeight: 'bold',
@@ -111,18 +111,21 @@ function YAxis({ domain, step, x, y, height }) {
   )
 }
 
-function XAxis({ values, scale, x, y, height, width }) {
+function XAxis({ data, scale, x, y, height, width }) {
   return (
     <svg>
       <Line position={[[x,     height], 
                        [width, height]]} />
       {
-        values.map((value, i) =>
-          <g>
-            <Line position={[[scale(i), height - 5], [scale(i), height + 5]]} />
-            <text y={height + 5} x={scale(i)} dy={FONT_SIZE} dx={-value.length * 3} fontSize={FONT_SIZE}>{ value }</text>
-          </g>
-        )
+        data.map((d, i) => {
+          const text = `${d.name} (n = ${d.data.length})`
+          return (
+            <g>
+              <Line position={[[scale(i), height - 5], [scale(i), height + 5]]} />
+              <text y={height + 5} x={scale(i)} dy={FONT_SIZE} dx={-text.length * 3} fontSize={FONT_SIZE}>{ text }</text>
+            </g>
+          )
+        })
       }
     </svg>
   )
