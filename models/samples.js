@@ -3,9 +3,12 @@
  */
 
 const child_process = require('child_process')
-const { promisify } = require('util')
-const exec = promisify(child_process.exec)
 const csvParse = require('csv-parse/lib/sync')
+
+const exec = command =>
+  new Promise((resolve, reject) =>
+    child_process.exec(command, { maxBuffer: 1024 * 2000 }, (err, stdout, stderr) =>
+      err ? reject(err) : resolve({ stdout, stderr })))
 
 const config = require('../config.js')
 
