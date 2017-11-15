@@ -19,6 +19,7 @@ module.exports = {
   get,
   values,
   group,
+  clean,
   merge,
 }
 
@@ -86,9 +87,18 @@ function group(tracks) {
   return tracksByAssay
 }
 
+function clean(/* mut */ tracksByAssay) {
+  Object.keys(tracksByAssay).forEach(assay => {
+    const tracksByType = tracksByAssay[assay]
+    if (tracksByType.HET === undefined && tracksByType.HOM === undefined)
+      delete tracksByAssay[assay]
+  })
+  return tracksByAssay
+}
+
 function merge(tracks, { chrom, start, end }) {
 
-  const tracksByAssay = group(tracks)
+  const tracksByAssay = clean(group(tracks))
 
   return Promise.all(Object.entries(tracksByAssay).map(([assay, tracksByType]) => {
 
