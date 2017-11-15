@@ -19,7 +19,7 @@ module.exports = {
   merge,
 }
 
-function get({ chrom, position }) {
+function get(chrom, position) {
 
   const makeQuery = samples => `
       SELECT track.id

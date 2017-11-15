@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/api/ucsc', require('./routes/ucsc'))
 app.use('/api/sessions', require('./routes/sessions'))
 app.use('/api/samples', require('./routes/samples'))
+app.use('/api/tracks', require('./routes/tracks'))
 
 
 // catch 404 and forward to error handler
