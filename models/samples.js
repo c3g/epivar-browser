@@ -55,7 +55,7 @@ function queryMap(chrom, start, end = start + 1) {
         const donor = key.slice(4)
         const value = res[key]
         const variant = variants.has(donor)
-        const type = value.charAt(0) !== value.charAt(2) ? 'HET' : 'HOM'
+        const type = !variant ? 'REF' : value.charAt(0) !== value.charAt(2) ? 'HET' : 'HOM'
         newRes.samples[donor] = { value, variant, type }
       } else {
         newRes[key] = res[key]

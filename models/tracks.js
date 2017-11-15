@@ -83,16 +83,16 @@ function merge(tracks, { chrom, start, end }) {
 
   return Promise.all(Object.entries(tracksByAssay).map(([assay, tracks]) => {
 
-    const tracksByType = groupBy(getType, tracks)
+    const tracksByType = groupBy(prop('type'), tracks)
 
-    if (tracksByType.variantHET === undefined && tracksByType.variantHOM === undefined)
+    if (tracksByType.HET === undefined && tracksByType.HOM === undefined)
       return undefined
 
     return Promise.all(
       [
-        tracksByType.reference,
-        tracksByType.variantHET || [],
-        tracksByType.variantHOM || []
+        tracksByType.REF,
+        tracksByType.HET || [],
+        tracksByType.HOM || []
       ].map(tracks =>
         mergeFiles(tracks.map(prop('path')), { chrom, start, end })
       )
@@ -129,10 +129,4 @@ function getLocalPath(track) {
       track.track_type
     ].join('.')
   )
-}
-
-function getType(track) {
-  return !track.variant ? 'reference' :
-    track.type === 'HET' ? 'variantHET' :
-                           'variantHOM'
 }
