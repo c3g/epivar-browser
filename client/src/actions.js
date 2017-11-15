@@ -90,9 +90,6 @@ function createFetchFunction(fn, actions, prop) {
     return (dispatch, getState) => {
       const state = getState()
 
-      if (state[prop].isLoading)
-        return
-
       dispatch(actions.request())
 
       fn(...args)
