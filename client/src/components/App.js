@@ -55,8 +55,8 @@ class App extends Component {
 
         <Container>
           <Row>
-            <Col sm='6'>
-              <Table className='Samples' bordered>
+            <Col sm='6' className={isLoading ? 'loading' : ''}>
+              <Table className='Samples' bordered size='sm'>
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -75,8 +75,7 @@ class App extends Component {
                 </tbody>
               </Table>
             </Col>
-            <Col sm='6'>
-              { values.isLoading && 'loading' }
+            <Col sm='6' className={values.isLoading ? 'loading' : ''}>
               <AutoSizer disableHeight>
                 {
                   ({ width }) =>
