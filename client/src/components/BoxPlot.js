@@ -92,17 +92,34 @@ function YAxis({ domain, step, x, y, height }) {
 
   const scale = scaleLinear().range([height, y]).domain(domain)
 
+  let lastY = 0
+
   return (
     <svg>
       <Line position={[[x, y], 
                        [x, height]]} />
       {
-        points.map(point =>
-          <g>
-            <Line position={[[x - 5, scale(point)], [x + 5, scale(point)]]} />
-            <text x={5} y={scale(point)} dy={FONT_SIZE / 4} fontSize={FONT_SIZE}>{ point }</text>
-          </g>
-        )
+        points.map(point => {
+
+          const y = scale(point)
+
+          const result =  (
+            <g>
+              <Line position={[[x - 5, y], [x + 5, y]]} />
+              {
+                Math.abs(lastY - y) > FONT_SIZE &&
+                  <text x={5} y={scale(point)} dy={FONT_SIZE / 4} fontSize={FONT_SIZE}>
+                    { Number(point).toPrecision(3) }
+                  </text>
+              }
+            </g>
+          )
+
+          if (Math.abs(lastY - y) > FONT_SIZE)
+            lastY = y
+
+          return result
+        })
       }
     </svg>
   )
