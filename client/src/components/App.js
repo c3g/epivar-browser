@@ -5,8 +5,7 @@ import { Container, Table, Col, Row } from 'reactstrap';
 
 import Header from './Header.js'
 import Controls from './Controls.js'
-import AutoSizer from './AutoSizer.js'
-import BoxPlot from './BoxPlot.js'
+import Charts from './Charts.js'
 
 const mapStateToProps = state => ({
     isLoading: state.samples.isLoading
@@ -76,20 +75,7 @@ class App extends Component {
               </Table>
             </Col>
             <Col sm='6' className={values.isLoading ? 'loading' : ''}>
-              <AutoSizer disableHeight>
-                {
-                  ({ width }) =>
-                    Object.entries(values.map).map(([assay, valuesByType]) =>
-                      <BoxPlot title={assay}
-                        data={Object.entries(valuesByType).map(([name, data]) => ({ name, data }))}
-                        width={width}
-                        height={300}
-                        padding={30}
-                        domain={[0, 5]}
-                      />
-                    )
-                }
-              </AutoSizer>
+              <Charts />
             </Col>
           </Row>
         </Container>
