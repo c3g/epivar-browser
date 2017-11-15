@@ -29,29 +29,56 @@ function generateGenome(session, assembly) {
 function generateTracks(mergedTracks) {
 
   const trackBlocks = []
+  const compositeTrackBlocks = []
 
   mergedTracks.forEach(merged => {
 
-    const trackName = merged.assay
+    const parentName = merged.assay
     const trackType = 'bigWig'
     const trackDensity = 'pack'
+    const visibility = 'on'
     const shortLabel = merged.assay
     const longLabel = merged.assay
 
-    trackBlocks.push(unindent`
-      track ${trackName}
-      type ${trackType}
-      shortLabel ${shortLabel}
-      longLabel ${longLabel}
-      visibility ${trackDensity}
-      bigDataUrl ${merged.url}
-      maxHeightPixels 25:25:8
-      autoScale on
-      color ${getColor(merged.url)}
+    compositeTrackBlocks.push(unindent`
+      track ${parentName}
+      compositeTrack on
+      shortLabel ${parentName}
+      longLabel ${parentName}
+      dragAndDrop subTracks
+      priority 1
+      type bed 5
+      visibility pack
+      color ${getColor(parentName)}
     `)
+
+    merged.output.forEach((output, i) => {
+
+      const type = i === 0 ? 'reference' : i === 1 ? 'variant_het' : 'variant_hom'
+      const trackName = `${parentName}__${type}`
+      const shortLabel = trackName
+      const longLabel = trackName
+
+      trackBlocks.push(unindent`
+        track ${trackName}
+        type ${trackType}
+        parent ${parentName} ${visibility}
+        shortLabel ${shortLabel}
+        longLabel ${longLabel}
+        visibility ${trackDensity}
+        bigDataUrl ${output.url}
+        maxHeightPixels 25:25:8
+        autoScale on
+      `)
+    })
+
   })
 
-  return trackBlocks.join('\n\n')
+  return (
+      compositeTrackBlocks.join('\n\n')
+    + '\n\n'
+    + trackBlocks.map(block => indent(4, block)).join('\n    \n')
+  )
 }
 
 // Thanks to Google Charts

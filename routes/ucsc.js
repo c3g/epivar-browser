@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const { textHandler, errorHandler } = require('../helpers/handlers')
+const { dataHandler, textHandler, errorHandler } = require('../helpers/handlers')
 const UCSC = require('../models/ucsc')
 const Sessions = require('../models/sessions')
 const Tracks = require('../models/tracks')
@@ -26,7 +26,7 @@ router.use('/track-db/:session', (req, res) => {
 
   Sessions.get(req.params.session)
   .then(session =>
-    Tracks.get(session.samples)
+    Tracks.get(session)
       .then(tracks => Tracks.merge(tracks, session))
   )
   .then(UCSC.generateTracks)

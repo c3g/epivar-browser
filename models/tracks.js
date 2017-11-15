@@ -10,54 +10,90 @@ const md5 = require('md5')
 const { prop, groupBy } = require('ramda')
 
 const sliceAndMerge = require('../helpers/slice-and-merge.js')
-const db = require('../db-ihec.js')
+const dbIHEC = require('../db-ihec.js')
 const config = require('../config.js')
+const Samples = require('./samples.js')
 
 module.exports = {
   get,
   merge,
 }
 
-function get(donors) {
+function get({ chrom, position }) {
 
-  const query = `
-    SELECT *
-         , track.id      AS id
-         , assembly.name AS assembly
-         , assay.name    AS assay
-     FROM dataset_track AS track
-     JOIN dataset      ON dataset.id      = track.dataset_id
-     JOIN assay        ON assay.id        = dataset.assay_id
-     JOIN data_release ON data_release.id = dataset.data_release_id
-     JOIN assembly     ON assembly.id     = data_release.assembly_id
-     JOIN institution  ON institution.id  = data_release.provider_institution_id
-    WHERE donor IN (${donors.map(db.escape).join(', ')})
-          AND track_type = 'bigWig'
-  `
+  const makeQuery = samples => `
+      SELECT track.id
+          , institution.short_name
+          , sample_name
+          , donor
+          , track.view
+          , track.track_type
+          , track.id as id
+          , assembly.name as assembly
+          , assay.name as assay
+          , assay.id as assay_id
+          , assay_category.name as assay_category
+          , assay_category.id as assay_category_id
+        FROM dataset_track as track
+        JOIN dataset on dataset.id = track.dataset_id
+        JOIN assay on assay.id = dataset.assay_id
+        JOIN assay_category on assay_category.id = assay.assay_category_id
+        JOIN data_release on data_release.id = dataset.data_release_id
+        JOIN assembly on assembly.id = data_release.assembly_id
+        JOIN institution on institution.id = data_release.provider_institution_id
+      WHERE donor IN (${samples.map(dbIHEC.escape).join(', ')})
+              AND track_type = 'bigWig'
+    `
 
-  return db.query(query).then(tracks => {
-    tracks.forEach(track => track.path = getLocalPath(track))
-    return tracks
-  })
+  return Samples.queryMap(chrom, position).then(info =>
+    dbIHEC.query(makeQuery(Object.keys(info.samples)))
+    .then(tracks => {
+      tracks.forEach(track => {
+        track.path = getLocalPath(track)
+        Object.assign(track, info.samples[track.donor])
+      })
+      return tracks
+    })
+  )
 }
 
-function merge(tracks, options) {
+function merge(tracks, { chrom, start, end }) {
 
   const tracksByAssay = groupBy(prop('assay'), tracks)
 
   return Promise.all(Object.entries(tracksByAssay).map(([assay, tracks]) => {
-    const paths = tracks.map(prop('path')).sort(Intl.Collator().compare)
-    const mergeHash = md5(JSON.stringify(paths))
-    const mergeName = mergeHash + '.bw'
-    const url = `/merged/${mergeName}`
-    const mergePath = path.join(config.paths.mergedTracks, mergeName)
 
-    return exists(mergePath)
-      .then(yes => yes ? true : sliceAndMerge(paths, { output: mergePath, ...options, ...config.merge }))
-      .then(() => ({ assay, tracks, path: mergePath, url }))
+    const tracksByType = groupBy(getType, tracks)
+
+    if (tracksByType.variantHET === undefined && tracksByType.variantHOM === undefined)
+      return undefined
+
+    return Promise.all(
+      [
+        tracksByType.reference,
+        tracksByType.variantHET || [],
+        tracksByType.variantHOM || []
+      ].map(tracks =>
+        mergeFiles(tracks.map(prop('path')), { chrom, start, end })
+      )
+    )
+    .then(output => ({ assay, tracks, output }))
   }))
+  .then(results => results.filter(Boolean))
 }
 
+
+function mergeFiles(paths, { chrom, start, end }) {
+  paths.sort(Intl.Collator().compare)
+  const mergeHash = md5(JSON.stringify({ paths, chrom, start, end }))
+  const mergeName = mergeHash + '.bw'
+  const url = `/merged/${mergeName}`
+  const mergePath = path.join(config.paths.mergedTracks, mergeName)
+
+  return exists(mergePath)
+    .then(yes => yes ? true : sliceAndMerge(paths, { output: mergePath, chrom, start, end, ...config.merge }))
+    .then(() => ({ path: mergePath, url }))
+}
 
 function getLocalPath(track) {
   return path.join(
@@ -73,4 +109,10 @@ function getLocalPath(track) {
       track.track_type
     ].join('.')
   )
+}
+
+function getType(track) {
+  return !track.variant ? 'reference' :
+    track.type === 'HET' ? 'variantHET' :
+                           'variantHOM'
 }

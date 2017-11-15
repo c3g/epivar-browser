@@ -11,6 +11,7 @@ const config = require('../config.js')
 
 module.exports = {
   query,
+  queryMap,
   getChroms,
   getPositions,
 }
@@ -29,6 +30,37 @@ function query(chrom, start, end = start + 1) {
   return gemini(query, params).then(res =>
     normalizeSamples(parseCSV(res.stdout))
   )
+}
+
+function queryMap(chrom, start, end = start + 1) {
+  const params = `--header --show-samples`
+
+  const query = escape`
+    SELECT chrom, start, end, ref, alt, (gts).(*)
+      FROM variants WHERE chrom = ${chrom} AND start >= ${start} AND end <= ${end}`
+
+  return gemini(query, params).then(({ stdout }) => {
+    const res = parseCSV(stdout)[0]
+
+    const variants    = new Set(res.variant_samples.split(','))
+    const hetVariants = new Set(res.het_samples.split(','))
+
+    const newRes = { samples: {} }
+
+    for (let key in res) {
+      if (key.startsWith('gts.')) {
+        const donor = key.slice(4)
+        const value = res[key]
+        const variant = variants.has(donor)
+        const type = value.charAt(0) !== value.charAt(2) ? 'HET' : 'HOM'
+        newRes.samples[donor] = { value, variant, type }
+      } else {
+        newRes[key] = res[key]
+      }
+    }
+
+    return newRes
+  })
 }
 
 function getChroms() {
