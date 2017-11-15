@@ -23,17 +23,17 @@ function get(chrom, position) {
 
   const makeQuery = samples => `
       SELECT track.id
-          , institution.short_name
-          , sample_name
-          , donor
-          , track.view
-          , track.track_type
-          , track.id as id
-          , assembly.name as assembly
-          , assay.name as assay
-          , assay.id as assay_id
-          , assay_category.name as assay_category
-          , assay_category.id as assay_category_id
+           , institution.short_name
+           , sample_name
+           , donor
+           , track.view
+           , track.track_type
+           , track.id as id
+           , assembly.name as assembly
+           , assay.name as assay
+           , assay.id as assay_id
+           , assay_category.name as assay_category
+           , assay_category.id as assay_category_id
         FROM dataset_track as track
         JOIN dataset on dataset.id = track.dataset_id
         JOIN assay on assay.id = dataset.assay_id
