@@ -88,7 +88,6 @@ function createFetchActions(namespace) {
 function createFetchFunction(fn, actions, prop) {
   return function (...args) {
     return (dispatch, getState) => {
-      const state = getState()
 
       dispatch(actions.request())
 

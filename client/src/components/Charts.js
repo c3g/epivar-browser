@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
-import { Container, Table, Col, Row } from 'reactstrap';
 
 import AutoSizer from './AutoSizer.js'
 import BoxPlot from './BoxPlot.js'
@@ -49,8 +48,8 @@ function getLabel(type) {
     case 'REF': return 'Homo Ref'
     case 'HET': return 'Het'
     case 'HOM': return 'Homo Alt'
+    default: throw new Error('unreachable')
   }
-  throw new Error('unreachable')
 }
 
 function getDomain(dataList) {

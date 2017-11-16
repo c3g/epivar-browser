@@ -27,7 +27,7 @@ class Controls extends React.Component {
   componentWillReceiveProps(props) {
     if (props.chrom !== this.props.chrom) {
       const { chrom } = props
-      const { position } = this.props
+
       this.props.fetchPositions({ chrom, position: '' })
     }
     if (props.positions !== this.props.positions) {
@@ -94,8 +94,7 @@ class Controls extends React.Component {
   }
 
   selectItem = index => {
-    const { open } = this.state
-    const { chrom, changePosition, doSearch, positions: { isLoading, list } } = this.props
+    const { changePosition, doSearch, positions: { list } } = this.props
 
     const position = list[index]
     changePosition(position)
@@ -129,7 +128,7 @@ class Controls extends React.Component {
 
   renderPosition() {
     const { open, index } = this.state
-    const { position, positions: { isLoading, list } } = this.props
+    const { position, positions: { list } } = this.props
 
     return (
       <div className='autocomplete'>
@@ -167,7 +166,7 @@ class Controls extends React.Component {
   }
 
   render() {
-    const { isLoading, position, samples } = this.props
+    const { isLoading, samples } = this.props
 
     return (
       <div className='Controls d-flex justify-content-center'>
