@@ -17,17 +17,25 @@ class Charts extends Component {
   render() {
     const { values } = this.props
 
+    const data = Object.entries(values.map).map(([assay, valuesByType]) =>
+      ({
+        assay,
+        data: Object.entries(valuesByType).map(([name, data]) =>
+          ({ name: getLabel(name), data }))
+      })
+    )
+
     return (
       <AutoSizer disableHeight>
         {
           ({ width }) =>
-            Object.entries(values.map).map(([assay, valuesByType]) =>
+            data.map(({ assay, data }) =>
               <BoxPlot title={assay}
-                data={Object.entries(valuesByType).map(([name, data]) => ({ name, data }))}
+                data={data}
                 width={width}
                 height={300}
                 padding={40}
-                domain={getDomain(valuesByType)}
+                domain={getDomain(data)}
               />
             )
         }
@@ -36,11 +44,20 @@ class Charts extends Component {
   }
 }
 
-function getDomain(dataMap) {
+function getLabel(type) {
+  switch (type) {
+    case 'REF': return 'Homo Ref'
+    case 'HET': return 'Het'
+    case 'HOM': return 'Homo Alt'
+  }
+  throw new Error('unreachable')
+}
+
+function getDomain(dataList) {
   let min = Infinity
   let max = -Infinity
 
-  Object.values(dataMap).forEach(data =>
+  dataList.forEach(({ data }) =>
     data.forEach(d => {
       if (d.data < min)
         min = d.data
