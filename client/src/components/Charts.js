@@ -66,7 +66,7 @@ function getDomain(dataList) {
     })
   )
 
-  const delta = max - min
+  const delta = max !== min ? max - min : 1
 
   return [
     min - delta * 0.1,
