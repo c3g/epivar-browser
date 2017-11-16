@@ -9,6 +9,11 @@ const BAR_HALFWIDTH = BAR_WIDTH / 2
 
 const POINT_RADIUS = 1
 
+const textStyles = {
+  fontSize: FONT_SIZE,
+  textAnchor: 'middle',
+}
+
 export default function BoxPlot({ title, data, width, height, padding, domain }) {
   const dimension = {
     x: padding,
@@ -132,11 +137,15 @@ function XAxis({ data, scale, x, y, height, width }) {
                        [width, height]]} />
       {
         data.map((d, i) => {
-          const text = `${d.name} (n = ${d.data.length})`
           return (
             <g>
               <Line position={[[scale(i), height - 5], [scale(i), height + 5]]} />
-              <text y={height + 5} x={scale(i)} dy={FONT_SIZE} dx={-text.length * 3} fontSize={FONT_SIZE}>{ text }</text>
+              <text y={height + 5} x={scale(i)} dy={FONT_SIZE} style={textStyles}>
+                { d.name }
+              </text>
+              <text y={height + 5} x={scale(i)} dy={FONT_SIZE * 2} style={textStyles}>
+                { `(n = ${d.data.length})` }
+              </text>
             </g>
           )
         })
