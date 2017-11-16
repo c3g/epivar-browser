@@ -38,7 +38,8 @@ export default function BoxPlot({ title, data, width, height, padding, domain })
       </text>
       {
         data.map((d, i) =>
-          <Bar data={d.data} { ...dimension } x={xScale(i)} domain={domain} />
+          d.data.length === 0 ? undefined :
+            <Bar data={d.data} { ...dimension } x={xScale(i)} domain={domain} />
         )
       }
     </svg>
