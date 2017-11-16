@@ -19,8 +19,11 @@ class Charts extends Component {
     const data = Object.entries(values.map).map(([assay, valuesByType]) =>
       ({
         assay,
-        data: Object.entries(valuesByType).map(([name, data]) =>
-          ({ name: getLabel(name), data }))
+        data: [
+          { name: 'Hom Ref', data: valuesByType.REF || [] },
+          { name: 'Het',     data: valuesByType.HET || [] },
+          { name: 'Hom Alt', data: valuesByType.HOM || [] }
+        ]
       })
     )
 
@@ -40,15 +43,6 @@ class Charts extends Component {
         }
       </AutoSizer>
     )
-  }
-}
-
-function getLabel(type) {
-  switch (type) {
-    case 'REF': return 'Homo Ref'
-    case 'HET': return 'Het'
-    case 'HOM': return 'Homo Alt'
-    default: throw new Error('unreachable')
   }
 }
 
