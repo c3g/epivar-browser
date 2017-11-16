@@ -22,12 +22,13 @@ export default function BoxPlot({ title, data, width, height, padding, domain })
     height: height - 1 * padding,
   }
 
+  const step = (domain[1] - domain[0]) / 10
   const start = dimension.width / (data.length + 2)
   const xScale = scaleLinear().range([dimension.x + start, dimension.width]).domain([0, data.length])
 
   return (
     <svg width={width} height={height}>
-      <YAxis domain={domain} step={0.5} {...dimension} />
+      <YAxis domain={domain} step={step} {...dimension} />
       <XAxis data={data} scale={xScale} {...dimension} />
       <text x={dimension.width / 2} y={dimension.y} textAnchor='middle'
         style={{
