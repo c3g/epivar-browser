@@ -105,7 +105,7 @@ class Controls extends React.Component {
     const { chrom, chroms: { isLoading, list }, setChrom } = this.props
 
     return (
-      <UncontrolledDropdown>
+      <UncontrolledDropdown className='Controls__chromosome'>
         <DropdownToggle caret disabled={isLoading}>
           { isLoading &&
             <span><Icon name='spinner' spin/> Loading</span>

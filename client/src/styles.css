@@ -112,6 +112,15 @@ body {
 .btn, .dropdown-toggle, .dropdown-item {
   cursor: pointer;
 }
+.dropdown-toggle {
+  width: 100%;
+}
+.dropdown-toggle::after {
+  position: absolute;
+  top: 1em;
+  right: 0.7em;
+}
+
 
 
 /*
@@ -173,12 +182,12 @@ body {
  */
 
 .Header {
-  height: 350px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #7249AD 0%,#7E50BF 100%);
   color: white;
+  padding-top: 2rem;
 }
 .Header__title {
   text-align: center;
@@ -202,6 +211,10 @@ body {
 .Controls > *:not(:last-child) {
   margin-right: 1em;
 }
+.Controls__chromosome {
+  width: 150px;
+}
+
 
 .Params th,
 .Params td {
