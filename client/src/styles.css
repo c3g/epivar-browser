@@ -184,13 +184,15 @@ body {
   text-align: center;
   font-size: 70px;
   line-height: 60px;
-  font-family: 'Roboto Slab', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 800;
 }
 .Header__subtitle {
   text-align: center;
-  font-size: 30px;
-  font-weight: 300;
   color: #B388FF;
+  font-size: 30px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
 }
 
 
