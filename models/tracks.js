@@ -9,7 +9,7 @@ const exists = promisify(fs.exists)
 const md5 = require('md5')
 const { prop, groupBy } = require('ramda')
 
-const sliceAndMerge = require('../helpers/slice-and-merge.js')
+const bigWigMerge = require('../helpers/bigwig-merge.js')
 const valueAt = require('../helpers/value-at.js')
 const dbIHEC = require('../db-ihec.js')
 const config = require('../config.js')
@@ -129,7 +129,7 @@ function mergeFiles(paths, { chrom, start, end }) {
   const mergePath = path.join(config.paths.mergedTracks, mergeName)
 
   return exists(mergePath)
-    .then(yes => yes ? true : sliceAndMerge(paths, { output: mergePath, chrom, start, end, ...config.merge }))
+    .then(yes => yes ? true : bigWigMerge(paths, { output: mergePath, chrom, start, end, ...config.merge }))
     .then(() => ({ path: mergePath, url }))
 }
 
