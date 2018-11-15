@@ -29,7 +29,7 @@ function bigWigMerge(files, userOptions) {
       ) :
       '',
     ...files,
-    output
+    options.output
   ].join(' ')
 
   log(options)
