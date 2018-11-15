@@ -108,7 +108,7 @@ function merge(tracks, { chrom, start, end }) {
 
     return Promise.all(
       [
-        tracksByType.REF,
+        tracksByType.REF || [],
         tracksByType.HET || [],
         tracksByType.HOM || []
       ].map(tracks =>
