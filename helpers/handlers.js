@@ -17,5 +17,6 @@ exports.dataHandler = res => data => {
 }
 
 exports.textHandler = res => text => {
+  res.header('Content-Length', text.length)
   res.end(text)
 }
