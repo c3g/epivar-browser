@@ -25,7 +25,7 @@ function bigWigMerge(files, userOptions) {
     path.join(options.bin, `bigWigMergePlus`),
     options.chrom ?
       '-range=' + options.chrom + ((options.start && options.end) ?
-        `${options.start}-${options.end}` : ''
+        `:${options.start}-${options.end}` : ''
       ) :
       '',
     ...files,
