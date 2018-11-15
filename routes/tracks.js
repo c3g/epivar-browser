@@ -4,6 +4,11 @@ const router = express.Router()
 const { dataHandler, textHandler, errorHandler } = require('../helpers/handlers')
 const Tracks = require('../models/tracks')
 
+router.use((req, res, next) => {
+  res.header('Accept-Ranges', 'bytes')
+  return next()
+})
+
 router.use('/get', (req, res) => {
 
   Tracks.get(req.query.chrom, Number(req.query.position))
