@@ -3,7 +3,6 @@
  */
 
 const os = require('os')
-const fs = require('fs')
 const path = require('path')
 const child_process = require('child_process')
 const { promisify } = require('util')
@@ -22,7 +21,8 @@ function bigWigMerge(files, userOptions) {
   const options = { ...defaultOptions, ...userOptions }
 
   const command = [
-    path.join(options.bin, `bigWigMergePlus`),
+    path.join(options.bin, 'bigWigMergePlus'),
+    '-compress',
     options.chrom ?
       '-range=' + options.chrom + (
       (options.start !== undefined && options.end !== undefined) ?
@@ -36,7 +36,7 @@ function bigWigMerge(files, userOptions) {
   log(options)
   log(command)
 
-  exec(command)
+  return exec(command)
   .catch(err =>
     console.error('Error:', err))
 }
