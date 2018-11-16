@@ -47,6 +47,7 @@ function get(chrom, position) {
         JOIN institution on institution.id = data_release.provider_institution_id
        WHERE donor IN (${samples.map(dbIHEC.escape).join(', ')})
               AND track_type = 'bigWig'
+              AND assembly.name = 'hg19'
     `
   return Samples.queryMap(chrom, position).then(info =>
     dbIHEC.query(makeQuery(Object.keys(info.samples)))
