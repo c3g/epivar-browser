@@ -9,7 +9,7 @@ const exists = promisify(fs.exists)
 const md5 = require('md5')
 const { prop, groupBy } = require('ramda')
 
-const bigWigMerge = require('../helpers/bigwig-merge.js')
+const bigWigMerge = require('../helpers/bigwig-merge-safe.js')
 const valueAt = require('../helpers/value-at.js')
 const dbIHEC = require('../db-ihec.js')
 const config = require('../config.js')
