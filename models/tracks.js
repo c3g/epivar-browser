@@ -113,10 +113,22 @@ function merge(tracks, { chrom, start, end }) {
         tracksByType.HET || [],
         tracksByType.HOM || []
       ].map(tracks =>
-        mergeFiles(tracks.map(prop('path')), { chrom, start, end })
+        tracks.length > 0 ?
+          mergeFiles(tracks.map(prop('path')), { chrom, start, end }) :
+          undefined
       )
     )
-    .then(output => ({ assay, tracks, output }))
+    .then(output => {
+      return {
+        assay,
+        tracks,
+        output: {
+          REF: output[0],
+          HET: output[1],
+          HOM: output[2],
+        }
+      }
+    })
   }))
   .then(results => results.filter(Boolean))
 }

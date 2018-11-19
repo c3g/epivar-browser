@@ -52,7 +52,11 @@ function generateTracks(mergedTracks) {
       color ${getColor(parentName)}
     `)
 
-    merged.output.forEach((output, i) => {
+    Object.keys(merged.output).forEach((typeShort, i) => {
+      const output = merged.output[typeShort]
+
+      if (output === undefined)
+        return
 
       const type = i === 0 ? 'reference' : i === 1 ? 'variant_het' : 'variant_hom'
       const trackName = `${parentName}__${type}`
