@@ -28,7 +28,7 @@ const defaultOptions = {
 // Command generation
 
 const toWigCommand = (file, options) => {
-  const output = path.join(os.tmpdir(), path.basename(changeExtname(file, '.wig')))
+  const output = path.join(os.tmpdir(), options.id + '_' + path.basename(changeExtname(file, '.wig')))
   return {
     output: output,
     command: [
@@ -43,7 +43,7 @@ const toWigCommand = (file, options) => {
 }
 
 const toBigWigCommand = (file, options) => {
-  const output = path.join(os.tmpdir(), path.basename(changeExtname(file, '.out.bw')))
+  const output = path.join(os.tmpdir(), options.id + '_' + path.basename(changeExtname(file, '.out.bw')))
   return {
     output: output,
     command: [
