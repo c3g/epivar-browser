@@ -94,13 +94,15 @@ function bigWigMerge(files, userOptions) {
   options.sizeFile = path.join(os.tmpdir(), `chrom-${options.id}.sizes`)
   options.bedFile  = path.join(os.tmpdir(), `out-${options.id}.bedGraph`)
 
+  console.log(files, options)
+
   log(options, '\n')
 
   // Files that will need to be removed
   const tempFiles = []
 
   log('bigWigToWig -------------------------------------------------------')
-  Promise.all( // bigWigToWig
+  return Promise.all( // bigWigToWig
     files.map(file => {
 
       const to = toWigCommand(file, options)
