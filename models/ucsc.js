@@ -72,7 +72,6 @@ function generateTracks(mergedTracks) {
         visibility ${trackDensity}
         bigDataUrl ${output.url}
         maxHeightPixels 25:25:8
-        autoScale on
       `)
     })
 
