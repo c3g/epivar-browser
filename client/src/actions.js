@@ -7,6 +7,7 @@ import * as k from './constants/ActionTypes.js'
 export const setSearch   = createAction(k.SET_SEARCH)
 export const setChrom    = createAction(k.SET_CHROM)
 export const setPosition = createAction(k.SET_POSITION)
+export const setRange    = createAction(k.SET_RANGE)
 export const handleError = createAction(k.HANDLE_ERROR)
 
 export const samples   = createFetchActions(k.SAMPLES)
@@ -52,8 +53,8 @@ export function mergeTracks() {
       return
 
     const position = Number(ui.position)
-    const start = Math.max(position - 100000, 0)
-    const end   = position + 100000
+    const start = Math.max(position - (ui.range / 2), 0)
+    const end   = position + (ui.range / 2)
 
     const session = {
       samples: samples.list.map(s => s.name),

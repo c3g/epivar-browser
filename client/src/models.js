@@ -7,6 +7,7 @@ export function createDefaultUI() {
   return {
     chrom: '',
     position: '',
+    range: 200000,
   }
 }
 

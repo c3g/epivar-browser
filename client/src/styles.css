@@ -105,6 +105,19 @@ body {
   border-color: #adadad;
 }
 
+.input-group {
+  width: unset;
+}
+.input-group-prepend > .btn {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.input-group-prepend + input {
+  border-left: none;
+}
+
+
+
 .dropdown--inline {
   display: inline-block !important;
 }
@@ -213,6 +226,10 @@ body {
 }
 .Controls__chromosome {
   width: 150px;
+}
+.Controls__size {
+  width: 15ch !important;
+  flex: 0 0 auto !important;
 }
 
 

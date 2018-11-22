@@ -1,10 +1,18 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Input, Button, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import {
+  Input,
+  InputGroup,
+  Button,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap'
 
 import Icon from './Icon.js'
-import { setChrom, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError } from '../actions.js'
+import { setChrom, setRange, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError } from '../actions.js'
 
 const mapStateToProps = state => ({
     isLoading: state.samples.isLoading
@@ -13,9 +21,10 @@ const mapStateToProps = state => ({
   , chrom: state.ui.chrom
   , positions: state.positions
   , position: state.ui.position
+  , range: state.ui.range
 })
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ setChrom, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError }, dispatch)
+  bindActionCreators({ setChrom, setRange, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError }, dispatch)
 
 class Controls extends React.Component {
 
@@ -178,12 +187,22 @@ class Controls extends React.Component {
         >
           <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
         </Button>
-        <Button className='Controls__merge'
-          onClick={this.onClickMerge}
-          disabled={samples.length === 0}
-        >
-          <Icon name='compress' /> Merge
-        </Button>
+        <InputGroup>
+          <div className='input-group-prepend'>
+            <Button className='Controls__merge'
+              onClick={this.onClickMerge}
+            >
+              <Icon name='compress' /> Merge
+            </Button>
+          </div>
+          <Input
+            type='number'
+            className='Controls__size'
+            ref='size'
+            value={this.props.range}
+            onChange={ev => this.props.setRange(+ev.target.value)}
+          />
+        </InputGroup>
       </div>
     )
   }

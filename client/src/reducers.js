@@ -14,6 +14,9 @@ function uiReducer(state = createDefaultUI(), action, data) {
     case k.SET_POSITION: {
       return { ...state, position: action.payload }
     }
+    case k.SET_RANGE: {
+      return { ...state, range: action.payload }
+    }
     default:
       return state;
   }
