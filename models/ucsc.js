@@ -29,28 +29,12 @@ function generateGenome(session, assembly) {
 function generateTracks(mergedTracks) {
 
   const trackBlocks = []
-  const compositeTrackBlocks = []
 
   mergedTracks.forEach(merged => {
 
-    const parentName = merged.assay
     const trackType = 'bigWig'
     const trackDensity = 'pack'
     const visibility = 'on'
-    const shortLabel = merged.assay
-    const longLabel = merged.assay
-
-    compositeTrackBlocks.push(unindent`
-      track ${parentName}
-      compositeTrack on
-      shortLabel ${parentName}
-      longLabel ${parentName}
-      dragAndDrop subTracks
-      priority 1
-      type bed 5
-      visibility pack
-      color ${getColor(parentName)}
-    `)
 
     Object.keys(merged.output).forEach((typeShort, i) => {
       const output = merged.output[typeShort]
@@ -59,29 +43,46 @@ function generateTracks(mergedTracks) {
         return
 
       const type = i === 0 ? 'reference' : i === 1 ? 'variant_het' : 'variant_hom'
-      const trackName = `${parentName}__${type}`
+      const trackName = `${merged.assay}__${type}`
       const shortLabel = trackName
       const longLabel = trackName
 
       trackBlocks.push(unindent`
         track ${trackName}
+        compositeTrack on
+        dragAndDrop subTracks
+        priority 1
+        type bed 5
+        visibility pack
+        color ${getColor(merged.assay)}
+      `)
+
+      trackBlocks.push(indent(4, unindent`
+        track ${trackName}__data
         type ${trackType}
-        parent ${parentName} ${visibility}
+        parent ${trackName} ${visibility}
         shortLabel ${shortLabel}
         longLabel ${longLabel}
         visibility ${trackDensity}
         bigDataUrl ${output.url}
         maxHeightPixels 25:25:8
-      `)
+      `))
+
+      trackBlocks.push(indent(4, unindent`
+        track ${trackName}__deviation
+        type ${trackType}
+        parent ${trackName} ${visibility}
+        shortLabel ${shortLabel}__deviation
+        longLabel ${longLabel}__deviation
+        visibility ${trackDensity}
+        bigDataUrl ${output.url.replace(/\.bw$/, '-dev.bw')}
+        maxHeightPixels 25:25:8
+      `))
     })
 
   })
 
-  return (
-      compositeTrackBlocks.join('\n\n')
-    + '\n\n'
-    + trackBlocks.map(block => indent(4, block)).join('\n    \n')
-  )
+  return trackBlocks.join('\n\n')
 }
 
 // Thanks to Google Charts
