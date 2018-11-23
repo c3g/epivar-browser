@@ -51,6 +51,10 @@ function generateTracks(mergedTracks) {
         track ${trackName}
         compositeTrack on
         dragAndDrop subTracks
+        shortLabel ${shortLabel}
+        longLabel ${longLabel}
+        aggregate transparentOverlay
+        showSubtrackColorOnUi on
         priority 1
         type bed 5
         visibility pack
