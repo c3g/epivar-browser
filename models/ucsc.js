@@ -66,8 +66,8 @@ function generateTracks(mergedTracks) {
         track ${trackName}__data
         type ${trackType}
         parent ${trackName} ${visibility}
-        shortLabel ${shortLabel}
-        longLabel ${longLabel}
+        shortLabel ${shortLabel}__data
+        longLabel ${longLabel}__data
         bigDataUrl ${output.url}
         maxHeightPixels 25:25:8
         color ${getColor(merged.assay)}
