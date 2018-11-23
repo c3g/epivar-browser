@@ -58,7 +58,6 @@ function generateTracks(mergedTracks) {
         priority 1
         type bed 5
         visibility pack
-        color ${getColor(merged.assay)}
       `)
 
       trackBlocks.push(indent(4, unindent`
@@ -70,6 +69,7 @@ function generateTracks(mergedTracks) {
         visibility ${trackDensity}
         bigDataUrl ${output.url}
         maxHeightPixels 25:25:8
+        color ${getColor(merged.assay)}
       `))
 
       trackBlocks.push(indent(4, unindent`
@@ -81,6 +81,7 @@ function generateTracks(mergedTracks) {
         visibility ${trackDensity}
         bigDataUrl ${output.url.replace(/\.bw$/, '-dev.bw')}
         maxHeightPixels 25:25:8
+        color ${getColor(merged.assay)}
       `))
     })
 
