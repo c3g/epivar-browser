@@ -20,6 +20,9 @@ const defaultOptions = {
 function bigWigMerge(files, userOptions) {
   const options = { ...defaultOptions, ...userOptions }
 
+  if (options.deviation && files.length <= 1)
+    throw new Error(`Can't generate standard-deviation for a single track`)
+
   const command = [
     path.join(options.bin, 'bigWigMergePlus'),
     '-compress',

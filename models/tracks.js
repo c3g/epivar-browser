@@ -147,14 +147,14 @@ function mergeFiles(paths, { chrom, start, end }) {
       true :
       bigWigMerge(paths, {
         output: mergePath,
-        deviation: deviationPath,
+        deviation: paths.length > 1 ? deviationPath : undefined,
         chrom,
         start,
         end,
         ...config.merge
       })
     )
-    .then(() => ({ path: mergePath, url }))
+    .then(() => ({ path: mergePath, url, hasDeviation: paths.length > 1 }))
 }
 
 function getLocalPath(track) {

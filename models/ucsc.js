@@ -55,9 +55,11 @@ function generateTracks(mergedTracks) {
         longLabel ${longLabel}
         aggregate transparentOverlay
         showSubtrackColorOnUi on
+        windowingFunction maximum
+        visibility full
         priority 1
         type bed 5
-        visibility pack
+        configurable on
       `)
 
       trackBlocks.push(indent(4, unindent`
@@ -66,23 +68,22 @@ function generateTracks(mergedTracks) {
         parent ${trackName} ${visibility}
         shortLabel ${shortLabel}
         longLabel ${longLabel}
-        visibility ${trackDensity}
         bigDataUrl ${output.url}
         maxHeightPixels 25:25:8
         color ${getColor(merged.assay)}
       `))
 
-      trackBlocks.push(indent(4, unindent`
-        track ${trackName}__deviation
-        type ${trackType}
-        parent ${trackName} ${visibility}
-        shortLabel ${shortLabel}__deviation
-        longLabel ${longLabel}__deviation
-        visibility ${trackDensity}
-        bigDataUrl ${output.url.replace(/\.bw$/, '-dev.bw')}
-        maxHeightPixels 25:25:8
-        color ${getColor(merged.assay)}
-      `))
+      if (output.hasDeviation)
+        trackBlocks.push(indent(4, unindent`
+          track ${trackName}__deviation
+          type ${trackType}
+          parent ${trackName} ${visibility}
+          shortLabel ${shortLabel}__deviation
+          longLabel ${longLabel}__deviation
+          bigDataUrl ${output.url.replace(/\.bw$/, '-dev.bw')}
+          maxHeightPixels 25:25:8
+          color ${getColor(merged.assay)}
+        `))
     })
 
   })
