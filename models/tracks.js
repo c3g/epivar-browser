@@ -140,9 +140,20 @@ function mergeFiles(paths, { chrom, start, end }) {
   const mergeName = mergeHash + '.bw'
   const url = `/merged/${mergeName}`
   const mergePath = path.join(config.paths.mergedTracks, mergeName)
+  const deviationPath = mergePath.replace(/\.bw$/, '-dev.bw')
 
   return exists(mergePath)
-    .then(yes => yes ? true : bigWigMerge(paths, { output: mergePath, chrom, start, end, ...config.merge }))
+    .then(yes => yes ?
+      true :
+      bigWigMerge(paths, {
+        output: mergePath,
+        deviation: deviationPath,
+        chrom,
+        start,
+        end,
+        ...config.merge
+      })
+    )
     .then(() => ({ path: mergePath, url }))
 }
 
