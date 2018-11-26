@@ -60,6 +60,7 @@ function generateTracks(mergedTracks) {
         priority 1.2
         configurable on
         dragAndDrop subTracks
+        autoScale on
       `)
 
       trackBlocks.push(indent(4, unindent`
