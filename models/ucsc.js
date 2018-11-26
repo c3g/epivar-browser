@@ -49,23 +49,23 @@ function generateTracks(mergedTracks) {
 
       trackBlocks.push(unindent`
         track ${trackName}
-        compositeTrack on
-        dragAndDrop subTracks
+        container multiWig
         shortLabel ${shortLabel}
         longLabel ${longLabel}
+        type bigWig
+        visibility full
         aggregate transparentOverlay
         showSubtrackColorOnUi on
         windowingFunction maximum
-        visibility full
-        priority 1
-        type bed 5
+        priority 1.2
         configurable on
+        dragAndDrop subTracks
       `)
 
       trackBlocks.push(indent(4, unindent`
         track ${trackName}__data
         type ${trackType}
-        parent ${trackName} ${visibility}
+        parent ${trackName}
         shortLabel ${shortLabel}__data
         longLabel ${longLabel}__data
         bigDataUrl ${output.url}
@@ -77,7 +77,7 @@ function generateTracks(mergedTracks) {
         trackBlocks.push(indent(4, unindent`
           track ${trackName}__deviation
           type ${trackType}
-          parent ${trackName} ${visibility}
+          parent ${trackName}
           shortLabel ${shortLabel}__deviation
           longLabel ${longLabel}__deviation
           bigDataUrl ${output.url.replace(/\.bw$/, '-dev.bw')}
