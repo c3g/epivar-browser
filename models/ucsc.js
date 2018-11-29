@@ -83,7 +83,7 @@ function generateTracks(mergedTracks) {
           longLabel ${longLabel}__deviation
           bigDataUrl ${output.url.replace(/\.bw$/, '-dev.bw')}
           maxHeightPixels 25:25:8
-          color ${getColor(merged.assay)}
+          color 0,0,0
         `))
     })
 
