@@ -1,12 +1,13 @@
 import React from 'react'
 
 
-export default function Icon(props) {
-  const className = [
+export default function Icon({ name, spin, className, ...rest }) {
+  const iconClassName = [
     'fa',
-    `fa-${props.name}`,
-    ('spin' in props) && (props.spin !== false) ? 'fa-spin' : ''
+    `fa-${name}`,
+    spin ? 'fa-spin' : '',
+    className,
   ].join(' ')
 
-  return <i className={className} />
+  return <i className={iconClassName} {...rest} />
 }

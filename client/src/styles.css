@@ -231,6 +231,11 @@ body {
   width: 15ch !important;
   flex: 0 0 auto !important;
 }
+.Controls__help {
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 1.5rem;
+  line-height: 35px;
+}
 
 
 .Params th,

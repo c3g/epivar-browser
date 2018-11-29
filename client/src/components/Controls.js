@@ -8,7 +8,8 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  UncontrolledTooltip,
 } from 'reactstrap'
 
 import Icon from './Icon.js'
@@ -203,6 +204,11 @@ class Controls extends React.Component {
             onChange={ev => this.props.setRange(+ev.target.value)}
           />
         </InputGroup>
+        <Icon id='help-tooltip-icon' name='question-circle' className='Controls__help' />
+        <UncontrolledTooltip placement='right' target='help-tooltip-icon'>
+          The Merge button merge tracks for each experiment/category together, into a single track.
+          The input field allows you to choose the window size that will be merged, in bases.
+        </UncontrolledTooltip>
       </div>
     )
   }
