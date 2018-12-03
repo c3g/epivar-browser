@@ -28,7 +28,7 @@ function bigWigMerge(files, userOptions) {
     '-compress',
     '-range=0-1000',
     options.deviation !== undefined ?
-      `-deviation=` + options.deviation :
+      `-deviation=${options.deviation} -deviationDefault=0` :
       '',
     (options.chrom !== undefined && options.start !== undefined && options.end !== undefined) ?
       `-position=${options.chrom}:${options.start}-${options.end}` :
