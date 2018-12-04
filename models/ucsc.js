@@ -144,7 +144,15 @@ const COLORS = [
  * ] */
 
 function getColor(string) {
-  return COLORS[hash(string, COLORS.length)]
+  return COLORS[hash(string, COLORS.length)].map(colorToRGB)
+}
+
+function colorToRGB(c) {
+  const color = Color(c)
+  const r = Math.floor(color.getRed() * 255)
+  const g = Math.floor(color.getGreen() * 255)
+  const b = Math.floor(color.getBlue() * 255)
+  return [r, g, b].join(',')
 }
 
 function hash(string, mod) {
