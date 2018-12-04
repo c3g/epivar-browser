@@ -2,6 +2,7 @@
  * ucsc.js
  */
 
+const Color = require('color-js')
 
 module.exports = {
   generateHub,
@@ -47,6 +48,8 @@ function generateTracks(mergedTracks) {
       const shortLabel = trackName
       const longLabel = trackName
 
+      const colors = getColor(merged.assay)
+
       trackBlocks.push(unindent`
         track ${trackName}
         container multiWig
@@ -71,7 +74,7 @@ function generateTracks(mergedTracks) {
         longLabel ${longLabel}__data
         bigDataUrl ${output.url}
         maxHeightPixels 25:25:8
-        color ${getColor(merged.assay)}
+        color ${colors[0]}
       `))
 
       if (output.hasDeviation)
@@ -83,7 +86,7 @@ function generateTracks(mergedTracks) {
           longLabel ${longLabel}__deviation
           bigDataUrl ${output.url.replace(/\.bw$/, '-dev.bw')}
           maxHeightPixels 25:25:8
-          color 0,0,0
+          color ${colors[1]}
         `))
     })
 
@@ -94,27 +97,51 @@ function generateTracks(mergedTracks) {
 
 // Thanks to Google Charts
 const COLORS = [
-  '51,102,204',
-  '220,57,18',
-  '255,153,0',
-  '16,150,24',
-  '153,0,153',
-  '59,62,172',
-  '0,153,198',
-  '221,68,119',
-  '102,170,0',
-  '184,46,46',
-  '49,99,149',
-  '153,68,153',
-  '34,170,153',
-  '170,170,17',
-  '102,51,204',
-  '230,115,0',
-  '139,7,7',
-  '50,146,98',
-  '85,116,166',
-  '59,62,172'
+  [ '#5C85D6', '#2952A3' ],
+  [ '#EE5430', '#B02E0E' ],
+  [ '#FFAD33', '#CC7A00' ],
+  [ '#13B41D', '#0D7813' ],
+  [ '#B800B8', '#7A007A' ],
+  [ '#5255C4', '#2F328A' ],
+  [ '#00B8EE', '#007A9E' ],
+  [ '#E6759B', '#C42459' ],
+  [ '#7ACC00', '#528800' ],
+  [ '#D04444', '#932525' ],
+  [ '#3B77B3', '#274F77' ],
+  [ '#B456B4', '#7A367A' ],
+  [ '#29CCB8', '#1B887A' ],
+  [ '#CCCC14', '#88880E' ],
+  [ '#855CD6', '#5229A3' ],
+  [ '#FF8A15', '#B85C00' ],
+  [ '#A70808', '#6F0606' ],
+  [ '#3CAF76', '#28754E' ],
+  [ '#758FB8', '#445D85' ],
+  [ '#5255C4', '#2F328A' ]
 ]
+
+/* Original colors:
+ * [
+ *   '#3366CC',
+ *   '#DC3912',
+ *   '#FF9900',
+ *   '#109618',
+ *   '#990099',
+ *   '#3B3EAC',
+ *   '#0099C6',
+ *   '#DD4477',
+ *   '#66AA00',
+ *   '#B82E2E',
+ *   '#316395',
+ *   '#994499',
+ *   '#22AA99',
+ *   '#AAAA11',
+ *   '#6633CC',
+ *   '#E67300',
+ *   '#8B0707',
+ *   '#329262',
+ *   '#5574A6',
+ *   '#3B3EAC'
+ * ] */
 
 function getColor(string) {
   return COLORS[hash(string, COLORS.length)]
