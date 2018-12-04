@@ -13,7 +13,7 @@ import {
 } from 'reactstrap'
 
 import Icon from './Icon.js'
-import { setChrom, setRange, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError } from '../actions.js'
+import { setChrom, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError } from '../actions.js'
 
 const mapStateToProps = state => ({
     isLoading: state.samples.isLoading
@@ -25,7 +25,7 @@ const mapStateToProps = state => ({
   , range: state.ui.range
 })
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ setChrom, setRange, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError }, dispatch)
+  bindActionCreators({ setChrom, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError }, dispatch)
 
 class Controls extends React.Component {
 
@@ -188,27 +188,6 @@ class Controls extends React.Component {
         >
           <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
         </Button>
-        <InputGroup>
-          <div className='input-group-prepend'>
-            <Button className='Controls__merge'
-              onClick={this.onClickMerge}
-            >
-              <Icon name='compress' /> Merge
-            </Button>
-          </div>
-          <Input
-            type='number'
-            className='Controls__size'
-            ref='size'
-            value={this.props.range}
-            onChange={ev => this.props.setRange(+ev.target.value)}
-          />
-        </InputGroup>
-        <Icon id='help-tooltip-icon' name='question-circle' className='Controls__help' />
-        <UncontrolledTooltip placement='right' target='help-tooltip-icon'>
-          The Merge button merge tracks for each experiment/category together, into a single track.
-          The input field allows you to choose the window size that will be merged, in bases.
-        </UncontrolledTooltip>
       </div>
     )
   }

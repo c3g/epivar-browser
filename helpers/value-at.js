@@ -19,6 +19,12 @@ const defaultOptions = {
 
 // Command generation
 
+const cache = new Map()
+const cacheInterval = setInterval(() => {
+  cache.clear()
+}, 24 * 60 * 60 * 1000)
+cacheInterval.unref()
+
 const valueCommand = (file, options) => [
     path.join(options.bin, `bigWigSummary`),
     file,
@@ -29,16 +35,22 @@ const valueCommand = (file, options) => [
   ].join(' ')
 
 function valueAt(file, options) {
+  const key = [file, options.chrom, options.position].join('#')
 
-  if (options.position !== undefined) {
-    options.start = options.position
-    options.end   = options.position + 1
-  }
+  if (cache.has(key))
+    return Promise.resolve(cache.get(key))
+
+  options.start = options.position
+  options.end   = options.position + 1
 
   const command = valueCommand(file, options)
 
   return exec(command)
-  .then(({ stdout }) => parseFloat(stdout.trim()))
+  .then(({ stdout }) => {
+    const value = parseFloat(stdout.trim())
+    cache.set(key, value)
+    return value
+  })
   .catch(({ err, stderr, stdout }) => {
     if (stderr.includes('no data in region'))
       return Promise.resolve(undefined)

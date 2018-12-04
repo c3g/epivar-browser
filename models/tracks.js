@@ -63,7 +63,6 @@ function get(chrom, position) {
 
 function values(chrom, position) {
   return get(chrom, position)
-  .then(tracks => tracks.filter(t => fs.existsSync(t.path))) // FIXME sync operation, remove when DB clean
   .then(tracks =>
     Promise.all(tracks.map(track =>
       valueAt(track.path, { chrom, position, ...config.merge })

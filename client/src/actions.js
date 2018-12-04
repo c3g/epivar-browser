@@ -45,11 +45,11 @@ export function doSearch() {
   }
 }
 
-export function mergeTracks() {
+export function mergeTracks(samples) {
   return (dispatch, getState) => {
-    const { ui, samples } = getState()
+    const { ui } = getState()
 
-    if (samples.isLoading || samples.list.length === 0)
+    if (samples.length === 0)
       return
 
     const position = Number(ui.position)
@@ -57,7 +57,7 @@ export function mergeTracks() {
     const end   = position + (ui.range / 2)
 
     const session = {
-      samples: samples.list.map(s => s.name),
+      samples,
       chrom: ui.chrom,
       position,
       start,

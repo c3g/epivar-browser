@@ -238,6 +238,14 @@ body {
 }
 
 
+.Charts__controls {
+  padding: 1em 1em;
+}
+.Charts__controls > *:not(:last-child) {
+  margin-right: 1em;
+}
+
+
 .Params th,
 .Params td {
   text-align: center;
