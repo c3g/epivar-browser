@@ -10,7 +10,7 @@ module.exports = {
   get,
 }
 
-function create({ samples, chrom, position, start, end }) {
+function create({ samples, assay, chrom, position, start, end }) {
 
   samples.sort(Intl.Collator().compare)
 
@@ -18,10 +18,11 @@ function create({ samples, chrom, position, start, end }) {
   const hash = md5(text)
 
   return get(hash).then(row => row ? hash :
-      db.run(`INSERT INTO sessions VALUES ($hash, $samples, $chrom, $position, $start, $end)`, {
+      db.run(`INSERT INTO sessions VALUES ($hash, $samples, $assay, $chrom, $position, $start, $end)`, {
     $hash: hash,
     $samples: JSON.stringify(samples),
     $chrom: chrom,
+    $assay: assay,
     $position: position,
     $start: start,
     $end: end,

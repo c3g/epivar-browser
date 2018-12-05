@@ -45,7 +45,7 @@ export function doSearch() {
   }
 }
 
-export function mergeTracks(samples) {
+export function mergeTracks(assay, samples) {
   return (dispatch, getState) => {
     const { ui } = getState()
 
@@ -58,6 +58,7 @@ export function mergeTracks(samples) {
 
     const session = {
       samples,
+      assay,
       chrom: ui.chrom,
       position,
       start,

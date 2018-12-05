@@ -23,7 +23,7 @@ module.exports = {
   merge,
 }
 
-function get(chrom, position) {
+function get(chrom, position, assay = undefined) {
 
   const makeQuery = samples => `
       SELECT track.id
@@ -48,7 +48,11 @@ function get(chrom, position) {
        WHERE donor IN (${samples.map(dbIHEC.escape).join(', ')})
               AND track_type = 'bigWig'
               AND assembly.name = 'hg19'
+      ${ typeof assay === 'string' ?
+             `AND assay.name = ${dbIHEC.escape(assay)}` : ''
+      }
     `
+
   return Samples.queryMap(chrom, position).then(info =>
     dbIHEC.query(makeQuery(Object.keys(info.samples)))
     .then(tracks => {
