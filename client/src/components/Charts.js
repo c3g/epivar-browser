@@ -51,23 +51,26 @@ class Charts extends Component {
     return (
       <div>
 
-        <div className='Charts__controls d-flex'>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">Merge window size</InputGroupAddon>
-            <Input
-              type='number'
-              className='Controls__size'
-              ref='size'
-              value={this.props.range}
-              onChange={ev => this.props.setRange(+ev.target.value)}
-            />
-          </InputGroup>
-          <Icon id='help-tooltip-icon' name='question-circle' className='Controls__help' />
-          <UncontrolledTooltip placement='right' target='help-tooltip-icon'>
-            The Merge button merge tracks for each experiment/category together, into a single track.
-            The input field allows you to choose the window size that will be merged, in bases.
-          </UncontrolledTooltip>
-        </div>
+        {
+          data.length > 0 &&
+            <div className='Charts__controls d-flex'>
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">Merge window size</InputGroupAddon>
+                <Input
+                  type='number'
+                  className='Controls__size'
+                  ref='size'
+                  value={this.props.range}
+                  onChange={ev => this.props.setRange(+ev.target.value)}
+                />
+              </InputGroup>
+              <Icon id='help-tooltip-icon' name='question-circle' className='Controls__help' />
+              <UncontrolledTooltip placement='right' target='help-tooltip-icon'>
+                The Merge buttons below merge tracks for each experiment/category together, into a single track.
+                This input field allows you to choose the window size that will be merged, in bases.
+              </UncontrolledTooltip>
+            </div>
+        }
 
         <AutoSizer disableHeight>
           {
@@ -81,9 +84,11 @@ class Charts extends Component {
                     padding={40}
                     domain={getDomain(data)}
                   />
-                  <Button onClick={() => this.onClickMerge(assay, data)}>
-                    Merge
-                  </Button>
+                  <div className='d-flex justify-content-end' style={{ width }}>
+                    <Button onClick={() => this.onClickMerge(assay, data)}>
+                      Merge
+                    </Button>
+                  </div>
                 </div>
               )
           }
