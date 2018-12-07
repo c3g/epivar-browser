@@ -26,7 +26,7 @@ router.use('/track-db/:session', (req, res) => {
 
   Sessions.get(req.params.session)
   .then(session =>
-    Tracks.get(session.chrom, session.position)
+    Tracks.get(session.chrom, session.position, session.assay)
       .then(tracks => Tracks.merge(tracks, session))
   )
   .then(UCSC.generateTracks)

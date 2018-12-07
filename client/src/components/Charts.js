@@ -31,7 +31,7 @@ class Charts extends Component {
 
   onClickMerge(assay, data) {
     const sampleNames = Object.values(data).reduce((acc, cur) => acc.concat(cur.data.map(n => n.donor)), [])
-    this.props.mergeTracks(sampleNames)
+    this.props.mergeTracks(assay, sampleNames)
   }
 
   render() {
