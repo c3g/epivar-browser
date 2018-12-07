@@ -17,6 +17,7 @@ const defaultOptions = {
   bin: '',
 }
 
+
 // Command generation
 
 const cache = new Map()
@@ -26,7 +27,7 @@ const cacheInterval = setInterval(() => {
 cacheInterval.unref()
 
 const valueCommand = (file, options) => [
-    path.join(options.bin, `bigWigSummary`),
+    path.join(options.bin, 'bigWigSummary'),
     file,
     options.chrom,
     options.start,
@@ -34,14 +35,30 @@ const valueCommand = (file, options) => [
     '1'
   ].join(' ')
 
-function valueAt(file, options) {
+/**
+ * @param {string} file
+ * @param {Object} option
+ * @param {string} option.chrom
+ * @param {number} option.position
+ * @param {number} [option.windowSize]
+ * @param {string} [option.bin]
+ */
+function valueAt(file, userOptions) {
+  const options = { ...defaultOptions, ...userOptions }
+
   const key = [file, options.chrom, options.position].join('#')
 
   if (cache.has(key))
     return Promise.resolve(cache.get(key))
 
-  options.start = options.position
-  options.end   = options.position + 1
+  if (options.windowSize !== undefined) {
+    const halfWindowSize = Math.round(options.windowSize / 2)
+    options.start = options.position - halfWindowSize
+    options.end   = options.position + halfWindowSize
+  } else {
+    options.start = options.position
+    options.end   = options.position + 1
+  }
 
   const command = valueCommand(file, options)
 

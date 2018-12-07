@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import {
   Input,
   InputGroup,
+  InputGroupAddon,
   Button,
   UncontrolledDropdown,
   DropdownToggle,
@@ -13,19 +14,29 @@ import {
 } from 'reactstrap'
 
 import Icon from './Icon.js'
-import { setChrom, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError } from '../actions.js'
+import {
+  setChrom,
+  setValuesWindowSize,
+  doSearch,
+  changePosition,
+  fetchSamples,
+  fetchPositions,
+  mergeTracks,
+  handleError,
+} from '../actions.js'
 
 const mapStateToProps = state => ({
     isLoading: state.samples.isLoading
   , samples: state.samples.list
   , chroms: state.chroms
   , chrom: state.ui.chrom
+  , valuesWindowSize: state.ui.valuesWindowSize
   , positions: state.positions
   , position: state.ui.position
   , range: state.ui.range
 })
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ setChrom, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError }, dispatch)
+  bindActionCreators({ setChrom, setValuesWindowSize, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError }, dispatch)
 
 class Controls extends React.Component {
 
@@ -182,12 +193,28 @@ class Controls extends React.Component {
       <div className='Controls d-flex justify-content-center'>
         { this.renderChroms() }
         { this.renderPosition() }
-        <Button className='Controls__search'
-          onClick={this.onClickSearch}
-          disabled={isLoading}
-        >
-          <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
-        </Button>
+
+        <InputGroup>
+          <div className='input-group-prepend'>
+            <Button className='Controls__search'
+              onClick={this.onClickSearch}
+              disabled={isLoading}
+            >
+              <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
+            </Button>
+          </div>
+          <Input
+            type='number'
+            className='Controls__size'
+            ref='size'
+            value={this.props.valuesWindowSize}
+            onChange={ev => this.props.setValuesWindowSize(+ev.target.value)}
+          />
+        </InputGroup>
+        <Icon id='search-help-tooltip-icon' name='question-circle' className='Controls__help' />
+        <UncontrolledTooltip placement='right' target='search-help-tooltip-icon'>
+          This input allows you to control the window size for which to examine track values.
+        </UncontrolledTooltip>
       </div>
     )
   }

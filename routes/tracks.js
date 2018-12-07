@@ -18,7 +18,7 @@ router.use('/get', (req, res) => {
 
 router.use('/values', (req, res) => {
 
-  Tracks.values(req.query.chrom, Number(req.query.position))
+  Tracks.values(req.query.chrom, Number(req.query.position), Number(req.query.windowSize))
   .then(Tracks.group)
   .then(Tracks.clean)
   .then(dataHandler(res))

@@ -4,11 +4,12 @@ import queryString from './helpers/queryString.js'
 import * as requests from './requests'
 import * as k from './constants/ActionTypes.js'
 
-export const setSearch   = createAction(k.SET_SEARCH)
-export const setChrom    = createAction(k.SET_CHROM)
-export const setPosition = createAction(k.SET_POSITION)
-export const setRange    = createAction(k.SET_RANGE)
-export const handleError = createAction(k.HANDLE_ERROR)
+export const setSearch           = createAction(k.SET_SEARCH)
+export const setChrom            = createAction(k.SET_CHROM)
+export const setPosition         = createAction(k.SET_POSITION)
+export const setRange            = createAction(k.SET_RANGE)
+export const setValuesWindowSize = createAction(k.SET_VALUES_WINDOW_SIZE)
+export const handleError         = createAction(k.HANDLE_ERROR)
 
 export const samples   = createFetchActions(k.SAMPLES)
 export const chroms    = createFetchActions(k.CHROMS)
@@ -34,13 +35,13 @@ export function changePosition(value) {
 
 export function doSearch() {
   return (dispatch, getState) => {
-    const { ui: { chrom, position } } = getState()
+    const { ui: { chrom, position, valuesWindowSize } } = getState()
 
     if (chrom && position) {
       dispatch(fetchSamples({ chrom, position }))
       // We create a 1s delay here to allow the first request to finish sooner
       dispatch(values.request())
-      setTimeout(() => dispatch(fetchValues({ chrom, position })), 1000)
+      setTimeout(() => dispatch(fetchValues({ chrom, position, windowSize: valuesWindowSize })), 1000)
     }
   }
 }

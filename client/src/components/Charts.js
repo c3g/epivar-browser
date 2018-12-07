@@ -55,11 +55,10 @@ class Charts extends Component {
           data.length > 0 &&
             <div className='Charts__controls d-flex'>
               <InputGroup>
-                <InputGroupAddon addonType="prepend">Merge window size</InputGroupAddon>
+                <InputGroupAddon addonType='prepend'>Merge window size</InputGroupAddon>
                 <Input
                   type='number'
-                  className='Controls__size'
-                  ref='size'
+                  className='Charts__range'
                   value={this.props.range}
                   onChange={ev => this.props.setRange(+ev.target.value)}
                 />

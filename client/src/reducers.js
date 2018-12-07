@@ -17,6 +17,9 @@ function uiReducer(state = createDefaultUI(), action, data) {
     case k.SET_RANGE: {
       return { ...state, range: action.payload }
     }
+    case k.SET_VALUES_WINDOW_SIZE: {
+      return { ...state, valuesWindowSize: action.payload }
+    }
     default:
       return state;
   }
