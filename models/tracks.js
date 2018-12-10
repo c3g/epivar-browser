@@ -65,11 +65,11 @@ function get(chrom, position, assay = undefined) {
   )
 }
 
-function values(chrom, position, windowSize) {
+function values(chrom, position, start, end) {
   return get(chrom, position)
   .then(tracks =>
     Promise.all(tracks.map(track =>
-      valueAt(track.path, { chrom, position, windowSize, ...config.merge })
+      valueAt(track.path, { chrom, start, end, ...config.merge })
       .then(data => (data === undefined ? undefined : {
         id: track.id,
         donor: track.donor,

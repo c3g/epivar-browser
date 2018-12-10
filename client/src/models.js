@@ -8,7 +8,8 @@ export function createDefaultUI() {
     chrom: '',
     position: '',
     range: 200000,
-    valuesWindowSize: 100,
+    windowStart: 0,
+    windowEnd: 100,
   }
 }
 

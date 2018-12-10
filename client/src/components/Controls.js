@@ -16,7 +16,8 @@ import {
 import Icon from './Icon.js'
 import {
   setChrom,
-  setValuesWindowSize,
+  setWindowStart,
+  setWindowEnd,
   doSearch,
   changePosition,
   fetchSamples,
@@ -30,13 +31,24 @@ const mapStateToProps = state => ({
   , samples: state.samples.list
   , chroms: state.chroms
   , chrom: state.ui.chrom
-  , valuesWindowSize: state.ui.valuesWindowSize
+  , windowStart: state.ui.windowStart
+  , windowEnd: state.ui.windowEnd
   , positions: state.positions
   , position: state.ui.position
   , range: state.ui.range
 })
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ setChrom, setValuesWindowSize, doSearch, changePosition, fetchSamples, fetchPositions, mergeTracks, handleError }, dispatch)
+  bindActionCreators({
+    setChrom,
+    setWindowStart,
+    setWindowEnd,
+    doSearch,
+    changePosition,
+    fetchSamples,
+    fetchPositions,
+    mergeTracks,
+    handleError
+  }, dispatch)
 
 class Controls extends React.Component {
 
@@ -115,11 +127,13 @@ class Controls extends React.Component {
   }
 
   selectItem = index => {
-    const { changePosition, doSearch, positions: { list } } = this.props
+    const { positions: { list } } = this.props
 
-    const position = list[index]
-    changePosition(position)
-    doSearch()
+    const position = Number(list[index])
+    this.props.setWindowStart(Math.max(0, position - 5000))
+    this.props.setWindowEnd(position + 5000)
+    this.props.changePosition(position)
+    this.props.doSearch()
   }
 
   renderChroms() {
@@ -205,15 +219,20 @@ class Controls extends React.Component {
           </div>
           <Input
             type='number'
-            className='Controls__size'
-            ref='size'
-            value={this.props.valuesWindowSize}
-            onChange={ev => this.props.setValuesWindowSize(+ev.target.value)}
+            className='Controls__windowStart'
+            value={this.props.windowStart}
+            onChange={ev => this.props.setWindowStart(+ev.target.value)}
+          />
+          <Input
+            type='number'
+            className='Controls__windowEnd'
+            value={this.props.windowEnd}
+            onChange={ev => this.props.setWindowEnd(+ev.target.value)}
           />
         </InputGroup>
         <Icon id='search-help-tooltip-icon' name='question-circle' className='Controls__help' />
         <UncontrolledTooltip placement='right' target='search-help-tooltip-icon'>
-          This input allows you to control the window size for which to examine track values.
+          These inputs allows you to control the window size for which to examine track values.
         </UncontrolledTooltip>
       </div>
     )

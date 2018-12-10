@@ -227,7 +227,11 @@ body {
 .Controls__chromosome {
   width: 150px;
 }
-.Controls__size {
+.Controls__windowStart {
+  border-right: none;
+}
+.Controls__windowStart,
+.Controls__windowEnd {
   width: 15ch !important;
   flex: 0 0 auto !important;
 }
