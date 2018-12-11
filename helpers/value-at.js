@@ -47,7 +47,7 @@ const valueCommand = (file, options) => [
 function valueAt(file, userOptions) {
   const options = { ...defaultOptions, ...userOptions }
 
-  const key = [file, options.chrom, options.position].join('#')
+  const key = [file, options.chrom, options.start, options.end].join('#')
 
   if (cache.has(key))
     return Promise.resolve(cache.get(key))
