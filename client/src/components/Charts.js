@@ -53,21 +53,27 @@ class Charts extends Component {
 
         {
           data.length > 0 &&
-            <div className='Charts__controls d-flex'>
-              <InputGroup>
-                <InputGroupAddon addonType='prepend'>Merge window size</InputGroupAddon>
-                <Input
-                  type='number'
-                  className='Charts__range'
-                  value={this.props.range}
-                  onChange={ev => this.props.setRange(+ev.target.value)}
-                />
-              </InputGroup>
-              <Icon id='help-tooltip-icon' name='question-circle' className='Controls__help' />
-              <UncontrolledTooltip placement='right' target='help-tooltip-icon'>
-                The Merge buttons below merge tracks for each experiment/category together, into a single track.
-                This input field allows you to choose the window size that will be merged, in bases.
-              </UncontrolledTooltip>
+            <div className='Charts__top'>
+              <div className='Charts__controls d-flex'>
+                <InputGroup>
+                  <InputGroupAddon addonType='prepend'>Merge window size</InputGroupAddon>
+                  <Input
+                    type='number'
+                    className='Charts__range'
+                    value={this.props.range}
+                    onChange={ev => this.props.setRange(+ev.target.value)}
+                  />
+                </InputGroup>
+                <Icon id='help-tooltip-icon' name='question-circle' className='Controls__help' />
+                <UncontrolledTooltip placement='right' target='help-tooltip-icon'>
+                  The Merge buttons below merge tracks for each experiment/category together, into a single track.
+                  This input field allows you to choose the window size that will be merged, in bases.
+                </UncontrolledTooltip>
+              </div>
+
+              <p>
+                The box plots display, per genotype, the average signal within the specified genomic region
+              </p>
             </div>
         }
 
@@ -75,7 +81,7 @@ class Charts extends Component {
           {
             ({ width }) =>
               data.map(({ assay, data }) =>
-                <div>
+                <div key={assay} className='Charts__box' style={{ width }}>
                   <BoxPlot title={assay}
                     data={data}
                     width={width}
@@ -83,11 +89,9 @@ class Charts extends Component {
                     padding={40}
                     domain={getDomain(data)}
                   />
-                  <div className='d-flex justify-content-end' style={{ width }}>
-                    <Button onClick={() => this.onClickMerge(assay, data)}>
-                      Merge
-                    </Button>
-                  </div>
+                  <Button className='Charts__merge' onClick={() => this.onClickMerge(assay, data)}>
+                    Merge
+                  </Button>
                 </div>
               )
           }

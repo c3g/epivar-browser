@@ -248,6 +248,15 @@ body {
 .Charts__controls > *:not(:last-child) {
   margin-right: 1em;
 }
+.Charts__box {
+  height: 300px;
+  position: relative;
+}
+.Charts__merge {
+  position: absolute;
+  top: 25px;
+  left: calc(100% - 73.5px - 5px);
+}
 
 
 .Params th,
