@@ -2,10 +2,19 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 import { Container, Table, Col, Row } from 'reactstrap';
+import { groupBy, prop } from 'ramda';
 
 import Header from './Header.js'
 import Controls from './Controls.js'
 import Charts from './Charts.js'
+
+const groupByValue = groupBy(prop('value'))
+const getCounts = samples => {
+  const samplesByValue = groupByValue(samples)
+  const values = Object.keys(samplesByValue)
+  return values.map(value => ({ key: value, count: Object.values(samplesByValue[value]).length }))
+}
+
 
 const mapStateToProps = state => ({
     isLoading: state.samples.isLoading
@@ -20,6 +29,7 @@ class App extends Component {
   render() {
     const { isLoading, samples, values } = this.props
     const first = samples[0] || {}
+    const counts = getCounts(samples)
 
     const showParams = !isLoading && samples.length > 0
 
@@ -36,7 +46,11 @@ class App extends Component {
                 <th>Start</th>
                 <th>End</th>
                 <th>Reference</th>
-                <th>Results</th>
+                {
+                  counts.map(({key}) =>
+                    <th>{key}</th>
+                  )
+                }
               </tr>
             </thead>
             <tbody>
@@ -45,40 +59,18 @@ class App extends Component {
                 <td>{ first.start }</td>
                 <td>{ first.end }</td>
                 <td>{ first.ref }</td>
-                <td>{ samples.length }</td>
+                {
+                  counts.map(({count}) =>
+                    <th>{count}</th>
+                  )
+                }
               </tr>
             </tbody>
           </Table>
 
         </Header>
 
-        <Container>
-          <Row>
-            <Col sm='6' className={isLoading ? 'loading' : ''}>
-              <Table className='Samples' size='sm'>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    samples.map(sample =>
-                    <tr>
-                      <td>{ sample.name }</td>
-                      <td>{ sample.value }</td>
-                    </tr>
-                    )
-                  }
-                </tbody>
-              </Table>
-            </Col>
-            <Col sm='6' className={values.isLoading ? 'loading' : ''}>
-              <Charts />
-            </Col>
-          </Row>
-        </Container>
+        <Charts />
 
     </div>
     )
