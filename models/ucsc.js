@@ -34,21 +34,67 @@ function generateTracks(mergedTracks) {
   mergedTracks.forEach(merged => {
 
     const trackType = 'bigWig'
-    const trackDensity = 'pack'
-    const visibility = 'on'
 
-    Object.keys(merged.output).forEach((typeShort, i) => {
+    const types = Object.keys(merged.output)
+    const typesWithDataLength = Object.values(merged.output).filter(Boolean).length
+
+    if (typesWithDataLength > 1) {
+      const parentName = `${merged.assay}__averages`
+      const shortLabel = parentName
+      const longLabel = parentName
+
+      trackBlocks.push(unindent`
+        track ${parentName}
+        container multiWig
+        shortLabel ${shortLabel}
+        longLabel ${longLabel}
+        type bigWig
+        visibility full
+        aggregate transparentOverlay
+        showSubtrackColorOnUi on
+        windowingFunction maximum
+        priority 1.2
+        configurable on
+        dragAndDrop subTracks
+        autoScale on
+      `)
+
+      types.forEach(type => {
+        const output = merged.output[type]
+
+        if (output === undefined)
+          return
+
+        const trackName = `${parentName}__${type}`
+        const shortLabel = trackName
+
+        const colors = getColor(type)
+
+        trackBlocks.push(indent(4, unindent`
+          track ${trackName}
+          type ${trackType}
+          parent ${parentName}
+          shortLabel ${shortLabel}
+          bigDataUrl ${output.url}
+          maxHeightPixels 25:25:8
+          color ${colors[0]}
+          graphTypeDefault points
+        `))
+      })
+    }
+
+    types.forEach((typeShort, i) => {
       const output = merged.output[typeShort]
 
       if (output === undefined)
         return
 
-      const type = i === 0 ? 'reference' : i === 1 ? 'variant_het' : 'variant_hom'
+      const type = typeShort === 'REF' ? 'reference' : typeShort === 'HET' ? 'variant_het' : 'variant_hom'
       const trackName = `${merged.assay}__${type}`
       const shortLabel = trackName
       const longLabel = trackName
 
-      const colors = getColor(merged.assay)
+      const colors = getColor(typeShort)
 
       trackBlocks.push(unindent`
         track ${trackName}
@@ -96,16 +142,11 @@ function generateTracks(mergedTracks) {
 }
 
 // Thanks to Google Charts
-const COLORS = [
-  [ '#5C85D6', '#EE5430' ],
-  [ '#FFAD33', '#13B41D' ],
-  [ '#B800B8', '#29CCB8' ],
-  [ '#676BFA', '#EE7AA1' ],
-  [ '#7ACC00', '#00B8EE' ],
-  [ '#D04444', '#3B77B3' ],
-  [ '#CCCC14', '#B456B4' ],
-  [ '#855CD6', '#FF8A15' ],
-]
+const COLORS = {
+  REF: [ '#5C85D6', '#EE5430' ],
+  HET: [ '#FFAD33', '#13B41D' ],
+  HOM: [ '#B800B8', '#29CCB8' ],
+}
 
 /* Original colors:
  * [
@@ -131,8 +172,8 @@ const COLORS = [
  *   '#3B3EAC'
  * ] */
 
-function getColor(string) {
-  return COLORS[hash(string, COLORS.length)].map(colorToRGB)
+function getColor(type) {
+  return COLORS[type].map(colorToRGB)
 }
 
 function colorToRGB(c) {
