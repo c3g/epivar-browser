@@ -22,6 +22,11 @@ router.use('/genome/:session', (req, res) => {
   .catch(errorHandler(res))
 })
 
+// UCSC Browser tries to get track descriptions here
+router.use('/track-db/*.html', (req, res) => {
+  res.end()
+})
+
 router.use('/track-db/:session', (req, res) => {
 
   Sessions.get(req.params.session)
