@@ -153,7 +153,7 @@ class Controls extends React.Component {
         <DropdownMenu>
           {
             list.map(chrom =>
-              <DropdownItem onClick={() => setChrom(chrom)}>{ chrom }</DropdownItem>
+              <DropdownItem key={chrom} onClick={() => setChrom(chrom)}>{ chrom }</DropdownItem>
             )
           }
         </DropdownMenu>
