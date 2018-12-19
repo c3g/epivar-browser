@@ -75,7 +75,8 @@ class Charts extends Component {
                 </div>
 
                 <p>
-                  The box plots display, per genotype, the average signal within the specified genomic region
+                  The box plots display, per genotype, the average signal within the specified genomic region.<br/>
+                  Some donors may have more than one track. In those cases, only the first one is kept.
                 </p>
               </div>
           }

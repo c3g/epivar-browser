@@ -53,8 +53,8 @@ function get(chrom, position, assay = undefined) {
       }
     `
 
-  return Samples.queryMap(chrom, position).then(info =>
-    dbIHEC.query(makeQuery(Object.keys(info.samples)))
+  return Samples.queryMap(chrom, position).then(info => {
+    return dbIHEC.query(makeQuery(Object.keys(info.samples)))
     .then(tracks => {
       tracks.forEach(track => {
         track.path = getLocalPath(track)
@@ -62,11 +62,12 @@ function get(chrom, position, assay = undefined) {
       })
       return tracks
     })
-  )
+  })
 }
 
 function values(chrom, position, start, end) {
   return get(chrom, position)
+  .then(filterTracksUniqueDonorAssay)
   .then(tracks =>
     Promise.all(tracks.map(track =>
       valueAt(track.path, { chrom, start, end, ...config.merge })
@@ -137,6 +138,8 @@ function merge(tracks, { chrom, start, end }) {
 }
 
 
+// Helpers
+
 function mergeFiles(paths, { chrom, start, end }) {
   paths.sort(Intl.Collator().compare)
   const mergeHash = md5(JSON.stringify({ paths, chrom, start, end }))
@@ -174,4 +177,17 @@ function getLocalPath(track) {
       track.track_type
     ].join('.')
   )
+}
+
+function filterTracksUniqueDonorAssay(tracks) {
+  const combinations = new Map()
+  const filteredTracks = tracks.filter(track => {
+    const key = `${track.donor}-${track.assay}`
+    if (combinations.has(key)) {
+      return false
+    }
+    combinations.set(key, track)
+    return true
+  })
+  return filteredTracks
 }
