@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
-import { Container, Table, Col, Row } from 'reactstrap';
-import { groupBy, prop } from 'ramda';
+import { Table } from 'reactstrap';
 
 import Header from './Header.js'
 import Controls from './Controls.js'
