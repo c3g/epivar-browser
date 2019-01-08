@@ -10,6 +10,7 @@ const md5 = require('md5')
 const { prop, groupBy } = require('ramda')
 
 const bigWigMerge = require('../helpers/bigwig-merge.js')
+const bigWigInfo = require('../helpers/bigwig-info.js')
 const valueAt = require('../helpers/value-at.js')
 const dbIHEC = require('../db-ihec.js')
 const config = require('../config.js')
@@ -22,6 +23,8 @@ module.exports = {
   clean,
   merge,
 }
+
+const range = { start: 0, end: 1000 }
 
 function get(chrom, position, assay = undefined) {
 
@@ -70,15 +73,20 @@ function values(chrom, position, start, end) {
   .then(filterTracksUniqueDonorAssay)
   .then(tracks =>
     Promise.all(tracks.map(track =>
-      valueAt(track.path, { chrom, start, end, ...config.merge })
-      .then(data => (data === undefined ? undefined : {
+
+      Promise.all([
+        bigWigInfo(track.path, config.merge),
+        valueAt(track.path, { chrom, start, end, ...config.merge }),
+      ])
+      .then(([summary, value]) => (value === undefined ? undefined : {
         id: track.id,
         donor: track.donor,
         assay: track.assay,
         variant: track.variant,
         type: track.type,
         value: track.value,
-        data,
+        data: ((((value - summary.min) / (summary.max - summary.min)) * (range.end - range.start)) + range.start),
+        originalData: value,
       }))
     ))
     .then(values => values.filter(v => v !== undefined))
