@@ -34,7 +34,7 @@ function samplesReducer(state = createDefaultList(), action) {
       return { ...state, isLoading: true }
     }
     case k.SAMPLES.RECEIVE: {
-      return { ...state, isLoading: false, list: action.payload }
+      return { ...state, isLoading: false, total: action.payload.total, list: action.payload.list }
     }
     case k.SAMPLES.ERROR: {
       return { ...state, isLoading: false }

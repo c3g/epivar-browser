@@ -94,6 +94,8 @@ function gemini(query, params = '') {
 }
 
 function normalizeSamples(samples) {
+  const total = Object.keys(samples[0] || {}).filter(key => key.startsWith('gts.')).length
+
   samples.forEach(sample => {
 
     sample.value = sample['gts.' + sample.name]
@@ -103,7 +105,8 @@ function normalizeSamples(samples) {
         delete sample[key]
     }
   })
-  return samples
+
+  return { total, list: samples }
 }
 
 function parseLines({ stdout }) {

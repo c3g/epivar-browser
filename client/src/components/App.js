@@ -8,16 +8,27 @@ import Header from './Header.js'
 import Controls from './Controls.js'
 import Charts from './Charts.js'
 
-const groupByValue = groupBy(prop('value'))
-const getCounts = samples => {
-  const samplesByValue = groupByValue(samples)
-  const values = Object.keys(samplesByValue)
-  return values.map(value => ({ key: value, count: Object.values(samplesByValue[value]).length }))
+const getCounts = (total, samples) => {
+  const types = {
+    REF: 0,
+    HET: 0,
+    HOM: 0,
+  }
+  samples.forEach(sample => {
+    if (sample.value === `${sample.alt}|${sample.alt}`)
+      types.HOM += 1
+    else
+      types.HET += 1
+  })
+  types.REF = total - types.HET - types.HOM
+
+  return Object.entries(types).map(([key, value]) => ({ key: key, count: value }))
 }
 
 
 const mapStateToProps = state => ({
     isLoading: state.samples.isLoading
+  , total: state.samples.total
   , samples: state.samples.list
   , values: state.values
 })
@@ -27,9 +38,9 @@ const mapDispatchToProps = dispatch =>
 class App extends Component {
 
   render() {
-    const { isLoading, samples, values } = this.props
+    const { isLoading, total, samples, values } = this.props
     const first = samples[0] || {}
-    const counts = getCounts(samples)
+    const counts = getCounts(total, samples)
 
     const showParams = !isLoading && samples.length > 0
 
