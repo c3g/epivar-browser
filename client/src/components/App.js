@@ -58,7 +58,7 @@ class App extends Component {
                 <th>Reference</th>
                 {
                   counts.map(({key}) =>
-                    <th>{key}</th>
+                    <th key={key}>{key}</th>
                   )
                 }
               </tr>
@@ -70,8 +70,8 @@ class App extends Component {
                 <td>{ first.end }</td>
                 <td>{ first.ref }</td>
                 {
-                  counts.map(({count}) =>
-                    <th>{count}</th>
+                  counts.map(({key, count}) =>
+                    <th key={key}>{count}</th>
                   )
                 }
               </tr>

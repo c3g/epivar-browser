@@ -68,12 +68,24 @@ class Controls extends React.Component {
     }
   }
 
-  onFocus = () => {
+  onFocus = (ev) => {
+    this.previousValue = ev.target.value
+
     setTimeout(() => this.setState({ open: true }), 100)
   }
 
-  onBlur = () => {
-    setTimeout(() => this.setState({ open: false }), 200)
+  onBlur = (ev) => {
+    const didChange = ev.target.value !== this.previousValue
+    const position = didChange ? Number(ev.target.value) : null
+
+    setTimeout(() => {
+      this.setState({ open: false })
+
+      if (didChange && !Number.isNaN(position) && position !== 0 && !this.props.isLoading) {
+        this.props.setWindowStart(Math.max(0, position - 5000))
+        this.props.setWindowEnd(position + 5000)
+      }
+    }, 200)
   }
 
   onKeyDown = ev => {
@@ -187,7 +199,7 @@ class Controls extends React.Component {
               }
               {
                 list.map((item, i) =>
-                  <div className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
+                  <div key={item} className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
                     onClick={() => this.selectItem(i)}
                   >
                     { highlight(item, position) }

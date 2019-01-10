@@ -39,6 +39,7 @@ export function doSearch() {
     const { ui: { chrom, position, windowStart, windowEnd } } = getState()
 
     if (chrom && position) {
+      dispatch(setRange(windowEnd - windowStart))
       dispatch(fetchSamples({ chrom, position }))
       // We create a 1s delay here to allow the first request to finish sooner
       dispatch(values.request())
@@ -54,7 +55,10 @@ export function mergeTracks(assay, samples) {
     if (samples.length === 0)
       return
 
-    const position = Number(ui.position)
+    // const position = Number(ui.position)
+    const { windowStart, windowEnd } = ui
+    const position = windowStart + Math.round((windowEnd - windowStart) / 2)
+
     const start = Math.max(position - (ui.range / 2), 0)
     const end   = position + (ui.range / 2)
 
