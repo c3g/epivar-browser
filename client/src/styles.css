@@ -260,6 +260,13 @@ body {
   top: 25px;
   left: calc(100% - 73.5px - 5px);
 }
+.Charts__empty {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 3em 0;
+  text-align: center;
+  opacity: 0.3;
+}
 
 
 .Params th,

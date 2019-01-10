@@ -21,6 +21,10 @@ import { setRange, mergeTracks, handleError } from '../actions.js'
 
 const mapStateToProps = state => ({
   isLoading: state.samples.isLoading,
+  isEmpty:
+    state.samples.list.length > 0
+    && state.values.isLoading === false
+    && Object.keys(state.values.map).length === 0,
   values: state.values,
   range: state.ui.range,
 })
@@ -36,7 +40,7 @@ class Charts extends Component {
   }
 
   render() {
-    const { values } = this.props
+    const { isEmpty, values } = this.props
 
     const data = Object.entries(values.map).map(([assay, valuesByType]) =>
       ({
@@ -54,6 +58,13 @@ class Charts extends Component {
     return (
       <div className={'Charts ' + (values.isLoading ? 'loading' : '')}>
         <Container>
+          {
+            isEmpty &&
+              <div className='Charts__empty'>
+                No results for the selected range.<br/>
+                Try with a different range.
+              </div>
+          }
           {
             data.length > 0 &&
               <div className='Charts__top'>
