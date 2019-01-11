@@ -59,8 +59,8 @@ export function mergeTracks(assay, samples) {
     const { windowStart, windowEnd } = ui
     const position = windowStart + Math.round((windowEnd - windowStart) / 2)
 
-    const start = Math.max(position - (ui.range / 2), 0)
-    const end   = position + (ui.range / 2)
+    const start = Math.max(position - Math.round(ui.range / 2), 0)
+    const end   = position + Math.round(ui.range / 2)
 
     const session = {
       samples,
