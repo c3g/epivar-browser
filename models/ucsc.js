@@ -143,10 +143,24 @@ function generateTracks(mergedTracks) {
 
 // Thanks to Google Charts
 const COLORS = {
-  REF: [ '#5C85D6', '#EE5430' ],
-  HET: [ '#FFAD33', '#13B41D' ],
-  HOM: [ '#B800B8', '#29CCB8' ],
+  REF: [
+    '#87A8E8',
+    '#3559A1'
+  ],
+  HET: [
+    '#FFAD33',
+    '#B77C25'
+  ],
+  HOM: [
+    '#E038E0',
+    '#910591'
+  ],
 }
+/* const COLORS = {
+ *   REF: [ '#5C85D6', '#EE5430' ],
+ *   HET: [ '#FFAD33', '#13B41D' ],
+ *   HOM: [ '#B800B8', '#29CCB8' ],
+ * } */
 
 /* Original colors:
  * [
