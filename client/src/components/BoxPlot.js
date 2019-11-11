@@ -39,8 +39,7 @@ export default function BoxPlot({ title, data, width, height, padding, domain })
       </text>
       {
         data.map((d, i) =>
-          d.data.length === 0 ? undefined :
-            <Bar data={d.data} { ...dimension } x={xScale(i)} domain={domain} />
+          <Bar key={i} data={d.data} { ...dimension } x={xScale(i)} domain={domain} />
         )
       }
     </svg>
@@ -48,19 +47,38 @@ export default function BoxPlot({ title, data, width, height, padding, domain })
 }
 
 
-function Bar({ data = [], x, y, height, domain }) {
-
-  const dataPoints = data.map(d => d.data).sort((a, b) => a - b)
-  const min = Math.min(...dataPoints)
-  const max = Math.max(...dataPoints)
-
-  const stats = getStats(dataPoints)
+function Bar({ data, x, y, height, domain }) {
+  const min = data.min
+  const max = data.max
+  const stats = data.stats
 
   const xMin = x - BAR_HALFWIDTH
   const xMax = x + BAR_HALFWIDTH
 
-  const xScale = scaleLinear().range([xMin, xMax]).domain([0, data.length])
   const yScale = scaleLinear().range([height, y]).domain(domain)
+
+  if (data.hidden) {
+    const delta = domain[1] - domain[0]
+
+    return (
+      <g>
+        <Rect
+          position={[[xMin, yScale(domain[1] - delta * 0.1)], [xMax, yScale(domain[0] + delta * 0.1)]]}
+          stroke='grey'
+          fill='rgba(0, 0, 0, 0.05)'
+          strokeDasharray='5,5'
+        />
+        <text
+          textAnchor='middle'
+          dominantBaseline='central'
+          transform={`translate(${middle(xMin, xMax)} ${yScale(middle(domain[0], domain[1]))}) rotate(-90)`}
+          style={{ fill: 'rgba(0, 0, 0, 0.3)', fontWeight: 'bold', fontSize: '18px' }}
+        >
+          Hidden
+        </text>
+      </g>
+    )
+  }
 
   return (
     <g>
@@ -74,15 +92,6 @@ function Bar({ data = [], x, y, height, domain }) {
                        [xMax, yScale(stats.start)]]} />
       <Line position={[[xMin, yScale(stats.median)],
                        [xMax, yScale(stats.median)]]} />
-      {
-        data.map(d => d.data).map((point, i) =>
-          <circle r={POINT_RADIUS} cx={xScale(i)} cy={yScale(point)}
-            fill='transparent'
-            stroke='rgba(150,20,20,0.5)'
-          />
-        )
-      }
-
     </g>
   )
 }
@@ -140,13 +149,13 @@ function XAxis({ data, scale, x, y, height, width }) {
       {
         data.map((d, i) => {
           return (
-            <g>
+            <g key={i}>
               <Line position={[[scale(i), height - 5], [scale(i), height + 5]]} />
               <text y={height + 5} x={scale(i)} dy={FONT_SIZE} style={textStyles}>
                 { d.name }
               </text>
               <text y={height + 5} x={scale(i)} dy={FONT_SIZE * 2} style={textStyles}>
-                { `(n = ${d.data.length})` }
+                { `(n = ${d.data.n})` }
               </text>
             </g>
           )
@@ -168,15 +177,16 @@ function Line({ position }) {
   )
 }
 
-function Rect({ position }) {
+function Rect({ position, stroke = 'black', fill = 'rgba(230, 200, 20, 0.5)', ...rest }) {
   return (
     <rect
       x={position[0][0]}
       y={position[0][1]}
       width={Math.abs(position[1][0] - position[0][0])}
       height={Math.abs(position[1][1] - position[0][1])}
-      stroke='black'
-      fill='rgba(230, 200, 20, 0.5)'
+      stroke={stroke}
+      fill={fill}
+      { ...rest }
     />
   )
 }
@@ -187,4 +197,9 @@ function getStats(points) {
     median: points[~~(points.length * 2/4)],
     end:    points[~~(points.length * 3/4)],
   }
+}
+
+function middle(a, b) {
+  const d = b - a
+  return a + d / 2
 }

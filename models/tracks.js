@@ -22,6 +22,7 @@ module.exports = {
   group,
   clean,
   merge,
+  calculate,
 }
 
 const range = { start: 0, end: 1000 }
@@ -107,6 +108,23 @@ function clean(/* mut */ tracksByAssay) {
     if (tracksByType.HET === undefined && tracksByType.HOM === undefined)
       delete tracksByAssay[assay]
   })
+  return tracksByAssay
+}
+
+function calculate(tracksByAssay) {
+  Object.keys(tracksByAssay).forEach(assay => {
+    const tracksByType = tracksByAssay[assay]
+
+    if (tracksByType.HET === undefined && tracksByType.HOM === undefined) {
+      delete tracksByAssay[assay]
+      return
+    }
+
+    tracksByType.HET = derive(tracksByType.HET || [])
+    tracksByType.HOM = derive(tracksByType.HOM || [])
+    tracksByType.REF = derive(tracksByType.REF || [])
+  })
+
   return tracksByAssay
 }
 
@@ -198,4 +216,29 @@ function filterTracksUniqueDonorAssay(tracks) {
     return true
   })
   return filteredTracks
+}
+
+function derive(list) {
+  const n = list.length
+  const hidden = n <= 3
+  const dataPoints = hidden ? null : list.map(d => d.data).sort((a, b) => a - b)
+
+  const data = {
+    n: n,
+    hidden: hidden,
+    min: hidden ? null : Math.min(...dataPoints),
+    max: hidden ? null : Math.max(...dataPoints),
+    stats: hidden ? null : getStats(dataPoints),
+    donors: list.map(d => d.donor),
+  }
+
+  return data
+}
+
+function getStats(points) {
+  return {
+    start:  points[~~(points.length * 1/4)],
+    median: points[~~(points.length * 2/4)],
+    end:    points[~~(points.length * 3/4)],
+  }
 }

@@ -244,6 +244,7 @@ body {
 
 .Charts {
   position: relative;
+  padding-bottom: 3em;
 }
 .Charts__controls {
   padding: 1em 1em;
@@ -266,6 +267,29 @@ body {
   padding: 3em 0;
   text-align: center;
   opacity: 0.3;
+}
+.Charts__legend {
+  position: relative;
+  padding: 3em 1em 1em;
+  border: 1px solid #d8d8d8;
+  margin: 1rem 0 0;
+}
+.Charts__legend::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 1em;
+  color: #aaa;
+  font-size: smaller;
+  font-weight: 500;
+  content: 'LEGEND';
+}
+.Charts__hidden {
+  border: 1px dashed #aaa;
+  background-color: rgba(0, 0, 0, 0.03);
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: bold;
+  padding: 0 3px;
 }
 
 

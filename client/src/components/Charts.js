@@ -7,10 +7,6 @@ import {
   InputGroupAddon,
   Button,
   Container, Col, Row,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   UncontrolledTooltip,
 } from 'reactstrap'
 
@@ -35,7 +31,7 @@ const mapDispatchToProps = (dispatch) =>
 class Charts extends Component {
 
   onClickMerge(assay, data) {
-    const sampleNames = Object.values(data).reduce((acc, cur) => acc.concat(cur.data.map(n => n.donor)), [])
+    const sampleNames = Object.values(data).reduce((acc, cur) => acc.concat(cur.data.donors), [])
     this.props.mergeTracks(assay, sampleNames)
   }
 
@@ -67,41 +63,46 @@ class Charts extends Component {
           }
           {
             data.length > 0 &&
-              <div className='Charts__top'>
-                <div className='Charts__controls d-flex'>
-                  <InputGroup>
-                    <InputGroupAddon addonType='prepend'>Merge window size</InputGroupAddon>
-                    <Input
-                      type='number'
-                      className='Charts__range'
-                      value={this.props.range}
-                      onChange={ev => this.props.setRange(+ev.target.value)}
-                    />
-                  </InputGroup>
-                  <Icon id='help-tooltip-icon' name='question-circle' className='Controls__help' />
-                  <UncontrolledTooltip placement='right' target='help-tooltip-icon'>
-                    The Merge buttons below merge tracks for each experiment/category together, into a single track.
-                    This input field allows you to choose the window size that will be merged, in bases.
-                  </UncontrolledTooltip>
-                </div>
-
-                <p>
-                  The box plots display, per genotype, the average signal within the specified genomic region.<br/>
-                  Some donors may have more than one track. In those cases, only the first one is kept.
-                </p>
-              </div>
+              <Row className='Charts__top'>
+                <Col xs='6'>
+                  <div className='Charts__controls d-flex'>
+                    <InputGroup>
+                      <InputGroupAddon addonType='prepend'>Merge window size</InputGroupAddon>
+                      <Input
+                        type='number'
+                        className='Charts__range'
+                        value={this.props.range}
+                        onChange={ev => this.props.setRange(+ev.target.value)}
+                      />
+                    </InputGroup>
+                    <Icon id='help-tooltip-icon' name='question-circle' className='Controls__help' />
+                    <UncontrolledTooltip placement='right' target='help-tooltip-icon'>
+                      The Merge buttons below merge tracks for each experiment/category together, into a single track.
+                      This input field allows you to choose the window size that will be merged, in bases.
+                    </UncontrolledTooltip>
+                  </div>
+                </Col>
+                <Col xs='6'>
+                  <div className='Charts__legend'>
+                    The box plots display, per genotype, the average signal within the specified genomic region.
+                    Some donors may have more than one track. In those cases, only the first one is kept.<br/>
+                    Some data might be <span className='Charts__hidden'>Hidden</span> for privacy reasons (when <code>n ≤ 3</code>).
+                  </div>
+                </Col>
+              </Row>
           }
           {
-            groups.map(group =>
-              <Row>
+            groups.map((group, i) =>
+              <Row key={i}>
                 {
                   group.map(({ assay, data }) =>
-                    <Col sm='6'>
+                    <Col sm='6' key={assay}>
                       <AutoSizer disableHeight>
                         {
                           ({ width }) =>
-                            <div key={assay} className='Charts__box' style={{ width }}>
-                              <BoxPlot title={assay}
+                            <div key={assay + '_element'} className='Charts__box' style={{ width }}>
+                              <BoxPlot
+                                title={assay}
                                 data={data}
                                 width={width}
                                 height={300}
@@ -126,18 +127,17 @@ class Charts extends Component {
   }
 }
 
-function getDomain(dataList) {
+function getDomain(categories) {
+
   let min = Infinity
   let max = -Infinity
 
-  dataList.forEach(({ data }) =>
-    data.forEach(d => {
-      if (d.data < min)
-        min = d.data
-      if (d.data > max)
-        max = d.data
-    })
-  )
+  categories.forEach(({ data }) => {
+    if (data.min < min)
+      min = data.min
+    if (data.max > max)
+      max = data.max
+  })
 
   const delta = max !== min ? max - min : 1
 
