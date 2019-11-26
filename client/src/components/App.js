@@ -7,28 +7,10 @@ import Header from './Header.js'
 import Controls from './Controls.js'
 import Charts from './Charts.js'
 
-const getCounts = (total, samples) => {
-  const types = {
-    REF: 0,
-    HET: 0,
-    HOM: 0,
-  }
-  samples.forEach(sample => {
-    if (sample.value === `${sample.alt}|${sample.alt}`)
-      types.HOM += 1
-    else
-      types.HET += 1
-  })
-  types.REF = total - types.HET - types.HOM
-
-  return Object.entries(types).map(([key, value]) => ({ key: key, count: value }))
-}
-
 
 const mapStateToProps = state => ({
     isLoading: state.samples.isLoading
-  , total: state.samples.total
-  , samples: state.samples.list
+  , samples: state.samples.stats
   , values: state.values
 })
 const mapDispatchToProps = dispatch =>
@@ -37,11 +19,10 @@ const mapDispatchToProps = dispatch =>
 class App extends Component {
 
   render() {
-    const { isLoading, total, samples, values } = this.props
-    const first = samples[0] || {}
-    const counts = getCounts(total, samples)
+    const { isLoading, samples, values } = this.props
+    const counts = Object.entries(samples.counts).map(([key, value]) => ({ key: key, count: value }))
 
-    const showParams = !isLoading && samples.length > 0
+    const showParams = !isLoading && samples.total > 0
 
     return (
       <div className='App'>
@@ -65,10 +46,10 @@ class App extends Component {
             </thead>
             <tbody>
               <tr>
-                <td>{ first.chrom }</td>
-                <td>{ first.start }</td>
-                <td>{ first.end }</td>
-                <td>{ first.ref }</td>
+                <td>{ samples.chrom }</td>
+                <td>{ samples.start }</td>
+                <td>{ samples.end }</td>
+                <td>{ samples.ref }</td>
                 {
                   counts.map(({key, count}) =>
                     <th key={key}>{count}</th>

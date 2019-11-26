@@ -229,7 +229,6 @@ function derive(list) {
     min: hidden ? null : Math.min(...dataPoints),
     max: hidden ? null : Math.max(...dataPoints),
     stats: hidden ? null : getStats(dataPoints),
-    donors: list.map(d => d.donor),
   }
 
   return data

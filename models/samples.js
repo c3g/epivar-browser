@@ -30,7 +30,8 @@ function query(chrom, start, end = start + 1) {
        AND end   <= ${end}
   `
 
-  return gemini(query, params).then(res =>
+  return gemini(query, params)
+  .then(res =>
     normalizeSamples(parseCSV(res.stdout))
   )
 }
@@ -106,7 +107,33 @@ function normalizeSamples(samples) {
     }
   })
 
-  return { total, list: samples }
+  const first = samples[0] || {}
+
+  return {
+    total,
+    counts: getCounts(total, samples),
+    chrom:  first.chrom,
+    start:  first.start,
+    end:    first.end,
+    ref:    first.ref,
+  }
+}
+
+function getCounts(total, samples) {
+  const counts = {
+    REF: 0,
+    HET: 0,
+    HOM: 0,
+  }
+  samples.forEach(sample => {
+    if (sample.value === `${sample.alt}|${sample.alt}`)
+      counts.HOM += 1
+    else
+      counts.HET += 1
+  })
+  counts.REF = total - counts.HET - counts.HOM
+
+  return counts
 }
 
 function parseLines({ stdout }) {

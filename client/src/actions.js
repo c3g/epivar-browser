@@ -48,12 +48,9 @@ export function doSearch() {
   }
 }
 
-export function mergeTracks(assay, samples) {
+export function mergeTracks(assay) {
   return (dispatch, getState) => {
     const { ui } = getState()
-
-    if (samples.length === 0)
-      return
 
     const position = Number(ui.position)
     const { windowStart, windowEnd } = ui
@@ -63,7 +60,6 @@ export function mergeTracks(assay, samples) {
     const end   = windowCenter + Math.round(ui.range / 2)
 
     const session = {
-      samples,
       assay,
       chrom: ui.chrom,
       position,

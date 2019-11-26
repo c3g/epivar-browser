@@ -18,7 +18,7 @@ import { setRange, mergeTracks, handleError } from '../actions.js'
 const mapStateToProps = state => ({
   isLoading: state.samples.isLoading,
   isEmpty:
-    state.samples.list.length > 0
+    state.samples.stats.total > 0
     && state.values.isLoading === false
     && Object.keys(state.values.map).length === 0,
   values: state.values,
@@ -30,9 +30,8 @@ const mapDispatchToProps = (dispatch) =>
 
 class Charts extends Component {
 
-  onClickMerge(assay, data) {
-    const sampleNames = Object.values(data).reduce((acc, cur) => acc.concat(cur.data.donors), [])
-    this.props.mergeTracks(assay, sampleNames)
+  onClickMerge(assay) {
+    this.props.mergeTracks(assay)
   }
 
   render() {
@@ -109,7 +108,7 @@ class Charts extends Component {
                                 padding={40}
                                 domain={getDomain(data)}
                               />
-                              <Button className='Charts__merge' onClick={() => this.onClickMerge(assay, data)}>
+                              <Button className='Charts__merge' onClick={() => this.onClickMerge(assay)}>
                                 Merge
                               </Button>
                             </div>

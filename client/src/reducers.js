@@ -28,13 +28,24 @@ function uiReducer(state = createDefaultUI(), action, data) {
   }
 }
 
-function samplesReducer(state = createDefaultList(), action) {
+const defaultSamples = {
+  isLoading: false,
+  stats: {
+    total: 0,
+    counts: {},
+    chrom: undefined,
+    start: undefined,
+    end: undefined,
+    ref: undefined,
+  }
+}
+function samplesReducer(state = defaultSamples, action) {
   switch (action.type) {
     case k.SAMPLES.REQUEST: {
       return { ...state, isLoading: true }
     }
     case k.SAMPLES.RECEIVE: {
-      return { ...state, isLoading: false, total: action.payload.total, list: action.payload.list }
+      return { ...state, isLoading: false, stats: action.payload }
     }
     case k.SAMPLES.ERROR: {
       return { ...state, isLoading: false }

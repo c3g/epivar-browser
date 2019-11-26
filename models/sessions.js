@@ -4,14 +4,25 @@
 
 const md5 = require('md5')
 const db = require('../db.js')
+const Tracks = require('./tracks')
 
 module.exports = {
   create,
   get,
 }
 
-function create({ samples, assay, chrom, position, start, end }) {
+async function create({ assay, chrom, position, start, end }) {
 
+  const tracksByAssay = await Tracks.values(
+    chrom,
+    Number(position),
+    Number(start),
+    Number(end)
+  )
+  .then(Tracks.group)
+  .then(Tracks.clean)
+
+  const samples = Object.values(tracksByAssay[assay]).reduce((acc, cur) => acc.concat(cur), []).map(d => d.donor)
   samples.sort(Intl.Collator().compare)
 
   const text = JSON.stringify({ samples, chrom, position, start, end })
