@@ -5,6 +5,7 @@ A web application to search for variant and merge bigWig tracks.
 # Installation
 
 Things to do:
+ - Install `bigWigMergePlus`: https://github.com/c3g/kent/releases
  - Generate or copy `gemini.db` file
  - Mount `/ihec_data` somewhere
  - Copy IHEC database or make sure it's accessible for the application
