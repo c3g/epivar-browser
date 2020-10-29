@@ -80,14 +80,6 @@ function getLocalPath(track) {
 
 
 
-module.exports = {
-  get,
-  query,
-  queryOne,
-  insert,
-  escape: mysql.escape,
-}
-
 // Helpers
 
 function format(q, values = {}) {
