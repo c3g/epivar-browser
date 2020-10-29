@@ -23,7 +23,7 @@ function getTracks(samples, assay) {
 
   const sampleNames = Object.keys(samples)
 
-  const query =
+  const q =
     `
       SELECT track.id
             , institution.short_name
@@ -52,7 +52,7 @@ function getTracks(samples, assay) {
       }
     `
 
-  return dbIHEC.query(query)
+  return query(q)
   .then(tracks => {
     tracks.forEach(track => {
       track.path = getLocalPath(track)
