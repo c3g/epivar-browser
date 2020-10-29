@@ -12,9 +12,10 @@ const { prop, groupBy } = require('ramda')
 const bigWigMerge = require('../helpers/bigwig-merge.js')
 const bigWigInfo = require('../helpers/bigwig-info.js')
 const valueAt = require('../helpers/value-at.js')
-const dbIHEC = require('../db-ihec.js')
 const config = require('../config.js')
 const Samples = require('./samples.js')
+
+const source = require('./source')
 
 module.exports = {
   get,
