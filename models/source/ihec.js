@@ -44,11 +44,11 @@ function getTracks(samples, assay) {
         JOIN data_release on data_release.id = dataset.data_release_id
         JOIN assembly on assembly.id = data_release.assembly_id
         JOIN institution on institution.id = data_release.provider_institution_id
-        WHERE donor IN (${sampleNames.map(escape).join(', ')})
+        WHERE donor IN (${sampleNames.map(mysql.escape).join(', ')})
               AND track_type = 'bigWig'
               AND assembly.name = 'hg19'
       ${ typeof assay === 'string' ?
-              `AND assay.name = ${escape(assay)}` : ''
+              `AND assay.name = ${mysql.escape(assay)}` : ''
       }
     `
 
