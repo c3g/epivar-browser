@@ -57,7 +57,7 @@ function getTracks(samples, assay) {
   .then(tracks => {
     tracks.forEach(track => {
       track.path = getLocalPath(track)
-      Object.assign(track, info.samples[track.donor])
+      Object.assign(track, samples[track.donor])
     })
     return tracks
   })
