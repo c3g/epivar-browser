@@ -7,7 +7,7 @@ const fs = require('fs')
 const { promisify } = require('util')
 const exists = promisify(fs.exists)
 const md5 = require('md5')
-const { prop, groupBy } = require('ramda')
+const { prop, groupBy } = require('rambda')
 
 const bigWigMerge = require('../helpers/bigwig-merge.js')
 const bigWigInfo = require('../helpers/bigwig-info.js')
