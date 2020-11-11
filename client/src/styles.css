@@ -198,23 +198,30 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #7249AD 0%,#7E50BF 100%);
+  background-image: url("./static/header.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   color: white;
   padding-top: 2rem;
+  padding-bottom: 6rem;
 }
 .Header__title {
   text-align: center;
-  font-size: 70px;
-  line-height: 60px;
-  font-family: 'Open Sans', sans-serif;
+  font-size: 50px;
+  line-height: 50px;
+  font-family: 'PT Sans', sans-serif;
   font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0;
 }
 .Header__subtitle {
   text-align: center;
-  color: #B388FF;
-  font-size: 30px;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 300;
+  color: #8FA1FF;
+  font-size: 22px;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: 500;
+  letter-spacing: .025em;
 }
 
 
@@ -406,6 +413,6 @@ body {
   font-weight: 400;
 }
 .autocomplete__item > span .highlight {
-  color: #5f2dab;
-  background-color: rgba(154,132,187,.12);
+  color: #4765FF;
+  background-color: #E6EAFF !important;
 }
