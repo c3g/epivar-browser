@@ -232,6 +232,9 @@ body {
   margin-right: 1em;
 }
 .Controls__chromosome {
+  width: 100px;
+}
+.Controls__input {
   width: 150px;
 }
 .Controls__windowStart {

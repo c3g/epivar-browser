@@ -152,14 +152,14 @@ class Controls extends React.Component {
     const { chrom, chroms: { isLoading, list }, setChrom } = this.props
 
     return (
-      <UncontrolledDropdown className='Controls__chromosome'>
+      <UncontrolledDropdown className='Controls__chromosome input-group-prepend'>
         <DropdownToggle caret disabled={isLoading}>
           { isLoading &&
             <span><Icon name='spinner' spin/> Loading</span>
           }
           {
             !isLoading &&
-              (chrom || 'Chromosome')
+              (chrom || 'Chrom.')
           }
         </DropdownToggle>
         <DropdownMenu>
@@ -178,9 +178,9 @@ class Controls extends React.Component {
     const { position, positions: { list } } = this.props
 
     return (
-      <div className='autocomplete'>
+      <React.Fragment>
         <Input
-          className='Controls__input'
+          className='Controls__input autocomplete'
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           onFocus={this.onFocus}
@@ -208,7 +208,7 @@ class Controls extends React.Component {
               }
             </div>
         }
-      </div>
+      </React.Fragment>
     )
   }
 
@@ -217,8 +217,10 @@ class Controls extends React.Component {
 
     return (
       <div className='Controls d-flex justify-content-center'>
-        { this.renderChroms() }
-        { this.renderPosition() }
+        <InputGroup>
+          { this.renderChroms() }
+          { this.renderPosition() }
+        </InputGroup>
 
         <InputGroup>
           <div className='input-group-prepend'>
