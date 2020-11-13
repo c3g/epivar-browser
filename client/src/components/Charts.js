@@ -128,7 +128,7 @@ class Charts extends Component {
 
 function getDomain(categories) {
 
-  let min = Infinity
+  let min =  Infinity
   let max = -Infinity
 
   categories.forEach(({ data }) => {
@@ -140,9 +140,20 @@ function getDomain(categories) {
 
   const delta = max !== min ? max - min : 1
 
+  const padding = Math.round(delta * 0.1 * 4) / 4
+
+  let start = min - padding
+  let end   = max + padding
+
+  if (0 < min && Math.abs(min) < (delta * 0.5))
+    start = 0
+
+  start = Math.round(start * 100) / 100
+  end = end
+
   return [
-    min - delta * 0.1,
-    max + delta * 0.1,
+    start,
+    end,
   ]
 }
 
