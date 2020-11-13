@@ -2,6 +2,7 @@
  * metadata.js
  */
 
+const path = require('path')
 const clone  = require('lodash.clonedeep')
 const config = require('../../config')
 
@@ -17,12 +18,12 @@ function getTracks(samples, assay) {
 
   const tracks =
     metadata
-      .filter(track => sampleNames.includes(track.donor))
+      .filter(track => sampleNames.some(s => s.includes(`_${track.donor}_`)))
       .map(clone)
 
   tracks.forEach(track => {
     track.path = getLocalPath(track)
-    Object.assign(track, info.samples[track.donor])
+    Object.assign(track, samples[track.donor])
   })
 
   return Promise.resolve(tracks)
