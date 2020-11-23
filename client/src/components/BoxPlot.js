@@ -1,25 +1,28 @@
 import React from 'react';
 import { scaleLinear } from 'd3-scale'
 
+const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺'
 
-const FONT_SIZE = 15
+const FONT_SIZE = 14
 
-const BAR_WIDTH = 50
+const BAR_WIDTH = 40
 const BAR_HALFWIDTH = BAR_WIDTH / 2
 
 const POINT_RADIUS = 1
+
+const PADDING = 40
 
 const textStyles = {
   fontSize: FONT_SIZE,
   textAnchor: 'middle',
 }
 
-export default function BoxPlot({ title, data, width, height, padding, domain }) {
+export default function BoxPlot({ title, data, width, height, domain }) {
   const dimension = {
-    x: padding,
-    y: padding,
-    width: width - 1 * padding,
-    height: height - 1 * padding,
+    x: PADDING + 20,
+    y: PADDING,
+    width: width - 1 * PADDING,
+    height: height - 1 * PADDING,
   }
 
   const step = (domain[1] - domain[0]) / 10
@@ -30,7 +33,7 @@ export default function BoxPlot({ title, data, width, height, padding, domain })
     <svg width={width} height={height}>
       <YAxis domain={domain} step={step} {...dimension} />
       <XAxis data={data} scale={xScale} {...dimension} />
-      <text x={dimension.width / 2} y={dimension.y} textAnchor='middle'
+      <text x={dimension.width / 2} y={20} textAnchor='middle'
         style={{
           fontWeight: 'bold',
         }}
@@ -46,7 +49,6 @@ export default function BoxPlot({ title, data, width, height, padding, domain })
   )
 }
 
-
 function Bar({ data, x, y, height, domain }) {
   const min = data.min
   const max = data.max
@@ -57,24 +59,30 @@ function Bar({ data, x, y, height, domain }) {
 
   const yScale = scaleLinear().range([height, y]).domain(domain)
 
-  if (data.hidden) {
+  if (data.hidden || data.n === 0) {
+    const isHidden = data.n > 0
+
     const delta = domain[1] - domain[0]
+    const text = isHidden ? 'Hidden' : 'Empty'
+    const fill = isHidden ? 'rgba(0, 0, 0, 0.05)' : 'rgba(0, 0, 0, 0)'
+    const border = isHidden ? '#888888' : '#bbbbbb'
+    const color = isHidden ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.1)'
 
     return (
       <g>
         <Rect
           position={[[xMin, yScale(domain[1] - delta * 0.1)], [xMax, yScale(domain[0] + delta * 0.1)]]}
-          stroke='grey'
-          fill='rgba(0, 0, 0, 0.05)'
+          stroke={border}
+          fill={fill}
           strokeDasharray='5,5'
         />
         <text
           textAnchor='middle'
           dominantBaseline='central'
           transform={`translate(${middle(xMin, xMax)} ${yScale(middle(domain[0], domain[1]))}) rotate(-90)`}
-          style={{ fill: 'rgba(0, 0, 0, 0.3)', fontWeight: 'bold', fontSize: '18px' }}
+          style={{ fill: color, fontWeight: 'bold', fontSize: '18px' }}
         >
-          Hidden
+          { text }
         </text>
       </g>
     )
@@ -96,7 +104,6 @@ function Bar({ data, x, y, height, domain }) {
   )
 }
 
-
 function YAxis({ domain, step, x, y, height }) {
 
   const points = []
@@ -116,16 +123,22 @@ function YAxis({ domain, step, x, y, height }) {
                        [x, height]]} />
       {
         points.map(point => {
-
           const y = scale(point)
 
+          const rounded = Number(Number(point).toPrecision(3))
+          const normalString      = rounded.toString()
+          const exponentialString = rounded.toExponential().toString().replace(/e(.)(\d+)/, (m, sign, numbers) => {
+            return SUPERSCRIPT[sign === '-' ? 10 : 11] + numbers.toString().split('').map(c => SUPERSCRIPT[+c]).join('')
+          })
+          const text = normalString.length < exponentialString.length ? normalString : exponentialString
+
           const result =  (
-            <g>
+            <g key={point}>
               <Line position={[[x - 5, y], [x + 5, y]]} />
               {
                 Math.abs(lastY - y) > FONT_SIZE &&
-                  <text x={5} y={scale(point)} dy={FONT_SIZE / 4} fontSize={FONT_SIZE}>
-                    { Number(Number(point).toPrecision(3)) }
+                  <text x={5} y={scale(point)} dy={FONT_SIZE / 4} fontSize={FONT_SIZE} fontFamily='monospace'>
+                    { text }
                   </text>
               }
             </g>

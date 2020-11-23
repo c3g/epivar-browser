@@ -27,6 +27,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ setRange, mergeTracks, handleError }, dispatch)
 
+const ETHNICITY_NAME = {
+  AF: 'African',
+  EU: 'Europen',
+}
 
 class Charts extends Component {
 
@@ -37,16 +41,7 @@ class Charts extends Component {
   render() {
     const { isEmpty, values } = this.props
 
-    const data = Object.entries(values.map).map(([assay, valuesByType]) =>
-      ({
-        assay,
-        data: [
-          { name: 'Hom Ref', data: valuesByType.REF || [] },
-          { name: 'Het',     data: valuesByType.HET || [] },
-          { name: 'Hom Alt', data: valuesByType.HOM || [] }
-        ]
-      })
-    )
+    const data = getDataFromValues(values)
 
     const groups = makeSubgroups(data, 2)
 
@@ -94,18 +89,17 @@ class Charts extends Component {
             groups.map((group, i) =>
               <Row key={i}>
                 {
-                  group.map(({ assay, data }) =>
+                  group.map(({ assay, ethnicity, data }) =>
                     <Col sm='6' key={assay}>
                       <AutoSizer disableHeight>
                         {
                           ({ width }) =>
                             <div key={assay + '_element'} className='Charts__box' style={{ width }}>
                               <BoxPlot
-                                title={assay}
+                                title={ethnicity ? `${assay} - ${ETHNICITY_NAME[ethnicity]}` : assay}
                                 data={data}
                                 width={width}
                                 height={300}
-                                padding={40}
                                 domain={getDomain(data)}
                               />
                               <Button className='Charts__merge' onClick={() => this.onClickMerge(assay)}>
@@ -169,6 +163,36 @@ function makeSubgroups(list, n) {
 
     return acc
   }, [])
+}
+
+function getDataFromValues(values) {
+  if (process.env.REACT_APP_GROUP_BY_ETHNICITY === undefined)
+    return Object.entries(values.map).map(([assay, valuesByType]) =>
+          ({
+            assay,
+            data: [
+              { name: 'Hom Ref', data: valuesByType.REF || [] },
+              { name: 'Het',     data: valuesByType.HET || [] },
+              { name: 'Hom Alt', data: valuesByType.HOM || [] }
+            ]
+          })
+        )
+
+  return Object.entries(values.map)
+  .map(([assay, valuesByEthnicity]) =>
+    Object.entries(valuesByEthnicity).map(([ethnicity, valuesByType]) =>
+      ({
+        assay,
+        ethnicity,
+        data: [
+          { name: 'Hom Ref', data: valuesByType.REF || [] },
+          { name: 'Het',     data: valuesByType.HET || [] },
+          { name: 'Hom Alt', data: valuesByType.HOM || [] }
+        ]
+      })
+    )
+  )
+  .flat()
 }
 
 

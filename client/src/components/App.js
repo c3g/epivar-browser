@@ -63,7 +63,7 @@ class App extends Component {
 
         <Charts />
 
-    </div>
+      </div>
     )
   }
 }
