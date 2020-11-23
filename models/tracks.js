@@ -53,6 +53,7 @@ function values(chrom, position, start, end) {
         value: track.value,
         data: ((((value - summary.min) / (summary.max - summary.min)) * (range.end - range.start)) + range.start),
         originalData: value,
+        track: track,
       }))
     ))
     .then(values => values.filter(v => v !== undefined))
@@ -62,32 +63,53 @@ function values(chrom, position, start, end) {
 function group(tracks) {
   const tracksByAssay = {}
   Object.entries(groupBy(prop('assay'), tracks)).forEach(([assay, tracks]) => {
-    tracksByAssay[assay] = groupBy(prop('type'), tracks)
+    if (!config.tracks.groupByEthnicity) {
+      tracksByAssay[assay] = groupBy(prop('type'), tracks)
+      return
+    }
+
+    Object.entries(groupBy(x => x.track.ethnicity, tracks)).forEach(([ethnicity, tracks]) => {
+      if (!tracksByAssay[assay])
+        tracksByAssay[assay] = {}
+      tracksByAssay[assay][ethnicity] = groupBy(prop('type'), tracks)
+    })
   })
   return tracksByAssay
 }
 
 function clean(/* mut */ tracksByAssay) {
   Object.keys(tracksByAssay).forEach(assay => {
-    const tracksByType = tracksByAssay[assay]
-    if (tracksByType.HET === undefined && tracksByType.HOM === undefined)
-      delete tracksByAssay[assay]
+    if (!config.tracks.groupByEthnicity) {
+      const tracksByType = tracksByAssay[assay]
+      if (tracksByType.HET === undefined && tracksByType.HOM === undefined)
+        delete tracksByAssay[assay]
+    }
+    else {
+      const tracksByEthnicity = tracksByAssay[assay]
+      if (Object.values(tracksByEthnicity).every(ts => ts.HET === undefined && ts.HOM === undefined)) {
+        delete tracksByAssay[assay]
+      }
+    }
   })
   return tracksByAssay
 }
 
 function calculate(tracksByAssay) {
   Object.keys(tracksByAssay).forEach(assay => {
-    const tracksByType = tracksByAssay[assay]
-
-    if (tracksByType.HET === undefined && tracksByType.HOM === undefined) {
-      delete tracksByAssay[assay]
-      return
+    if (!config.tracks.groupByEthnicity) {
+      const tracksByType = tracksByAssay[assay]
+      tracksByType.HET = derive(tracksByType.HET || [])
+      tracksByType.HOM = derive(tracksByType.HOM || [])
+      tracksByType.REF = derive(tracksByType.REF || [])
     }
-
-    tracksByType.HET = derive(tracksByType.HET || [])
-    tracksByType.HOM = derive(tracksByType.HOM || [])
-    tracksByType.REF = derive(tracksByType.REF || [])
+    else {
+      Object.keys(tracksByAssay[assay]).forEach(ethnicity => {
+        const tracksByType = tracksByAssay[assay][ethnicity]
+        tracksByType.HET = derive(tracksByType.HET || [])
+        tracksByType.HOM = derive(tracksByType.HOM || [])
+        tracksByType.REF = derive(tracksByType.REF || [])
+      })
+    }
   })
 
   return tracksByAssay
@@ -97,12 +119,8 @@ function merge(tracks, { chrom, start, end }) {
 
   const tracksByAssay = clean(group(tracks))
 
-  return Promise.all(Object.entries(tracksByAssay).map(([assay, tracksByType]) => {
-
-    if (tracksByType.HET === undefined && tracksByType.HOM === undefined)
-      return undefined
-
-    return Promise.all(
+  const mergeTracksByType = tracksByType =>
+    Promise.all(
       [
         tracksByType.REF || [],
         tracksByType.HET || [],
@@ -113,18 +131,50 @@ function merge(tracks, { chrom, start, end }) {
           undefined
       )
     )
-    .then(output => {
-      return {
-        assay,
-        tracks,
-        output: {
-          REF: output[0],
-          HET: output[1],
-          HOM: output[2],
-        }
-      }
-    })
-  }))
+
+  let promisedTracks
+
+  if (!config.tracks.groupByEthnicity) {
+    promisedTracks = 
+      Object.entries(tracksByAssay).map(([assay, tracksByType]) => {
+        return mergeTracksByType(tracksByType)
+        .then(output => {
+          return {
+            assay,
+            ethnicity: undefined,
+            tracks,
+            output: {
+              REF: output[0],
+              HET: output[1],
+              HOM: output[2],
+            }
+          }
+        })
+      })
+  }
+  else {
+    promisedTracks = 
+      Object.entries(tracksByAssay).map(([assay, tracksByEthnicity]) => {
+        return Object.entries(tracksByEthnicity).map(([ethnicity, tracksByType]) => {
+          return mergeTracksByType(tracksByType)
+          .then(output => {
+            return {
+              assay,
+              ethnicity,
+              tracks,
+              output: {
+                REF: output[0],
+                HET: output[1],
+                HOM: output[2],
+              }
+            }
+          })
+        })
+        .flat()
+      })
+  }
+
+  return Promise.all(promisedTracks)
   .then(results => results.filter(Boolean))
 }
 
