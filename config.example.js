@@ -30,6 +30,12 @@ module.exports = {
    *     path: path.join(__dirname, 'data/metadata.json'),
    *   },
    * }, */
+  samples: {
+    filter: '1 = 1',
+  },
+  tracks: {
+    groupByEthnicity: false,
+  },
   merge: {
     bin: ''
   },

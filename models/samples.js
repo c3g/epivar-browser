@@ -17,6 +17,12 @@ module.exports = {
   queryMap,
   getChroms,
   getPositions,
+
+  normalizeSamples,
+  normalizeSamplesMap,
+  getCounts,
+  parseLines,
+  parseCSV,
 }
 
 function query(chrom, start, end = start + 1) {
@@ -25,15 +31,16 @@ function query(chrom, start, end = start + 1) {
   const query = escape`
     SELECT chrom, start, end, ref, alt, (gts).(*)
       FROM variants
-     WHERE chrom = ${chrom}
+     WHERE ${config.samples.filter}
+       AND chrom = ${chrom}
        AND start >= ${start}
        AND end   <= ${end}
   `
 
   return gemini(query, params)
-  .then(res =>
-    normalizeSamples(parseCSV(res.stdout))
-  )
+  .then(res => res.stdout)
+  .then(parseCSV)
+  .then(normalizeSamples)
 }
 
 function queryMap(chrom, start, end = start + 1) {
@@ -41,34 +48,20 @@ function queryMap(chrom, start, end = start + 1) {
 
   const query = escape`
     SELECT chrom, start, end, ref, alt, (gts).(*)
-      FROM variants WHERE chrom = ${chrom} AND start >= ${start} AND end <= ${end}`
+      FROM variants
+     WHERE ${config.samples.filter}
+       AND chrom = ${chrom}
+       AND start >= ${start}
+       AND end <= ${end}`
 
-  return gemini(query, params).then(({ stdout }) => {
-    const res = parseCSV(stdout)[0]
-
-    const variants    = new Set(res.variant_samples.split(','))
-    const hetVariants = new Set(res.het_samples.split(','))
-
-    const newRes = { samples: {} }
-
-    for (let key in res) {
-      if (key.startsWith('gts.')) {
-        const donor = key.slice(4)
-        const value = res[key]
-        const variant = variants.has(donor)
-        const type = !variant ? 'REF' : value.charAt(0) !== value.charAt(2) ? 'HET' : 'HOM'
-        newRes.samples[donor] = { value, variant, type }
-      } else {
-        newRes[key] = res[key]
-      }
-    }
-
-    return newRes
-  })
+  return gemini(query, params)
+  .then(res => res.stdout)
+  .then(parseCSV)
+  .then(normalizeSamplesMap)
 }
 
 function getChroms() {
-  return gemini(`SELECT DISTINCT(chrom) FROM variants`)
+  return gemini(`SELECT DISTINCT(chrom) FROM variants WHERE ${config.samples.filter}`)
     .then(parseLines)
 }
 
@@ -76,7 +69,8 @@ function getPositions(chrom, start) {
   return gemini(escape`
     SELECT DISTINCT(start)
       FROM variants
-     WHERE chrom = ${chrom}
+     WHERE ${config.samples.filter}
+       AND chrom = ${chrom}
        AND start LIKE ${(start || '') + '%'}
      LIMIT 15
   `)
@@ -95,7 +89,6 @@ function gemini(query, params = '') {
 }
 
 function normalizeSamples(samples) {
-  const total = Object.keys(samples[0] || {}).filter(key => key.startsWith('gts.')).length
 
   samples.forEach(sample => {
 
@@ -109,14 +102,39 @@ function normalizeSamples(samples) {
 
   const first = samples[0] || {}
 
+  const total = samples.length
+
   return {
-    total,
+    total:  total,
     counts: getCounts(total, samples),
     chrom:  first.chrom,
     start:  first.start,
     end:    first.end,
     ref:    first.ref,
   }
+}
+
+function normalizeSamplesMap(samples) {
+  const res = samples[0]
+
+  const variants    = new Set(res.variant_samples.split(','))
+  const hetVariants = new Set(res.het_samples.split(','))
+
+  const newRes = { samples: {} }
+
+  for (let key in res) {
+    if (key.startsWith('gts.')) {
+      const donor = key.slice(4)
+      const value = res[key]
+      const variant = variants.has(donor)
+      const type = !variant ? 'REF' : value.charAt(0) !== value.charAt(2) ? 'HET' : 'HOM'
+      newRes.samples[donor] = { value, variant, type }
+    } else {
+      newRes[key] = res[key]
+    }
+  }
+
+  return newRes
 }
 
 function getCounts(total, samples) {
@@ -126,7 +144,8 @@ function getCounts(total, samples) {
     HOM: 0,
   }
   samples.forEach(sample => {
-    if (sample.value === `${sample.alt}|${sample.alt}`)
+    const [a, b] = splitSampleValue(sample)
+    if (a === sample.alt && b === sample.alt)
       counts.HOM += 1
     else
       counts.HET += 1
@@ -134,6 +153,19 @@ function getCounts(total, samples) {
   counts.REF = total - counts.HET - counts.HOM
 
   return counts
+}
+
+function splitSampleValue(sample) {
+  let parts = sample.value.split(/\||\//)
+
+  // Basic validation
+  if (parts.length !== 2)
+    throw new Error(`Invalid sample value: "${sample.value}" (sample ${sample.name})`)
+
+  if (!parts.every(p => /^\w$/.test(p)))
+    console.log('Invalid sample value:', sample.value)
+
+  return parts
 }
 
 function parseLines({ stdout }) {
@@ -159,7 +191,7 @@ function escapeValue(value) {
     case 'number':
       return value
     case 'string':
-      return "'" + value.replace(/'/g, "''") + "'"
+      return '"' + value.replace(/"/g, '\\"') + '"'
     case 'object':
       return value === null ? 'NULL' : "'" + (''+value).replace(/'/g, "''") + "'"
     default:
