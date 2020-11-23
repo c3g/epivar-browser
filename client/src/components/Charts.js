@@ -63,7 +63,14 @@ class Charts extends Component {
           {
             data.length > 0 &&
               <Row className='Charts__top'>
-                <Col xs='6'>
+                <Col xs='12'>
+                  <div className='Charts__legend'>
+                    The box plots display, per genotype, the average signal within the specified genomic region.
+                    Some donors may have more than one track. In those cases, only the first one is kept.<br/>
+                    Some data might be <span className='Charts__hidden'>Hidden</span> for privacy reasons (when <code>n ≤ 3</code>).
+                  </div>
+                </Col>
+                <Col xs='12'>
                   <div className='Charts__controls d-flex'>
                     <InputGroup>
                       <InputGroupAddon addonType='prepend'>Merge window size</InputGroupAddon>
@@ -79,13 +86,6 @@ class Charts extends Component {
                       The Merge buttons below merge tracks for each experiment/category together, into a single track.
                       This input field allows you to choose the window size that will be merged, in bases.
                     </UncontrolledTooltip>
-                  </div>
-                </Col>
-                <Col xs='6'>
-                  <div className='Charts__legend'>
-                    The box plots display, per genotype, the average signal within the specified genomic region.
-                    Some donors may have more than one track. In those cases, only the first one is kept.<br/>
-                    Some data might be <span className='Charts__hidden'>Hidden</span> for privacy reasons (when <code>n ≤ 3</code>).
                   </div>
                 </Col>
               </Row>

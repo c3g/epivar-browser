@@ -268,7 +268,7 @@ body {
 }
 .Charts__merge {
   position: absolute;
-  top: 25px;
+  top: 0px;
   left: calc(100% - 73.5px - 5px);
 }
 .Charts__empty {
@@ -282,7 +282,6 @@ body {
   position: relative;
   padding: 3em 1em 1em;
   border: 1px solid #d8d8d8;
-  margin: 1rem 0 0;
 }
 .Charts__legend::before {
   position: absolute;
