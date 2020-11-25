@@ -1,0 +1,19 @@
+[Unit]
+Description=varwig
+After=network.target
+
+[Service]
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node /opt/varwig/bin/www
+Restart=always
+SyslogIdentifier=varwig
+User=root
+Group=root
+
+
+TimeoutStopSec=30
+
+
+[Install]
+WantedBy=multi-user.target
+

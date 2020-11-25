@@ -6,32 +6,19 @@ A web application to search for variant and merge bigWig tracks.
 
 Things to do:
  - Install `bigWigMergePlus`: https://github.com/c3g/kent/releases
+ - Install `gemini`: https://github.com/c3g/kent/releases
+ - `cp config.example.js config.js` and adapt the config
+ - `mkdir -p data/mergedTracks`
  - Generate or copy `gemini.db` file
- - Mount `/ihec_data` somewhere
- - Copy IHEC database or make sure it's accessible for the application
+ - Add data:
+   - Mount tracks data somewhere
+   - IHEC:
+     - Copy IHEC database or make sure it's accessible for the application
+   - Metadata:
+     - Add `data/metadata.json`
 
-A `config.js` must be placed at the root of the application, with the following schema:
+External setup:
+ - Setup nginx or apache proxy
+ - Setup systemd service (see `./varwig.service`)
 
-```javascript
-module.exports = {
-  paths: {
-    // Location of the varwig DB, mainly for storing sessions
-    db: '/home/rgregoir/data/varwig.db',
-    // Location of the gemini DB, passed to gemini-query
-    gemini: '/home/rgregoir/data/gemini.db',
-    // Path to /ihec_data tracks
-    tracks: '/home/rgregoir/data/tracks',
-    // Path to an empty folder to store merged tracks
-    mergedTracks: '/home/rgregoir/data/mergedTracks',
-  },
-  mysql: { // details to connect to the IHEC database
-    host:     'localhost',
-    user:     'root',
-    password: 'secret',
-    database: 'edcc',
-  },
-  merge: { // install location of Kent tools
-    bin: '/usr/local/bin'
-  },
-}
-```
+See `config.example.js` for details about the config.
