@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "build":           "rm -rf ./public && mkdir public && cd client && npm run build           && cp -r build/* ../public",
+    "watch": "nodemon -i client ./bin/www",
+    "build": "rm -rf ./public && mkdir public && cd client && npm run build           && cp -r build/* ../public",
     "build:ethnicity": "rm -rf ./public && mkdir public && cd client && npm run build:ethnicity && cp -r build/* ../public"
   },
   "dependencies": {
@@ -25,5 +26,8 @@
     "rambda": "^6.3.1",
     "serve-favicon": "~2.4.2",
     "sqlite3": "^4.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
