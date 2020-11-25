@@ -8,8 +8,6 @@ const FONT_SIZE = 14
 const BAR_WIDTH = 40
 const BAR_HALFWIDTH = BAR_WIDTH / 2
 
-const POINT_RADIUS = 1
-
 const PADDING = 40
 
 const textStyles = {
@@ -204,13 +202,13 @@ function Rect({ position, stroke = 'black', fill = 'rgba(230, 200, 20, 0.5)', ..
   )
 }
 
-function getStats(points) {
-  return {
-    start:  points[~~(points.length * 1/4)],
-    median: points[~~(points.length * 2/4)],
-    end:    points[~~(points.length * 3/4)],
-  }
-}
+/* function getStats(points) {
+ *   return {
+ *     start:  points[~~(points.length * 1/4)],
+ *     median: points[~~(points.length * 2/4)],
+ *     end:    points[~~(points.length * 3/4)],
+ *   }
+ * } */
 
 function middle(a, b) {
   const d = b - a

@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch =>
 class App extends Component {
 
   render() {
-    const { isLoading, samples, values } = this.props
+    const { isLoading, samples } = this.props
     const counts = Object.entries(samples.counts).map(([key, value]) => ({ key: key, count: value }))
 
     const showParams = !isLoading && samples.total > 0

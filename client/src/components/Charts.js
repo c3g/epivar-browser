@@ -143,7 +143,7 @@ function getDomain(categories) {
     start = 0
 
   start = Math.round(start * 100) / 100
-  end = end
+  // end = end
 
   return [
     start,

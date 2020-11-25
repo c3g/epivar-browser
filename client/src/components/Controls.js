@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import {
   Input,
   InputGroup,
-  InputGroupAddon,
   Button,
   UncontrolledDropdown,
   DropdownToggle,
@@ -213,7 +212,7 @@ class Controls extends React.Component {
   }
 
   render() {
-    const { isLoading, samples } = this.props
+    const { isLoading } = this.props
 
     return (
       <div className='Controls d-flex justify-content-center'>
