@@ -60,9 +60,16 @@ function queryMap(chrom, start, end = start + 1) {
   .then(normalizeSamplesMap)
 }
 
+let cachedChroms = undefined
 function getChroms() {
+  if (cachedChroms)
+    return Promise.resolve(cachedChroms)
   return gemini(`SELECT DISTINCT(chrom) FROM variants WHERE ${config.samples.filter}`)
     .then(parseLines)
+    .then(chroms => {
+      cachedChroms = chroms
+      return chroms
+    })
 }
 
 function getPositions(chrom, start) {
