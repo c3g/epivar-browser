@@ -33,9 +33,6 @@ module.exports = {
   samples: {
     filter: '1 = 1',
   },
-  tracks: {
-    groupByEthnicity: false,
-  },
   merge: {
     bin: ''
   },
