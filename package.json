@@ -25,6 +25,7 @@
     "mysql": "^2.15.0",
     "rambda": "^6.3.1",
     "serve-favicon": "~2.4.2",
+    "sqlite-objects": "^2.0.3",
     "sqlite3": "^4.2.0"
   },
   "devDependencies": {

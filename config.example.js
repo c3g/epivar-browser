@@ -11,6 +11,8 @@ module.exports = {
     gemini: '/home/rgregoir/data/gemini.db',
     tracks: '/home/rgregoir/data/tracks',
     mergedTracks: '/home/rgregoir/data/mergedTracks',
+    peaks: '/home/rgregoir/data/peaks.sqlite',
+    genes: '/home/rgregoir/data/genes.sqlite',
   },
   // source: either 'ihec' or 'metadata'
   /* source: {
