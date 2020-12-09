@@ -16,6 +16,7 @@ import { fetchChroms } from './actions.js'
 
 
 const initialState = {}
+// const initialState = localStorage.state ? JSON.parse(localStorage.state) : {}
 
 const store =
   (process.env.NODE_ENV === 'production')
@@ -30,6 +31,10 @@ render(
 )
 
 store.dispatch(fetchChroms())
+
+window.addEventListener('unload', () => {
+  localStorage.state = JSON.stringify(store.getState())
+})
 
 
 // Register service worker

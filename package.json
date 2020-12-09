@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "npm run watch",
+    "server": "node ./bin/www",
     "watch": "nodemon -i client ./bin/www",
     "build": "rm -rf ./public && mkdir public && cd client && npm run build && cp -r build/* ../public"
   },
