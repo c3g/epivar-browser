@@ -31,7 +31,7 @@ function query(chrom, start, end = start + 1) {
   const query = escape`
     SELECT chrom, start, end, ref, alt, (gts).(*)
       FROM variants
-     WHERE ${config.samples.filter}
+     WHERE ${[config.samples.filter]}
        AND chrom = ${chrom}
        AND start >= ${start}
        AND end   <= ${end}
@@ -49,7 +49,7 @@ function queryMap(chrom, start, end = start + 1) {
   const query = escape`
     SELECT chrom, start, end, ref, alt, (gts).(*)
       FROM variants
-     WHERE ${config.samples.filter}
+     WHERE ${[config.samples.filter]}
        AND chrom = ${chrom}
        AND start >= ${start}
        AND end <= ${end}`
@@ -76,7 +76,7 @@ function getPositions(chrom, start) {
   return gemini(escape`
     SELECT DISTINCT(start)
       FROM variants
-     WHERE ${config.samples.filter}
+     WHERE ${[config.samples.filter]}
        AND chrom = ${chrom}
        AND start LIKE ${(start || '') + '%'}
      LIMIT 15
@@ -204,6 +204,8 @@ function escape(strings, ...args) {
 }
 
 function escapeValue(value) {
+  if (Array.isArray(value))
+    return value[0]
   switch (typeof value) {
     case 'number':
       return value
