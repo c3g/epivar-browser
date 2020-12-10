@@ -101,7 +101,6 @@ function gemini(query, params = '') {
 
   // query $PATH --header --show-samples --format sampledetail -q "SELECT chrom, start, end, ref, alt, (gts).(*) from variants where chrom = \"chr1\" and start <= 20000"'
 
-  console.log(command)
   return exec(command)
 }
 
