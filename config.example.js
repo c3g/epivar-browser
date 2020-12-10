@@ -38,4 +38,10 @@ module.exports = {
   merge: {
     bin: ''
   },
+
+  /* Configuration for development related options */
+  development: {
+    /** @type Array<String> cached list of chroms */
+    chroms: undefined,
+  },
 }

@@ -60,7 +60,7 @@ function queryMap(chrom, start, end = start + 1) {
   .then(normalizeSamplesMap)
 }
 
-let cachedChroms = undefined
+let cachedChroms = config.development.chroms || undefined
 function getChroms() {
   if (cachedChroms)
     return Promise.resolve(cachedChroms)
