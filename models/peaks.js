@@ -9,10 +9,10 @@ const config = require('../config')
 const database = new Database(config.paths.peaks)
 
 module.exports = {
-  find,
+  query,
 }
 
-function find(chrom, position) {
+function query(chrom, position) {
   return database.findAll(
     `
      SELECT *
