@@ -135,7 +135,13 @@ function YAxis({ domain, step, x, y, height }) {
               <Line position={[[x - 5, y], [x + 5, y]]} />
               {
                 Math.abs(lastY - y) > FONT_SIZE &&
-                  <text x={5} y={scale(point)} dy={FONT_SIZE / 4} fontSize={FONT_SIZE} fontFamily='monospace'>
+                <text
+                  x={5 + (5 - text.length) * 8}
+                  y={scale(point)}
+                  dy={FONT_SIZE / 4}
+                  fontSize={FONT_SIZE}
+                  fontFamily='monospace'
+                >
                     { text }
                   </text>
               }
@@ -216,6 +222,9 @@ function middle(a, b) {
 }
 
 function getDomain(categories) {
+  if (categories.length === 0)
+    return [0, 10]
+
   let min =  Infinity
   let max = -Infinity
 
