@@ -302,6 +302,9 @@ body {
 }
 
 
+.Params {
+  color: white;
+}
 .Params th,
 .Params td {
   width: 100px;
