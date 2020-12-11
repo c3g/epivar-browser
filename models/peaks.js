@@ -20,6 +20,7 @@ function query(chrom, position) {
       WHERE chrom = @chrom
         AND position = @position
     `,
-    { chrom, position }
+    // FIXME position + 1 is a hack because the data is offset by 1
+    { chrom, position: position + 1 }
   )
 }

@@ -16,11 +16,13 @@ export const samples   = createFetchActions(k.SAMPLES)
 export const chroms    = createFetchActions(k.CHROMS)
 export const positions = createFetchActions(k.POSITIONS)
 export const values    = createFetchActions(k.VALUES)
+export const peaks     = createFetchActions(k.PEAKS)
 
 export const fetchSamples   = createFetchFunction(api.fetchSamples,   samples,   'samples')
 export const fetchChroms    = createFetchFunction(api.fetchChroms,    chroms,    'chroms')
 export const fetchPositions = createFetchFunction(api.fetchPositions, positions, 'positions')
 export const fetchValues    = createFetchFunction(api.fetchValues,    values,    'values')
+export const fetchPeaks     = createFetchFunction(api.fetchPeaks,     peaks,     'peaks')
 
 
 export function changePosition(value) {
@@ -39,11 +41,20 @@ export function doSearch() {
     const { ui: { chrom, position, windowStart, windowEnd } } = getState()
 
     if (chrom && position) {
+      const query = { chrom, position }
+
       dispatch(setRange(windowEnd - windowStart))
-      dispatch(fetchSamples({ chrom, position }))
+      dispatch(fetchSamples(query))
+      dispatch(fetchPeaks(query))
       // We create a 1s delay here to allow the first request to finish sooner
       dispatch(values.request())
-      setTimeout(() => dispatch(fetchValues({ chrom, position, start: windowStart, end: windowEnd })), 1000)
+      setTimeout(() =>
+        dispatch(fetchValues({
+          chrom,
+          position,
+          start: windowStart,
+          end: windowEnd
+        })), 1000)
     }
   }
 }

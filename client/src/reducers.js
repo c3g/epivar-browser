@@ -103,10 +103,27 @@ function valuesReducer(state = createDefaultMap(), action) {
   }
 }
 
+function peaksReducer(state = createDefaultList(), action) {
+  switch (action.type) {
+    case k.PEAKS.REQUEST: {
+      return { ...state, isLoading: true }
+    }
+    case k.PEAKS.RECEIVE: {
+      return { ...state, isLoading: false, map: action.payload }
+    }
+    case k.PEAKS.ERROR: {
+      return { ...state, isLoading: false }
+    }
+    default:
+      return state;
+  }
+}
+
 export const rootReducer = combineReducers({
   ui: uiReducer,
   samples: samplesReducer,
   chroms: chromsReducer,
   positions: positionsReducer,
   values: valuesReducer,
+  peaks: peaksReducer,
 })

@@ -6,8 +6,12 @@ import axios from 'axios'
 
 import queryString from './helpers/queryString'
 
-export const peaks = {
-  query: params => get('/peaks/query', params),
+/*
+ * API functions
+ */
+
+export function fetchPeaks(params) {
+  return get('/peaks/query', params)
 }
 
 export function fetchSamples(params) {
@@ -36,6 +40,8 @@ export function createSession(params) {
 }
 
 
+// Helpers
+
 function fetchAPI(url, params, options = {}) {
   let { method = 'get', ...other } = options
 
@@ -59,7 +65,7 @@ function fetchAPI(url, params, options = {}) {
     if (data.ok)
       return Promise.resolve(data.data)
     else
-      return Promise.reject(data.message)
+      return Promise.reject(new Error(data.message))
   })
 }
 
