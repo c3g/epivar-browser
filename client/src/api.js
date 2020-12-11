@@ -6,6 +6,10 @@ import axios from 'axios'
 
 import queryString from './helpers/queryString'
 
+export const peaks = {
+  query: params => get('/peaks/query', params),
+}
+
 export function fetchSamples(params) {
   return get('/samples/query', params)
 }
