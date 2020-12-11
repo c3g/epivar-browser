@@ -9,7 +9,6 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  UncontrolledTooltip,
 } from 'reactstrap'
 
 import Icon from './Icon.js'
@@ -243,10 +242,6 @@ class Controls extends React.Component {
             onChange={ev => this.props.setWindowEnd(+ev.target.value)}
           />
         </InputGroup>
-        <Icon id='search-help-tooltip-icon' name='question-circle' className='Controls__help' />
-        <UncontrolledTooltip placement='right' target='search-help-tooltip-icon'>
-          These inputs allows you to control the window size for which to examine track values.
-        </UncontrolledTooltip>
       </div>
     )
   }
