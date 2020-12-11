@@ -14,8 +14,6 @@ import {
 import Icon from './Icon.js'
 import {
   setChrom,
-  setWindowStart,
-  setWindowEnd,
   doSearch,
   changePosition,
   fetchSamples,
@@ -38,8 +36,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({
     setChrom,
-    setWindowStart,
-    setWindowEnd,
     doSearch,
     changePosition,
     fetchSamples,
@@ -67,23 +63,13 @@ class Controls extends React.Component {
   }
 
   onFocus = (ev) => {
-    this.previousValue = ev.target.value
-
     setTimeout(() => this.setState({ open: true }), 100)
   }
 
   onBlur = (ev) => {
-    const didChange = ev.target.value !== this.previousValue
-    const position = didChange ? Number(ev.target.value) : null
-
     setTimeout(() => {
       this.setState({ open: false })
-
-      if (didChange && !Number.isNaN(position) && position !== 0 && !this.props.isLoading) {
-        this.props.setWindowStart(Math.max(0, position - 5000))
-        this.props.setWindowEnd(position + 5000)
-      }
-    }, 200)
+    }, 200) 
   }
 
   onKeyDown = ev => {
@@ -140,8 +126,6 @@ class Controls extends React.Component {
     const { positions: { list } } = this.props
 
     const position = Number(list[index])
-    this.props.setWindowStart(Math.max(0, position - 5000))
-    this.props.setWindowEnd(position + 5000)
     this.props.changePosition(position)
     this.props.doSearch()
   }
@@ -218,10 +202,7 @@ class Controls extends React.Component {
         <InputGroup>
           { this.renderChroms() }
           { this.renderPosition() }
-        </InputGroup>
-
-        <InputGroup>
-          <div className='input-group-prepend'>
+          <div className='input-group-append'>
             <Button className='Controls__search'
               onClick={this.onClickSearch}
               disabled={isLoading}
@@ -229,18 +210,6 @@ class Controls extends React.Component {
               <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
             </Button>
           </div>
-          <Input
-            type='number'
-            className='Controls__windowStart'
-            value={this.props.windowStart}
-            onChange={ev => this.props.setWindowStart(+ev.target.value)}
-          />
-          <Input
-            type='number'
-            className='Controls__windowEnd'
-            value={this.props.windowEnd}
-            onChange={ev => this.props.setWindowEnd(+ev.target.value)}
-          />
         </InputGroup>
       </div>
     )

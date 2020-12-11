@@ -338,6 +338,9 @@ body {
 .Params.visible tr > *:nth-child(9) { transition: 0.45s all 0.25s cubic-bezier(0.51, 0.11, 0.64, 1.41);  }
 
 
+.PeakResults {
+  padding-top: 1em;
+}
 .PeakResults__empty {
   font-size: 24px;
   font-weight: bold;
@@ -387,7 +390,7 @@ body {
   text-align: left;
   height: auto;
   background: transparent;
-  width: 100%;
+  width: 50vw;
   min-width: 0 !important;
   max-width: none !important;
   padding: .75rem 0 !important;
@@ -395,11 +398,6 @@ body {
   background-clip: padding-box;
   border: 1px solid rgba(0,0,0,.1);
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175);
-}
-@media (min-width: 768px) {
-  .autocomplete__dropdown-menu {
-    width: 175%;
-  }
 }
 .autocomplete__item {
   color: black;

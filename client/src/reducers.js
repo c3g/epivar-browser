@@ -1,9 +1,16 @@
 import { combineReducers } from 'redux'
-import * as k from './constants/ActionTypes.js'
-import { createDefaultUI, createDefaultList, createDefaultMap } from './models'
+import { set, merge } from 'object-path-immutable'
+import * as k from './constants/ActionTypes'
 
 
-function uiReducer(state = createDefaultUI(), action, data) {
+const defaultUI = {
+  chrom: 'chr11',
+  position: '70310555',
+  range: 200000,
+  windowStart: 0,
+  windowEnd: 100,
+}
+function uiReducer(state = defaultUI, action, data) {
   switch (action.type) {
     case k.SET_SEARCH: {
       return { ...state, search: action.payload }
@@ -16,12 +23,6 @@ function uiReducer(state = createDefaultUI(), action, data) {
     }
     case k.SET_RANGE: {
       return { ...state, range: action.payload }
-    }
-    case k.SET_WINDOW_START: {
-      return { ...state, windowStart: action.payload }
-    }
-    case k.SET_WINDOW_END: {
-      return { ...state, windowEnd: action.payload }
     }
     default:
       return state;
@@ -56,7 +57,13 @@ function samplesReducer(state = defaultSamples, action) {
   }
 }
 
-function chromsReducer(state = createDefaultList(), action) {
+const defaultChroms = {
+  isLoading: false,
+  isLoaded: false,
+  total: 0,
+  list: [],
+}
+function chromsReducer(state = defaultChroms, action) {
   switch (action.type) {
     case k.CHROMS.REQUEST: {
       return { ...state, isLoading: true }
@@ -72,7 +79,13 @@ function chromsReducer(state = createDefaultList(), action) {
   }
 }
 
-function positionsReducer(state = createDefaultList(), action) {
+const defaultPositions = {
+  isLoading: false,
+  isLoaded: false,
+  total: 0,
+  list: [],
+}
+function positionsReducer(state = defaultPositions, action) {
   switch (action.type) {
     case k.POSITIONS.REQUEST: {
       return { ...state, isLoading: true }
@@ -88,23 +101,34 @@ function positionsReducer(state = createDefaultList(), action) {
   }
 }
 
-function valuesReducer(state = createDefaultMap(), action) {
+const defaultValues = {
+  isLoading: false,
+  isLoaded: false,
+  itemsByID: {},
+}
+function valuesReducer(state = defaultValues, action) {
   switch (action.type) {
     case k.VALUES.REQUEST: {
-      return { ...state, isLoading: true }
+      return merge(state, ['itemsByID', action.meta.id], { isLoading: true, isLoaded: false })
     }
     case k.VALUES.RECEIVE: {
-      return { ...state, isLoading: false, isLoaded: true, map: action.payload }
+      return merge(state, ['itemsByID', action.meta.id], { isLoading: false, isLoaded: true, ...action.payload })
     }
     case k.VALUES.ERROR: {
-      return { ...state, isLoading: false }
+      return merge(state, ['itemsByID', action.meta.id], { isLoading: false, message: action.payload.message })
     }
     default:
       return state;
   }
 }
 
-function peaksReducer(state = createDefaultList(), action) {
+const defaultPeaks = {
+  isLoading: false,
+  isLoaded: false,
+  total: 0,
+  list: [],
+}
+function peaksReducer(state = defaultPeaks, action) {
   switch (action.type) {
     case k.PEAKS.REQUEST: {
       return { ...state, isLoading: true }

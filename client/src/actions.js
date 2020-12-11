@@ -8,8 +8,6 @@ export const setSearch      = createAction(k.SET_SEARCH)
 export const setChrom       = createAction(k.SET_CHROM)
 export const setPosition    = createAction(k.SET_POSITION)
 export const setRange       = createAction(k.SET_RANGE)
-export const setWindowStart = createAction(k.SET_WINDOW_START)
-export const setWindowEnd   = createAction(k.SET_WINDOW_END)
 export const handleError    = createAction(k.HANDLE_ERROR)
 
 export const samples   = createFetchActions(k.SAMPLES)
@@ -18,11 +16,11 @@ export const positions = createFetchActions(k.POSITIONS)
 export const values    = createFetchActions(k.VALUES)
 export const peaks     = createFetchActions(k.PEAKS)
 
-export const fetchSamples   = createFetchFunction(api.fetchSamples,   samples,   'samples')
-export const fetchChroms    = createFetchFunction(api.fetchChroms,    chroms,    'chroms')
-export const fetchPositions = createFetchFunction(api.fetchPositions, positions, 'positions')
-export const fetchValues    = createFetchFunction(api.fetchValues,    values,    'values')
-export const fetchPeaks     = createFetchFunction(api.fetchPeaks,     peaks,     'peaks')
+export const fetchSamples   = createFetchFunction(api.fetchSamples,   samples)
+export const fetchChroms    = createFetchFunction(api.fetchChroms,    chroms)
+export const fetchPositions = createFetchFunction(api.fetchPositions, positions)
+export const fetchValues    = createFetchFunction(api.fetchValues,    values)
+export const fetchPeaks     = createFetchFunction(api.fetchPeaks,     peaks)
 
 
 export function changePosition(value) {
@@ -38,23 +36,11 @@ export function changePosition(value) {
 
 export function doSearch() {
   return (dispatch, getState) => {
-    const { ui: { chrom, position, windowStart, windowEnd } } = getState()
+    const { ui: { chrom, position } } = getState()
 
     if (chrom && position) {
       const query = { chrom, position }
-
-      dispatch(setRange(windowEnd - windowStart))
-      dispatch(fetchSamples(query))
       dispatch(fetchPeaks(query))
-      // We create a 1s delay here to allow the first request to finish sooner
-      dispatch(values.request())
-      setTimeout(() =>
-        dispatch(fetchValues({
-          chrom,
-          position,
-          start: windowStart,
-          end: windowEnd
-        })), 1000)
     }
   }
 }
@@ -92,23 +78,31 @@ export function mergeTracks(assay) {
 }
 
 
+// Helpers
+
 function createFetchActions(namespace) {
   return {
-    request: createAction(namespace.REQUEST),
-    receive: createAction(namespace.RECEIVE),
-    error: createAction(namespace.ERROR),
+    request: createAction(namespace.REQUEST, undefined),
+    receive: createAction(namespace.RECEIVE, undefined),
+    error: createAction(namespace.ERROR, undefined),
   }
 }
 
-function createFetchFunction(fn, actions, prop) {
-  return function (...args) {
+function createFetchFunction(fn, actions) {
+  return function (params, meta) {
     return (dispatch, getState) => {
 
-      dispatch(actions.request())
+      dispatch(withMeta(actions.request(), meta))
 
-      fn(...args)
-      .then(result => dispatch(actions.receive(result)))
-      .catch(err =>   dispatch(actions.error(err)))
+      fn(params)
+      .then(result => dispatch(withMeta(actions.receive(result), meta)))
+      .catch(err =>   dispatch(withMeta(actions.error(err), meta)))
     }
   }
+}
+
+function withMeta(action, meta) {
+  if (meta)
+    action.meta = meta
+  return action
 }

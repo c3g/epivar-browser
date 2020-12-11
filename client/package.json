@@ -7,6 +7,7 @@
     "bootstrap": "^4.0.0-beta.2",
     "classname": "0.0.0",
     "font-awesome": "^4.7.0",
+    "object-path-immutable": "^4.1.1",
     "rambda": "^6.4.0",
     "ramda": "^0.24.1",
     "react": "^16.14.0",

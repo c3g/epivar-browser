@@ -10,21 +10,48 @@ import {
 import Icon from './Icon'
 import AutoSizer from './AutoSizer'
 import BoxPlot from './BoxPlot'
-import { setRange, mergeTracks } from '../actions'
+import { fetchValues } from '../actions'
 
 const mapStateToProps = state => ({
+  valuesByID: state.values.itemsByID
 })
 const mapDispatchToProps =
-  { setRange, mergeTracks }
+  { fetchValues }
 
 
 class PeakAssay extends Component {
+  static getDerivedStateFromProps(props) {
+    const p = props.peaks[0]
+    return { selectedPeak: p ? p.id : undefined }
+  }
+
+  state = {
+    selectedPeak: undefined,
+  }
 
   onChangeFeature = (p) => {
+    const peakID = p.id
+
+    this.setState({ selectedPeak: peakID })
   }
 
   render() {
-    const { assay, peaks } = this.props
+    const { assay, peaks, valuesByID } = this.props
+    const { selectedPeak } = this.state
+    const p = peaks.find(p => p.id === selectedPeak)
+    const values = valuesByID[selectedPeak]
+
+    console.log(selectedPeak, peaks)
+    if (!values && p) {
+      const params = {
+        chrom: p.chrom,
+        position: p.position,
+      }
+      const meta = {
+        id: p.id,
+      }
+      this.props.fetchValues(params, meta)
+    }
 
     return (
       <Container className='PeakAssay'>
@@ -50,7 +77,7 @@ class PeakAssay extends Component {
                     title={assay}
                     data={[]}
                     width={width}
-                    height={300}
+                    height={width}
                   />
               }
             </AutoSizer>
@@ -86,7 +113,7 @@ function PeaksTable({ peaks, onChangeFeature}) {
               role='button'
               onClick={() => onChangeFeature(p)}
             >
-              <td className='PeaksTable__feature'>{formatFeature(p.feature)}</td>
+              <td className='PeaksTable__feature'>{p.gene || formatFeature(p.feature)}</td>
               <td>{p.condition.split(',').map(conditionName).join(' | ')}</td>
               <td>{p.pvalue.toPrecision(5)}</td>
               <td><a href='#'>Tracks</a></td>

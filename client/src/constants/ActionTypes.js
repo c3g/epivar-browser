@@ -2,8 +2,6 @@ export const SET_SEARCH       = 'SET_SEARCH'
 export const SET_CHROM        = 'SET_CHROM'
 export const SET_POSITION     = 'SET_POSITION'
 export const SET_RANGE        = 'SET_RANGE'
-export const SET_WINDOW_START = 'SET_WINDOW_START'
-export const SET_WINDOW_END   = 'SET_WINDOW_END'
 export const HANDLE_ERROR     = 'HANDLE_ERROR'
 
 export const SAMPLES   = createFetchConstants('SAMPLES')
