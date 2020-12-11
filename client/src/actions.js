@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions'
 
 import queryString from './helpers/queryString.js'
-import * as requests from './requests'
+import * as api from './api'
 import * as k from './constants/ActionTypes.js'
 
 export const setSearch      = createAction(k.SET_SEARCH)
@@ -17,10 +17,10 @@ export const chroms    = createFetchActions(k.CHROMS)
 export const positions = createFetchActions(k.POSITIONS)
 export const values    = createFetchActions(k.VALUES)
 
-export const fetchSamples   = createFetchFunction(requests.fetchSamples, samples, 'samples')
-export const fetchChroms    = createFetchFunction(requests.fetchChroms, chroms, 'chroms')
-export const fetchPositions = createFetchFunction(requests.fetchPositions, positions, 'positions')
-export const fetchValues    = createFetchFunction(requests.fetchValues, values, 'values')
+export const fetchSamples   = createFetchFunction(api.fetchSamples,   samples,   'samples')
+export const fetchChroms    = createFetchFunction(api.fetchChroms,    chroms,    'chroms')
+export const fetchPositions = createFetchFunction(api.fetchPositions, positions, 'positions')
+export const fetchValues    = createFetchFunction(api.fetchValues,    values,    'values')
 
 
 export function changePosition(value) {
@@ -67,7 +67,7 @@ export function mergeTracks(assay) {
       end
     }
 
-    requests.createSession(session)
+    api.createSession(session)
     .then(sessionID => {
       const params = {
         hubClear: `${window.location.origin}${process.env.PUBLIC_URL || ''}/api/ucsc/hub/${sessionID}`,
