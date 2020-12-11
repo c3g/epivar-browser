@@ -62,7 +62,6 @@ class Charts extends Component {
                   <div className='Charts__legend'>
                     The box plots display, per genotype, the average signal within the specified genomic region.
                     Some donors may have more than one track. In those cases, only the first one is kept.<br/>
-                    Some data might be <span className='Charts__hidden'>Hidden</span> for privacy reasons (when <code>n ≤ 3</code>).
                   </div>
                 </Col>
                 <Col xs='12'>

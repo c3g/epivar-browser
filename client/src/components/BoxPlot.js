@@ -57,14 +57,12 @@ function Bar({ data, x, y, height, domain }) {
 
   const yScale = scaleLinear().range([height, y]).domain(domain)
 
-  if (data.hidden || data.n === 0) {
-    const isHidden = data.n > 0
-
+  if (data.n === 0) {
     const delta = domain[1] - domain[0]
-    const text = isHidden ? 'Hidden' : 'Empty'
-    const fill = isHidden ? 'rgba(0, 0, 0, 0.05)' : 'rgba(0, 0, 0, 0)'
-    const border = isHidden ? '#888888' : '#bbbbbb'
-    const color = isHidden ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.1)'
+    const text = 'Empty'
+    const fill = 'rgba(0, 0, 0, 0)'
+    const border = '#bbbbbb'
+    const color = 'rgba(0, 0, 0, 0.1)'
 
     return (
       <g>

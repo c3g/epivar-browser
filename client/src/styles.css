@@ -293,13 +293,6 @@ body {
   font-weight: 500;
   content: 'LEGEND';
 }
-.Charts__hidden {
-  border: 1px dashed #aaa;
-  background-color: rgba(0, 0, 0, 0.03);
-  color: rgba(0, 0, 0, 0.4);
-  font-weight: bold;
-  padding: 0 3px;
-}
 
 
 .Params {

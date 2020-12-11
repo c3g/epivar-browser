@@ -174,15 +174,14 @@ function filterTracksUniqueDonorAssay(tracks) {
 
 function derive(list) {
   const n = list.length
-  const hidden = n <= 3
-  const dataPoints = hidden ? null : list.map(d => d.data).sort((a, b) => a - b)
+  const points = list.map(d => d.data).sort((a, b) => a - b)
 
   const data = {
     n: n,
-    hidden: hidden,
-    min: hidden ? null : Math.min(...dataPoints),
-    max: hidden ? null : Math.max(...dataPoints),
-    stats: hidden ? null : getStats(dataPoints),
+    min: Math.min(...points),
+    max: Math.max(...points),
+    stats: getStats(points),
+    points,
   }
 
   return data
