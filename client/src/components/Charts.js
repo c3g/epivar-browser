@@ -166,16 +166,21 @@ function makeSubgroups(list, n) {
 }
 
 function getDataFromValues(values) {
-  return Object.entries(values.map).map(([assay, valuesByType]) =>
-    ({
-      assay,
-      data: [
-        { name: 'Hom Ref', data: valuesByType.REF || [] },
-        { name: 'Het',     data: valuesByType.HET || [] },
-        { name: 'Hom Alt', data: valuesByType.HOM || [] }
-      ]
-    })
+  return Object.entries(values.map)
+  .map(([assay, valuesByEthnicity]) =>
+    Object.entries(valuesByEthnicity).map(([ethnicity, valuesByType]) =>
+      ({
+        assay,
+        ethnicity,
+        data: [
+          { name: 'Hom Ref', data: valuesByType.REF || [] },
+          { name: 'Het',     data: valuesByType.HET || [] },
+          { name: 'Hom Alt', data: valuesByType.HOM || [] }
+        ]
+      })
+    )
   )
+  .flat()
 }
 
 
