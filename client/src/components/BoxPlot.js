@@ -15,13 +15,15 @@ const textStyles = {
   textAnchor: 'middle',
 }
 
-export default function BoxPlot({ title, data, width, height, domain }) {
+export default function BoxPlot({ title, data, width, height }) {
   const dimension = {
     x: PADDING + 20,
     y: PADDING,
     width: width - 1 * PADDING,
     height: height - 1 * PADDING,
   }
+
+  const domain = getDomain(data)
 
   const step = (domain[1] - domain[0]) / 10
   const start = dimension.width / (data.length + 2)
@@ -212,3 +214,34 @@ function middle(a, b) {
   const d = b - a
   return a + d / 2
 }
+
+function getDomain(categories) {
+  let min =  Infinity
+  let max = -Infinity
+
+  categories.forEach(({ data }) => {
+    if (data.min < min)
+      min = data.min
+    if (data.max > max)
+      max = data.max
+  })
+
+  const delta = max !== min ? max - min : 1
+
+  const padding = Math.round(delta * 0.1 * 4) / 4
+
+  let start = min - padding
+  let end   = max + padding
+
+  if (0 < min && Math.abs(min) < (delta * 0.5))
+    start = 0
+
+  start = Math.round(start * 100) / 100
+  // end = end
+
+  return [
+    start,
+    end,
+  ]
+}
+
