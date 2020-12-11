@@ -9,7 +9,8 @@ create table peaks (
     id        integer primary key autoincrement,
     chrom     text,
     position  integer,
-    feature   text, -- gene or chrom_start_end
+    gene      text,
+    feature   text not null, -- chrom_start_end
     condition text,
     pvalue    double,
     assay     text

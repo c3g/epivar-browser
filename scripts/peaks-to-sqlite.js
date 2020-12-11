@@ -5,6 +5,7 @@
 const path = require('path')
 const xlsx = require('xlsx')
 const Database = require('sqlite-objects').Database
+const Gene = require('../models/genes')
 
 
 const inputPath = '/home/romgrk/data/flu-infection-peaks.xlsx'
@@ -18,11 +19,24 @@ const schemaPath = path.join(__dirname, '../models/peaks.sql')
   console.log(peaks)
   console.log(peaks.length, 'records')
 
+  await Promise.all(peaks.map(p => {
+    if (p.feature.startsWith('chr')) {
+      p.gene = null
+      return true
+    }
+
+    return Gene.findByName(p.feature)
+    .then(g => {
+      p.gene = p.feature
+      p.feature = [g.chrom, g.start, g.end, g.strand].join('_')
+    })
+  }))
+
   const db = new Database(outputPath, schemaPath)
   await db.ready
   await db.insertMany(
-    `INSERT INTO peaks (chrom, position, feature, condition, pvalue, assay)
-          VALUES       (@chrom, @position, @feature, @condition, @pvalue, @assay)`,
+    `INSERT INTO peaks (chrom, position, gene, feature, condition, pvalue, assay)
+          VALUES       (@chrom, @position, @gene, @feature, @condition, @pvalue, @assay)`,
     peaks
   )
   console.log('Done')
