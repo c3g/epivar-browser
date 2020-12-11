@@ -1,3 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="640" height="640"><defs><path d="M640 0C640 374.37 640 582.35 640 623.95C640 633.52 636.89 640.97 633.33 639.9C570.53 621 68.13 469.83 5.33 450.94C2.29 450.02 0 443.16 0 434.99C0 405.99 0 260.99 0 0L640 0Z" id="a4IeJqoxK2"></path><path d="M640 0C640 366.35 640 569.87 640 610.58C640 620.15 636.89 627.59 633.33 626.52C570.53 607.63 68.13 456.46 5.33 437.56C2.29 436.65 0 429.79 0 421.62C0 393.51 0 252.97 0 0L640 0Z" id="aGQyNawg"></path><path d="M640 0C640 358.32 640 557.39 640 597.2C640 606.78 636.89 614.22 633.33 613.15C570.53 594.26 68.13 443.09 5.33 424.19C2.29 423.28 0 416.41 0 408.24C0 381.03 0 244.95 0 0L640 0Z" id="h1sPlU4dQ1"></path><path d="M640 0C640 358.32 640 557.39 640 597.2C640 606.78 636.89 614.22 633.33 613.15C570.53 594.26 68.13 443.09 5.33 424.19C2.29 423.28 0 416.41 0 408.24C0 381.03 0 244.95 0 0L640 0Z" id="a1dCZLbs50"></path><linearGradient id="gradienta5tFJUaTF" gradientUnits="userSpaceOnUse" x1="320" y1="0" x2="320" y2="567.02"><stop style="stop-color: #6369ff;stop-opacity: 0" offset="0%"></stop><stop style="stop-color: #00e3df;stop-opacity: 0.2" offset="100%"></stop></linearGradient></defs><g><g><g><use xlink:href="#a4IeJqoxK2" opacity="1" fill="#fafafa" fill-opacity="1"></use><g><use xlink:href="#a4IeJqoxK2" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"></use></g></g><g><use xlink:href="#aGQyNawg" opacity="1" fill="#f0f0fe" fill-opacity="1"></use><g><use xlink:href="#aGQyNawg" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"></use></g></g><g><use xlink:href="#h1sPlU4dQ1" opacity="1" fill="#6369ff" fill-opacity="1"></use><g><use xlink:href="#h1sPlU4dQ1" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"></use></g></g><g><use xlink:href="#a1dCZLbs50" opacity="1" fill="url(#gradienta5tFJUaTF)"></use><g><use xlink:href="#a1dCZLbs50" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1" stroke-opacity="0"></use></g></g></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="540" viewBox="0 0 2000 540" fill="none">
+<path d="M 0 0 H 2000 V 520 C 2000 520 2000 540 1900 540 L 100 540 C 100 540 0 540 0 520 V 0 Z" fill="#FAFAFA"/>
+<path d="M 0 0 H 2000 V 510 C 2000 510 2000 530 1900 530 L 100 530 C 100 530 0 530 0 510 V 0 Z" fill="#F0F0FE"/>
+<path d="M 0 0 H 2000 V 500 C 2000 500 2000 520 1900 520 L 100 520 C 100 520 0 520 0 500 V 0 Z" fill="#6369FF"/>
+<path d="M 0 0 H 2000 V 500 C 2000 500 2000 520 1900 520 L 100 520 C 100 520 0 520 0 500 V 0 Z" fill="url(#paint0_linear)"/>
+<defs>
+<linearGradient id="paint0_linear" x1="1280" y1="0" x2="1280" y2="848" gradientUnits="userSpaceOnUse">
+<stop stop-color="#6369FF" stop-opacity="0"/>
+<stop offset="1" stop-color="#00E3DF" stop-opacity="0.2"/>
+</linearGradient>
+</defs>
+</svg>
