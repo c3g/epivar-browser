@@ -16,6 +16,7 @@ export function createDefaultUI() {
 export function createDefaultList() {
   return {
     isLoading: false,
+    isLoaded: false,
     total: 0,
     list: [],
   }
@@ -24,6 +25,7 @@ export function createDefaultList() {
 export function createDefaultMap() {
   return {
     isLoading: false,
+    isLoaded: false,
     map: {},
   }
 }

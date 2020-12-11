@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 
-import Charts from './Charts'
 import Controls from './Controls'
 import Header from './Header'
 import ParamsTable from './ParamsTable'
+import PeakResults from './PeakResults'
 
 
 const mapStateToProps = state => ({})
@@ -22,8 +22,7 @@ class App extends Component {
           <ParamsTable />
         </Header>
 
-        <Charts />
-
+        <PeakResults />
       </div>
     )
   }

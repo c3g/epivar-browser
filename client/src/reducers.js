@@ -30,6 +30,7 @@ function uiReducer(state = createDefaultUI(), action, data) {
 
 const defaultSamples = {
   isLoading: false,
+  isLoaded: false,
   stats: {
     total: 0,
     counts: {},
@@ -45,7 +46,7 @@ function samplesReducer(state = defaultSamples, action) {
       return { ...state, isLoading: true }
     }
     case k.SAMPLES.RECEIVE: {
-      return { ...state, isLoading: false, stats: action.payload }
+      return { ...state, isLoading: false, isLoaded: true, stats: action.payload }
     }
     case k.SAMPLES.ERROR: {
       return { ...state, isLoading: false }
@@ -61,7 +62,7 @@ function chromsReducer(state = createDefaultList(), action) {
       return { ...state, isLoading: true }
     }
     case k.CHROMS.RECEIVE: {
-      return { ...state, isLoading: false, list: action.payload }
+      return { ...state, isLoading: false, isLoaded: true, list: action.payload }
     }
     case k.CHROMS.ERROR: {
       return { ...state, isLoading: false }
@@ -77,7 +78,7 @@ function positionsReducer(state = createDefaultList(), action) {
       return { ...state, isLoading: true }
     }
     case k.POSITIONS.RECEIVE: {
-      return { ...state, isLoading: false, list: action.payload }
+      return { ...state, isLoading: false, isLoaded: true, list: action.payload }
     }
     case k.POSITIONS.ERROR: {
       return { ...state, isLoading: false }
@@ -93,7 +94,7 @@ function valuesReducer(state = createDefaultMap(), action) {
       return { ...state, isLoading: true }
     }
     case k.VALUES.RECEIVE: {
-      return { ...state, isLoading: false, map: action.payload }
+      return { ...state, isLoading: false, isLoaded: true, map: action.payload }
     }
     case k.VALUES.ERROR: {
       return { ...state, isLoading: false }
@@ -109,7 +110,7 @@ function peaksReducer(state = createDefaultList(), action) {
       return { ...state, isLoading: true }
     }
     case k.PEAKS.RECEIVE: {
-      return { ...state, isLoading: false, map: action.payload }
+      return { ...state, isLoading: false, isLoaded: true, list: action.payload }
     }
     case k.PEAKS.ERROR: {
       return { ...state, isLoading: false }
