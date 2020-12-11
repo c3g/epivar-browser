@@ -93,6 +93,7 @@ body {
           box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);
 }
 .btn-secondary.disabled, .btn-secondary:disabled {
+  color: #404345;
   background-color: #fff;
   border-color: #ccc;
 }
