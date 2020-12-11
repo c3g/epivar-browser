@@ -39,20 +39,15 @@ function values(chrom, position, start, end) {
   .then(filterTracksUniqueDonorAssay)
   .then(tracks =>
     Promise.all(tracks.map(track =>
-
-      Promise.all([
-        bigWigInfo(track.path, config.merge),
-        valueAt(track.path, { chrom, start, end, ...config.merge }),
-      ])
-      .then(([summary, value]) => (value === undefined ? undefined : {
+      valueAt(track.path, { chrom, start, end, ...config.merge })
+      .then(value => (value === undefined ? undefined : {
         id: track.id,
         donor: track.donor,
         assay: track.assay,
         variant: track.variant,
         type: track.type,
         value: track.value,
-        data: ((((value - summary.min) / (summary.max - summary.min)) * (range.end - range.start)) + range.start),
-        originalData: value,
+        data: value,
         track: track,
       }))
     ))
