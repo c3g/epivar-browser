@@ -17,7 +17,7 @@ Things to do:
    - Metadata:
      - Add `data/metadata.json`
  - `cp config.example.js config.js` and adapt the config
- - `npm run build` or `npm run build:ethnicity`
+ - `npm run build`
 
 External setup:
  - Setup nginx or apache proxy
