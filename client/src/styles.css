@@ -369,6 +369,12 @@ body {
 .PeaksTable__row {
   cursor: pointer;
 }
+.PeaksTable__row--selected {
+  background-color: #599eff29 !important;
+}
+.PeaksTable__row--selected:hover {
+  background-color: #599eff40 !important;
+}
 .PeaksTable__feature {
   font-size: 0.9em;
   font-family: monospace;
@@ -429,9 +435,9 @@ body {
  * Loading overlay
  */
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+@keyframes loadingspin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .loading::before {
@@ -448,8 +454,8 @@ body {
   content: '';
   position: absolute;
   z-index: 2;
-  top: 100px;
-  left: calc(50% - 25px);
+  top: 50%;
+  left: 50%;
   border-width: 10px;
   border-style: solid;
   border-color: transparent;
@@ -458,6 +464,6 @@ body {
   border-radius: 50%;
   width:  60px;
   height: 60px;
-  animation: 1s spin infinite;
+  animation: 1s loadingspin infinite;
   opacity: 0.5;
 }

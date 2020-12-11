@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
+  Alert,
   Container,
   Col,
   Row,
@@ -20,7 +21,9 @@ const mapDispatchToProps =
 
 
 class PeakAssay extends Component {
-  static getDerivedStateFromProps(props) {
+  static getDerivedStateFromProps(props, state) {
+    if (state.selectedPeak !== undefined)
+      return null
     const p = props.peaks[0]
     return { selectedPeak: p ? p.id : undefined }
   }
@@ -31,7 +34,6 @@ class PeakAssay extends Component {
 
   onChangeFeature = (p) => {
     const peakID = p.id
-
     this.setState({ selectedPeak: peakID })
   }
 
@@ -41,7 +43,6 @@ class PeakAssay extends Component {
     const p = peaks.find(p => p.id === selectedPeak)
     const values = valuesByID[selectedPeak]
 
-    console.log(selectedPeak, peaks)
     if (!values && p) {
       const params = {
         chrom: p.chrom,
@@ -66,10 +67,16 @@ class PeakAssay extends Component {
           <Col xs='8'>
             <PeaksTable
               peaks={peaks}
+              selectedPeak={selectedPeak}
               onChangeFeature={this.onChangeFeature}
             />
+            {values && values.message &&
+              <Alert color='danger'>
+                <strong>Error while fetching data:</strong> {values.message}
+              </Alert>
+            }
           </Col>
-          <Col xs='4'>
+          <Col xs='4' className={values && values.isLoading ? 'loading' : ''}>
             <AutoSizer disableHeight>
               {
                 ({ width }) =>
@@ -88,7 +95,7 @@ class PeakAssay extends Component {
   }
 }
 
-function PeaksTable({ peaks, onChangeFeature}) {
+function PeaksTable({ peaks, selectedPeak, onChangeFeature}) {
   return (
     <Table
       className='PeaksTable'
@@ -109,7 +116,7 @@ function PeaksTable({ peaks, onChangeFeature}) {
           peaks.map(p =>
             <tr
               key={p.id}
-              className='PeaksTable__row'
+              className={'PeaksTable__row ' + (selectedPeak === p.id ? 'PeaksTable__row--selected' : '')}
               role='button'
               onClick={() => onChangeFeature(p)}
             >
