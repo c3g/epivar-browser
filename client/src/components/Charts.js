@@ -32,6 +32,11 @@ const ETHNICITY_NAME = {
   EU: 'Europen',
 }
 
+const CONDITION_NAME = {
+  NI:  'Non-Infected',
+  Flu: 'Flu',
+}
+
 class Charts extends Component {
 
   onClickMerge(assay) {
@@ -88,14 +93,14 @@ class Charts extends Component {
             groups.map((group, i) =>
               <Row key={i}>
                 {
-                  group.map(({ assay, ethnicity, data }) =>
+                  group.map(({ assay, condition, data }) =>
                     <Col sm='6' key={assay}>
                       <AutoSizer disableHeight>
                         {
                           ({ width }) =>
                             <div key={assay + '_element'} className='Charts__box' style={{ width }}>
                               <BoxPlot
-                                title={ethnicity ? `${assay} - ${ETHNICITY_NAME[ethnicity]}` : assay}
+                                title={condition ? `${assay} - ${CONDITION_NAME[condition]}` : assay}
                                 data={data}
                                 width={width}
                                 height={300}
@@ -135,10 +140,10 @@ function makeSubgroups(list, n) {
 function getDataFromValues(values) {
   return Object.entries(values.map)
   .map(([assay, valuesByEthnicity]) =>
-    Object.entries(valuesByEthnicity).map(([ethnicity, valuesByType]) =>
+    Object.entries(valuesByEthnicity).map(([condition, valuesByType]) =>
       ({
         assay,
-        ethnicity,
+        condition,
         data: [
           { name: 'Hom Ref', data: valuesByType.REF || [] },
           { name: 'Het',     data: valuesByType.HET || [] },

@@ -58,10 +58,10 @@ function values(chrom, position, start, end) {
 function group(tracks) {
   const tracksByAssay = {}
   Object.entries(groupBy(prop('assay'), tracks)).forEach(([assay, tracks]) => {
-    Object.entries(groupBy(x => x.track.ethnicity, tracks)).forEach(([ethnicity, tracks]) => {
+    Object.entries(groupBy(x => x.track.condition, tracks)).forEach(([condition, tracks]) => {
       if (!tracksByAssay[assay])
         tracksByAssay[assay] = {}
-      tracksByAssay[assay][ethnicity] = groupBy(prop('type'), tracks)
+      tracksByAssay[assay][condition] = groupBy(prop('type'), tracks)
     })
   })
   return tracksByAssay
@@ -79,8 +79,8 @@ function clean(/* mut */ tracksByAssay) {
 
 function calculate(tracksByAssay) {
   Object.keys(tracksByAssay).forEach(assay => {
-    Object.keys(tracksByAssay[assay]).forEach(ethnicity => {
-      const tracksByType = tracksByAssay[assay][ethnicity]
+    Object.keys(tracksByAssay[assay]).forEach(condition => {
+      const tracksByType = tracksByAssay[assay][condition]
       tracksByType.HET = derive(tracksByType.HET || [])
       tracksByType.HOM = derive(tracksByType.HOM || [])
       tracksByType.REF = derive(tracksByType.REF || [])
@@ -111,12 +111,12 @@ function merge(tracks, { chrom, start, end }) {
 
   promisedTracks = 
     Object.entries(tracksByAssay).map(([assay, tracksByEthnicity]) => {
-      return Object.entries(tracksByEthnicity).map(([ethnicity, tracksByType]) => {
+      return Object.entries(tracksByEthnicity).map(([condition, tracksByType]) => {
         return mergeTracksByType(tracksByType)
         .then(output => {
           return {
             assay,
-            ethnicity,
+            condition,
             tracks,
             output: {
               REF: output[0],
