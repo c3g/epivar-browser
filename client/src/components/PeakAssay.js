@@ -44,13 +44,8 @@ class PeakAssay extends Component {
     const values = valuesByID[selectedPeak]
 
     if (!values && p) {
-      const params = {
-        chrom: p.chrom,
-        position: p.position,
-      }
-      const meta = {
-        id: p.id,
-      }
+      const params = p
+      const meta = { id: p.id }
       this.props.fetchValues(params, meta)
     }
 
@@ -134,10 +129,11 @@ function PeaksTable({ peaks, selectedPeak, onChangeFeature}) {
 
 function conditionName(c) {
   switch (c) {
-    case 'NI': return 'Non-infected'
+    case 'NI':  return 'Non-infected'
     case 'Flu': return 'Flu'
+    default:
+      return 'Unknown'
   }
-  return 'Unknown'
 }
 
 function formatFeature(feature) {

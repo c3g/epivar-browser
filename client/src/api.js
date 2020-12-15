@@ -31,8 +31,24 @@ export function fetchPositions(params) {
   return get('/samples/positions', params)
 }
 
+
+/**
+ * @typedef ValuesOptions
+ * @type {object}
+ * @property {object} variant
+ * @property {string} variant.chrom
+ * @property {number} variant.position
+ * @property {object} feature
+ * @property {string} feature.chrom
+ * @property {number} feature.start
+ * @property {number} feature.end
+ */
+
+/**
+ * @param {ValuesOptions} params
+ */
 export function fetchValues(params) {
-  return get('/tracks/values', params)
+  return post('/tracks/values', params)
 }
 
 export function createSession(params) {

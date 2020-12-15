@@ -9,8 +9,8 @@ const exists = promisify(fs.exists)
 const md5 = require('md5')
 const { prop, groupBy } = require('rambda')
 
+const parseFeature = require('../helpers/parse-feature')
 const bigWigMerge = require('../helpers/bigwig-merge.js')
-const bigWigInfo = require('../helpers/bigwig-info.js')
 const valueAt = require('../helpers/value-at.js')
 const config = require('../config.js')
 const Samples = require('./samples.js')
@@ -26,20 +26,27 @@ module.exports = {
   calculate,
 }
 
-const range = { start: 0, end: 1000 }
+function get(peak, feature) {
+  const chrom    = peak.chrom
+  const position = peak.position - 1 // FIXME remove position - 1 hack (needs clean data)
 
-function get(chrom, position, assay = undefined) {
   return Samples.queryMap(chrom, position).then(info => {
-    return source.getTracks(info.samples, assay)
+    return source.getTracks(info.samples, peak, feature)
   })
 }
 
-function values(chrom, position, start, end) {
-  return get(chrom, position)
+function values(peak) {
+  const feature = parseFeature(peak.feature)
+  return get(peak, feature)
   .then(filterTracksUniqueDonorAssay)
   .then(tracks =>
     Promise.all(tracks.map(track =>
-      valueAt(track.path, { chrom, start, end, ...config.merge })
+      valueAt(track.path, {
+        chrom: feature.chrom,
+        start: feature.start,
+        end:   feature.end,
+        ...config.merge
+      })
       .then(value => (value === undefined ? undefined : {
         id: track.id,
         donor: track.donor,

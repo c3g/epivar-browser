@@ -17,13 +17,9 @@ router.use('/get', (req, res) => {
 })
 
 router.use('/values', (req, res) => {
+  const peak = req.body
 
-  Tracks.values(
-    req.query.chrom,
-    Number(req.query.position),
-    Number(req.query.start),
-    Number(req.query.end)
-  )
+  Tracks.values(peak)
   .then(Tracks.group)
   .then(Tracks.clean)
   .then(Tracks.calculate)
