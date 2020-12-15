@@ -13,6 +13,7 @@ module.exports = {
 
 async function create({ assay, chrom, position, start, end }) {
 
+  // FIXME change to new API
   const tracksByAssay = await Tracks.values(
     chrom,
     Number(position),
