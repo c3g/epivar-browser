@@ -98,6 +98,8 @@ function calculate(tracksByAssay) {
 }
 
 function merge(tracks, { chrom, start, end }) {
+  // FIXME need to reimplement this whole method with new structure
+  throw new Error('unimplemented')
 
   const tracksByAssay = clean(group(tracks))
 
