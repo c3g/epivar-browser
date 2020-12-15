@@ -52,7 +52,7 @@ export default class AutoSizer extends React.PureComponent {
   }
 
   render() {
-    const {children, disableHeight, disableWidth} = this.props;
+    const {children, disableHeight, disableWidth, className} = this.props;
     const {height, width} = this.state;
 
     // Outer div should not force width/height since that may prevent containers from shrinking.
@@ -85,7 +85,7 @@ export default class AutoSizer extends React.PureComponent {
     */
 
     return (
-      <div ref={this._setRef} style={outerStyle}>
+      <div ref={this._setRef} style={outerStyle} className={className}>
         {children(childParams)}
       </div>
     );
