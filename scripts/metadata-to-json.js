@@ -48,6 +48,11 @@ sheetNames.forEach(name => {
         })
         return newItem
       })
+      .filter(item => {
+        if (item.ethnicity === 'Exclude sample')
+          return false
+        return true
+      })
 
   items = items.concat(newItems)
 })
