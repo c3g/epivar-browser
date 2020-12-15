@@ -1,5 +1,6 @@
 import React from 'react';
 import { scaleLinear } from 'd3-scale'
+import { ETHNICITY_COLOR } from '../constants/app'
 
 const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺'
 
@@ -9,6 +10,7 @@ const BAR_WIDTH = 40
 const BAR_HALFWIDTH = BAR_WIDTH / 2
 
 const PADDING = 40
+const POINT_RADIUS = 4
 
 const textStyles = {
   fontSize: FONT_SIZE,
@@ -62,7 +64,7 @@ function Bar({ data, x, y, height, domain }) {
   if (data.n === 0) {
     const delta = domain[1] - domain[0]
     const text = 'Empty'
-    const fill = 'rgba(0, 0, 0, 0)'
+    const fill = 'rgba(0, 0, 0, 0.01)'
     const border = '#bbbbbb'
     const color = 'rgba(0, 0, 0, 0.1)'
 
@@ -86,18 +88,44 @@ function Bar({ data, x, y, height, domain }) {
     )
   }
 
+  const border = '#666666'
+
+  const afPoints = data.points.AF || []
+  const euPoints = data.points.EU || []
+
+  const padding = 5
+  const afXRange = [xMin + padding, x - padding]
+  const euXRange = [x + padding, xMax - padding]
+
+  const afScale = scaleLinear().range(afXRange).domain([0, afPoints.length || 1])
+  const euScale = scaleLinear().range(euXRange).domain([0, euPoints.length || 1])
+
   return (
     <g>
-      <Line position={[[x, yScale(min)], [x, yScale(max)]]} />
-      <Line position={[[xMin, yScale(min)], 
-                       [xMax, yScale(min)]]} />
-      <Line position={[[xMin, yScale(max)], 
-                       [xMax, yScale(max)]]} />
+      <Line stroke={border} position={[[x, yScale(min)], [x, yScale(max)]]} />
+      <Line stroke={border} position={[[xMin, yScale(min)], [xMax, yScale(min)]]} />
+      <Line stroke={border} position={[[xMin, yScale(max)], [xMax, yScale(max)]]} />
+      <Rect stroke={border} position={[[xMin, yScale(stats.end)], [xMax, yScale(stats.start)]]} />
+      <Line stroke={border} position={[[xMin, yScale(stats.median)], [xMax, yScale(stats.median)]]} />
 
-      <Rect position={[[xMin, yScale(stats.end)],
-                       [xMax, yScale(stats.start)]]} />
-      <Line position={[[xMin, yScale(stats.median)],
-                       [xMax, yScale(stats.median)]]} />
+      {afPoints.map((value, i) =>
+        <circle
+          cx={afScale(i)}
+          cy={yScale(value)}
+          r={POINT_RADIUS}
+          fill={ETHNICITY_COLOR.AF}
+          opacity='0.4'
+        />
+      )}
+      {euPoints.map((value, i) =>
+        <circle
+          cx={euScale(i)}
+          cy={yScale(value)}
+          r={POINT_RADIUS}
+          fill={ETHNICITY_COLOR.EU}
+          opacity='0.6'
+        />
+      )}
     </g>
   )
 }
@@ -182,19 +210,20 @@ function XAxis({ data, scale, x, y, height, width }) {
   )
 }
 
-function Line({ position }) {
+function Line({ position, stroke = 'black' }) {
   return (
     <line
       x1={position[0][0]}
       y1={position[0][1]}
       x2={position[1][0]}
       y2={position[1][1]}
-      stroke='black'
+      stroke={stroke}
     />
   )
 }
 
-function Rect({ position, stroke = 'black', fill = 'rgba(230, 200, 20, 0.5)', ...rest }) {
+// rgba(230, 200, 20, 0.5)
+function Rect({ position, stroke = 'black', fill = 'rgba(0, 0, 0, 0)', ...rest }) {
   return (
     <rect
       x={position[0][0]}
@@ -208,13 +237,6 @@ function Rect({ position, stroke = 'black', fill = 'rgba(230, 200, 20, 0.5)', ..
   )
 }
 
-/* function getStats(points) {
- *   return {
- *     start:  points[~~(points.length * 1/4)],
- *     median: points[~~(points.length * 2/4)],
- *     end:    points[~~(points.length * 3/4)],
- *   }
- * } */
 
 function middle(a, b) {
   const d = b - a

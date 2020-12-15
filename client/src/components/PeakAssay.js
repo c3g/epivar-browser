@@ -9,8 +9,7 @@ import {
 } from 'reactstrap'
 
 import Icon from './Icon'
-import AutoSizer from './AutoSizer'
-import BoxPlot from './BoxPlot'
+import PeakBoxplot from './PeakBoxplot'
 import { fetchValues } from '../actions'
 
 const mapStateToProps = state => ({
@@ -59,7 +58,7 @@ class PeakAssay extends Component {
           </Col>
         </Row>
         <Row>
-          <Col xs='8'>
+          <Col xs='12'>
             <PeaksTable
               peaks={peaks}
               selectedPeak={selectedPeak}
@@ -71,18 +70,11 @@ class PeakAssay extends Component {
               </Alert>
             }
           </Col>
-          <Col xs='4' className={values && values.isLoading ? 'loading' : ''}>
-            <AutoSizer disableHeight>
-              {
-                ({ width }) =>
-                  <BoxPlot
-                    title={assay}
-                    data={[]}
-                    width={width}
-                    height={width}
-                  />
-              }
-            </AutoSizer>
+          <Col xs='12' className={values && values.isLoading ? 'loading' : ''}>
+            <PeakBoxplot
+              title={p.feature}
+              values={values}
+            />
           </Col>
         </Row>
       </Container>

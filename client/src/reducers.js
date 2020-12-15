@@ -109,10 +109,10 @@ const defaultValues = {
 function valuesReducer(state = defaultValues, action) {
   switch (action.type) {
     case k.VALUES.REQUEST: {
-      return merge(state, ['itemsByID', action.meta.id], { isLoading: true, isLoaded: false, message: undefined, })
+      return merge(state, ['itemsByID', action.meta.id], { isLoading: true, isLoaded: false, data: {}, message: undefined, })
     }
     case k.VALUES.RECEIVE: {
-      return merge(state, ['itemsByID', action.meta.id], { isLoading: false, isLoaded: true, ...action.payload })
+      return merge(state, ['itemsByID', action.meta.id], { isLoading: false, isLoaded: true, data: action.payload })
     }
     case k.VALUES.ERROR: {
       return merge(state, ['itemsByID', action.meta.id], { isLoading: false, message: action.payload.message })
