@@ -7,7 +7,7 @@ const fs = require('fs')
 const { promisify } = require('util')
 const exists = promisify(fs.exists)
 const md5 = require('md5')
-const { prop, groupBy } = require('rambda')
+const { map, path: prop, groupBy } = require('rambda')
 
 const parseFeature = require('../helpers/parse-feature')
 const bigWigMerge = require('../helpers/bigwig-merge.js')
@@ -21,10 +21,12 @@ module.exports = {
   get,
   values,
   group,
-  clean,
   merge,
   calculate,
 }
+
+const groupByEthnicity = groupBy(prop('track.ethnicity'))
+const mapToData = map(prop('data'))
 
 function get(peak, feature) {
   const chrom    = peak.chrom
@@ -38,7 +40,6 @@ function get(peak, feature) {
 function values(peak) {
   const feature = parseFeature(peak.feature)
   return get(peak, feature)
-  .then(filterTracksUniqueDonorAssay)
   .then(tracks =>
     Promise.all(tracks.map(track =>
       valueAt(track.path, {
@@ -63,45 +64,29 @@ function values(peak) {
 }
 
 function group(tracks) {
-  const tracksByAssay = {}
-  Object.entries(groupBy(prop('assay'), tracks)).forEach(([assay, tracks]) => {
-    Object.entries(groupBy(x => x.track.condition, tracks)).forEach(([condition, tracks]) => {
-      if (!tracksByAssay[assay])
-        tracksByAssay[assay] = {}
-      tracksByAssay[assay][condition] = groupBy(prop('type'), tracks)
-    })
+  const tracksByCondition = {}
+  Object.entries(groupBy(x => x.track.condition, tracks)).forEach(([condition, tracks]) => {
+    tracksByCondition[condition] = groupBy(prop('type'), tracks)
   })
-  return tracksByAssay
+  return tracksByCondition
 }
 
-function clean(/* mut */ tracksByAssay) {
-  Object.keys(tracksByAssay).forEach(assay => {
-    const tracksByEthnicity = tracksByAssay[assay]
-    if (Object.values(tracksByEthnicity).every(ts => ts.HET === undefined && ts.HOM === undefined)) {
-      delete tracksByAssay[assay]
-    }
-  })
-  return tracksByAssay
-}
-
-function calculate(tracksByAssay) {
-  Object.keys(tracksByAssay).forEach(assay => {
-    Object.keys(tracksByAssay[assay]).forEach(condition => {
-      const tracksByType = tracksByAssay[assay][condition]
-      tracksByType.HET = derive(tracksByType.HET || [])
-      tracksByType.HOM = derive(tracksByType.HOM || [])
-      tracksByType.REF = derive(tracksByType.REF || [])
-    })
+function calculate(tracksByCondition) {
+  Object.keys(tracksByCondition).forEach(condition => {
+    const tracksByType = tracksByCondition[condition]
+    tracksByType.HET = derive(tracksByType.HET || [])
+    tracksByType.HOM = derive(tracksByType.HOM || [])
+    tracksByType.REF = derive(tracksByType.REF || [])
   })
 
-  return tracksByAssay
+  return tracksByCondition
 }
 
 function merge(tracks, { chrom, start, end }) {
   // FIXME need to reimplement this whole method with new structure
   throw new Error('unimplemented')
 
-  const tracksByAssay = clean(group(tracks))
+  const tracksByAssay = group(tracks)
 
   const mergeTracksByType = tracksByType =>
     Promise.all(
@@ -168,29 +153,17 @@ function mergeFiles(paths, { chrom, start, end }) {
     .then(() => ({ path: mergePath, url, hasDeviation: paths.length > 1 }))
 }
 
-function filterTracksUniqueDonorAssay(tracks) {
-  const combinations = new Map()
-  const filteredTracks = tracks.filter(track => {
-    const key = `${track.donor}-${track.assay}`
-    if (combinations.has(key)) {
-      return false
-    }
-    combinations.set(key, track)
-    return true
-  })
-  return filteredTracks
-}
-
 function derive(list) {
   const n = list.length
   const points = list.map(d => d.data).sort((a, b) => a - b)
+  const pointsByEthnicity = map(mapToData, groupByEthnicity(list))
 
   const data = {
     n: n,
     min: Math.min(...points),
     max: Math.max(...points),
     stats: getStats(points),
-    points,
+    points: pointsByEthnicity,
   }
 
   return data

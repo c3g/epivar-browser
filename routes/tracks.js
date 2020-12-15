@@ -21,7 +21,6 @@ router.use('/values', (req, res) => {
 
   Tracks.values(peak)
   .then(Tracks.group)
-  .then(Tracks.clean)
   .then(Tracks.calculate)
   .then(dataHandler(res))
   .catch(errorHandler(res))
