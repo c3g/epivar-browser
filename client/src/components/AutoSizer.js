@@ -62,12 +62,12 @@ export default class AutoSizer extends React.PureComponent {
     const childParams = {};
 
     if (!disableHeight) {
-      outerStyle.height = 0;
+      // outerStyle.height = 0;
       childParams.height = height;
     }
 
     if (!disableWidth) {
-      outerStyle.width = 0;
+      // outerStyle.width = 0;
       childParams.width = width;
     }
 
