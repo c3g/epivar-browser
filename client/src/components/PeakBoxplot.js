@@ -24,7 +24,7 @@ function PeakBoxplot({ title, values = defaultValues }) {
       <AutoSizer disableHeight>
         {
           ({ width }) => {
-            const boxWidth = width / 2
+            const boxWidth = Math.min(width / 2, 350)
 
             return (
               <div className='PeakBoxplot__graphs'>

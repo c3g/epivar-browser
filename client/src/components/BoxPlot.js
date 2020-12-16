@@ -171,7 +171,7 @@ function YAxis({ domain, step, x, y, height }) {
 
           const result =  (
             <g key={point}>
-              <Line position={[[x - 5, y], [x + 5, y]]} />
+              <Line position={[[x - 5, y], [x, y]]} />
               {
                 Math.abs(lastY - y) > FONT_SIZE &&
                 <text
@@ -206,7 +206,7 @@ function XAxis({ data, scale, x, y, height, width }) {
         data.map((d, i) => {
           return (
             <g key={i}>
-              <Line position={[[scale(i), height - 5], [scale(i), height + 5]]} />
+              <Line position={[[scale(i), height], [scale(i), height + 5]]} />
               <text y={height + 5} x={scale(i)} dy={FONT_SIZE} style={textStyles}>
                 { d.name }
               </text>
