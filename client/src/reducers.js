@@ -6,23 +6,14 @@ import * as k from './constants/ActionTypes'
 const defaultUI = {
   chrom: 'chr11',
   position: '70310555',
-  range: 200000,
-  windowStart: 0,
-  windowEnd: 100,
 }
 function uiReducer(state = defaultUI, action, data) {
   switch (action.type) {
-    case k.SET_SEARCH: {
-      return { ...state, search: action.payload }
-    }
     case k.SET_CHROM: {
       return { ...state, chrom: action.payload }
     }
     case k.SET_POSITION: {
       return { ...state, position: action.payload }
-    }
-    case k.SET_RANGE: {
-      return { ...state, range: action.payload }
     }
     default:
       return state;

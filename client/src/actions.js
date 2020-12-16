@@ -4,10 +4,8 @@ import queryString from './helpers/queryString.js'
 import * as api from './api'
 import * as k from './constants/ActionTypes.js'
 
-export const setSearch      = createAction(k.SET_SEARCH)
 export const setChrom       = createAction(k.SET_CHROM)
 export const setPosition    = createAction(k.SET_POSITION)
-export const setRange       = createAction(k.SET_RANGE)
 export const handleError    = createAction(k.HANDLE_ERROR)
 
 export const samples   = createFetchActions(k.SAMPLES)
