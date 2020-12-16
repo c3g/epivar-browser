@@ -86,18 +86,18 @@ function getPositions(chrom, start) {
 
 
 function gemini(query, params = '') {
-  /* const path = config.paths.gemini
-   * const command =
-   *   `gemini query ${path} \
-   *       ${params} \
-   *       -q "${query.replace(/"/g, '\\"')}"` */
-
-  const path = '~/projects/rrg-bourqueg-ad/C3G/projects/DavidB_varwig/WGS_VCFs/allSamples_WGS.gemini.db'
-  const gemini = '/cvmfs/soft.mugqic/CentOS6/software/gemini/gemini-0.20.1/shared/anaconda/bin/gemini'
+  const path = config.paths.gemini
   const command =
-    `ssh beluga '${gemini} query ${path} \
+    `gemini query ${path} \
         ${params} \
-        -q "${query.replace(/"/g, '\\"')}"'`
+        -q "${query.replace(/"/g, '\\"')}"` 
+
+  /* const path = '~/projects/rrg-bourqueg-ad/C3G/projects/DavidB_varwig/WGS_VCFs/allSamples_WGS.gemini.db'
+   * const gemini = '/cvmfs/soft.mugqic/CentOS6/software/gemini/gemini-0.20.1/shared/anaconda/bin/gemini'
+   * const command =
+   *   `ssh beluga '${gemini} query ${path} \
+   *       ${params} \
+   *       -q "${query.replace(/"/g, '\\"')}"'` */
 
   // query $PATH --header --show-samples --format sampledetail -q "SELECT chrom, start, end, ref, alt, (gts).(*) from variants where chrom = \"chr1\" and start <= 20000"'
 
