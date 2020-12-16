@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import Controls from './Controls'
 import Header from './Header'
-import ParamsTable from './ParamsTable'
 import PeakResults from './PeakResults'
 
 
@@ -19,7 +18,6 @@ class App extends Component {
       <div className='App'>
         <Header>
           <Controls />
-          <ParamsTable />
         </Header>
 
         <PeakResults />
