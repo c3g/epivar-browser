@@ -1,6 +1,7 @@
 import React from 'react';
 import { scaleLinear } from 'd3-scale'
 import { ETHNICITY_COLOR } from '../constants/app'
+import { getDomain } from '../helpers/boxplot'
 
 const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺'
 
@@ -17,7 +18,14 @@ const textStyles = {
   textAnchor: 'middle',
 }
 
-export default function BoxPlot({ title, data, width, height }) {
+export default function BoxPlot({
+  title,
+  data,
+  width,
+  height,
+  domain = getDomain(data),
+}) {
+
   const dimension = {
     x: PADDING + 20,
     y: PADDING,
@@ -25,15 +33,17 @@ export default function BoxPlot({ title, data, width, height }) {
     height: height - 1 * PADDING,
   }
 
-  const domain = getDomain(data)
+  const yAxis = getYAxisDetails(domain)
+  const yDomain = [yAxis.start, yAxis.end]
 
-  const step = (domain[1] - domain[0]) / 10
   const start = dimension.width / (data.length + 2)
-  const xScale = scaleLinear().range([dimension.x + start, dimension.width]).domain([0, data.length])
+  const xScale = scaleLinear()
+    .range([dimension.x + start, dimension.width])
+    .domain([0, data.length])
 
   return (
     <svg width={width} height={height}>
-      <YAxis domain={domain} step={step} {...dimension} />
+      <YAxis domain={yDomain} step={yAxis.step} {...dimension} />
       <XAxis data={data} scale={xScale} {...dimension} />
       <text x={dimension.width / 2} y={20} textAnchor='middle'
         style={{
@@ -44,7 +54,7 @@ export default function BoxPlot({ title, data, width, height }) {
       </text>
       {
         data.map((d, i) =>
-          <Bar key={i} data={d.data} { ...dimension } x={xScale(i)} domain={domain} />
+          <Bar key={i} data={d.data} { ...dimension } x={xScale(i)} domain={yDomain} />
         )
       }
     </svg>
@@ -139,7 +149,8 @@ function YAxis({ domain, step, x, y, height }) {
   if (points[points.length - 1] !== domain[1])
     points.push(domain[1])
 
-  const scale = scaleLinear().range([height, y]).domain(domain)
+  const scale =
+    scaleLinear().range([height, y]).domain(domain)
 
   let lastY = 0
 
@@ -152,11 +163,11 @@ function YAxis({ domain, step, x, y, height }) {
           const y = scale(point)
 
           const rounded = Number(Number(point).toPrecision(3))
-          const normalString      = rounded.toString()
-          const exponentialString = rounded.toExponential().toString().replace(/e(.)(\d+)/, (m, sign, numbers) => {
-            return SUPERSCRIPT[sign === '-' ? 10 : 11] + numbers.toString().split('').map(c => SUPERSCRIPT[+c]).join('')
-          })
-          const text = normalString.length < exponentialString.length ? normalString : exponentialString
+          const abs = Math.abs(rounded)
+
+          const text =
+            (abs < 0.01 || abs > 999) && abs !== 0 ?
+              toExponentString(rounded) : rounded.toString()
 
           const result =  (
             <g key={point}>
@@ -222,7 +233,6 @@ function Line({ position, stroke = 'black' }) {
   )
 }
 
-// rgba(230, 200, 20, 0.5)
 function Rect({ position, stroke = 'black', fill = 'rgba(0, 0, 0, 0)', ...rest }) {
   return (
     <rect
@@ -238,24 +248,8 @@ function Rect({ position, stroke = 'black', fill = 'rgba(0, 0, 0, 0)', ...rest }
 }
 
 
-function middle(a, b) {
-  const d = b - a
-  return a + d / 2
-}
-
-function getDomain(categories) {
-  if (categories.length === 0)
-    return [0, 10]
-
-  let min =  Infinity
-  let max = -Infinity
-
-  categories.forEach(({ data }) => {
-    if (data.min < min)
-      min = data.min
-    if (data.max > max)
-      max = data.max
-  })
+function getYAxisDetails(domain) {
+  const [min, max] = domain
 
   const delta = max !== min ? max - min : 1
 
@@ -268,11 +262,32 @@ function getDomain(categories) {
     start = 0
 
   start = Math.round(start * 100) / 100
-  // end = end
 
-  return [
+  let factor = 1
+  while (true) {
+    const newEnd = Math.ceil(end * factor) / factor
+    end = newEnd
+    break
+  }
+
+  const step = (end - start) / 10
+
+  return {
     start,
     end,
-  ]
+    step,
+  }
 }
 
+function middle(a, b) {
+  const d = b - a
+  return a + d / 2
+}
+
+function toExponentString(n) {
+  return n.toExponential().toString().replace(/e(.)(\d+)/, (m, sign, numbers) => {
+    const signChar =  SUPERSCRIPT[sign === '-' ? 10 : 11]
+    const exponent = numbers.toString().split('').map(c => SUPERSCRIPT[+c]).join('')
+    return signChar + exponent
+  })
+}

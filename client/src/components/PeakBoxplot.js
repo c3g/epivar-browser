@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ETHNICITY_COLOR } from '../constants/app'
+import { getDomain, combineDomains } from '../helpers/boxplot'
 import AutoSizer from './AutoSizer'
 import BoxPlot from './BoxPlot'
 
@@ -9,6 +10,13 @@ const defaultValues = { isLoading: true, data: {} }
 function PeakBoxplot({ title, values = defaultValues }) {
 
   console.log(values)
+
+  const niData  = values.data.NI  ? getDataFromValues(values.data.NI)  : []
+  const fluData = values.data.Flu ? getDataFromValues(values.data.Flu) : []
+
+  const niDomain  = getDomain(niData)
+  const fluDomain = getDomain(fluData)
+  const domain = combineDomains([niDomain, fluDomain])
 
   return (
     <div className='PeakBoxplot'>
@@ -31,7 +39,8 @@ function PeakBoxplot({ title, values = defaultValues }) {
                 {values.data.NI &&
                   <BoxPlot
                     title='Non-infected'
-                    data={getDataFromValues(values.data.NI)}
+                    domain={domain}
+                    data={niData}
                     width={boxWidth}
                     height={boxWidth}
                   />
@@ -39,7 +48,8 @@ function PeakBoxplot({ title, values = defaultValues }) {
                 {values.data.Flu &&
                   <BoxPlot
                     title='Flu'
-                    data={getDataFromValues(values.data.Flu)}
+                    domain={domain}
+                    data={fluData}
                     width={boxWidth}
                     height={boxWidth}
                   />
