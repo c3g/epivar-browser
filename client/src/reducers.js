@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { set, merge } from 'object-path-immutable'
+import { merge } from 'object-path-immutable'
 import * as k from './constants/ActionTypes'
 
 

@@ -1,10 +1,4 @@
 import React from 'react';
-import {
-  Container,
-  Col,
-  Row,
-  Table,
-} from 'reactstrap'
 
 import { ETHNICITY_COLOR } from '../constants/app'
 import AutoSizer from './AutoSizer'
