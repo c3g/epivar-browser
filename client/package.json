@@ -16,7 +16,7 @@
     "react-bootstrap-table": "^4.0.5",
     "react-dom": "^16.14.0",
     "react-redux": "^5.0.6",
-    "react-scripts": "1.0.14",
+    "react-scripts": "2.1.8",
     "reactstrap": "^5.0.0-alpha.3",
     "recharts": "^1.0.0-apha.5",
     "redux": "^3.7.2",
@@ -30,5 +30,11 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3002"
+  "proxy": "http://localhost:3002",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
