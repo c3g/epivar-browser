@@ -44,7 +44,7 @@ function getTracks(samples, peak) {
         if (!conditions.includes(track.condition))
           return false
         if (peak.assay === 'RNA-Seq' &&
-              feature.strand === '+' && track.view !== 'signal_forward')
+              peak.feature.strand === '+' && track.view !== 'signal_forward')
           return false
         return true
       })

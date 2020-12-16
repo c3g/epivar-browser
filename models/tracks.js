@@ -9,7 +9,6 @@ const exists = promisify(fs.exists)
 const md5 = require('md5')
 const { map, path: prop, groupBy } = require('rambda')
 
-const parseFeature = require('../helpers/parse-feature')
 const bigWigMerge = require('../helpers/bigwig-merge.js')
 const valueAt = require('../helpers/value-at.js')
 const config = require('../config.js')
@@ -28,24 +27,23 @@ module.exports = {
 const groupByEthnicity = groupBy(prop('track.ethnicity'))
 const mapToData = map(prop('data'))
 
-function get(peak, feature) {
+function get(peak) {
   const chrom    = peak.chrom
   const position = peak.position - 1 // FIXME remove position - 1 hack (needs clean data)
 
   return Samples.queryMap(chrom, position).then(info => {
-    return source.getTracks(info.samples, peak, feature)
+    return source.getTracks(info.samples, peak)
   })
 }
 
 function values(peak) {
-  const feature = parseFeature(peak.feature)
-  return get(peak, feature)
+  return get(peak)
   .then(tracks =>
     Promise.all(tracks.map(track =>
       valueAt(track.path, {
-        chrom: feature.chrom,
-        start: feature.start,
-        end:   feature.end,
+        chrom: peak.feature.chrom,
+        start: peak.feature.start,
+        end:   peak.feature.end,
         ...config.merge
       })
       .then(value => (value === undefined ? undefined : {

@@ -72,7 +72,7 @@ class PeakAssay extends Component {
           </Col>
           <Col xs='12' className={values && values.isLoading ? 'loading' : ''}>
             <PeakBoxplot
-              title={p.feature}
+              title={formatFeature(p.feature)}
               values={values}
             />
           </Col>
@@ -129,11 +129,8 @@ function conditionName(c) {
 }
 
 function formatFeature(feature) {
-  if (!feature.startsWith('chr'))
-    return feature
-
-  const [chrom, start, end] = feature.split('_')
-  return `${chrom}:${start}-${end}`
+  const {chrom, start, end, strand} = feature
+  return `${chrom}:${start}-${end}` + (strand ? ` (${strand})` : '')
 }
 
 export default connect(
