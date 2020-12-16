@@ -5,7 +5,7 @@
 
 export function getDomain(categories) {
   if (categories.length === 0)
-    return [0, 10]
+    return undefined
 
   let min =  Infinity
   let max = -Infinity
@@ -24,9 +24,12 @@ export function getDomain(categories) {
 }
 
 export function combineDomains(ds) {
+  const fds = ds.filter(Boolean)
+  if (fds.length === 0)
+    return [0, 10]
   let min =  Infinity
   let max = -Infinity
-  ds.forEach(d => {
+  fds.forEach(d => {
     if (d[0] < min)
       min = d[0]
     if (d[1] > max)

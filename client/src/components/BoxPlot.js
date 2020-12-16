@@ -249,6 +249,9 @@ function Rect({ position, stroke = 'black', fill = 'rgba(0, 0, 0, 0)', ...rest }
 
 
 function getYAxisDetails(domain) {
+  if (!domain)
+    return { start: 0, end: 1, step: 0.5 }
+
   const [min, max] = domain
 
   const delta = max !== min ? max - min : 1
