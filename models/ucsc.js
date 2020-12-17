@@ -38,8 +38,10 @@ function generateTracks(mergedTracks) {
     const types = Object.keys(merged.output)
     const typesWithDataLength = Object.values(merged.output).filter(Boolean).length
 
+    const baseName = `${merged.assay}__${merged.condition}`
+
     if (typesWithDataLength > 1) {
-      const parentName = `${merged.assay}__averages`
+      const parentName = `${baseName}__averages`
       const shortLabel = parentName
       const longLabel = parentName
 
@@ -90,7 +92,7 @@ function generateTracks(mergedTracks) {
         return
 
       const type = typeShort === 'REF' ? 'reference' : typeShort === 'HET' ? 'variant_het' : 'variant_hom'
-      const trackName = `${merged.assay}__${type}`
+      const trackName = `${baseName}__${type}`
       const shortLabel = trackName
       const longLabel = trackName
 
