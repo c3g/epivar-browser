@@ -7,6 +7,7 @@ const fs = require('fs')
 const { promisify } = require('util')
 const exists = promisify(fs.exists)
 const md5 = require('md5')
+const Cache = require('map-expire')
 const { map, path: prop, groupBy } = require('rambda')
 
 const bigWigMerge = require('../helpers/bigwig-merge.js')
@@ -24,7 +25,7 @@ module.exports = {
   calculate,
 }
 
-const groupByEthnicity = groupBy(prop('track.ethnicity'))
+const groupByEthnicity = groupBy(prop('ethnicity'))
 const mapToData = map(prop('data'))
 
 function get(peak) {
@@ -36,7 +37,12 @@ function get(peak) {
   })
 }
 
+const valuesCache = new Cache()
 function values(peak) {
+  if (valuesCache.has(peak.id)) {
+    return Promise.resolve(valuesCache.get(peak.id))
+  }
+
   return get(peak)
   .then(tracks =>
     Promise.all(tracks.map(track =>
@@ -50,20 +56,25 @@ function values(peak) {
         id: track.id,
         donor: track.donor,
         assay: track.assay,
+        condition: track.condition,
+        ethnicity: track.ethnicity,
         variant: track.variant,
         type: track.type,
         value: track.value,
         data: value,
-        track: track,
       }))
     ))
     .then(values => values.filter(v => v !== undefined))
   )
+  .then(result => {
+    valuesCache.set(peak.id, result, 60 * 60 * 1000)
+    return result
+  })
 }
 
 function group(tracks) {
   const tracksByCondition = {}
-  Object.entries(groupBy(x => x.track.condition, tracks)).forEach(([condition, tracks]) => {
+  Object.entries(groupBy(x => x.condition, tracks)).forEach(([condition, tracks]) => {
     tracksByCondition[condition] = groupBy(prop('type'), tracks)
   })
   return tracksByCondition
@@ -80,11 +91,9 @@ function calculate(tracksByCondition) {
   return tracksByCondition
 }
 
-function merge(tracks, { chrom, start, end }) {
-  // FIXME need to reimplement this whole method with new structure
-  throw new Error('unimplemented')
+function merge(tracks, session) {
 
-  const tracksByAssay = group(tracks)
+  const tracksByCondition = group(tracks)
 
   const mergeTracksByType = tracksByType =>
     Promise.all(
@@ -94,7 +103,11 @@ function merge(tracks, { chrom, start, end }) {
         tracksByType.HOM || []
       ].map(tracks =>
         tracks.length > 0 ?
-          mergeFiles(tracks.map(prop('path')), { chrom, start, end }) :
+          mergeFiles(tracks.map(prop('path')), {
+            chrom: session.peak.feature.chrom,
+            start: session.peak.feature.start,
+            end:   session.peak.feature.end,
+          }) :
           undefined
       )
     )
@@ -102,27 +115,24 @@ function merge(tracks, { chrom, start, end }) {
   let promisedTracks
 
   promisedTracks = 
-    Object.entries(tracksByAssay).map(([assay, tracksByEthnicity]) => {
-      return Object.entries(tracksByEthnicity).map(([condition, tracksByType]) => {
-        return mergeTracksByType(tracksByType)
-        .then(output => {
-          return {
-            assay,
-            condition,
-            tracks,
-            output: {
-              REF: output[0],
-              HET: output[1],
-              HOM: output[2],
-            }
+    Object.entries(tracksByCondition).map(([condition, tracksByType]) => {
+      return mergeTracksByType(tracksByType)
+      .then(output => {
+        return {
+          assay: session.peak.assay,
+          condition,
+          tracks,
+          output: {
+            REF: output[0],
+            HET: output[1],
+            HOM: output[2],
           }
-        })
+        }
       })
-      .flat()
     })
 
   return Promise.all(promisedTracks)
-  .then(results => results.filter(Boolean))
+    .then(results => results.filter(Boolean))
 }
 
 

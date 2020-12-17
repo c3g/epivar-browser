@@ -31,8 +31,7 @@ router.use('/track-db/:session', (req, res) => {
 
   Sessions.get(req.params.session)
   .then(session =>
-    // FIXME update to new API here
-    Tracks.get(session.chrom, session.position, session.assay)
+    Tracks.get(session.peak)
       .then(tracks => Tracks.merge(tracks, session))
   )
   .then(UCSC.generateTracks)

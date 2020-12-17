@@ -33,7 +33,7 @@ class PeakResults extends Component {
         }
         {
           Object.entries(peaksByAssay).map(([assay, peaks]) =>
-            <PeakAssay assay={assay} peaks={peaks} />
+            <PeakAssay key={assay} assay={assay} peaks={peaks} />
           )
         }
       </div>

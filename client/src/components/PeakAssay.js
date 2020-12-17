@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Alert,
+  Button,
   Container,
   Col,
   Row,
@@ -10,13 +11,13 @@ import {
 
 import Icon from './Icon'
 import PeakBoxplot from './PeakBoxplot'
-import { fetchValues } from '../actions'
+import { fetchValues, mergeTracks } from '../actions'
 
 const mapStateToProps = state => ({
   valuesByID: state.values.itemsByID
 })
 const mapDispatchToProps =
-  { fetchValues }
+  { fetchValues, mergeTracks }
 
 
 class PeakAssay extends Component {
@@ -34,6 +35,10 @@ class PeakAssay extends Component {
   onChangeFeature = (p) => {
     const peakID = p.id
     this.setState({ selectedPeak: peakID })
+  }
+
+  onOpenTracks = (p) => {
+    this.props.mergeTracks(p)
   }
 
   render() {
@@ -63,6 +68,7 @@ class PeakAssay extends Component {
               peaks={peaks}
               selectedPeak={selectedPeak}
               onChangeFeature={this.onChangeFeature}
+              onOpenTracks={this.onOpenTracks}
             />
             {values && values.message &&
               <Alert color='danger'>
@@ -82,7 +88,7 @@ class PeakAssay extends Component {
   }
 }
 
-function PeaksTable({ peaks, selectedPeak, onChangeFeature}) {
+function PeaksTable({ peaks, selectedPeak, onChangeFeature, onOpenTracks}) {
   return (
     <Table
       className='PeaksTable'
@@ -95,7 +101,7 @@ function PeaksTable({ peaks, selectedPeak, onChangeFeature}) {
           <th>Feature</th>
           <th>Condition</th>
           <th>P-value</th>
-          <th>Output</th>
+          <th>View in UCSC</th>
         </tr>
       </thead>
       <tbody>
@@ -110,7 +116,11 @@ function PeaksTable({ peaks, selectedPeak, onChangeFeature}) {
               <td className='PeaksTable__feature'>{p.gene || formatFeature(p.feature)}</td>
               <td>{p.condition.split(',').map(conditionName).join(' | ')}</td>
               <td>{p.pvalue.toPrecision(5)}</td>
-              <td><a href='#'>Tracks</a></td>
+              <td className='PeaksTable__tracks'>
+                <Button size='sm' color='link' onClick={() => onOpenTracks(p)}>
+                  Tracks <Icon name='external-link' />
+                </Button>
+              </td>
             </tr>
           )
         }

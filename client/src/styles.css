@@ -379,6 +379,12 @@ body {
   font-size: 0.9em;
   font-family: monospace;
 }
+.PeaksTable__tracks {
+  width: 120px;
+}
+.PeaksTable__tracks > button {
+  padding: 0;
+}
 
 
 .PeakBoxplot {

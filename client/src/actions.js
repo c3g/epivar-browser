@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions'
 
-import queryString from './helpers/queryString.js'
+import qs from './helpers/queryString.js'
 import * as api from './api'
 import * as k from './constants/ActionTypes.js'
 
@@ -43,33 +43,24 @@ export function doSearch() {
   }
 }
 
-export function mergeTracks(assay) {
-  return (dispatch, getState) => {
-    const { ui } = getState()
-
-    const position = Number(ui.position)
-    const { windowStart, windowEnd } = ui
-    const windowCenter = windowStart + Math.round((windowEnd - windowStart) / 2)
-
-    const start = Math.max(windowCenter - Math.round(ui.range / 2), 0)
-    const end   = windowCenter + Math.round(ui.range / 2)
+export function mergeTracks(peak) {
+  return (dispatch) => {
 
     const session = {
-      assay,
-      chrom: ui.chrom,
-      position,
-      start,
-      end
+      ...peak,
     }
 
     api.createSession(session)
     .then(sessionID => {
-      const params = {
-        hubClear: `${window.location.origin}${process.env.PUBLIC_URL || ''}/api/ucsc/hub/${sessionID}`,
-        db: 'hg19',
-        position: `${session.chrom}:${session.start}-${session.end}`,
-      }
-      window.open('http://ucscbrowser.genap.ca/cgi-bin/hgTracks?' + queryString(params))
+      const position = `${session.chrom}:${session.feature.start}-${session.feature.end}`
+      const baseURL = `${window.location.origin}${process.env.PUBLIC_URL || ''}`
+      const hubURL = `${baseURL}/api/ucsc/hub/${sessionID}`
+      const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs({ db: 'hg19', hubClear: hubURL, position })
+
+      console.log('Hub:',  hubURL)
+      console.log('UCSC:', ucscURL)
+
+      window.open(ucscURL)
     })
     .catch(err => dispatch(handleError(err)))
   }
