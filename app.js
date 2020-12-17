@@ -5,8 +5,6 @@ const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 
-const db = require('./db.js')
-
 const app = express()
 
 // view engine setup

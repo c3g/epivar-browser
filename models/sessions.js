@@ -2,46 +2,61 @@
  * sessions.js
  */
 
+const path = require('path')
 const md5 = require('md5')
-const db = require('../db.js')
+const Database = require('sqlite-objects').Database
+
 const Tracks = require('./tracks')
+const config = require('../config')
+
+const database = new Database(
+  config.paths.sessions,
+  path.join(__dirname, 'sessions.sql')
+)
 
 module.exports = {
   create,
   get,
 }
 
-async function create({ assay, chrom, position, start, end }) {
+async function create(peak) {
 
-  // FIXME change to new API
-  const tracksByAssay = await Tracks.values(
-    chrom,
-    Number(position),
-    Number(start),
-    Number(end)
-  )
-  .then(Tracks.group)
-  .then(Tracks.clean)
+  const tracksByCondition =
+    await Tracks.values(peak).then(Tracks.group)
 
-  const samples = Object.values(tracksByAssay[assay]).reduce((acc, cur) => acc.concat(cur), []).map(d => d.donor)
+  const samples =
+    Object.values(tracksByCondition).flat().map(d => d.donor)
   samples.sort(Intl.Collator().compare)
 
-  const text = JSON.stringify({ samples, chrom, position, start, end })
+  const session = { samples, peak }
+  const text = JSON.stringify(session)
   const hash = md5(text)
 
-  return get(hash).then(row => row ? hash :
-      db.run(`INSERT INTO sessions VALUES ($hash, $samples, $assay, $chrom, $position, $start, $end)`, {
-    $hash: hash,
-    $samples: JSON.stringify(samples),
-    $chrom: chrom,
-    $assay: assay,
-    $position: position,
-    $start: start,
-    $end: end,
-  }).then(() => hash))
+  return get(hash).then(row => {
+    if (row)
+      return hash
+
+    return database.insert(
+      `INSERT INTO sessions
+                   (hash, samples, peak)
+            VALUES (@hash, @samples, @peak)`,
+      {
+        hash,
+        samples: JSON.stringify(samples),
+        peak: JSON.stringify(peak),
+      }
+    )
+    .then(() => hash)
+  })
 }
 
 function get(hash) {
-  return db.get(`SELECT * FROM sessions WHERE hash = $hash`, { $hash: hash })
-    .then(res => res ? (res.samples = JSON.parse(res.samples), res) : undefined)
+  return database.findOne(`SELECT * FROM sessions WHERE hash = @hash`, { hash })
+  .then(row => {
+    if (!row)
+      return undefined
+    row.samples = JSON.parse(row.samples)
+    row.peak = JSON.parse(row.peak)
+    return row
+  })
 }
