@@ -8,9 +8,6 @@ import BoxPlot from './BoxPlot'
 const defaultValues = { isLoading: true, data: {} }
 
 function PeakBoxplot({ title, values = defaultValues }) {
-
-  console.log(values)
-
   const niData  = values.data.NI  ? getDataFromValues(values.data.NI)  : []
   const fluData = values.data.Flu ? getDataFromValues(values.data.Flu) : []
 
