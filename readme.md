@@ -20,7 +20,7 @@ Things to do:
  - `npm run build`
 
 External setup:
- - Setup nginx or apache proxy
+ - Setup nginx or apache proxy (see `./nginx.conf`)
  - Setup systemd service (see `./varwig.service`)
 
 See `config.example.js` for details about the config.
