@@ -7,10 +7,10 @@ const path = require('path')
 module.exports = {
   paths: {
     data: '/home/rgregoir/data',
-    db: '/home/rgregoir/data/varwig.db',
     gemini: '/home/rgregoir/data/gemini.db',
     tracks: '/home/rgregoir/data/tracks',
     mergedTracks: '/home/rgregoir/data/mergedTracks',
+    sessions: '/home/rgregoir/data/sessions.sqlite',
     peaks: '/home/rgregoir/data/peaks.sqlite',
     genes: '/home/rgregoir/data/genes.sqlite',
   },
@@ -36,7 +36,8 @@ module.exports = {
     filter: '1 = 1',
   },
   merge: {
-    bin: ''
+    bin: '',
+    semaphoreLimit: 2,
   },
 
   /* Configuration for development related options */

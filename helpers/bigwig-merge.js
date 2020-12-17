@@ -7,6 +7,10 @@ const path = require('path')
 const child_process = require('child_process')
 const { promisify } = require('util')
 const exec = promisify(child_process.exec)
+const { Semaphore } = require('await-semaphore')
+const config = require('../config')
+
+const semaphore = new Semaphore(config.merge.semaphoreLimit)
 
 module.exports = bigWigMerge
 
@@ -17,7 +21,7 @@ const defaultOptions = {
   output: path.join(os.tmpdir(), 'out.bw'),
 }
 
-function bigWigMerge(files, userOptions) {
+async function bigWigMerge(files, userOptions) {
   const options = { ...defaultOptions, ...userOptions }
 
   if (options.deviation && files.length <= 1)
@@ -30,8 +34,8 @@ function bigWigMerge(files, userOptions) {
     options.deviation !== undefined ?
       `-deviation=${options.deviation} -deviationDefault=0` :
       '',
-    (options.chrom !== undefined && options.start !== undefined && options.end !== undefined) ?
-      `-position=${options.chrom}:${options.start}-${options.end}` :
+    (options.chrom !== undefined) ?
+      `-position=${options.chrom}` + (options.start !== undefined && options.end !== undefined ? `:${options.start}-${options.end}` : '') :
       '',
     ...files,
     options.output
@@ -40,9 +44,20 @@ function bigWigMerge(files, userOptions) {
   log(options)
   log(command)
 
-  return exec(command)
-  .catch(err =>
-    console.error('Error:', err))
+
+  let result
+
+  const release = await semaphore.acquire()
+
+  try {
+    result = await exec(command)
+  } catch(err) {
+    result = Promise.reject(err)
+  } finally {
+    release()
+  }
+
+  return result
 }
 
 function log(...args) {
