@@ -10,10 +10,11 @@ const md5 = require('md5')
 const Cache = require('map-expire')
 const { map, path: prop, groupBy } = require('rambda')
 
-const bigWigMerge = require('../helpers/bigwig-merge.js')
-const valueAt = require('../helpers/value-at.js')
-const config = require('../config.js')
-const Samples = require('./samples.js')
+const bigWigMerge = require('../helpers/bigwig-merge')
+const bigWigChromosomeLength = require('../helpers/bigwig-chromosome-length')
+const valueAt = require('../helpers/value-at')
+const config = require('../config')
+const Samples = require('./samples')
 
 const source = require('./source')
 
@@ -101,15 +102,21 @@ function merge(tracks, session) {
         tracksByType.REF || [],
         tracksByType.HET || [],
         tracksByType.HOM || []
-      ].map(tracks =>
-        tracks.length > 0 ?
-          mergeFiles(tracks.map(prop('path')), {
-            chrom: session.peak.feature.chrom,
-            start: session.peak.feature.start,
-            end:   session.peak.feature.end,
-          }) :
-          undefined
-      )
+      ].map(async tracks => {
+        if (tracks.length === 0)
+          return undefined
+
+        const filepaths = tracks.map(prop('path'))
+
+        const maxSize = await bigWigChromosomeLength(filepaths[0], session.peak.feature.chrom)
+
+        debugger
+        return mergeFiles(filepaths, {
+          chrom: session.peak.feature.chrom,
+          start: Math.max(session.peak.feature.start - 100000, 0),
+          end:   Math.min(session.peak.feature.end + 100000, maxSize),
+        })
+      })
     )
 
   let promisedTracks
