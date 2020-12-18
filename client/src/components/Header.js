@@ -6,8 +6,8 @@ export default function Header({ children }) {
   return (
     <div className='Header'>
       <Container>
-        <h1 className='Header__title'>Varwig</h1>
-        <h4 className='Header__subtitle'>Variant search & merge tool</h4>
+        <h1 className='Header__title'>IMMUNPOP</h1>
+        <h4 className='Header__subtitle'>Epigenetic & Expression QTLs</h4>
         { children }
       </Container>
     </div>

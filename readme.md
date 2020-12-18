@@ -1,4 +1,4 @@
-# Varwig
+# flu-infection
 
 A web application to search for variant and merge bigWig tracks.
 
