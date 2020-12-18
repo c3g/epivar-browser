@@ -3,10 +3,11 @@ import { merge } from 'object-path-immutable'
 import * as k from './constants/ActionTypes'
 
 
-const defaultUI = {
-  chrom: 'chr11',
-  position: '70310556',
-}
+const defaultUI =
+  process.env.NODE_ENV === 'production' ?
+    { chrom: undefined, position: '' } :
+    { chrom: 'chr11',   position: '70310556' }
+
 function uiReducer(state = defaultUI, action, data) {
   switch (action.type) {
     case k.SET_CHROM: {
