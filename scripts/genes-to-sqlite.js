@@ -22,8 +22,8 @@ const schemaPath = path.join(__dirname, '../models/genes.sql')
   const db = new Database(outputPath, schemaPath)
   await db.ready
   await db.insertMany(
-    `INSERT INTO genes (name, chrom, start, end, strand)
-          VALUES       (@name, @chrom, @start, @end, @strand)`,
+    `INSERT INTO genes (id,  name, chrom, start, end, strand)
+          VALUES       (@id, @name, @chrom, @start, @end, @strand)`,
     genes
   )
   console.log('Done')
@@ -33,6 +33,7 @@ const schemaPath = path.join(__dirname, '../models/genes.sql')
 function parseGene(line) {
   const fields = line.trim().split('\t')
   return {
+    id:     Gene.normalizeName(fields[0]),
     name:   fields[0],
     chrom:  fields[1],
     start: +fields[2],

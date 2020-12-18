@@ -15,7 +15,7 @@ const schemaPath = path.join(__dirname, '../models/peaks.sql')
 
 ;(async () => {
   const workbook = xlsx.readFileSync(inputPath)
-  const peaks = xlsx.utils.sheet_to_json(workbook.Sheets['peaks']).map(normalizePeak)
+  const peaks = xlsx.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]).map(normalizePeak)
   console.log(peaks)
   console.log(peaks.length, 'records')
 
@@ -28,6 +28,11 @@ const schemaPath = path.join(__dirname, '../models/peaks.sql')
     return Gene.findByName(p.feature)
     .then(g => {
       p.gene = p.feature
+      if (!g) {
+        console.log('Gene not found:', Gene.normalizeName(p.feature))
+        console.log(p)
+        process.exit(1)
+      }
       p.feature = [g.chrom, g.start, g.end, g.strand].join('_')
     })
   }))
@@ -42,14 +47,15 @@ const schemaPath = path.join(__dirname, '../models/peaks.sql')
   console.log('Done')
 })()
 
-
 function normalizePeak(peak) {
   const [chrom, position] = peak.snp.split('_')
   peak.chrom = chrom
   peak.position = +position
   delete peak.snp
 
+  // peak.condition must be "NI", "Flu", or "NI,Flu"
   peak.condition = peak.condition.replace('Non-infected', 'NI').replace(/ \| /g, ',')
+  peak.condition = peak.condition.replace('Shared', 'NI,Flu')
 
   peak.assay = peak.feature_type
   delete peak.feature_type

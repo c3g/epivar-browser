@@ -6,7 +6,8 @@
  */
 
 create table genes (
-    name      text primary key,
+    id        text primary key,
+    name      text,
     chrom     text,
     start     integer,
     end       integer,
