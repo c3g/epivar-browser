@@ -5,7 +5,7 @@ import * as k from './constants/ActionTypes'
 
 const defaultUI = {
   chrom: 'chr11',
-  position: '70310555',
+  position: '70310556',
 }
 function uiReducer(state = defaultUI, action, data) {
   switch (action.type) {
