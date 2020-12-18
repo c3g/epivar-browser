@@ -11,6 +11,8 @@ const database = new Database(config.paths.peaks)
 
 module.exports = {
   query,
+  chroms,
+  positions,
 }
 
 function query(chrom, position) {
@@ -21,11 +23,37 @@ function query(chrom, position) {
       WHERE chrom = @chrom
         AND position = @position
     `,
-    // FIXME position + 1 is a hack because the data is offset by 1
-    { chrom, position: position + 1 }
+    { chrom, position }
   )
   .then(peaks => peaks.map(p => {
     p.feature = parseFeature(p.feature)
     return p
   }))
+}
+
+let cachedChroms = config.development.chroms || undefined
+function chroms() {
+  if (cachedChroms)
+    return Promise.resolve(cachedChroms)
+
+  return database.findAll(
+    `
+     SELECT DISTINCT(chrom)
+       FROM peaks
+    `
+  )
+  .then(rows => rows.map(r => r.chrom))
+}
+
+function positions(chrom, position) {
+  return database.findAll(
+    `
+     SELECT DISTINCT(position)
+       FROM peaks
+      WHERE chrom = @chrom
+        AND position LIKE @query
+    `,
+    { chrom, query: String(position) + '%' }
+  )
+  .then(rows => rows.map(r => r.position))
 }

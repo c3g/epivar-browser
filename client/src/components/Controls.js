@@ -217,10 +217,11 @@ class Controls extends React.Component {
 }
 
 function highlight(item, prefix) {
-  if (!item.startsWith(prefix))
-    return <span>{ item }</span>
+  const text = String(item)
+  if (!text.startsWith(prefix))
+    return <span>{ text }</span>
 
-  const rest = item.replace(prefix, '')
+  const rest = text.replace(prefix, '')
   return (
     <span>
       <span className='highlight'>{ prefix }</span>

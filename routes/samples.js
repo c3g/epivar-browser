@@ -9,26 +9,9 @@ const { dataHandler, errorHandler } = require('../helpers/handlers')
 const Samples = require('../models/samples.js')
 
 router.use('/query', (req, res) => {
-
   const { chrom, position } = req.query
 
   Samples.query(chrom, Number(position))
-  .then(dataHandler(res))
-  .catch(errorHandler(res))
-})
-
-router.use('/chroms', (req, res) => {
-
-  Samples.getChroms()
-  .then(dataHandler(res))
-  .catch(errorHandler(res))
-})
-
-router.use('/positions', (req, res) => {
-
-  const { chrom, start } = req.query
-
-  Samples.getPositions(chrom, start)
   .then(dataHandler(res))
   .catch(errorHandler(res))
 })

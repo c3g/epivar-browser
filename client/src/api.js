@@ -19,7 +19,7 @@ export function fetchSamples(params) {
 }
 
 export function fetchChroms() {
-  return get('/samples/chroms')
+  return get('/autocomplete/chroms')
   .then(chroms => {
     const parse = string => +string.slice(3)
     chroms.sort((a, b) => parse(a) - parse(b))
@@ -28,7 +28,7 @@ export function fetchChroms() {
 }
 
 export function fetchPositions(params) {
-  return get('/samples/positions', params)
+  return get('/autocomplete/positions', params)
 }
 
 
