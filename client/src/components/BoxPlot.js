@@ -120,6 +120,7 @@ function Bar({ data, x, y, height, domain }) {
 
       {afPoints.map((value, i) =>
         <circle
+          key={i}
           cx={afScale(i)}
           cy={yScale(value)}
           r={POINT_RADIUS}
