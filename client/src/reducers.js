@@ -123,7 +123,7 @@ const defaultPeaks = {
 function peaksReducer(state = defaultPeaks, action) {
   switch (action.type) {
     case k.PEAKS.REQUEST: {
-      return { ...state, isLoading: true }
+      return { ...state, isLoading: true, isLoaded: false, list: [] }
     }
     case k.PEAKS.RECEIVE: {
       return { ...state, isLoading: false, isLoaded: true, list: action.payload }
