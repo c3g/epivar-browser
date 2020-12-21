@@ -25,32 +25,20 @@ function PeakBoxplot({ title, values = defaultValues }) {
 
             return (
               <div className='PeakBoxplot__graphs'>
-                {values.isLoading &&
-                  <BoxPlot
-                    title='Non-infected'
-                    data={[]}
-                    width={boxWidth}
-                    height={boxWidth}
-                  />
-                }
-                {values.data.NI &&
-                  <BoxPlot
-                    title='Non-infected'
-                    domain={domain}
-                    data={niData}
-                    width={boxWidth}
-                    height={boxWidth}
-                  />
-                }
-                {values.data.Flu &&
-                  <BoxPlot
-                    title='Flu'
-                    domain={domain}
-                    data={fluData}
-                    width={boxWidth}
-                    height={boxWidth}
-                  />
-                }
+                <BoxPlot
+                  title='Non-infected'
+                  domain={values.isLoading ? undefined : domain}
+                  data={values.isLoading ? [] : niData}
+                  width={boxWidth}
+                  height={boxWidth}
+                />
+                <BoxPlot
+                  title='Flu'
+                  domain={values.isLoading ? undefined : domain}
+                  data={values.isLoading ? [] : fluData}
+                  width={boxWidth}
+                  height={boxWidth}
+                />
               </div>
             )
           }

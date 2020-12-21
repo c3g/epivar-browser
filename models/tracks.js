@@ -110,7 +110,6 @@ function merge(tracks, session) {
 
         const maxSize = await bigWigChromosomeLength(filepaths[0], session.peak.feature.chrom)
 
-        debugger
         return mergeFiles(filepaths, {
           chrom: session.peak.feature.chrom,
           start: Math.max(session.peak.feature.start - 100000, 0),

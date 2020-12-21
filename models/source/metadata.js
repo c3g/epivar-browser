@@ -30,7 +30,6 @@ function getTracks(samples, peak) {
         .map(([key, value]) => [nameToRealName(key), value]))
 
   const sampleNames = Object.keys(samplesByRealName)
-  const conditions = peak.condition.split(',')
   const assay = peak.assay.toLowerCase()
 
   const tracks =
@@ -40,8 +39,6 @@ function getTracks(samples, peak) {
         if (assay !== track.assay.toLowerCase())
           return false
         if (!sampleNames.includes(track.donor))
-          return false
-        if (!conditions.includes(track.condition))
           return false
         if (peak.assay === 'RNA-Seq' &&
               peak.feature.strand === '+' && track.view !== 'signal_forward')
