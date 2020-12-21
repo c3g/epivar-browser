@@ -102,10 +102,6 @@ class Controls extends React.Component {
     this.props.doSearch()
   }
 
-  onClickMerge = () => {
-    this.props.mergeTracks()
-  }
-
   onChange = (ev) => {
     this.props.changePosition(ev.target.value)
   }
