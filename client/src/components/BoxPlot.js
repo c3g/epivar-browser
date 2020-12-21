@@ -130,6 +130,7 @@ function Bar({ data, x, y, height, domain }) {
       )}
       {euPoints.map((value, i) =>
         <circle
+          key={i}
           cx={euScale(i)}
           cy={yScale(value)}
           r={POINT_RADIUS}
