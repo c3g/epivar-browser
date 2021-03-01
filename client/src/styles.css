@@ -133,7 +133,14 @@ body {
   right: 0.7em;
 }
 
-
+.nav-link {
+  color: #888;
+  cursor: pointer;
+  user-select: none;
+}
+.nav-link.active {
+  color: #000 !important;
+}
 
 /*
  * Elements
@@ -209,7 +216,7 @@ body {
   background-size: 100% 100%;
   color: white;
   padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 .Header__title {
   text-align: center;
@@ -232,10 +239,33 @@ body {
 
 
 .Controls {
-  padding: 1em 4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.Controls > *:not(:last-child) {
-  margin-right: 1em;
+.Controls__content {
+  padding: 1em 4em 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+.Controls .input-group {
+  margin-bottom: 0.25rem;
+}
+.Controls__example {
+  width: 100%;
+  transition: all .25s;
+}
+.Controls.didFirstSearch .Controls__example {
+  opacity: 0;
+  /* height: 0; */
+}
+.Controls__example b {
+  margin-right: 1.0em;
+}
+.Controls__example em {
+  font-style: normal;
+  opacity: 0.8;
 }
 .Controls__chromosome {
   width: 100px;

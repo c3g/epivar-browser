@@ -10,6 +10,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from 'reactstrap'
+import cx from 'clsx'
 
 import Icon from './Icon.js'
 import {
@@ -49,6 +50,7 @@ class Controls extends React.Component {
   state = {
     index: 0,
     open: false,
+    didFirstSearch: false,
   }
 
   componentWillReceiveProps(props) {
@@ -100,6 +102,7 @@ class Controls extends React.Component {
 
   onClickSearch = () => {
     this.props.doSearch()
+    this.setState({ didFirstSearch: true })
   }
 
   onChange = (ev) => {
@@ -191,22 +194,28 @@ class Controls extends React.Component {
   }
 
   render() {
+    const { didFirstSearch } = this.state
     const { isLoading } = this.props
 
     return (
-      <div className='Controls d-flex justify-content-center'>
-        <InputGroup>
-          { this.renderChroms() }
-          { this.renderPosition() }
-          <div className='input-group-append'>
-            <Button className='Controls__search'
-              onClick={this.onClickSearch}
-              disabled={isLoading}
-            >
-              <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
-            </Button>
+      <div className={cx('Controls', { didFirstSearch })}>
+        <div className='Controls__content'>
+          <InputGroup>
+            { this.renderChroms() }
+            { this.renderPosition() }
+            <div className='input-group-append'>
+              <Button className='Controls__search'
+                onClick={this.onClickSearch}
+                disabled={isLoading}
+              >
+                <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
+              </Button>
+            </div>
+          </InputGroup>
+          <div className='Controls__example'>
+            e.g.: <b>chr11</b> <b>70310556</b> <em>Select chromosome first, then position</em>
           </div>
-        </InputGroup>
+        </div>
       </div>
     )
   }
