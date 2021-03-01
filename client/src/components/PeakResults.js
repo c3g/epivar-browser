@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
   isLoading: state.peaks.isLoading,
   isLoaded: state.peaks.isLoaded,
   isEmpty: state.peaks.isLoaded && state.peaks.list.length === 0,
-  peaks: state.peaks.list,
+  peaks: state.peaks.list || [],
 })
 const mapDispatchToProps = {}
 
