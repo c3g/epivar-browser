@@ -30,7 +30,7 @@ class PeakResults extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const peaksByAssay = groupAndSortPeaks(props.peaks)
+    const peaksByAssay = groupAndSortPeaks(props.peaks || [])
     const assays = Object.keys(peaksByAssay)
 
     console.log(state.activeTab, peaksByAssay)
