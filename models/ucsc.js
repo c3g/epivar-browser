@@ -40,102 +40,47 @@ function generateTracks(mergedTracks) {
 
     const baseName = `${merged.assay}__${merged.condition}`
 
-    if (typesWithDataLength > 1) {
-      const parentName = `${baseName}__averages`
-      const shortLabel = parentName
-      const longLabel = parentName
+    const parentName = `${baseName}__averages`
+    const shortLabel = parentName
+    const longLabel = parentName
 
-      trackBlocks.push(unindent`
-        track ${parentName}
-        container multiWig
-        shortLabel ${shortLabel}
-        longLabel ${longLabel}
-        type bigWig
-        visibility full
-        aggregate transparentOverlay
-        showSubtrackColorOnUi on
-        windowingFunction maximum
-        priority 1.2
-        configurable on
-        dragAndDrop subTracks
-        autoScale on
-      `)
+    trackBlocks.push(unindent`
+      track ${parentName}
+      container multiWig
+      shortLabel ${shortLabel}
+      longLabel ${longLabel}
+      type bigWig
+      visibility full
+      aggregate transparentOverlay
+      showSubtrackColorOnUi on
+      windowingFunction maximum
+      priority 1.2
+      configurable on
+      dragAndDrop subTracks
+      autoScale on
+    `)
 
-      types.forEach(type => {
-        const output = merged.output[type]
-
-        if (output === undefined)
-          return
-
-        const trackName = `${parentName}__${type}`
-        const shortLabel = trackName
-
-        const colors = getColor(type)
-
-        trackBlocks.push(indent(4, unindent`
-          track ${trackName}
-          type ${trackType}
-          parent ${parentName}
-          shortLabel ${shortLabel}
-          bigDataUrl ${output.url}
-          maxHeightPixels 25:25:8
-          color ${colors[0]}
-          graphTypeDefault points
-        `))
-      })
-    }
-
-    types.forEach((typeShort, i) => {
-      const output = merged.output[typeShort]
+    types.forEach(type => {
+      const output = merged.output[type]
 
       if (output === undefined)
         return
 
-      const type = typeShort === 'REF' ? 'reference' : typeShort === 'HET' ? 'variant_het' : 'variant_hom'
-      const trackName = `${baseName}__${type}`
+      const trackName = `${parentName}__${type}`
       const shortLabel = trackName
-      const longLabel = trackName
 
-      const colors = getColor(typeShort)
-
-      trackBlocks.push(unindent`
-        track ${trackName}
-        container multiWig
-        shortLabel ${shortLabel}
-        longLabel ${longLabel}
-        type bigWig
-        visibility full
-        aggregate transparentOverlay
-        showSubtrackColorOnUi on
-        windowingFunction maximum
-        priority 1.2
-        configurable on
-        dragAndDrop subTracks
-        autoScale on
-      `)
+      const colors = getColor(type)
 
       trackBlocks.push(indent(4, unindent`
-        track ${trackName}__data
+        track ${trackName}
         type ${trackType}
-        parent ${trackName}
-        shortLabel ${shortLabel}__data
-        longLabel ${longLabel}__data
+        parent ${parentName}
+        shortLabel ${shortLabel}
         bigDataUrl ${output.url}
         maxHeightPixels 25:25:8
         color ${colors[0]}
+        graphTypeDefault points
       `))
-
-      if (output.hasDeviation)
-        trackBlocks.push(indent(4, unindent`
-          track ${trackName}__deviation
-          type ${trackType}
-          parent ${trackName}
-          shortLabel ${shortLabel}__deviation
-          longLabel ${longLabel}__deviation
-          bigDataUrl ${output.url.replace(/\.bw$/, '-dev.bw')}
-          maxHeightPixels 25:25:8
-          color ${colors[1]}
-        `))
     })
 
   })
