@@ -57,13 +57,6 @@ class PeakAssay extends Component {
       <Container className='PeakAssay'>
         <Row>
           <Col xs='12'>
-            <h6 className='PeakAssay__name'>
-              <Icon name='flask' className='PeakAssay__icon' /><strong>{assay}</strong> - {peaks.length} peaks
-            </h6>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs='12'>
             <PeaksTable
               peaks={peaks}
               selectedPeak={selectedPeak}

@@ -1,25 +1,54 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Container } from 'reactstrap'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Container, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import { groupBy, sortBy, prop, map, reverse, compose } from 'rambda'
+import memoizeOne from 'memoize-one'
+import cx from 'clsx'
 
+import Icon from './Icon'
 import PeakAssay from './PeakAssay'
 
 const mapStateToProps = state => ({
   isLoading: state.peaks.isLoading,
+  isLoaded: state.peaks.isLoaded,
   isEmpty: state.peaks.isLoaded && state.peaks.list.length === 0,
   peaks: state.peaks.list,
 })
 const mapDispatchToProps = {}
 
-const groupAndSortPeaks = compose(map(compose(reverse, sortBy(prop('pvalue')))), groupBy(prop('assay')))
+const groupAndSortPeaks = memoizeOne(
+  compose(map(compose(reverse, sortBy(prop('pvalue')))), groupBy(prop('assay')))
+)
 
 class PeakResults extends Component {
+  state = {
+    activeTab: null,
+  }
+
+  setTab = activeTab => {
+    this.setState({ activeTab })
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const peaksByAssay = groupAndSortPeaks(props.peaks)
+    const assays = Object.keys(peaksByAssay)
+
+    console.log(state.activeTab, peaksByAssay)
+    if (state.activeTab !== null && !(state.activeTab in peaksByAssay))
+      return { activeTab: assays.length > 0 ? assays[0] : null }
+
+    if (state.activeTab === null && assays.length > 0)
+      return { activeTab: assays[0] }
+  }
+
   render() {
-    const { isLoading, isEmpty, peaks } = this.props
+    const { activeTab } = this.state
+    const { isLoading, isLoaded, isEmpty, peaks } = this.props
 
     const peaksByAssay = groupAndSortPeaks(peaks)
+    const entries = Object.entries(peaksByAssay)
 
+    console.log(activeTab, entries)
     return (
       <div className={'PeakResults ' + (isLoading ? 'loading' : '')}>
         {
@@ -32,9 +61,32 @@ class PeakResults extends Component {
             </Container>
         }
         {
-          Object.entries(peaksByAssay).map(([assay, peaks]) =>
-            <PeakAssay key={assay} assay={assay} peaks={peaks} />
-          )
+          (isLoading || isLoaded) &&
+            <Container>
+              <Nav tabs>
+                {
+                  entries.map(([assay, peaks]) =>
+                    <NavItem key={assay}>
+                      <NavLink
+                        className={cx({ active: activeTab === assay })}
+                        onClick={() => this.setTab(assay)}
+                      >
+                        <Icon name='flask' className='PeakAssay__icon' /><strong>{assay}</strong> - {peaks.length} peak{peaks.length > 1 ? 's' : ''}
+                      </NavLink>
+                    </NavItem>
+                  )
+                }
+              </Nav>
+              <TabContent activeTab={activeTab}>
+                {
+                  entries.map(([assay, peaks]) =>
+                    <TabPane tabId={assay}>
+                      <PeakAssay assay={assay} peaks={peaks} />
+                    </TabPane>
+                  )
+                }
+              </TabContent>
+            </Container>
         }
       </div>
     )

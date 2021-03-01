@@ -351,12 +351,11 @@ body {
 
 
 .PeakAssay {
+  padding-top: 1rem;
   margin-bottom: 2rem;
 }
 .PeakAssay__icon {
-  position: absolute;
-  top: 0.4rem;
-  left: -1.5em;
+  margin-right: 0.5em;
 }
 .PeakAssay__name {
   position: relative;
