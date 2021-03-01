@@ -2,7 +2,10 @@
  * ucsc.js
  */
 
+const fs = require('fs')
+const path = require('path')
 const Color = require('color-js')
+const otherTracks = fs.readFileSync(path.join(__dirname, './ucsc.other-tracks.txt')).toString()
 
 module.exports = {
   generateHub,
@@ -85,7 +88,11 @@ function generateTracks(mergedTracks) {
 
   })
 
-  return trackBlocks.join('\n\n')
+  return (
+    trackBlocks.join('\n\n')
+    + '\n\n'
+    + otherTracks
+  )
 }
 
 // Thanks to Google Charts
