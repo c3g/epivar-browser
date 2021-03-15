@@ -33,7 +33,6 @@ class PeakResults extends Component {
     const peaksByAssay = groupAndSortPeaks(props.peaks || [])
     const assays = Object.keys(peaksByAssay)
 
-    console.log(state.activeTab, peaksByAssay)
     if (state.activeTab !== null && !(state.activeTab in peaksByAssay))
       return { activeTab: assays.length > 0 ? assays[0] : null }
 
@@ -48,7 +47,6 @@ class PeakResults extends Component {
     const peaksByAssay = groupAndSortPeaks(peaks)
     const entries = Object.entries(peaksByAssay)
 
-    console.log(activeTab, entries)
     return (
       <div className={'PeakResults ' + (isLoading ? 'loading' : '')}>
         {
