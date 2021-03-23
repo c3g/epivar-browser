@@ -6,7 +6,7 @@
  */
 
 create table peaks (
-    id        integer primary key autoincrement,
+    id        integer primary key,
     rsID      text,
     chrom     text,
     position  integer,

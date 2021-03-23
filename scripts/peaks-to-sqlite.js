@@ -41,8 +41,8 @@ const schemaPath = path.join(__dirname, '../models/peaks.sql')
   const db = new Database(outputPath, schemaPath)
   await db.ready
   await db.insertMany(
-    `INSERT INTO peaks (rsID,  chrom,  position,  gene,  feature,  assay,  valueNI,  valueFlu)
-          VALUES       (@rsID, @chrom, @position, @gene, @feature, @assay, @valueNI, @valueFlu)`,
+    `INSERT INTO peaks (id,  rsID,  chrom,  position,  gene,  feature,  assay,  valueNI,  valueFlu)
+          VALUES       (@id, @rsID, @chrom, @position, @gene, @feature, @assay, @valueNI, @valueFlu)`,
     peaks
   )
   console.log('Done')
@@ -52,7 +52,10 @@ const schemaPath = path.join(__dirname, '../models/peaks.sql')
 // "rsID",       "snp",           "feature",                "fdr.NI",             "fdr.Flu",            "feature_type"
 // "rs13266435", "chr8_21739832", "chr8_21739251_21740780", 1.16446980634725e-11, 6.85657669813694e-13, "ATAC-seq"
 
-function normalizePeak(peak) {
+function normalizePeak(peak, index) {
+  // Table is sorted in order of priority
+  peak.id = index
+
   const [chrom, position] = peak.snp.split('_')
   peak.chrom    = chrom
   peak.position = +position
@@ -65,6 +68,9 @@ function normalizePeak(peak) {
 
   peak.assay = peak.feature_type
   delete peak.feature_type
+
+  if (peak.rsID === '.')
+    peak.rsID = null
 
   return peak
 }

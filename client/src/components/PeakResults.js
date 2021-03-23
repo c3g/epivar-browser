@@ -16,8 +16,10 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = {}
 
+// Original data comes sorted by order of priority, therefore we
+// sort by ID because it's also the priority field.
 const groupAndSortPeaks = memoizeOne(
-  compose(map(compose(reverse, sortBy(prop('pvalue')))), groupBy(prop('assay')))
+  compose(map(compose(reverse, sortBy(prop('id')))), groupBy(prop('assay')))
 )
 
 class PeakResults extends Component {

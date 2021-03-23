@@ -91,9 +91,10 @@ function PeaksTable({ peaks, selectedPeak, onChangeFeature, onOpenTracks}) {
     >
       <thead>
         <tr>
+          <th>RS</th>
           <th>Feature</th>
-          <th>Condition</th>
-          <th>P-value</th>
+          <th>Value (Flu)</th>
+          <th>Value (NI)</th>
           <th>View in UCSC</th>
         </tr>
       </thead>
@@ -106,9 +107,10 @@ function PeaksTable({ peaks, selectedPeak, onChangeFeature, onOpenTracks}) {
               role='button'
               onClick={() => onChangeFeature(p)}
             >
+              <td>{p.rsID}</td>
               <td className='PeaksTable__feature'>{p.gene || formatFeature(p.feature)}</td>
-              <td>{p.condition.split(',').map(conditionName).join(' | ')}</td>
-              <td>{p.pvalue.toPrecision(5)}</td>
+              <td>{p.valueFlu.toPrecision(5)}</td>
+              <td>{p.valueNI.toPrecision(5)}</td>
               <td className='PeaksTable__tracks'>
                 <Button size='sm' color='link' onClick={() => onOpenTracks(p)}>
                   Tracks <Icon name='external-link' />

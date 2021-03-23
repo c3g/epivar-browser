@@ -53,7 +53,7 @@ const defaultChroms = {
   isLoading: false,
   isLoaded: false,
   total: 0,
-  list: [],
+  list: ['rsID'],
 }
 function chromsReducer(state = defaultChroms, action) {
   switch (action.type) {
@@ -61,7 +61,12 @@ function chromsReducer(state = defaultChroms, action) {
       return { ...state, isLoading: true }
     }
     case k.CHROMS.RECEIVE: {
-      return { ...state, isLoading: false, isLoaded: true, list: action.payload }
+      return {
+        ...state,
+        isLoading: false,
+        isLoaded: true,
+        list: state.list.concat(action.payload)
+      }
     }
     case k.CHROMS.ERROR: {
       return { ...state, isLoading: false }

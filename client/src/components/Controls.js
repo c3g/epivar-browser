@@ -124,7 +124,7 @@ class Controls extends React.Component {
   selectItem = index => {
     const { positions: { list } } = this.props
 
-    const position = Number(list[index])
+    const position = list[index]
     this.props.changePosition(position)
     this.props.doSearch()
   }
