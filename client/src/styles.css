@@ -47,7 +47,7 @@ body {
 }
 *::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: #A7A7A7;
+  background-color: #dddddd;
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.2);
 }
 
@@ -461,8 +461,10 @@ body {
   border-radius: 4px;
   margin: 6px 0 0;
   text-align: left;
-  height: auto;
+  overflow-y: scroll;
   background: transparent;
+  height: auto;
+  max-height: 600px;
   width: 50vw;
   min-width: 0 !important;
   max-width: none !important;

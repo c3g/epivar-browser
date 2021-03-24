@@ -156,7 +156,7 @@ class Controls extends React.Component {
 
   renderPosition() {
     const { open, index } = this.state
-    const { position, positions: { list } } = this.props
+    const { chrom, position, positions: { list } } = this.props
 
     return (
       <React.Fragment>
@@ -167,7 +167,7 @@ class Controls extends React.Component {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           value={position}
-          placeholder='10000'
+          placeholder={chrom === 'rsID' ? 'Search by RS ID' : 'Search position'}
         />
         {
           open &&
