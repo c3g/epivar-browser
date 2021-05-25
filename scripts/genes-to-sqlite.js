@@ -6,10 +6,11 @@
 const fs = require('fs')
 const path = require('path')
 const Database = require('sqlite-objects').Database
+const Gene = require('../models/genes')
 
 
-const inputPath = '/home/romgrk/data/flu-infection-genes.txt'
-const outputPath = 'genes.sqlite'
+const inputPath = path.join(__dirname, '../input-files/flu-infection-genes.txt')
+const outputPath = path.join(__dirname, '../data/genes.sqlite')
 const schemaPath = path.join(__dirname, '../models/genes.sql')
 
 

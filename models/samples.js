@@ -90,19 +90,22 @@ function gemini(query, params = '') {
   const command =
     `gemini query ${path} \
         ${params} \
-        -q "${query.replace(/"/g, '\\"')}"` 
-
-  /* const path = '~/projects/rrg-bourqueg-ad/C3G/projects/DavidB_varwig/WGS_VCFs/allSamples_WGS.gemini.db'
-   * const gemini = '/cvmfs/soft.mugqic/CentOS6/software/gemini/gemini-0.20.1/shared/anaconda/bin/gemini'
-   * const command =
-   *   `ssh beluga '${gemini} query ${path} \
-   *       ${params} \
-   *       -q "${query.replace(/"/g, '\\"')}"'` */
-
-  // query $PATH --header --show-samples --format sampledetail -q "SELECT chrom, start, end, ref, alt, (gts).(*) from variants where chrom = \"chr1\" and start <= 20000"'
-
+        -q "${query.replace(/"/g, '\\"')}"`
   return exec(command)
 }
+
+// NOTE: For development, calling gemini on beluga directly
+// is much faster. Uncomment this and comment above to do it that way.
+// function gemini(query, params = '') {
+//   const path = '~/projects/rrg-bourqueg-ad/C3G/projects/DavidB_varwig/WGS_VCFs/allSamples_WGS.gemini.db'
+//   const gemini = '/cvmfs/soft.mugqic/CentOS6/software/gemini/gemini-0.20.1/shared/anaconda/bin/gemini'
+//   const command =
+//     `ssh beluga '${gemini} query ${path} \
+//         ${params} \
+//         -q "${query.replace(/"/g, '\\"')}"'`
+//   return exec(command)
+// }
+
 
 function normalizeSamples(samples) {
 

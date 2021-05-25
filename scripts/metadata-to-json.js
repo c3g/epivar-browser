@@ -3,6 +3,7 @@
  */
 
 const fs = require('fs')
+const path = require('path')
 const xlsx = require('xlsx')
 
 const sheetNames = [
@@ -32,7 +33,8 @@ const headers = {
   'assay_category_id': 'assay_category.name',
 }
 
-const path = '/home/romgrk/data/flu-infection.xlsx'
+const path = path.join(__dirname, '../input-files/flu-infection.xlsx')
+const output = path.join(__dirname, '../data/metadata.json')
 const workbook = xlsx.readFileSync(path)
 
 let items = []
@@ -57,4 +59,4 @@ sheetNames.forEach(name => {
   items = items.concat(newItems)
 })
 
-fs.writeFileSync('metadata.json', JSON.stringify(items, null, 2))
+fs.writeFileSync(output, JSON.stringify(items, null, 2))

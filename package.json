@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "cd client && npm install",
     "start": "npm run watch",
     "server": "node ./bin/www",
     "watch": "nodemon -i client ./bin/www",

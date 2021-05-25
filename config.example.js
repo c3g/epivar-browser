@@ -4,17 +4,49 @@
 
 const path = require('path')
 
+
+/* This is the application data directory */
+const dataDirname = path.join(__dirname, './data')
+
+/* For development: the `tracks` data is huge, so it makes
+ * more sense to mount the files via `sshfs` instead of
+ * copying them all.
+ * You'd mount them with something like:
+ *  sshfs beluga.calculcanada.ca:~/projects/rrg-bourqueg-ad/C3G/projects/DavidB_varwig \
+ *      ~/mnt/beluga-varwig-data
+ * Then you base directory would be:
+ */
+// const belugaDirname = '/home/romgrk/mnt/beluga-varwig-data'
+
 module.exports = {
   paths: {
-    data: '/home/rgregoir/data',
-    gemini: '/home/rgregoir/data/gemini.db',
-    tracks: '/home/rgregoir/data/tracks',
-    mergedTracks: '/home/rgregoir/data/mergedTracks',
-    sessions: '/home/rgregoir/data/sessions.sqlite',
-    peaks: '/home/rgregoir/data/peaks.sqlite',
-    genes: '/home/rgregoir/data/genes.sqlite',
+    data:         dataDirname,
+    peaks:        `${dataDirname}/peaks.sqlite`,
+    genes:        `${dataDirname}/genes.sqlite`,
+
+    // In production:
+    tracks:       `${dataDirname}/tracks`,
+    gemini:       `${dataDirname}/gemini.db`,
+    // In development:
+    //tracks:       belugaDirname,
+    //gemini:       path.join(belugaDirname, 'WGS_VCFs/allSamples_WGS.gemini.db'),
+
+    mergedTracks: `${dataDirname}/mergedTracks`,
+
+    /* Used to save sessions, no need to create it, the application
+     * handles that. */
+    sessions:     `${dataDirname}/sessions.sqlite`,
   },
-  // source: either 'ihec' or 'metadata'
+
+  source: {
+    type: 'metadata',
+    metadata: {
+      path: path.join(__dirname, 'data/metadata.json'),
+    },
+  },
+
+  // The application was conceived to accept multiple data sources,
+  // but for now only `metadata` (above) is tested.
   /* source: {
    *   type: 'ihec',
    *   ihec: {
@@ -26,23 +58,26 @@ module.exports = {
    *     },
    *   },
    * }, */
-  /* source: {
-   *   type: 'metadata',
-   *   metadata: {
-   *     path: path.join(__dirname, 'data/metadata.json'),
-   *   },
-   * }, */
+
   samples: {
-    filter: '1 = 1',
+    /* Additional filter for samples. The gemini database might contain
+     * variants that we don't want to see, this removes them without
+     * having to clean the database. */
+    filter: 'type = "snp"',
   },
+
   merge: {
     bin: '',
+    /* Maximum number of concurrent bigWigMergePlus processes, to
+     * avoid CPU/memory shortage. */
     semaphoreLimit: 2,
   },
 
   /* Configuration for development related options */
   development: {
-    /** @type Array<String> cached list of chroms */
+    /** @type Array<String> */
     chroms: undefined,
+    // Eg
+    //chroms: ['chr1', 'chr2', 'chr3' /* etc */],
   },
 }
