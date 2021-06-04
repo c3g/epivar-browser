@@ -4,10 +4,11 @@ A web application to search for variant and merge bigWig tracks.
 
 ## Installation
 
-### Third-party dependencies
+### Dependencies
 
 Install these dependencies according to their own instructions:
- - `bigWigMergePlus`: https://github.com/c3g/kent/releases (bin: https://github.com/c3g/kent/releases/download/bigWigMergePlus_v2.3.2/bigWigMergePlus-mp2b)
+ - `nodejs`
+ - `bigWigMergePlus`: https://github.com/c3g/kent/releases/download/bigWigMergePlus_v2.3.2/bigWigMergePlus-mp2b
  - `bigWigInfo` and `bigWigSummary`: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/
  - `gemini`: https://gemini.readthedocs.io/en/latest/ (non-trivial, takes some effort, there is a lot of data to download)
 
@@ -20,10 +21,10 @@ is also transformed to be consumable by the application. The first step
 is therefore to prepare the data. `./input-files` contain the source data
 at time of writing as provided by Alain Pacis, but may need to be updated.
 The data directory is configurable but the application and this document
-will use `./data` by default; this directory contains all the require
+will use `./data` by default; this directory contains all the required
 runtime data for the application.
 
-Start with `cp config.example.js config.js` to create the required config.
+**Start with** `cp config.example.js config.js` to create the required config.
 The default config should not need much updating if you follow this document
 but you can follow along to make sure everything matches. Make sure `./data`
 exists with `mkdir -p ./data`.
@@ -55,15 +56,6 @@ The different data sources to generate/prepare are:
      Data: `./data/metadata.json`
      Config: `config.source.metadata.path` (filepath)
      Notes: This is really just an XLSX to JSON transformation.
- - Tracks: There are the bigWig files that contain the signal data.
-     **Generate with**: You will need to either copy the files, or
-      in development mount them with `sshfs` to have access to them.
-      See comment inside `config.example.js` for more details.
-     Config: `config.paths.tracks` (directory)
-     Notes: A metadata item (from step just before) `.path` field
-      point to a path inside the `config.paths.tracks` directory, eg:
-      `metadata.path = 'RNAseq/AF02_Flu.forward.bw'`
-      `filepath = path.join(config.paths.tracks, metadata.path)`
  - Gemini database: This contains variants' data.
      **Generate with**: Copy it.
      Notes: Accessing it over `sshfs` in development is bad because the
@@ -73,6 +65,15 @@ The different data sources to generate/prepare are:
      Fetching the chromosomes list can also be expensive, so for development
      you might want to hardcode the list in the config at
      `config.development.chroms` once you know what that list is.
+ - Tracks: There are the bigWig files that contain the signal data.
+     **Generate with**: You will need to either copy the files, or
+      in development mount them with `sshfs` to have access to them.
+      See comment inside `config.example.js` for more details.
+     Config: `config.paths.tracks` (directory)
+     Notes: A metadata item (from step Metadata above) `.path` field
+      points to a path inside the `config.paths.tracks` directory, eg:
+      `metadata.path = 'RNAseq/AF02_Flu.forward.bw'`
+      `filepath = path.join(config.paths.tracks, metadata.path)`
  - Merged tracks: The directory to store the merged tracks.
      **Generate with**: `mkdir -p ./data/mergedTracks`
      Config: `config.paths.mergedTracks` (directory)
