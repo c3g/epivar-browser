@@ -25,7 +25,7 @@ will use `./data` by default; this directory contains all the required
 runtime data for the application.
 
 **Start with** `cp config.example.js config.js` to create the required config.
-The default config should not need much updating if you follow this document
+The default config should not need updating if you follow the instructions below
 but you can follow along to make sure everything matches. Make sure `./data`
 exists with `mkdir -p ./data`.
 
@@ -56,15 +56,6 @@ The different data sources to generate/prepare are:
      Data: `./data/metadata.json`
      Config: `config.source.metadata.path` (filepath)
      Notes: This is really just an XLSX to JSON transformation.
- - Gemini database: This contains variants' data.
-     **Generate with**: Copy it.
-     Notes: Accessing it over `sshfs` in development is bad because the
-     `gemini` command needs to read it a lot. It might be easier to call
-     `gemini` directly on `beluga`. See the comment in `./models/samples.js`
-     about the `gemini()` function for more details.
-     Fetching the chromosomes list can also be expensive, so for development
-     you might want to hardcode the list in the config at
-     `config.development.chroms` once you know what that list is.
  - Tracks: There are the bigWig files that contain the signal data.
      **Generate with**: You will need to either copy the files, or
       in development mount them with `sshfs` to have access to them.
@@ -78,6 +69,15 @@ The different data sources to generate/prepare are:
      **Generate with**: `mkdir -p ./data/mergedTracks`
      Config: `config.paths.mergedTracks` (directory)
      Notes: Make sure there is enough space for those tracks.
+ - Gemini database: This contains variants' data.
+     **Generate with**: Copy it or mount over `sshfs`.
+     Notes: Accessing it over `sshfs` in development is slow because the
+     `gemini` command needs to read it a lot. It might be easier to call
+     `gemini` directly on `beluga`. See the comment in `./models/samples.js`
+     about the `gemini()` function for more details.
+     Fetching the chromosomes list can also be expensive, so for development
+     you might want to hardcode the list in the config at
+     `config.development.chroms` once you know what that list is.
 
 ### Application
 
@@ -95,4 +95,16 @@ In development, you'd run:
 
 In production, you may need to setup these to handle persistence & HTTPS:
  - Setup nginx or apache proxy (see `./nginx.conf`) with letsencrypt certificate
- - Setup systemd service (see `./varwig.service`)
+ - Setup systemd service (see `./varwig.service`) that runs `node ./bin/www`
+
+## Architecture
+
+This is a standard express backend + react frontend application. Frontend files
+live in `./client`, and backend files live at the root of the project.
+
+The API routes are setup in [app.js](./app.js), and are listed in [routes/](./routes);
+the frontend groups all API communication functions in [./client/src/api.js](./client/src/api.js).
+The [models/](./models) folder contains the functions to retrieve the actual data,
+depending on where it is. Some of it is in SQLite databases (genes, peaks, sessions), the tracks
+come from the tracks/mergedTracks folders configured previously, the variants (aka samples) data
+comes from gemini, and the UCSC track hubs are generated on the fly.
