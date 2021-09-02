@@ -13,8 +13,6 @@
     "rambda": "^6.4.0",
     "ramda": "^0.24.1",
     "react": "^16.14.0",
-    "react-addons-css-transition-group": "^15.6.2",
-    "react-addons-transition-group": "^15.6.2",
     "react-bootstrap-table": "^4.0.5",
     "react-dom": "^16.14.0",
     "react-redux": "^5.0.6",
