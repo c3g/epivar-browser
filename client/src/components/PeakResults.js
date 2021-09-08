@@ -40,6 +40,8 @@ class PeakResults extends Component {
 
     if (state.activeTab === null && assays.length > 0)
       return { activeTab: assays[0] }
+
+    return state
   }
 
   render() {

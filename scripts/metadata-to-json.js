@@ -33,9 +33,9 @@ const headers = {
   'assay_category_id': 'assay_category.name',
 }
 
-const path = path.join(__dirname, '../input-files/flu-infection.xlsx')
+const metadataPath = path.join(__dirname, '../input-files/flu-infection.xlsx')
 const output = path.join(__dirname, '../data/metadata.json')
-const workbook = xlsx.readFileSync(path)
+const workbook = xlsx.readFileSync(metadataPath)
 
 let items = []
 

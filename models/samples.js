@@ -85,26 +85,35 @@ function getPositions(chrom, start) {
 }
 
 
+// NOTE: For development, calling gemini on beluga directly
+// is much faster. Set EXECUTE_GEMINI_REMOTELY to a non-blank
+// value to turn this on. This requires that `beluga` is configured
+// in your SSH config to use your username and is an alias for the
+// actual beluga hostname.
+// IMPORTANT: Do not use this in production!!
+const EXECUTE_GEMINI_REMOTELY = process.env.EXECUTE_GEMINI_REMOTELY || false;
+
 function gemini(query, params = '') {
-  const path = config.paths.gemini
-  const command =
-    `gemini query ${path} \
+  const remoteGeminiBaseDir = '/cvmfs/soft.mugqic/CentOS6/software/gemini/gemini-0.20.1'
+
+  const path = EXECUTE_GEMINI_REMOTELY
+    ? '~/projects/rrg-bourqueg-ad/C3G/projects/DavidB_varwig/WGS_VCFs/allSamples_WGS.gemini.db'
+    : config.paths.gemini
+  const gemini = EXECUTE_GEMINI_REMOTELY
+      ? `${remoteGeminiBaseDir}/shared/anaconda/bin/gemini`
+      : 'gemini'
+  const command = EXECUTE_GEMINI_REMOTELY
+    ? `ssh beluga '\
+        PYTHONPATH=${remoteGeminiBaseDir}/shared/anaconda/lib/python2.7/site-packages \
+        ${gemini} query ${path} \
+        ${params} \
+        -q "${query.replace(/"/g, '\\"')}"'`
+    : `${gemini} query ${path} \
         ${params} \
         -q "${query.replace(/"/g, '\\"')}"`
+
   return exec(command)
 }
-
-// NOTE: For development, calling gemini on beluga directly
-// is much faster. Uncomment this and comment above to do it that way.
-// function gemini(query, params = '') {
-//   const path = '~/projects/rrg-bourqueg-ad/C3G/projects/DavidB_varwig/WGS_VCFs/allSamples_WGS.gemini.db'
-//   const gemini = '/cvmfs/soft.mugqic/CentOS6/software/gemini/gemini-0.20.1/shared/anaconda/bin/gemini'
-//   const command =
-//     `ssh beluga '${gemini} query ${path} \
-//         ${params} \
-//         -q "${query.replace(/"/g, '\\"')}"'`
-//   return exec(command)
-// }
 
 
 function normalizeSamples(samples) {
