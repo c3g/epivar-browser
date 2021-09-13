@@ -4,20 +4,35 @@
 
 const fs = require('fs')
 const path = require('path')
-const xlsx = require('xlsx')
 const parseCSV = require('csv-parse/lib/sync')
 const Database = require('sqlite-objects').Database
 const Gene = require('../models/genes')
 
+const chipmentationAssays = [
+  'H3K4me1',
+  'H3K4me3',
+  'H3K27ac',
+  'H3K27me3',
+];
 
-const inputPath = `${path.join(__dirname, '../input-files')}/flu-infection-peaks-qtls-complete-atacseq.csv`
+const datasetPaths = [
+  'atacseq',
+  'h3k4me1',
+  'h3k4me3',
+  'h3k27ac',
+  'h3k27me3',
+  'rnaseq',
+].map(d => `${path.join(__dirname, '../input-files')}/flu-infection-peaks-qtls-complete-${d}.csv`);
+
 const outputPath = path.join(__dirname, '../data/peaks.sqlite')
 const schemaPath = path.join(__dirname, '../models/peaks.sql')
 
-
 ;(async () => {
-  const peaks = parseCSV(fs.readFileSync(inputPath).toString(), { columns: true }).map(normalizePeak)
-  console.log(peaks)
+  const peaks = datasetPaths
+    .flatMap(inputPath => parseCSV(fs.readFileSync(inputPath).toString(), { columns: true }))
+    .map(normalizePeak)
+
+  // console.log(peaks)
   console.log(peaks.length, 'records')
 
   await Promise.all(peaks.map(p => {
@@ -27,22 +42,22 @@ const schemaPath = path.join(__dirname, '../models/peaks.sql')
     }
 
     return Gene.findByName(p.feature)
-    .then(g => {
-      p.gene = p.feature
-      if (!g) {
-        console.log('Gene not found:', Gene.normalizeName(p.feature))
-        console.log(p)
-        process.exit(1)
-      }
-      p.feature = [g.chrom, g.start, g.end, g.strand].join('_')
-    })
+      .then(g => {
+        p.gene = p.feature
+        if (!g) {
+          console.log('Gene not found:', Gene.normalizeName(p.feature))
+          console.log(p)
+          process.exit(1)
+        }
+        p.feature = [g.chrom, g.start, g.end, g.strand].join('_')
+      })
   }))
 
   const db = new Database(outputPath, schemaPath)
   await db.ready
   await db.insertMany(
     `INSERT INTO peaks (id,  rsID,  chrom,  position,  gene,  feature,  assay,  valueNI,  valueFlu)
-          VALUES       (@id, @rsID, @chrom, @position, @gene, @feature, @assay, @valueNI, @valueFlu)`,
+        VALUES       (@id, @rsID, @chrom, @position, @gene, @feature, @assay, @valueNI, @valueFlu)`,
     peaks
   )
   console.log('Done')
@@ -66,17 +81,15 @@ function normalizePeak(peak, index) {
   delete peak['fdr.NI']
   delete peak['fdr.Flu']
 
-  peak.assay = peak.feature_type
+  // Pre-process the assay name: add the 'Chipmentation '
+  // prefix in cases where it's missing from the CSV
+  peak.assay = chipmentationAssays.includes(peak.feature_type)
+    ? `Chipmentation ${peak.feature_type}`
+    : peak.feature_type
   delete peak.feature_type
 
   if (peak.rsID === '.')
     peak.rsID = null
 
   return peak
-}
-
-function parseExcel(inputPath) {
-  const workbook = xlsx.readFileSync(inputPath)
-  const peaks = xlsx.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]).map(normalizePeak)
-  return peaks
 }

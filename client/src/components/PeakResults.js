@@ -82,7 +82,7 @@ class PeakResults extends Component {
               <TabContent activeTab={activeTab}>
                 {
                   entries.map(([assay, peaks]) =>
-                    <TabPane tabId={assay}>
+                    <TabPane key={assay} tabId={assay}>
                       <PeakAssay assay={assay} peaks={peaks} />
                     </TabPane>
                   )

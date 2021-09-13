@@ -270,6 +270,10 @@ body {
 .Controls__chromosome {
   width: 100px;
 }
+.Controls__chromosome .dropdown-menu {
+  max-height: calc(100vh - 200px);  /* Roughly the full screen height minus the top offset */
+  overflow-y: auto;
+}
 .Controls__input {
   width: 150px;
 }
