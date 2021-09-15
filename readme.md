@@ -42,7 +42,6 @@ The different data sources to generate/prepare are:
        the `.` and `-` will diverge from one source to another. Therefore, names are
        normalized by replacing all non-digits/non-letters with `-`, and that is the
        `id` used for genes.
- - 
  - Peaks: list of peaks names mapped to their characteristics.
      - **Generate with**: `node ./scripts/peaks-to-sqlite.js`
      - Schema: `./models/peaks.sql`
