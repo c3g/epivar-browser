@@ -53,14 +53,21 @@ const schemaPath = path.join(__dirname, '../models/peaks.sql')
       })
   }))
 
-  const db = new Database(outputPath, schemaPath)
-  await db.ready
-  await db.insertMany(
-    `INSERT INTO peaks (id,  rsID,  chrom,  position,  gene,  feature,  assay,  valueNI,  valueFlu)
+  // Remove the database if it already exists
+  fs.unlink(outputPath, err => (async () => {
+    // Ignore file-not-found errors, since that is OK
+
+    if (!err) console.log(`Removed existing database at '${outputPath}'`)
+
+    const db = new Database(outputPath, schemaPath)
+    await db.ready
+    await db.insertMany(
+      `INSERT INTO peaks (id,  rsID,  chrom,  position,  gene,  feature,  assay,  valueNI,  valueFlu)
         VALUES       (@id, @rsID, @chrom, @position, @gene, @feature, @assay, @valueNI, @valueFlu)`,
-    peaks
-  )
-  console.log('Done')
+      peaks
+    )
+    console.log('Done')
+  })())
 })()
 
 

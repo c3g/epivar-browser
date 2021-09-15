@@ -20,14 +20,21 @@ const schemaPath = path.join(__dirname, '../models/genes.sql')
   console.log(genes)
   console.log(genes.length, 'records')
 
-  const db = new Database(outputPath, schemaPath)
-  await db.ready
-  await db.insertMany(
-    `INSERT INTO genes (id,  name, chrom, start, end, strand)
+  // Remove the database if it already exists
+  fs.unlink(outputPath, err => (async () => {
+    // Ignore file-not-found errors, since that is OK
+
+    if (!err) console.log(`Removed existing database at '${outputPath}'`)
+
+    const db = new Database(outputPath, schemaPath)
+    await db.ready
+    await db.insertMany(
+      `INSERT INTO genes (id,  name, chrom, start, end, strand)
           VALUES       (@id, @name, @chrom, @start, @end, @strand)`,
-    genes
-  )
-  console.log('Done')
+      genes
+    )
+    console.log('Done')
+  })())
 })()
 
 
