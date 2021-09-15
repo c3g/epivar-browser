@@ -1,6 +1,6 @@
 {
   "name": "varwig",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "postinstall": "cd client && npm install",
@@ -17,23 +17,23 @@
     "color-js": "^1.0.5",
     "cookie-parser": "~1.4.5",
     "csv-parse": "^2.5.0",
-    "cuid": "^2.1.4",
+    "cuid": "^2.1.8",
     "d3-scale": "^1.0.7",
     "debug": "~2.6.3",
     "express": "^4.17.1",
     "lodash.clonedeep": "^4.5.0",
     "map-expire": "^0.0.6",
     "md5": "^2.3.0",
-    "morgan": "^1.9.1",
-    "mysql": "^2.15.0",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
     "pug": "~3.0.2",
-    "rambda": "^6.3.1",
+    "rambda": "^6.9.0",
     "serve-favicon": "~2.5.0",
     "sqlite-objects": "^2.0.3",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6",
-    "xlsx": "^0.16.9"
+    "nodemon": "^2.0.12",
+    "xlsx": "^0.17.1"
   }
 }
