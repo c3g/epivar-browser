@@ -16,7 +16,7 @@
     "bootstrap": "^4.6.0",
     "color-js": "^1.0.5",
     "cookie-parser": "~1.4.5",
-    "csv-parse": "^2.5.0",
+    "csv-parse": "^4.16.3",
     "cuid": "^2.1.8",
     "d3-scale": "^1.0.7",
     "debug": "~2.6.3",
