@@ -51,6 +51,8 @@ class PeakResults extends Component {
     const peaksByAssay = groupAndSortPeaks(peaks)
     const entries = Object.entries(peaksByAssay)
 
+    // Even though in the scripts we *add* chipmentation to the assay name for consistency, we remove it here
+    // for display purposes.
     return (
       <div className={'PeakResults ' + (isLoading ? 'loading' : '')}>
         {
@@ -73,7 +75,9 @@ class PeakResults extends Component {
                         className={cx({ active: activeTab === assay })}
                         onClick={() => this.setTab(assay)}
                       >
-                        <Icon name='flask' className='PeakAssay__icon' /><strong>{assay}</strong> - {peaks.length} peak{peaks.length > 1 ? 's' : ''}
+                        <Icon name='flask' className='PeakAssay__icon' />
+                        <strong>{assay.replace("Chipmentation ", "")}</strong>&nbsp;-&nbsp;
+                        {peaks.length} peak{peaks.length > 1 ? 's' : ''}
                       </NavLink>
                     </NavItem>
                   )
