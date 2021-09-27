@@ -16,12 +16,12 @@ const chipmentationAssays = [
 ];
 
 const datasetPaths = [
+  'rnaseq',
   'atacseq',
   'h3k4me1',
   'h3k4me3',
   'h3k27ac',
   'h3k27me3',
-  'rnaseq',
 ].map(d => `${path.join(__dirname, '../input-files')}/flu-infection-peaks-qtls-complete-${d}.csv`);
 
 const outputPath = path.join(__dirname, '../data/peaks.sqlite')
