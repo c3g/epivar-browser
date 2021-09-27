@@ -227,6 +227,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 0;
+  cursor: pointer;
 }
 .Header__subtitle {
   text-align: center;
