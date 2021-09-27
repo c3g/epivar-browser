@@ -42,7 +42,7 @@ class PeakAssay extends Component {
   }
 
   render() {
-    const { assay, peaks, valuesByID } = this.props
+    const { peaks, valuesByID } = this.props
     const { selectedPeak } = this.state
     const p = peaks.find(p => p.id === selectedPeak)
     const values = valuesByID[selectedPeak]
