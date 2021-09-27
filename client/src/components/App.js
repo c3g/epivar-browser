@@ -1,33 +1,40 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux';
+import {Redirect, Route, Switch, useHistory, useParams} from "react-router-dom";
 
 import Controls from './Controls'
 import Header from './Header'
 import PeakResults from './PeakResults'
 
 
-const mapStateToProps = state => ({})
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({}, dispatch)
+const AppWithParams = () => {
+  const history = useHistory();
+  const params = useParams();
+  return (
+    <div className="RoutedApp">
+      <Header>
+        <Controls params={params} history={history} />
+      </Header>
+
+      <PeakResults />
+    </div>
+  )
+};
+
 
 class App extends Component {
 
   render() {
     return (
       <div className='App'>
-        <Header>
-          <Controls />
-        </Header>
-
-        <PeakResults />
+        <Switch>
+          <Route path="/:chrom/:position" children={<AppWithParams />} />
+          <Route path="/:chrom" children={<AppWithParams />} />
+          <Redirect to="/rsID" />
+        </Switch>
       </div>
     )
   }
 }
 
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default App;

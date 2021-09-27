@@ -51,11 +51,19 @@ class Controls extends React.Component {
     index: 0,
     open: false,
     didFirstSearch: false,
+    searchPosition: "",
+  }
+
+  componentDidMount() {
+    const { params: {chrom, position} } = this.props;
+    if (chrom && position) {
+      this.props.doSearch(chrom, position);
+    }
   }
 
   componentWillReceiveProps(props) {
-    if (props.chrom !== this.props.chrom) {
-      const { chrom } = props
+    if (props.params?.chrom !== this.props.params?.chrom) {
+      const { params: {chrom} } = props;
 
       this.props.fetchPositions({ chrom, position: '' })
     }
@@ -64,11 +72,11 @@ class Controls extends React.Component {
     }
   }
 
-  onFocus = (ev) => {
+  onFocus = () => {
     setTimeout(() => this.setState({ open: true }), 100)
   }
 
-  onBlur = (ev) => {
+  onBlur = () => {
     setTimeout(() => {
       this.setState({ open: false })
     }, 200) 
@@ -76,10 +84,12 @@ class Controls extends React.Component {
 
   onKeyDown = ev => {
     if (ev.which === 13 /* Enter */) {
-      if (this.props.positions.list.length > 0)
-        this.selectItem(this.state.index)
-      else
-        this.props.doSearch()
+      if (this.props.positions.list.length > 0) {
+        this.selectItem(this.state.index);
+      } else {
+        const {params: {chrom, position}} = this.props;
+        this.props.doSearch(chrom, position);
+      }
 
       if (document.activeElement.tagName === 'INPUT')
         document.activeElement.blur()
@@ -101,12 +111,18 @@ class Controls extends React.Component {
   }
 
   onClickSearch = () => {
-    this.props.doSearch()
+    const {params: {chrom, position}} = this.props;
+    const {searchPosition} = this.state;
+    this.props.doSearch(chrom, searchPosition || position);
     this.setState({ didFirstSearch: true })
   }
 
   onChange = (ev) => {
-    this.props.changePosition(ev.target.value)
+    const {params: {chrom}} = this.props;
+    const searchPosition = ev.target.value;
+    this.setState({searchPosition});
+    this.props.fetchPositions({chrom, start: searchPosition});
+    // this.props.changePosition(ev.target.value)
   }
 
   moveSelection = n => {
@@ -122,15 +138,16 @@ class Controls extends React.Component {
   }
 
   selectItem = index => {
-    const { positions: { list } } = this.props
+    const { positions: { list }, params: {chrom}, history } = this.props
 
     const position = list[index]
-    this.props.changePosition(position)
-    this.props.doSearch()
+    history.replace(`/${chrom}/${position}`);
+    this.props.doSearch(chrom, position);
+    this.setState({searchPosition: ""});  // Search has been fulfilled; clear the override
   }
 
   renderChroms() {
-    const { chrom, chroms: { isLoading, list }, setChrom } = this.props
+    const { chroms: { isLoading, list }, params: {chrom}, history } = this.props
 
     return (
       <UncontrolledDropdown className='Controls__chromosome input-group-prepend'>
@@ -146,7 +163,7 @@ class Controls extends React.Component {
         <DropdownMenu>
           {
             list.map(chrom =>
-              <DropdownItem key={chrom} onClick={() => setChrom(chrom)}>{ chrom }</DropdownItem>
+              <DropdownItem key={chrom} onClick={() => history.replace(`/${chrom}`)}>{ chrom }</DropdownItem>
             )
           }
         </DropdownMenu>
@@ -155,18 +172,18 @@ class Controls extends React.Component {
   }
 
   renderPosition() {
-    const { open, index } = this.state
-    const { chrom, position, positions: { list } } = this.props
+    const { open, index, searchPosition } = this.state
+    const { positions: { list }, params: {chrom, position} } = this.props
 
     return (
-      <React.Fragment>
+      <>
         <Input
           className='Controls__input autocomplete'
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
-          value={position}
+          value={searchPosition || position || ""}
           placeholder={chrom === 'rsID' ? 'Search by RS ID' : 'Search position'}
         />
         {
@@ -189,7 +206,7 @@ class Controls extends React.Component {
               }
             </div>
         }
-      </React.Fragment>
+      </>
     )
   }
 
