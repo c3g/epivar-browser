@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
-import { groupBy, sortBy, prop, map, reverse, compose } from 'rambda'
+import { groupBy, sortBy, prop, map, compose } from 'rambda'
 import memoizeOne from 'memoize-one'
 import cx from 'clsx'
 
@@ -19,7 +19,7 @@ const mapDispatchToProps = {}
 // Original data comes sorted by order of priority, therefore we
 // sort by ID because it's also the priority field.
 const groupAndSortPeaks = memoizeOne(
-  compose(map(compose(reverse, sortBy(prop('id')))), groupBy(prop('assay')))
+  compose(map(sortBy(prop('valueNI'))), groupBy(prop('assay')))
 )
 
 class PeakResults extends Component {
