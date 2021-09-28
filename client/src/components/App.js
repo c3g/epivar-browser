@@ -27,9 +27,9 @@ class App extends Component {
     return (
       <div className='App'>
         <Switch>
+          <Route path="/:chrom/:position/:assay" children={<AppWithParams />} />
           <Route path="/:chrom/:position" children={<AppWithParams />} />
-          <Route path="/:chrom" children={<AppWithParams />} />
-          <Redirect to="/rsID" />
+          <Route path="/" children={<AppWithParams />} />
         </Switch>
       </div>
     )

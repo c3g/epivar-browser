@@ -32,9 +32,9 @@ export function changePosition(value) {
   }
 }
 
-export function doSearch(chrom, position) {
+export function doSearch() {
   return (dispatch, getState) => {
-    // const { ui: { chrom, position } } = getState()
+    const { ui: { chrom, position } } = getState()
 
     if (chrom && position) {
       const query = { chrom, position }
