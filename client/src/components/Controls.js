@@ -123,11 +123,6 @@ class Controls extends React.Component {
   }
 
   onChange = (ev) => {
-    // const {params: {chrom}} = this.props;
-    // const searchPosition = ev.target.value;
-    // this.setState({searchPosition});
-    // const {searchChrom} = this.state
-    // this.props.fetchPositions({chrom: searchChrom || chrom, start: searchPosition});
     this.props.changePosition(ev.target.value)
   }
 
@@ -153,7 +148,7 @@ class Controls extends React.Component {
   }
 
   renderChroms() {
-    const { chroms: { isLoading, list }, chrom } = this.props
+    const { chrom, chroms: { isLoading, list }, setChrom } = this.props
 
     return (
       <UncontrolledDropdown className='Controls__chromosome input-group-prepend'>
@@ -169,7 +164,7 @@ class Controls extends React.Component {
         <DropdownMenu>
           {
             list.map(chr =>
-              <DropdownItem key={chr} onClick={() => this.props.setChrom(chr)}>
+              <DropdownItem key={chr} onClick={() => setChrom(chr)}>
                 { chr }</DropdownItem>
             )
           }
@@ -180,7 +175,7 @@ class Controls extends React.Component {
 
   renderPosition() {
     const { open, index } = this.state
-    const { positions: { list }, chrom, position } = this.props
+    const { chrom, position, positions: { list } } = this.props
 
     return <>
       <Input
