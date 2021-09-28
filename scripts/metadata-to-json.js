@@ -43,18 +43,15 @@ sheetNames.forEach(name => {
   const sheet = workbook.Sheets[name]
   const newItems =
     xlsx.utils.sheet_to_json(sheet)
-      .map(item => {
-        const newItem = {}
-        Object.entries(headers).forEach(([key, oldKey]) => {
-          newItem[key] = item[oldKey]
-        })
-        return newItem
-      })
-      .filter(item => {
-        if (item.ethnicity === 'Exclude sample')
-          return false
-        return true
-      })
+      .filter(item => item[headers["ethnicity"]] !== "Exclude sample")
+      .map(item => Object.fromEntries(
+        Object.entries(headers).map(([key, oldKey]) => (
+          // Preprocess and remove 'Chipmentation' from assay names if necessary
+          oldKey === "assay.name"
+            ? [key, item[oldKey].replace("Chipmentation ", "")]
+            : [key, item[oldKey]]
+        ))
+      ));
 
   items = items.concat(newItems)
 })

@@ -54,7 +54,7 @@ const PeakResults = () => {
                   onClick={() => setActiveTab(assay)}
                 >
                   <Icon name='flask' className='PeakAssay__icon' />
-                  <strong>{assay.replace("Chipmentation ", "")}</strong>&nbsp;-&nbsp;
+                  <strong>{assay}</strong>&nbsp;-&nbsp;
                   {peaks.length} peak{peaks.length > 1 ? 's' : ''}
                 </NavLink>
               </NavItem>
