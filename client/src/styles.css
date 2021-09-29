@@ -227,7 +227,14 @@ body {
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 0;
-  cursor: pointer;
+}
+.Header__title > .Link {
+  color: white;
+  text-decoration: none;
+}
+.Header__title > .Link:hover, .Header__title > .Link:active {
+  color: #E3E3E3;
+  transition: color 0.1s ease-in-out;
 }
 .Header__subtitle {
   text-align: center;
