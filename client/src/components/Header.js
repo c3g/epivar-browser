@@ -1,10 +1,8 @@
 import React from 'react'
 import { Container } from 'reactstrap'
-import {Link, useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default function Header({ children }) {
-  const history = useHistory();
-
   return (
     <div className='Header'>
       <Container>
