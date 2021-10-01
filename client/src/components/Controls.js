@@ -69,7 +69,7 @@ class Controls extends React.Component {
   componentWillReceiveProps(nextProps, _nextContext) {
     if (nextProps.params?.chrom !== this.props.params?.chrom) {
       const { params: {chrom} } = nextProps;
-      this.props.setChrom(chrom);
+      this.props.setChrom(chrom ?? defaultChrom);
     }
     if (nextProps.chrom !== this.props.chrom) {
       const {chrom} = nextProps

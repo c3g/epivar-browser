@@ -31,6 +31,8 @@ const PeakResults = () => {
   const entries = Object.entries(peaksByAssay);
 
   useEffect(() => {
+    if (!chrom || !position) return;  // If chromosome or position are undefined, don't push us anywhere
+
     if (activeAssay && !(activeAssay in peaksByAssay) && isLoaded) {
       // Assay isn't valid for the position in question
       history.replace(`/${chrom}/${position}` + (assays.length ? `/${assays[0]}` : ""));
@@ -50,7 +52,7 @@ const PeakResults = () => {
       </Container>
     }
     {
-      (isLoading || isLoaded) &&
+      chrom && position && (isLoading || isLoaded) &&
       <Container>
         <Nav tabs>
           {
