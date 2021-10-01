@@ -29,8 +29,8 @@ export default function BoxPlot({
   const dimension = {
     x: PADDING + 20,
     y: PADDING,
-    width: width - 1 * PADDING,
-    height: height - 1 * PADDING,
+    width: width - PADDING,
+    height: height - PADDING,
   }
 
   const yAxis = getYAxisDetails(domain)
@@ -199,7 +199,7 @@ function YAxis({ domain, step, x, y, height }) {
   )
 }
 
-function XAxis({ data, scale, x, y, height, width }) {
+function XAxis({ data, scale, x, height, width }) {
   return (
     <svg>
       <Line position={[[x,     height], 
