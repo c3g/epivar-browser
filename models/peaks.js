@@ -14,7 +14,9 @@ module.exports = {
   queryByRsID,
   chroms,
   rsIDs,
+  rsIDsWithDetail,
   positions,
+  positionsWithDetail,
 }
 
 function query(chrom, position) {
@@ -84,6 +86,35 @@ function positions(chrom, position) {
     { chrom, query: String(position) + '%' }
   )
   .then(rows => rows.map(r => r.position))
+}
+
+function rsIDsWithDetail(query) {
+  return database.findAll(
+    `
+      SELECT rsID, AVG(valueNI) AS avgValueNI, AVG(valueFlu) AS avgValueFlu, COUNT(*) AS nPeaks
+        FROM peaks
+       WHERE rsID LIKE @query
+    GROUP BY rsID
+    ORDER BY avgValueNI
+       LIMIT 100
+    `,
+    { query: String(query) + '%' }
+  )
+}
+
+function positionsWithDetail(chrom, position) {
+  return database.findAll(
+    `
+      SELECT position, AVG(valueNI) AS avgValueNI, AVG(valueFlu) AS avgValueFlu, COUNT(*) AS nPeaks
+        FROM peaks
+       WHERE chrom = @query 
+         AND position LIKE @query
+    GROUP BY position
+    ORDER BY avgValueNI
+       LIMIT 100
+    `,
+    { chrom, query: String(position) + '%' }
+  )
 }
 
 

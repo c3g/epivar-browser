@@ -491,6 +491,8 @@ body {
 .autocomplete__item {
   color: black;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
 }
 .autocomplete__item:hover,
 .autocomplete__item--selected {

@@ -87,7 +87,7 @@ class Controls extends React.Component {
   onBlur = () => {
     setTimeout(() => {
       this.setState({ open: false })
-    }, 200) 
+    }, 200)
   }
 
   onKeyDown = ev => {
@@ -141,7 +141,7 @@ class Controls extends React.Component {
   selectItem = index => {
     const { positions: { list }, history, chrom } = this.props
 
-    const position = list[index]
+    const position = list[index].rsID ?? list[index].position
     history.replace(`/${chrom}/${position}`)
     this.props.changePosition(position)
     this.props.doSearch();
@@ -175,7 +175,7 @@ class Controls extends React.Component {
 
   renderPosition() {
     const { open, index } = this.state
-    const { chrom, position, positions: { list } } = this.props
+    const { chrom, position, positions: { isLoading, list } } = this.props
 
     return <>
       <Input
@@ -191,17 +191,25 @@ class Controls extends React.Component {
         open &&
           <div className='autocomplete__dropdown-menu'>
             {
-              list.length === 0 &&
-                <div className={ 'autocomplete__item autocomplete__item--empty' }>
-                  <span>No results</span>
-                </div>
+              list.length === 0 && <div className={ 'autocomplete__item autocomplete__item--empty' }>
+                <span>{
+                  position.length > 2
+                    ? (isLoading ? "Loading..." : "No results")
+                    : "Keep typing to see results"
+                }</span>
+              </div>
             }
             {
               list.map((item, i) =>
-                <div key={item} className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
+                <div
+                  key={item.rsID ?? item.position}
+                  className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
                   onClick={() => this.selectItem(i)}
                 >
-                  { highlight(item, position) }
+                  { console.log(item) || highlight(item.rsID ?? item.position, position) }
+                  <span><strong>Avg. FDR (NI):</strong> {item.avgValueNI.toExponential(2)}</span>
+                  <span><strong>Avg. FDR (Flu):</strong> {item.avgValueFlu.toExponential(2)}</span>
+                  <span><strong>Peaks:</strong> {item.nPeaks}</span>
                 </div>
               )
             }

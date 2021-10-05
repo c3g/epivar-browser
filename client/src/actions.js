@@ -27,7 +27,7 @@ export function changePosition(value) {
 
     dispatch(setPosition(value))
 
-    if (chrom)
+    if (chrom && value.toString().length > 2)
       dispatch(fetchPositions({ chrom, start: value }))
   }
 }
