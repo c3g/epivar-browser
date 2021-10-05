@@ -1,6 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import debounce from 'lodash/debounce'
 import {
   Input,
   InputGroup,
@@ -16,7 +17,7 @@ import Icon from './Icon.js'
 import {
   setChrom,
   doSearch,
-  changePosition,
+  setPosition,
   fetchSamples,
   fetchPositions,
   mergeTracks,
@@ -38,7 +39,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators({
     setChrom,
     doSearch,
-    changePosition,
+    setPosition,
     fetchSamples,
     fetchPositions,
     mergeTracks,
@@ -53,15 +54,13 @@ class Controls extends React.Component {
     index: 0,
     open: false,
     didFirstSearch: false,
-    searchChrom: defaultChrom,
-    searchPosition: "",
   }
 
   componentDidMount() {
     const { params: {chrom, position} } = this.props;
     if (chrom && position) {
       this.props.setChrom(chrom);
-      this.props.changePosition(position);
+      this.changePosition(position);
       this.props.doSearch();
     }
   }
@@ -122,8 +121,20 @@ class Controls extends React.Component {
     this.setState({ didFirstSearch: true })
   }
 
+  debouncedFetch = debounce(start => {
+    const {chrom} = this.props;
+    if (chrom && start.toString().length > 2) {
+      this.props.fetchPositions({chrom, start});
+    }
+  }, 200, {leading: true, trailing: true})
+
+  changePosition = pos => {
+    this.props.setPosition(pos);
+    this.debouncedFetch(pos);
+  }
+
   onChange = (ev) => {
-    this.props.changePosition(ev.target.value)
+    this.changePosition(ev.target.value)
   }
 
   moveSelection = n => {
@@ -143,7 +154,7 @@ class Controls extends React.Component {
 
     const position = list[index].rsID ?? list[index].position
     history.replace(`/${chrom}/${position}`)
-    this.props.changePosition(position)
+    this.changePosition(position)
     this.props.doSearch();
   }
 
@@ -206,7 +217,7 @@ class Controls extends React.Component {
                   className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
                   onClick={() => this.selectItem(i)}
                 >
-                  { console.log(item) || highlight(item.rsID ?? item.position, position) }
+                  { highlight(item.rsID ?? item.position, position) }
                   <span><strong>Avg. FDR (NI):</strong> {item.avgValueNI.toExponential(2)}</span>
                   <span><strong>Avg. FDR (Flu):</strong> {item.avgValueFlu.toExponential(2)}</span>
                   <span><strong>Peaks:</strong> {item.nPeaks}</span>
