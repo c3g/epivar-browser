@@ -25,7 +25,7 @@ will use `./data` by default; this directory contains all the required
 runtime data for the application.
 
 **Start with** `cp config.example.js config.js` to create the required config.
-The default config should not need updating if you follow the instructions below
+The default config should not need updating if you follow the instructions below,
 but you can follow along to make sure everything matches. Make sure `./data`
 exists with `mkdir -p ./data`.
 
@@ -82,7 +82,7 @@ The different data sources to generate/prepare are:
 
 ### Application
 
-Once the data is read, you can install & build the application as follow:
+Once the data is read, you can install & build the application as follows:
 
 ```sh
 npm run install
@@ -94,8 +94,8 @@ In development, you'd run:
  - `npm run watch`: for the backend
  - `cd client && npm start`: for the frontend
 
-In production, you may need to setup these to handle persistence & HTTPS:
- - Setup nginx or apache proxy (see `./nginx.conf`) with letsencrypt certificate
+In production, you may need to set up these to handle persistence & HTTPS:
+ - Setup nginx or apache proxy (see `./nginx.conf`) with LetsEncrypt certificate
  - Setup systemd service (see `./varwig.service`) that runs `node ./bin/www`
 
 ## Architecture
@@ -103,7 +103,7 @@ In production, you may need to setup these to handle persistence & HTTPS:
 This is a standard express backend + react frontend application. Frontend files
 live in `./client`, and backend files live at the root of the project.
 
-The API routes are setup in [app.js](./app.js), and are listed in [routes/](./routes);
+The API routes are set up in [app.js](./app.js), and are listed in [routes/](./routes);
 the frontend groups all API communication functions in [./client/src/api.js](./client/src/api.js).
 The [models/](./models) folder contains the functions to retrieve the actual data,
 depending on where it is. Some of it is in SQLite databases (genes, peaks, sessions), the tracks

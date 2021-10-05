@@ -21,17 +21,6 @@ export const fetchValues    = createFetchFunction(api.fetchValues,    values)
 export const fetchPeaks     = createFetchFunction(api.fetchPeaks,     peaks)
 
 
-export function changePosition(value) {
-  return (dispatch, getState) => {
-    const { ui: { chrom } } = getState()
-
-    dispatch(setPosition(value))
-
-    if (chrom)
-      dispatch(fetchPositions({ chrom, start: value }))
-  }
-}
-
 export function doSearch() {
   return (dispatch, getState) => {
     const { ui: { chrom, position } } = getState()

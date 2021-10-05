@@ -166,19 +166,16 @@ function mergeFiles(paths, { chrom, start, end }) {
 }
 
 function derive(list) {
-  const n = list.length
   const points = list.map(d => d.data).sort((a, b) => a - b)
   const pointsByEthnicity = map(mapToData, groupByEthnicity(list))
 
-  const data = {
-    n: n,
+  return {
+    n: list.length,
     min: Math.min(...points),
     max: Math.max(...points),
     stats: getStats(points),
     points: pointsByEthnicity,
   }
-
-  return data
 }
 
 function getStats(points) {

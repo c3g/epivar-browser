@@ -14,7 +14,9 @@ module.exports = {
   queryByRsID,
   chroms,
   rsIDs,
+  rsIDsWithDetail,
   positions,
+  positionsWithDetail,
 }
 
 function query(chrom, position) {
@@ -84,6 +86,49 @@ function positions(chrom, position) {
     { chrom, query: String(position) + '%' }
   )
   .then(rows => rows.map(r => r.position))
+}
+
+function rsIDsWithDetail(query) {
+  // TODO: Some nice calculation that encapsulates what we want in a search ranking
+  return database.findAll(
+    `
+    SELECT rsID, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nPeaks 
+    FROM (
+        SELECT rsID,
+               MIN(valueNI) AS minValueNI,
+               MIN(valueFlu) AS minValueFlu,
+               COUNT(*) AS nPeaks
+          FROM peaks
+         WHERE rsID LIKE @query
+      GROUP BY rsID
+    )
+    ORDER BY avgMinBoth
+    LIMIT 100
+    `,
+    { query: String(query) + '%' }
+  )
+}
+
+function positionsWithDetail(chrom, position) {
+  // TODO: Some nice calculation that encapsulates what we want in a search ranking
+  return database.findAll(
+    `
+      SELECT position, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nPeaks 
+      FROM (
+        SELECT position,
+               MIN(valueNI) AS minValueNI,
+               MIN(valueFlu) AS minValueFlu,
+               COUNT(*) AS nPeaks
+          FROM peaks
+         WHERE chrom = @query
+           AND position LIKE @query
+      GROUP BY position
+    )
+    ORDER BY avgMinBoth
+       LIMIT 100
+    `,
+    { chrom, query: String(position) + '%' }
+  )
 }
 
 

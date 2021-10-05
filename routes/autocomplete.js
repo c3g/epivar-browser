@@ -19,8 +19,8 @@ router.use('/positions', (req, res) => {
   const { chrom, start } = req.query
 
   const query = chrom === 'rsID' ?
-    Peaks.rsIDs(start) :
-    Peaks.positions(chrom, start)
+    Peaks.rsIDsWithDetail(start) :
+    Peaks.positionsWithDetail(chrom, start)
 
   query
   .then(dataHandler(res))

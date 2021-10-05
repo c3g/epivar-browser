@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, {useEffect} from 'react'
+import {useSelector} from 'react-redux';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import { groupBy, sortBy, prop, map, compose } from 'rambda'
 import memoizeOne from 'memoize-one'
@@ -7,14 +7,7 @@ import cx from 'clsx'
 
 import Icon from './Icon'
 import PeakAssay from './PeakAssay'
-
-const mapStateToProps = state => ({
-  isLoading: state.peaks.isLoading,
-  isLoaded: state.peaks.isLoaded,
-  isEmpty: state.peaks.isLoaded && state.peaks.list.length === 0,
-  peaks: state.peaks.list || [],
-})
-const mapDispatchToProps = {}
+import {useHistory, useRouteMatch} from "react-router-dom";
 
 // Original data comes sorted by order of priority, therefore we
 // sort by ID because it's also the priority field.
@@ -22,80 +15,73 @@ const groupAndSortPeaks = memoizeOne(
   compose(map(sortBy(prop('valueNI'))), groupBy(prop('assay')))
 )
 
-class PeakResults extends Component {
-  state = {
-    activeTab: null,
-  }
+const PeakResults = () => {
+  const history = useHistory();
+  const match = useRouteMatch();
+  const {chrom, position} = match.params;
+  const activeAssay = match.params.assay;
 
-  setTab = activeTab => {
-    this.setState({ activeTab })
-  }
+  const isLoading = useSelector(state => state.peaks.isLoading);
+  const isLoaded = useSelector(state => state.peaks.isLoaded);
+  const isEmpty = useSelector(state => state.peaks.isLoaded && state.peaks.list.length === 0);
+  const peaks = useSelector(state => state.peaks.list || []);
 
-  static getDerivedStateFromProps(props, state) {
-    const peaksByAssay = groupAndSortPeaks(props.peaks || [])
-    const assays = Object.keys(peaksByAssay)
+  const peaksByAssay = groupAndSortPeaks(peaks);
+  const assays = Object.keys(peaksByAssay);
+  const entries = Object.entries(peaksByAssay);
 
-    if (state.activeTab !== null && !(state.activeTab in peaksByAssay))
-      return { activeTab: assays.length > 0 ? assays[0] : null }
+  useEffect(() => {
+    if (!chrom || !position) return;  // If chromosome or position are undefined, don't push us anywhere
 
-    if (state.activeTab === null && assays.length > 0)
-      return { activeTab: assays[0] }
+    if (activeAssay && !(activeAssay in peaksByAssay) && isLoaded) {
+      // Assay isn't valid for the position in question
+      history.replace(`/${chrom}/${position}` + (assays.length ? `/${assays[0]}` : ""));
+    } else if (!activeAssay && assays.length && isLoaded) {
+      history.replace(`/${chrom}/${position}/${assays[0]}`);
+    }
+  }, [activeAssay, chrom, position, isLoaded]);
 
-    return state
-  }
+  return <div className={'PeakResults ' + (isLoading ? 'loading' : '')}>
+    {
+      isEmpty &&
+      <Container>
+        <div className='PeakResults__empty'>
+          No results for the selected range.<br/>
+          Try with a different range.
+        </div>
+      </Container>
+    }
+    {
+      chrom && position && (isLoading || isLoaded) &&
+      <Container>
+        <Nav tabs>
+          {
+            entries.map(([assay, peaks]) =>
+              <NavItem key={assay}>
+                <NavLink
+                  className={cx({ active: activeAssay === assay })}
+                  onClick={() => history.replace(`/${chrom}/${position}/${assay}`)}
+                >
+                  <Icon name='flask' className='PeakAssay__icon' />
+                  <strong>{assay}</strong>&nbsp;-&nbsp;
+                  {peaks.length} peak{peaks.length > 1 ? 's' : ''}
+                </NavLink>
+              </NavItem>
+            )
+          }
+        </Nav>
+        <TabContent activeTab={activeAssay}>
+          {
+            entries.map(([assay, peaks]) =>
+              <TabPane key={assay} tabId={assay}>
+                <PeakAssay assay={assay} peaks={peaks} />
+              </TabPane>
+            )
+          }
+        </TabContent>
+      </Container>
+    }
+  </div>;
+};
 
-  render() {
-    const { activeTab } = this.state
-    const { isLoading, isLoaded, isEmpty, peaks } = this.props
-
-    const peaksByAssay = groupAndSortPeaks(peaks)
-    const entries = Object.entries(peaksByAssay)
-
-    return (
-      <div className={'PeakResults ' + (isLoading ? 'loading' : '')}>
-        {
-          isEmpty &&
-            <Container>
-              <div className='PeakResults__empty'>
-                No results for the selected range.<br/>
-                Try with a different range.
-              </div>
-            </Container>
-        }
-        {
-          (isLoading || isLoaded) &&
-            <Container>
-              <Nav tabs>
-                {
-                  entries.map(([assay, peaks]) =>
-                    <NavItem key={assay}>
-                      <NavLink
-                        className={cx({ active: activeTab === assay })}
-                        onClick={() => this.setTab(assay)}
-                      >
-                        <Icon name='flask' className='PeakAssay__icon' /><strong>{assay}</strong> - {peaks.length} peak{peaks.length > 1 ? 's' : ''}
-                      </NavLink>
-                    </NavItem>
-                  )
-                }
-              </Nav>
-              <TabContent activeTab={activeTab}>
-                {
-                  entries.map(([assay, peaks]) =>
-                    <TabPane key={assay} tabId={assay}>
-                      <PeakAssay assay={assay} peaks={peaks} />
-                    </TabPane>
-                  )
-                }
-              </TabContent>
-            </Container>
-        }
-      </div>
-    )
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PeakResults);
+export default PeakResults;

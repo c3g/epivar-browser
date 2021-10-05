@@ -1,6 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import debounce from 'lodash/debounce'
 import {
   Input,
   InputGroup,
@@ -16,7 +17,7 @@ import Icon from './Icon.js'
 import {
   setChrom,
   doSearch,
-  changePosition,
+  setPosition,
   fetchSamples,
   fetchPositions,
   mergeTracks,
@@ -38,12 +39,14 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators({
     setChrom,
     doSearch,
-    changePosition,
+    setPosition,
     fetchSamples,
     fetchPositions,
     mergeTracks,
     handleError
   }, dispatch)
+
+const defaultChrom = "rsID";
 
 class Controls extends React.Component {
 
@@ -53,33 +56,46 @@ class Controls extends React.Component {
     didFirstSearch: false,
   }
 
-  componentWillReceiveProps(props) {
-    if (props.chrom !== this.props.chrom) {
-      const { chrom } = props
+  componentDidMount() {
+    const { params: {chrom, position} } = this.props;
+    if (chrom && position) {
+      this.props.setChrom(chrom);
+      this.changePosition(position);
+      this.props.doSearch();
+    }
+  }
 
+  componentWillReceiveProps(nextProps, _nextContext) {
+    if (nextProps.params?.chrom !== this.props.params?.chrom) {
+      const { params: {chrom} } = nextProps;
+      this.props.setChrom(chrom ?? defaultChrom);
+    }
+    if (nextProps.chrom !== this.props.chrom) {
+      const {chrom} = nextProps
       this.props.fetchPositions({ chrom, position: '' })
     }
-    if (props.positions !== this.props.positions) {
+    if (nextProps.positions !== this.props.positions) {
       this.setState({ index: 0 })
     }
   }
 
-  onFocus = (ev) => {
+  onFocus = () => {
     setTimeout(() => this.setState({ open: true }), 100)
   }
 
-  onBlur = (ev) => {
+  onBlur = () => {
     setTimeout(() => {
       this.setState({ open: false })
-    }, 200) 
+    }, 200)
   }
 
   onKeyDown = ev => {
     if (ev.which === 13 /* Enter */) {
-      if (this.props.positions.list.length > 0)
-        this.selectItem(this.state.index)
-      else
-        this.props.doSearch()
+      if (this.props.positions.list.length > 0) {
+        this.selectItem(this.state.index);
+      } else {
+        this.props.doSearch();
+      }
 
       if (document.activeElement.tagName === 'INPUT')
         document.activeElement.blur()
@@ -101,12 +117,24 @@ class Controls extends React.Component {
   }
 
   onClickSearch = () => {
-    this.props.doSearch()
+    this.props.doSearch();
     this.setState({ didFirstSearch: true })
   }
 
+  debouncedFetch = debounce(start => {
+    const {chrom} = this.props;
+    if (chrom && start.toString().length > 2) {
+      this.props.fetchPositions({chrom, start});
+    }
+  }, 200, {leading: true, trailing: true})
+
+  changePosition = pos => {
+    this.props.setPosition(pos);
+    this.debouncedFetch(pos);
+  }
+
   onChange = (ev) => {
-    this.props.changePosition(ev.target.value)
+    this.changePosition(ev.target.value)
   }
 
   moveSelection = n => {
@@ -122,11 +150,12 @@ class Controls extends React.Component {
   }
 
   selectItem = index => {
-    const { positions: { list } } = this.props
+    const { positions: { list }, history, chrom } = this.props
 
-    const position = list[index]
-    this.props.changePosition(position)
-    this.props.doSearch()
+    const position = list[index].rsID ?? list[index].position
+    history.replace(`/${chrom}/${position}`)
+    this.changePosition(position)
+    this.props.doSearch();
   }
 
   renderChroms() {
@@ -145,8 +174,9 @@ class Controls extends React.Component {
         </DropdownToggle>
         <DropdownMenu>
           {
-            list.map(chrom =>
-              <DropdownItem key={chrom} onClick={() => setChrom(chrom)}>{ chrom }</DropdownItem>
+            list.map(chr =>
+              <DropdownItem key={chr} onClick={() => setChrom(chr)}>
+                { chr }</DropdownItem>
             )
           }
         </DropdownMenu>
@@ -156,41 +186,47 @@ class Controls extends React.Component {
 
   renderPosition() {
     const { open, index } = this.state
-    const { chrom, position, positions: { list } } = this.props
+    const { chrom, position, positions: { isLoading, list } } = this.props
 
-    return (
-      <React.Fragment>
-        <Input
-          className='Controls__input autocomplete'
-          onChange={this.onChange}
-          onKeyDown={this.onKeyDown}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          value={position}
-          placeholder={chrom === 'rsID' ? 'Search by RS ID' : 'Search position'}
-        />
-        {
-          open &&
-            <div className='autocomplete__dropdown-menu'>
-              {
-                list.length === 0 &&
-                  <div className={ 'autocomplete__item autocomplete__item--empty' }>
-                    <span>No results</span>
-                  </div>
-              }
-              {
-                list.map((item, i) =>
-                  <div key={item} className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
-                    onClick={() => this.selectItem(i)}
-                  >
-                    { highlight(item, position) }
-                  </div>
-                )
-              }
-            </div>
-        }
-      </React.Fragment>
-    )
+    return <>
+      <Input
+        className='Controls__input autocomplete'
+        onChange={this.onChange}
+        onKeyDown={this.onKeyDown}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        value={position || ""}
+        placeholder={chrom === 'rsID' ? 'Search by RS ID' : 'Search position'}
+      />
+      {
+        open &&
+          <div className='autocomplete__dropdown-menu'>
+            {
+              list.length === 0 && <div className={ 'autocomplete__item autocomplete__item--empty' }>
+                <span>{
+                  position.length > 2
+                    ? (isLoading ? "Loading..." : "No results")
+                    : "Keep typing to see results"
+                }</span>
+              </div>
+            }
+            {
+              list.map((item, i) =>
+                <div
+                  key={item.rsID ?? item.position}
+                  className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
+                  onClick={() => this.selectItem(i)}
+                >
+                  { highlight(item.rsID ?? item.position, position) }
+                  <span><strong>Min. FDR (NI):</strong> {item.minValueNI.toExponential(2)}</span>
+                  <span><strong>Min. FDR (Flu):</strong> {item.minValueFlu.toExponential(2)}</span>
+                  <span><strong>Peaks:</strong> {item.nPeaks}</span>
+                </div>
+              )
+            }
+          </div>
+      }
+    </>;
   }
 
   render() {

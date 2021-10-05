@@ -8,20 +8,20 @@ const parseCSV = require('csv-parse/lib/sync')
 const Database = require('sqlite-objects').Database
 const Gene = require('../models/genes')
 
-const chipmentationAssays = [
-  'H3K4me1',
-  'H3K4me3',
-  'H3K27ac',
-  'H3K27me3',
-];
+// const chipmentationAssays = [
+//   'H3K4me1',
+//   'H3K4me3',
+//   'H3K27ac',
+//   'H3K27me3',
+// ];
 
 const datasetPaths = [
+  'rnaseq',
   'atacseq',
   'h3k4me1',
   'h3k4me3',
   'h3k27ac',
   'h3k27me3',
-  'rnaseq',
 ].map(d => `${path.join(__dirname, '../input-files')}/flu-infection-peaks-qtls-complete-${d}.csv`);
 
 const outputPath = path.join(__dirname, '../data/peaks.sqlite')
@@ -88,11 +88,13 @@ function normalizePeak(peak, index) {
   delete peak['fdr.NI']
   delete peak['fdr.Flu']
 
+  peak.assay = peak.feature_type
   // Pre-process the assay name: add the 'Chipmentation '
   // prefix in cases where it's missing from the CSV
-  peak.assay = chipmentationAssays.includes(peak.feature_type)
-    ? `Chipmentation ${peak.feature_type}`
-    : peak.feature_type
+  // WE CHANGED OUR MINDS HERE...
+  // peak.assay = chipmentationAssays.includes(peak.feature_type)
+  //   ? `Chipmentation ${peak.feature_type}`
+  //   : peak.feature_type
   delete peak.feature_type
 
   if (peak.rsID === '.')

@@ -20,3 +20,6 @@ create table peaks (
 create index rsID_idx 
     on peaks(rsID);
 
+create index chrom_position_idx
+    on peaks(chrom, position);
+
