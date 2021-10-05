@@ -41,14 +41,12 @@ function generateTracks(mergedTracks) {
     const baseName = `${merged.assay}__${merged.condition}`
 
     const parentName = `${baseName}__averages`
-    const shortLabel = parentName
-    const longLabel = parentName
 
     trackBlocks.push(unindent`
       track ${parentName}
       container multiWig
-      shortLabel ${shortLabel}
-      longLabel ${longLabel}
+      shortLabel ${parentName}
+      longLabel ${parentName}
       type bigWig
       visibility full
       aggregate transparentOverlay
@@ -62,12 +60,7 @@ function generateTracks(mergedTracks) {
 
     const trackType = 'bigWig'
 
-    const types = Object.keys(merged.output)
-    const typesWithDataLength = Object.values(merged.output).filter(Boolean).length
-
-    types.forEach(type => {
-      const output = merged.output[type]
-
+    Object.entries(merged.output).forEach(([type, output]) => {
       if (output === undefined)
         return
 
@@ -154,10 +147,6 @@ function colorToRGB(c) {
   const g = Math.floor(color.getGreen() * 255)
   const b = Math.floor(color.getBlue() * 255)
   return [r, g, b].join(',')
-}
-
-function hash(string, mod) {
-  return [].slice.call(string).map(s => s.charCodeAt(0)).reduce((acc, cur) => acc + cur, 0) % mod
 }
 
 function unindent(strings, ...args) {
