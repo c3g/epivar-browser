@@ -103,14 +103,21 @@ function rsIDsWithDetail(query) {
 }
 
 function positionsWithDetail(chrom, position) {
+  // TODO: Some nice calculation that encapsulates what we want in a search ranking
   return database.findAll(
     `
-      SELECT position, AVG(valueNI) AS avgValueNI, AVG(valueFlu) AS avgValueFlu, COUNT(*) AS nPeaks
+      SELECT position, avgValueNI, avgValueFlu, ((avgValueNI + avgValueFlu) / 2) as avgValueBoth, nPeaks 
+        FROM (
+      SELECT position,
+             AVG(valueNI) AS avgValueNI,
+             AVG(valueFlu) AS avgValueFlu,
+             COUNT(*) AS nPeaks
         FROM peaks
-       WHERE chrom = @query 
+       WHERE chrom = @query
          AND position LIKE @query
+    )
     GROUP BY position
-    ORDER BY avgValueNI
+    ORDER BY avgValueBoth
        LIMIT 100
     `,
     { chrom, query: String(position) + '%' }
