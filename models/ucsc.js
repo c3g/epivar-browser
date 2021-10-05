@@ -35,18 +35,13 @@ function generateTracks(mergedTracks) {
   const trackBlocks = []
 
   mergedTracks.forEach(merged => {
-
-    const trackType = 'bigWig'
-
-    const types = Object.keys(merged.output)
-    const typesWithDataLength = Object.values(merged.output).filter(Boolean).length
-
     const baseName = `${merged.assay}__${merged.condition}`
 
     const parentName = `${baseName}__averages`
     const shortLabel = parentName
     const longLabel = parentName
 
+    // Add average track
     trackBlocks.push(unindent`
       track ${parentName}
       container multiWig
@@ -63,28 +58,37 @@ function generateTracks(mergedTracks) {
       autoScale on
     `)
 
-    types.forEach(type => {
-      const output = merged.output[type]
+    // Add AF/EU NI/Flu tracks
+    // 2021-10-05: Disable these for now at the request of Alain
 
-      if (output === undefined)
-        return
+    // const trackType = 'bigWig'
 
-      const trackName = `${parentName}__${type}`
-      const shortLabel = trackName
+    // const types = Object.keys(merged.output)
+    // const typesWithDataLength = Object.values(merged.output).filter(Boolean).length
 
-      const colors = getColor(type)
-
-      trackBlocks.push(indent(4, unindent`
-        track ${trackName}
-        type ${trackType}
-        parent ${parentName}
-        shortLabel ${shortLabel}
-        bigDataUrl ${output.url}
-        maxHeightPixels 25:25:8
-        color ${colors[0]}
-        graphTypeDefault points
-      `))
-    })
+    //              - David L
+    // types.forEach(type => {
+    //   const output = merged.output[type]
+    //
+    //   if (output === undefined)
+    //     return
+    //
+    //   const trackName = `${parentName}__${type}`
+    //   const shortLabel = trackName
+    //
+    //   const colors = getColor(type)
+    //
+    //   trackBlocks.push(indent(4, unindent`
+    //     track ${trackName}
+    //     type ${trackType}
+    //     parent ${parentName}
+    //     shortLabel ${shortLabel}
+    //     bigDataUrl ${output.url}
+    //     maxHeightPixels 25:25:8
+    //     color ${colors[0]}
+    //     graphTypeDefault points
+    //   `))
+    // })
 
   })
 
