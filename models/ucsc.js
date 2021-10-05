@@ -2,10 +2,13 @@
  * ucsc.js
  */
 
-const fs = require('fs')
-const path = require('path')
+// const fs = require('fs')
+// const path = require('path')
 const Color = require('color-js')
-const otherTracks = fs.readFileSync(path.join(__dirname, './ucsc.other-tracks.txt')).toString()
+
+// 2021-10-05: Disable these for now at the request of Alain
+//              - David L
+// const otherTracks = fs.readFileSync(path.join(__dirname, './ucsc.other-tracks.txt')).toString()
 
 module.exports = {
   generateHub,
@@ -57,10 +60,6 @@ function generateTracks(mergedTracks) {
       autoScale on
     `)
 
-    // Add AF/EU NI/Flu tracks
-    // 2021-10-05: Disable these for now at the request of Alain
-    //              - David L
-
     const trackType = 'bigWig'
 
     const types = Object.keys(merged.output)
@@ -93,8 +92,10 @@ function generateTracks(mergedTracks) {
 
   return (
     trackBlocks.join('\n\n')
-    + '\n\n'
-    + otherTracks
+    // 2021-10-05: Disable these for now at the request of Alain
+    //              - David L
+    // + '\n\n'
+    // + otherTracks
   )
 }
 
