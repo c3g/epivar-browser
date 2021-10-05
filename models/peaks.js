@@ -89,14 +89,21 @@ function positions(chrom, position) {
 }
 
 function rsIDsWithDetail(query) {
+  // TODO: Some nice calculation that encapsulates what we want in a search ranking
   return database.findAll(
     `
-      SELECT rsID, AVG(valueNI) AS avgValueNI, AVG(valueFlu) AS avgValueFlu, COUNT(*) AS nPeaks
-        FROM peaks
-       WHERE rsID LIKE @query
-    GROUP BY rsID
-    ORDER BY avgValueNI
-       LIMIT 100
+    SELECT rsID, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nPeaks 
+    FROM (
+        SELECT rsID,
+               MIN(valueNI) AS minValueNI,
+               MIN(valueFlu) AS minValueFlu,
+               COUNT(*) AS nPeaks
+          FROM peaks
+         WHERE rsID LIKE @query
+      GROUP BY rsID
+    )
+    ORDER BY avgMinBoth
+    LIMIT 100
     `,
     { query: String(query) + '%' }
   )
@@ -106,18 +113,18 @@ function positionsWithDetail(chrom, position) {
   // TODO: Some nice calculation that encapsulates what we want in a search ranking
   return database.findAll(
     `
-      SELECT position, avgValueNI, avgValueFlu, ((avgValueNI + avgValueFlu) / 2) as avgValueBoth, nPeaks 
-        FROM (
-      SELECT position,
-             AVG(valueNI) AS avgValueNI,
-             AVG(valueFlu) AS avgValueFlu,
-             COUNT(*) AS nPeaks
-        FROM peaks
-       WHERE chrom = @query
-         AND position LIKE @query
+      SELECT position, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nPeaks 
+      FROM (
+        SELECT position,
+               MIN(valueNI) AS minValueNI,
+               MIN(valueFlu) AS minValueFlu,
+               COUNT(*) AS nPeaks
+          FROM peaks
+         WHERE chrom = @query
+           AND position LIKE @query
+      GROUP BY position
     )
-    GROUP BY position
-    ORDER BY avgValueBoth
+    ORDER BY avgMinBoth
        LIMIT 100
     `,
     { chrom, query: String(position) + '%' }
