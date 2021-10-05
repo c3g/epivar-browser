@@ -41,7 +41,6 @@ function generateTracks(mergedTracks) {
     const shortLabel = parentName
     const longLabel = parentName
 
-    // Add average track
     trackBlocks.push(unindent`
       track ${parentName}
       container multiWig
@@ -60,35 +59,35 @@ function generateTracks(mergedTracks) {
 
     // Add AF/EU NI/Flu tracks
     // 2021-10-05: Disable these for now at the request of Alain
-
-    // const trackType = 'bigWig'
-
-    // const types = Object.keys(merged.output)
-    // const typesWithDataLength = Object.values(merged.output).filter(Boolean).length
-
     //              - David L
-    // types.forEach(type => {
-    //   const output = merged.output[type]
-    //
-    //   if (output === undefined)
-    //     return
-    //
-    //   const trackName = `${parentName}__${type}`
-    //   const shortLabel = trackName
-    //
-    //   const colors = getColor(type)
-    //
-    //   trackBlocks.push(indent(4, unindent`
-    //     track ${trackName}
-    //     type ${trackType}
-    //     parent ${parentName}
-    //     shortLabel ${shortLabel}
-    //     bigDataUrl ${output.url}
-    //     maxHeightPixels 25:25:8
-    //     color ${colors[0]}
-    //     graphTypeDefault points
-    //   `))
-    // })
+
+    const trackType = 'bigWig'
+
+    const types = Object.keys(merged.output)
+    const typesWithDataLength = Object.values(merged.output).filter(Boolean).length
+
+    types.forEach(type => {
+      const output = merged.output[type]
+
+      if (output === undefined)
+        return
+
+      const trackName = `${parentName}__${type}`
+      const shortLabel = trackName
+
+      const colors = getColor(type)
+
+      trackBlocks.push(indent(4, unindent`
+        track ${trackName}
+        type ${trackType}
+        parent ${parentName}
+        shortLabel ${shortLabel}
+        bigDataUrl ${output.url}
+        maxHeightPixels 25:25:8
+        color ${colors[0]}
+        graphTypeDefault points
+      `))
+    })
 
   })
 
