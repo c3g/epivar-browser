@@ -120,7 +120,7 @@ function positionsWithDetail(chrom, position) {
                MIN(valueFlu) AS minValueFlu,
                COUNT(*) AS nPeaks
           FROM peaks
-         WHERE chrom = @query
+         WHERE chrom = @chrom
            AND position LIKE @query
       GROUP BY position
     )

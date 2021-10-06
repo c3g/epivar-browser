@@ -121,9 +121,14 @@ class Controls extends React.Component {
     this.setState({ didFirstSearch: true })
   }
 
+  searchIsLongEnough = () => {
+    const {chrom, position} = this.props;
+    return chrom !== "rsID" || position.toString().length > 2;
+  }
+
   debouncedFetch = debounce(start => {
     const {chrom} = this.props;
-    if (chrom && start.toString().length > 2) {
+    if (this.searchIsLongEnough()) {
       this.props.fetchPositions({chrom, start});
     }
   }, 200, {leading: true, trailing: true})
@@ -204,7 +209,7 @@ class Controls extends React.Component {
             {
               list.length === 0 && <div className={ 'autocomplete__item autocomplete__item--empty' }>
                 <span>{
-                  position.length > 2
+                  this.searchIsLongEnough()
                     ? (isLoading ? "Loading..." : "No results")
                     : "Keep typing to see results"
                 }</span>
