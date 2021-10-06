@@ -26,6 +26,11 @@ module.exports = {
   calculate,
 }
 
+const strandToView = {
+  "+": "signal_forward",
+  "-": "signal_reverse",
+}
+
 const groupByEthnicity = groupBy(prop('ethnicity'))
 const mapToData = map(prop('data'))
 
@@ -46,7 +51,12 @@ function values(peak) {
 
   return get(peak)
   .then(tracks =>
-    Promise.all(tracks.map(track =>
+    Promise.all(tracks.filter(track =>
+      // RNA-seq results are either forward or reverse strand; we only want tracks from the direction
+      // of the selected peak (otherwise results will appear incorrectly and we'll have double the # of
+      // values we should in some cases.
+      track.assay !== "RNA-Seq" || track.view === strandToView[peak.feature.strand]
+    ).map(track =>
       valueAt(track.path, {
         chrom: peak.feature.chrom,
         start: peak.feature.start,
