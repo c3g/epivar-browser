@@ -10,7 +10,7 @@ const defaultUI =
     { chrom: defaultChrom, position: '' } :
     { chrom: defaultChrom, position: '' }
 
-function uiReducer(state = defaultUI, action, data) {
+function uiReducer(state = defaultUI, action) {
   switch (action.type) {
     case k.SET_CHROM: {
       return { ...state, chrom: action.payload }
