@@ -71,7 +71,7 @@ class PeakAssay extends Component {
           </Col>
           <Col xs='12' className={values && values.isLoading ? 'loading' : ''}>
             <PeakBoxplot
-              title={formatFeature(p.feature)}
+              title={formatFeature(p)}
               values={values}
             />
           </Col>
@@ -108,7 +108,7 @@ function PeaksTable({ peaks, selectedPeak, onChangeFeature, onOpenTracks}) {
               onClick={() => onChangeFeature(p)}
             >
               <td>{p.rsID}</td>
-              <td className='PeaksTable__feature'>{p.gene || formatFeature(p.feature)}</td>
+              <td className='PeaksTable__feature'>{formatFeature(p)}</td>
               <td>{p.valueNI.toPrecision(5)}</td>
               <td>{p.valueFlu.toPrecision(5)}</td>
               <td className='PeaksTable__tracks'>
@@ -133,9 +133,9 @@ function conditionName(c) {
   }
 }
 
-function formatFeature(feature) {
+function formatFeature({gene, feature}) {
   const {chrom, start, end, strand} = feature
-  return `${chrom}:${start}-${end}` + (strand ? ` (${strand})` : '')
+  return gene || `${chrom}:${start}-${end}` + (strand ? ` (${strand})` : '')
 }
 
 export default connect(
