@@ -225,7 +225,7 @@ class Controls extends React.Component {
                   { highlight(item.rsID ?? item.position, position) }
                   <span><strong>Min. FDR (NI):</strong> {item.minValueNI.toExponential(2)}</span>
                   <span><strong>Min. FDR (Flu):</strong> {item.minValueFlu.toExponential(2)}</span>
-                  <span><strong>Peaks:</strong> {item.nPeaks}</span>
+                  <span><strong>Features:</strong> {item.nFeatures}</span>
                 </div>
               )
             }

@@ -92,12 +92,12 @@ function rsIDsWithDetail(query) {
   // TODO: Some nice calculation that encapsulates what we want in a search ranking
   return database.findAll(
     `
-    SELECT rsID, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nPeaks 
+    SELECT rsID, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nFeatures 
     FROM (
         SELECT rsID,
                MIN(valueNI) AS minValueNI,
                MIN(valueFlu) AS minValueFlu,
-               COUNT(*) AS nPeaks
+               COUNT(*) AS nFeatures
           FROM peaks
          WHERE rsID LIKE @query
       GROUP BY rsID
@@ -113,12 +113,12 @@ function positionsWithDetail(chrom, position) {
   // TODO: Some nice calculation that encapsulates what we want in a search ranking
   return database.findAll(
     `
-      SELECT position, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nPeaks 
+      SELECT position, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nFeatures 
       FROM (
         SELECT position,
                MIN(valueNI) AS minValueNI,
                MIN(valueFlu) AS minValueFlu,
-               COUNT(*) AS nPeaks
+               COUNT(*) AS nFeatures
           FROM peaks
          WHERE chrom = @chrom
            AND position LIKE @query
