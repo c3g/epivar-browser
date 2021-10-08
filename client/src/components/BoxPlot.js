@@ -27,7 +27,7 @@ export default function BoxPlot({
 }) {
 
   const dimension = {
-    x: PADDING + 20,
+    x: PADDING + 25,
     y: PADDING,
     width: width - PADDING,
     height: height - PADDING,
@@ -143,6 +143,7 @@ function Bar({ data, x, y, height, domain }) {
 }
 
 function YAxis({ domain, step, x, y, height }) {
+  const label = "Signal"
 
   const points = []
   for (let i = domain[0]; i <= domain[1]; i += step) {
@@ -160,6 +161,11 @@ function YAxis({ domain, step, x, y, height }) {
     <svg>
       <Line position={[[x, y], 
                        [x, height]]} />
+      <text fontSize={FONT_SIZE}
+            x={-(height / 2)}
+            y={20}
+            textAnchor="end"
+            transform="rotate(-90)">{label}</text>
       {
         points.map(point => {
           const y = scale(point)
@@ -177,7 +183,7 @@ function YAxis({ domain, step, x, y, height }) {
               {
                 Math.abs(lastY - y) > FONT_SIZE &&
                 <text
-                  x={5 + (5 - text.length) * 8}
+                  x={15 + (5 - text.length) * 8}
                   y={scale(point)}
                   dy={FONT_SIZE / 4}
                   fontSize={FONT_SIZE}
