@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ETHNICITY_COLOR } from '../constants/app'
-import { getDomain, combineDomains } from '../helpers/boxplot'
+import { getDomain } from '../helpers/boxplot'
 import AutoSizer from './AutoSizer'
 import BoxPlot from './BoxPlot'
 
@@ -13,7 +13,11 @@ function PeakBoxplot({ title, values = defaultValues }) {
 
   const niDomain  = getDomain(niData)
   const fluDomain = getDomain(fluData)
-  const domain = combineDomains([niDomain, fluDomain])
+
+  // Use this for the box plots to get y-axes on the same scale
+  // Also import: import { combineDomains } from '../helpers/boxplot'
+  // Disabled upon request by David L, 2021-10-08
+  // const domain = combineDomains([niDomain, fluDomain])
 
   return (
     <div className='PeakBoxplot'>
@@ -27,14 +31,14 @@ function PeakBoxplot({ title, values = defaultValues }) {
               <div className='PeakBoxplot__graphs'>
                 <BoxPlot
                   title='Non-infected'
-                  domain={values.isLoading ? undefined : domain}
+                  domain={values.isLoading ? undefined : niDomain}
                   data={values.isLoading ? [] : niData}
                   width={boxWidth}
                   height={boxWidth}
                 />
                 <BoxPlot
                   title='Flu'
-                  domain={values.isLoading ? undefined : domain}
+                  domain={values.isLoading ? undefined : fluDomain}
                   data={values.isLoading ? [] : fluData}
                   width={boxWidth}
                   height={boxWidth}
