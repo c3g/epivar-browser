@@ -1,18 +1,24 @@
-import React, { Component } from 'react';
+import React, {Component, useState} from 'react';
 import {Redirect, Route, Switch, useHistory, useParams} from "react-router-dom";
 
 import Controls from './Controls'
 import Header from './Header'
 import PeakResults from './PeakResults'
+import HelpModal from "./HelpModal";
 
 
 const AppWithParams = () => {
   const history = useHistory();
   const params = useParams();
+
+  const [helpModal, setHelpModal] = useState(false);
+  const toggleHelp = () => setHelpModal(!helpModal);
+
   return (
     <div className="RoutedApp">
       <Header>
-        <Controls params={params} history={history} />
+        <HelpModal isOpen={helpModal} toggle={toggleHelp} />
+        <Controls params={params} history={history} toggleHelp={toggleHelp} />
       </Header>
 
       <PeakResults />

@@ -241,6 +241,7 @@ class Controls extends React.Component {
     return (
       <div className={cx('Controls', { didFirstSearch })}>
         <div className='Controls__content'>
+          <div style={{display: "flex", flexDirection: "row"}}>
           <InputGroup>
             { this.renderChroms() }
             { this.renderPosition() }
@@ -253,6 +254,11 @@ class Controls extends React.Component {
               </Button>
             </div>
           </InputGroup>
+          <InputGroup style={{marginLeft: "8px"}}>
+            <Button onClick={this.props.toggleHelp || (() => {})}>
+              <Icon name="question-circle-o" /></Button>
+          </InputGroup>
+          </div>
           <div className='Controls__example'>
             e.g.: <b>chr11</b> <b>70310556</b> <em>Select chromosome first, then position</em>
           </div>

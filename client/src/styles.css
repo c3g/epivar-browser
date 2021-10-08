@@ -243,6 +243,17 @@ body {
   font-weight: 500;
   letter-spacing: .025em;
 }
+.Header__links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.Header__links > button {
+  color: rgba(255, 255, 255, 0.8);
+}
+.Header__links > button:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
 
 
 .Controls {
@@ -262,6 +273,7 @@ body {
 .Controls__example {
   width: 100%;
   transition: all .25s;
+  text-align: center;
 }
 .Controls.didFirstSearch .Controls__example {
   opacity: 0;
@@ -278,7 +290,7 @@ body {
   width: 100px;
 }
 .Controls__chromosome .dropdown-menu {
-  max-height: calc(100vh - 200px);  /* Roughly the full screen height minus the top offset */
+  max-height: calc(100vh - 240px);  /* Roughly the full screen height minus the top offset */
   overflow-y: auto;
 }
 .Controls__input {
