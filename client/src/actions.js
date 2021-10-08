@@ -8,12 +8,14 @@ export const setChrom       = createAction(k.SET_CHROM)
 export const setPosition    = createAction(k.SET_POSITION)
 export const handleError    = createAction(k.HANDLE_ERROR)
 
+export const assays    = createFetchActions(k.ASSAYS)
 export const samples   = createFetchActions(k.SAMPLES)
 export const chroms    = createFetchActions(k.CHROMS)
 export const positions = createFetchActions(k.POSITIONS)
 export const values    = createFetchActions(k.VALUES)
 export const peaks     = createFetchActions(k.PEAKS)
 
+export const fetchAssays    = createFetchFunction(api.fetchAssays,    assays)
 export const fetchSamples   = createFetchFunction(api.fetchSamples,   samples)
 export const fetchChroms    = createFetchFunction(api.fetchChroms,    chroms)
 export const fetchPositions = createFetchFunction(api.fetchPositions, positions)
@@ -68,7 +70,7 @@ function createFetchActions(namespace) {
 
 function createFetchFunction(fn, actions) {
   return function (params, meta) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
 
       dispatch(withMeta(actions.request(), meta))
 

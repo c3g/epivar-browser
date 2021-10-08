@@ -434,6 +434,13 @@ body {
 }
 
 
+.nav-tabs .nav-link.disabled {
+  cursor: not-allowed;
+  pointer-events: all;  /* override to allow hover cursor */
+  color: #c8ccd0;  /* visually differentiate these tabs from non-selected ones */
+}
+
+
 /*
  * Loading overlay
  */

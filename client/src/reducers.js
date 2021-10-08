@@ -143,6 +143,33 @@ function peaksReducer(state = defaultPeaks, action) {
   }
 }
 
+const defaultAssays = {
+  isLoading: false,
+  isLoaded: false,
+  total: 0,
+  list: ['RNA-seq', 'ATAC-seq', 'H3K4me1', 'H3K4me3', 'H3K27ac', 'H3K27me3'],
+}
+function assaysReducer(state = defaultAssays, action) {
+  switch (action.type) {
+    case k.ASSAYS.REQUEST: {
+      return { ...state, isLoading: true }
+    }
+    case k.ASSAYS.RECEIVE: {
+      return {
+        ...state,
+        isLoading: false,
+        isLoaded: true,
+        list: action.payload
+      }
+    }
+    case k.ASSAYS.ERROR: {
+      return { ...state, isLoading: false }
+    }
+    default:
+      return state;
+  }
+}
+
 export const rootReducer = combineReducers({
   ui: uiReducer,
   samples: samplesReducer,
@@ -150,4 +177,5 @@ export const rootReducer = combineReducers({
   positions: positionsReducer,
   values: valuesReducer,
   peaks: peaksReducer,
+  assays: assaysReducer,
 })

@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use('/api/assays',       require('./routes/assays'))
 app.use('/api/autocomplete', require('./routes/autocomplete'))
 app.use('/api/peaks',        require('./routes/peaks'))
 app.use('/api/ucsc',         require('./routes/ucsc'))

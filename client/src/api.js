@@ -10,6 +10,10 @@ import queryString from './helpers/queryString'
  * API functions
  */
 
+export function fetchAssays(params) {
+  return get('/assays/list', params)
+}
+
 export function fetchPeaks(params) {
   return get('/peaks/query', params)
 }

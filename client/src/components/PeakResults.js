@@ -21,27 +21,31 @@ const PeakResults = () => {
   const {chrom, position} = match.params;
   const activeAssay = match.params.assay;
 
-  const isLoading = useSelector(state => state.peaks.isLoading);
-  const isLoaded = useSelector(state => state.peaks.isLoaded);
+  const assaysLoading = useSelector(state => state.assays.isLoading);
+  const assaysLoaded = useSelector(state => state.assays.isLoaded);
+  const assays = useSelector(state => state.assays.list || []);
+
+  const peaksLoading = useSelector(state => state.peaks.isLoading);
+  const peaksLoaded = useSelector(state => state.peaks.isLoaded);
   const isEmpty = useSelector(state => state.peaks.isLoaded && state.peaks.list.length === 0);
   const peaks = useSelector(state => state.peaks.list || []);
 
   const peaksByAssay = groupAndSortPeaks(peaks);
-  const assays = Object.keys(peaksByAssay);
+  const assaysWithFeatures = Object.keys(peaksByAssay);
   const entries = Object.entries(peaksByAssay);
 
   useEffect(() => {
     if (!chrom || !position) return;  // If chromosome or position are undefined, don't push us anywhere
 
-    if (activeAssay && !(activeAssay in peaksByAssay) && isLoaded) {
+    if (activeAssay && !(activeAssay in peaksByAssay) && peaksLoaded) {
       // Assay isn't valid for the position in question
-      history.replace(`/${chrom}/${position}` + (assays.length ? `/${assays[0]}` : ""));
-    } else if (!activeAssay && assays.length && isLoaded) {
-      history.replace(`/${chrom}/${position}/${assays[0]}`);
+      history.replace(`/${chrom}/${position}` + (assaysWithFeatures.length ? `/${assays[0]}` : ""));
+    } else if (!activeAssay && assaysWithFeatures.length && peaksLoaded) {
+      history.replace(`/${chrom}/${position}/${assaysWithFeatures[0]}`);
     }
-  }, [activeAssay, chrom, position, isLoaded]);
+  }, [activeAssay, chrom, position, peaksLoaded]);
 
-  return <div className={'PeakResults ' + (isLoading ? 'loading' : '')}>
+  return <div className={'PeakResults ' + (peaksLoading ? 'loading' : '')}>
     {
       isEmpty &&
       <Container>
@@ -52,22 +56,25 @@ const PeakResults = () => {
       </Container>
     }
     {
-      chrom && position && (isLoading || isLoaded) &&
+      chrom && position && (peaksLoading || peaksLoaded) &&
       <Container>
         <Nav tabs>
           {
-            entries.map(([assay, peaks]) =>
-              <NavItem key={assay}>
+            assays.map(assay => {
+              const nPeaks = peaksByAssay[assay]?.length ?? 0
+              return <NavItem key={assay}>
                 <NavLink
-                  className={cx({ active: activeAssay === assay })}
-                  onClick={() => history.replace(`/${chrom}/${position}/${assay}`)}
+                  className={cx({active: activeAssay === assay})}
+                  onClick={() => nPeaks && history.replace(`/${chrom}/${position}/${assay}`)}
+                  disabled={!nPeaks}
+                  aria-disabled={true}
                 >
-                  <Icon name='flask' className='PeakAssay__icon' />
+                  <Icon name='flask' className='PeakAssay__icon'/>
                   <strong>{assay}</strong>&nbsp;-&nbsp;
-                  {peaks.length} {assay === 'RNA-seq' ? 'gene' : 'peak'}{peaks.length > 1 ? 's' : ''}
+                  {nPeaks} {assay === 'RNA-seq' ? 'gene' : 'peak'}{nPeaks !== 1 ? 's' : ''}
                 </NavLink>
               </NavItem>
-            )
+            })
           }
         </Nav>
         <TabContent activeTab={activeAssay}>

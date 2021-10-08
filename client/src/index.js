@@ -13,7 +13,7 @@ import './styles.css';
 import registerServiceWorker from './registerServiceWorker';
 import { rootReducer } from './reducers';
 import App from './components/App';
-import { fetchChroms } from './actions.js'
+import { fetchAssays, fetchChroms } from './actions.js'
 
 
 const initialState = {}
@@ -33,6 +33,7 @@ render(
   document.querySelector('#root')
 )
 
+store.dispatch(fetchAssays())
 store.dispatch(fetchChroms())
 
 window.addEventListener('unload', () => {

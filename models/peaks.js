@@ -13,6 +13,7 @@ module.exports = {
   query,
   queryByRsID,
   chroms,
+  assays,
   rsIDs,
   rsIDsWithDetail,
   positions,
@@ -56,6 +57,15 @@ function chroms() {
     `
   )
   .then(rows => rows.map(r => r.chrom))
+}
+
+function assays() {
+  return database.findAll(
+    `
+    SELECT DISTINCT(assay)
+      FROM peaks
+    `
+  ).then(rows => rows.map(r => r.assay))
 }
 
 let cachedRsIDs = config.development.rsIDs || undefined
