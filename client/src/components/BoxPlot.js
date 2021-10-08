@@ -25,9 +25,10 @@ export default function BoxPlot({
   height,
   domain = getDomain(data),
 }) {
+  const horizPadding = 25;
 
   const dimension = {
-    x: PADDING + 25,
+    x: PADDING + horizPadding,
     y: PADDING,
     width: width - PADDING,
     height: height - PADDING,
@@ -45,7 +46,7 @@ export default function BoxPlot({
     <svg width={width} height={height}>
       <YAxis domain={yDomain} step={yAxis.step} {...dimension} />
       <XAxis data={data} scale={xScale} {...dimension} />
-      <text x={dimension.width / 2} y={20} textAnchor='middle'
+      <text x={(dimension.width / 2) + dimension.x - horizPadding - 8} y={20} textAnchor='middle'
         style={{
           fontWeight: 'bold',
         }}
@@ -273,13 +274,14 @@ function getYAxisDetails(domain) {
     start = 0
 
   start = Math.round(start * 100) / 100
+  end = Math.ceil(end)
 
-  let factor = 1
-  while (true) {
-    const newEnd = Math.ceil(end * factor) / factor
-    end = newEnd
-    break
-  }
+  // let factor = 1
+  // while (true) {
+  //   const newEnd = Math.ceil(end * factor) / factor
+  //   end = newEnd
+  //   break
+  // }
 
   const step = (end - start) / 10
 
