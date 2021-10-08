@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useSelector} from 'react-redux';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
-import { groupBy, sortBy, prop, map, compose } from 'rambda'
+import { groupBy, sortBy, add, prop, map, compose } from 'rambda'
 import memoizeOne from 'memoize-one'
 import cx from 'clsx'
 
@@ -9,10 +9,11 @@ import Icon from './Icon'
 import PeakAssay from './PeakAssay'
 import {useHistory, useRouteMatch} from "react-router-dom";
 
-// Original data comes sorted by order of priority, therefore we
-// sort by ID because it's also the priority field.
+// Sort peaks by the average FDR, lowest to highest
+// We don't have to divide by two to get the real mean, since there are
+// always two values
 const groupAndSortPeaks = memoizeOne(
-  compose(map(sortBy(prop('valueNI'))), groupBy(prop('assay')))
+  compose(map(sortBy(compose(add, prop('valueNI'), prop('valueFlu')))), groupBy(prop('assay')))
 )
 
 const PeakResults = () => {
