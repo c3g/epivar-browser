@@ -22,8 +22,6 @@ const PeakResults = () => {
   const {chrom, position} = match.params;
   const activeAssay = match.params.assay;
 
-  const assaysLoading = useSelector(state => state.assays.isLoading);
-  const assaysLoaded = useSelector(state => state.assays.isLoaded);
   const assays = useSelector(state => state.assays.list || []);
 
   const peaksLoading = useSelector(state => state.peaks.isLoading);
