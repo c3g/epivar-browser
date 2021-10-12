@@ -37,7 +37,7 @@ function generateTracks(mergedTracks) {
 
   const trackBlocks = []
 
-  mergedTracks.forEach(merged => {
+  mergedTracks.forEach((merged, idx) => {
     const baseName = `${merged.assay}__${merged.condition}`
 
     const parentName = `${baseName}__averages`
@@ -52,7 +52,7 @@ function generateTracks(mergedTracks) {
       aggregate transparentOverlay
       showSubtrackColorOnUi on
       windowingFunction maximum
-      priority 1.2
+      priority 1.${idx}
       configurable on
       dragAndDrop subTracks
       autoScale on
@@ -83,17 +83,16 @@ function generateTracks(mergedTracks) {
   })
 
   // Add legend 'tracks' - non-data tracks that show the REF/HET/HOM colours
-  for (const t of ["REF", "HET", "HOM"]) {
-    trackBlocks.push(unindent`
-      track ${t}
-      shortLabel Legend: ${t}
-      longLabel Legend: ${t}
-      type bigBed
-      bigDataUrl /otherData/legendItem.bb
-      color ${getColor(t)[0]}
-      visibility dense
-    `)
-  }
+  trackBlocks.push(...["REF", "HET", "HOM"].map((t, i) => unindent`
+    track ${t}
+    shortLabel Legend: ${t}
+    longLabel Legend: ${t}
+    type bigBed
+    bigDataUrl /otherData/legendItem.bb
+    color ${getColor(t)[0]}
+    visibility dense
+    priority 2.${i}
+  `))
 
   return (
     trackBlocks.join('\n\n')
