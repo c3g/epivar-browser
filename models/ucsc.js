@@ -91,6 +91,7 @@ function generateTracks(mergedTracks) {
       type bigBed
       bigDataUrl /otherData/legendItem.bb
       color ${getColor(t)[0]}
+      visibility dense
     `)
   }
 
