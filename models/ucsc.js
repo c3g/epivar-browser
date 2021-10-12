@@ -80,8 +80,19 @@ function generateTracks(mergedTracks) {
         graphTypeDefault points
       `))
     })
-
   })
+
+  // Add legend 'tracks' - non-data tracks that show the REF/HET/HOM colours
+  for (const t of ["REF", "HET", "HOM"]) {
+    trackBlocks.push(unindent`
+      track ${t}
+      shortLabel Legend: ${t}
+      longLabel Legend: ${t}
+      type bigBed
+      bigDataUrl /otherData/legendItem.bb
+      color ${getColor(t)[0]}
+    `)
+  }
 
   return (
     trackBlocks.join('\n\n')

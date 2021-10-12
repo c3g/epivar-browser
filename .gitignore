@@ -1,5 +1,6 @@
 /data/*
 !/data/.gitkeep
+!/data/otherData
 /config.js
 /public/*
 node_modules
