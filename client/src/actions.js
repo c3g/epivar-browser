@@ -43,10 +43,16 @@ export function mergeTracks(peak) {
 
     api.createSession(session)
     .then(sessionID => {
+      const db = 'hg19'
       const position = `${session.chrom}:${session.feature.start}-${session.feature.end}`
       const baseURL = `${window.location.origin}${process.env.PUBLIC_URL || ''}`
       const hubURL = `${baseURL}/api/ucsc/hub/${sessionID}`
-      const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs({ db: 'hg19', hubClear: hubURL, position })
+      const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs({
+        db,
+        hubClear: hubURL,
+        position,
+        highlight: `${db}.${position}#CC0000`,
+      })
 
       console.log('Hub:',  hubURL)
       console.log('UCSC:', ucscURL)
