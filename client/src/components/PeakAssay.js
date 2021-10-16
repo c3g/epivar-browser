@@ -44,13 +44,24 @@ class PeakAssay extends Component {
   render() {
     const { peaks, valuesByID } = this.props
     const { selectedPeak } = this.state
-    const p = peaks.find(p => p.id === selectedPeak)
-    const values = valuesByID[selectedPeak]
+    const selectedPeakData = peaks.find(p => p.id === selectedPeak)
+    const selectedPeakValues = valuesByID[selectedPeak]
 
-    if (!values && p) {
-      const params = p
-      const meta = { id: p.id }
-      this.props.fetchValues(params, meta)
+    // Pre-fetch all peak values - fire off a bunch of promises without waiting
+    const fetchAll = (exclude = []) =>
+      peaks.forEach(p => {
+        if (!valuesByID[p.id] && !exclude.includes(p.id)) {
+          this.props.fetchValues(p, {id: p.id})
+        }
+      })
+
+    // Fire the selected peak request first
+    if (!selectedPeakValues && selectedPeakData) {
+      this.props.fetchValues(selectedPeakData, {id: selectedPeak})
+      // Give some time for the first one to get priority
+      setTimeout(() => fetchAll([selectedPeak]), 100)
+    } else {
+      fetchAll()
     }
 
     return (
@@ -63,16 +74,16 @@ class PeakAssay extends Component {
               onChangeFeature={this.onChangeFeature}
               onOpenTracks={this.onOpenTracks}
             />
-            {values && values.message &&
+            {selectedPeakValues && selectedPeakValues.message &&
               <Alert color='danger'>
-                <strong>Error while fetching data:</strong> {values.message}
+                <strong>Error while fetching data:</strong> {selectedPeakValues.message}
               </Alert>
             }
           </Col>
-          <Col xs='12' className={values && values.isLoading ? 'loading' : ''}>
+          <Col xs='12' className={selectedPeakValues && selectedPeakValues.isLoading ? 'loading' : ''}>
             <PeakBoxplot
-              title={formatFeature(p)}
-              values={values}
+              title={formatFeature(selectedPeakData)}
+              values={selectedPeakValues}
             />
           </Col>
         </Row>
