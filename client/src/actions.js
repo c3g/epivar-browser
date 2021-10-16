@@ -51,7 +51,7 @@ export function mergeTracks(peak) {
         db,
         hubClear: hubURL,
         position,
-        highlight: `${db}.${position}#FFAAAA`,
+        highlight: `${db}.${session.chrom}:${session.position}-${session.position+1}#FFAAAA`,
       })
 
       console.log('Hub:',  hubURL)
