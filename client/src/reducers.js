@@ -55,7 +55,7 @@ const defaultChroms = {
   isLoading: false,
   isLoaded: false,
   total: 0,
-  list: ['rsID'],
+  list: ['rsID'],  // Enable for gene search: ['rsID', 'gene'],
 }
 function chromsReducer(state = defaultChroms, action) {
   switch (action.type) {

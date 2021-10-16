@@ -12,12 +12,12 @@ const database = new Database(config.paths.peaks)
 module.exports = {
   query,
   queryByRsID,
+  queryByGene,
   chroms,
   assays,
   rsIDs,
-  rsIDsWithDetail,
   positions,
-  positionsWithDetail,
+  autocompleteWithDetail,
 }
 
 function query(chrom, position) {
@@ -43,6 +43,18 @@ function queryByRsID(rsID) {
     { rsID }
   )
   .then(normalizePeaks)
+}
+
+function queryByGene(gene) {
+  return database.findAll(
+    `
+     SELECT *
+       FROM peaks
+      WHERE gene = @gene
+    `,
+    { gene }
+  )
+    .then(normalizePeaks)
 }
 
 let cachedChroms = config.development.chroms || undefined
@@ -98,46 +110,52 @@ function positions(chrom, position) {
   .then(rows => rows.map(r => r.position))
 }
 
-function rsIDsWithDetail(query) {
+function autocompleteWithDetail(query) {
   // TODO: Some nice calculation that encapsulates what we want in a search ranking
+
+  const {rsID, gene, chrom, position} = query;
+
+  const {select, where, params, group} = (() => {
+    if (rsID) {
+      return {
+        select: "rsID, gene",
+        where: "rsID LIKE @query",
+        params: {query: String(rsID) + '%'},
+        group: "rsID",
+      }
+    } else if (gene) {
+      return {
+        select: "gene",
+        where: "gene LIKE @query",
+        params: {query: String(gene) + '%'},
+        group: "gene",
+      }
+    } else {  // chrom + position
+      return {
+        select: "position, gene",
+        where: "chrom = @chrom AND position LIKE @query",
+        params: {chrom, query: String(position) + '%'},
+        group: "position",
+      }
+    }
+  })();
+
   return database.findAll(
     `
-    SELECT rsID, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nFeatures 
+    SELECT ${select}, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nFeatures 
     FROM (
-        SELECT rsID,
+        SELECT ${select},
                MIN(valueNI) AS minValueNI,
                MIN(valueFlu) AS minValueFlu,
                COUNT(*) AS nFeatures
           FROM peaks
-         WHERE rsID LIKE @query
-      GROUP BY rsID
+         WHERE ${where}
+      GROUP BY ${group}
     )
     ORDER BY avgMinBoth
     LIMIT 100
     `,
-    { query: String(query) + '%' }
-  )
-}
-
-function positionsWithDetail(chrom, position) {
-  // TODO: Some nice calculation that encapsulates what we want in a search ranking
-  return database.findAll(
-    `
-      SELECT position, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nFeatures 
-      FROM (
-        SELECT position,
-               MIN(valueNI) AS minValueNI,
-               MIN(valueFlu) AS minValueFlu,
-               COUNT(*) AS nFeatures
-          FROM peaks
-         WHERE chrom = @chrom
-           AND position LIKE @query
-      GROUP BY position
-    )
-    ORDER BY avgMinBoth
-       LIMIT 100
-    `,
-    { chrom, query: String(position) + '%' }
+    params
   )
 }
 

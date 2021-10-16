@@ -157,7 +157,7 @@ class Controls extends React.Component {
   selectItem = index => {
     const { positions: { list }, history, chrom } = this.props
 
-    const position = list[index].rsID ?? list[index].position
+    const position = list[index].rsID ?? list[index].position ?? list[index].gene
     history.replace(`/${chrom}/${position}`)
     this.changePosition(position)
     this.props.doSearch();
@@ -201,7 +201,16 @@ class Controls extends React.Component {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         value={position || ""}
-        placeholder={chrom === 'rsID' ? 'Search by RS ID' : 'Search position'}
+        placeholder={(chrom => {
+          switch (chrom) {
+            case 'rsID':
+              return 'Search by RS ID'
+            case 'gene':
+              return 'Search by gene name'
+            default:
+              return 'Search position'
+          }
+        })(chrom)}
       />
       {
         open &&
@@ -218,11 +227,11 @@ class Controls extends React.Component {
             {
               list.map((item, i) =>
                 <div
-                  key={item.rsID ?? item.position}
+                  key={item.rsID ?? item.position ?? item.gene}
                   className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
                   onClick={() => this.selectItem(i)}
                 >
-                  { highlight(item.rsID ?? item.position, position) }
+                  { highlight(item.rsID ?? item.position ?? item.gene, position) }
                   <span><strong>Min. FDR (NI):</strong> {item.minValueNI.toExponential(2)}</span>
                   <span><strong>Min. FDR (Flu):</strong> {item.minValueFlu.toExponential(2)}</span>
                   <span><strong>Features:</strong> {item.nFeatures}</span>

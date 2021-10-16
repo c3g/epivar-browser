@@ -12,9 +12,16 @@ const Peaks = require('../models/peaks.js')
 router.use('/query', (req, res) => {
   const { chrom, position } = req.query
 
-  const query = chrom === 'rsID' ?
-    Peaks.queryByRsID(position) :
-    Peaks.query(chrom, Number(position))
+  const query = (() => {
+    switch (chrom) {
+      case 'rsID':
+        return Peaks.queryByRsID(position)
+      case 'gene':
+        return Peaks.queryByGene(position)
+      default:
+        return Peaks.query(chrom, Number(position))
+    }
+  })()
 
   query
   .then(dataHandler(res))

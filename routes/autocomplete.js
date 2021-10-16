@@ -18,9 +18,16 @@ router.use('/chroms', (req, res) => {
 router.use('/positions', (req, res) => {
   const { chrom, start } = req.query
 
-  const query = chrom === 'rsID' ?
-    Peaks.rsIDsWithDetail(start) :
-    Peaks.positionsWithDetail(chrom, start)
+  const query = (() => {
+    switch (chrom) {
+      case 'rsID':
+        return Peaks.autocompleteWithDetail({rsID: start})
+      case 'gene':
+        return Peaks.autocompleteWithDetail({gene: start})
+      default:
+        return Peaks.autocompleteWithDetail({chrom, position: start})
+    }
+  })();
 
   query
   .then(dataHandler(res))
