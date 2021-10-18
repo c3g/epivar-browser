@@ -111,48 +111,41 @@ function positions(chrom, position) {
 }
 
 function autocompleteWithDetail(query) {
-  // TODO: Some nice calculation that encapsulates what we want in a search ranking
-
   const {rsID, gene, chrom, position} = query;
 
-  const {select, where, params, group} = (() => {
+  const {select, where, params, by} = (() => {
     if (rsID) {
       return {
-        select: "rsID, gene",
+        select: "rsID",
         where: "rsID LIKE @query",
         params: {query: String(rsID) + '%'},
-        group: "rsID",
+        by: "rsID",
       }
     } else if (gene) {
       return {
         select: "gene",
         where: "gene LIKE @query",
         params: {query: String(gene) + '%'},
-        group: "gene",
+        by: "gene",
       }
     } else {  // chrom + position
       return {
-        select: "position, gene",
+        select: "position",
         where: "chrom = @chrom AND position LIKE @query",
         params: {chrom, query: String(position) + '%'},
-        group: "position",
+        by: "position",
       }
     }
   })();
 
+  // Order peaks in query by average FDR
+
   return database.findAll(
     `
-    SELECT ${select}, minValueNI, minValueFlu, ((minValueNI + minValueFlu) / 2) as avgMinBoth, nFeatures 
-    FROM (
-        SELECT ${select},
-               MIN(valueNI) AS minValueNI,
-               MIN(valueFlu) AS minValueFlu,
-               COUNT(*) AS nFeatures
-          FROM peaks
-         WHERE ${where}
-      GROUP BY ${group}
-    )
-    ORDER BY avgMinBoth
+    SELECT ${select}, minValueAvg, nFeatures, mostSignificantFeatureID 
+    FROM features_by_${by}
+    WHERE ${where} 
+    ORDER BY minValueAvg 
     LIMIT 100
     `,
     params

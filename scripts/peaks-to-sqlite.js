@@ -59,13 +59,62 @@ const schemaPath = path.join(__dirname, '../models/peaks.sql')
 
     if (!err) console.log(`Removed existing database at '${outputPath}'`)
 
+    console.log('Inserting peaks')
     const db = new Database(outputPath, schemaPath)
     await db.ready
     await db.insertMany(
-      `INSERT INTO peaks (id,  rsID,  chrom,  position,  gene,  feature,  assay,  valueNI,  valueFlu)
-        VALUES       (@id, @rsID, @chrom, @position, @gene, @feature, @assay, @valueNI, @valueFlu)`,
+      `INSERT INTO peaks (id,  rsID,  chrom,  position,  gene,  feature,  assay,  valueNI,  valueFlu,  valueAvg)
+        VALUES       (@id, @rsID, @chrom, @position, @gene, @feature, @assay, @valueNI, @valueFlu, @valueAvg)`,
       peaks
     )
+
+    console.log('Pre-processing feature groups by rsID')
+    await db.run(
+      `
+      INSERT INTO features_by_rsID (rsID, minValueAvg, nFeatures, mostSignificantFeatureID)
+      SELECT rsID, minValueAvg, nFeatures, (
+          SELECT id FROM peaks WHERE rsID = a.rsID AND valueAvg = a.minValueAvg
+      ) AS mostSignificantFeatureID 
+      FROM (
+          SELECT rsID, MIN(valueAvg) as minValueAvg, COUNT(*) AS nFeatures 
+          FROM peaks
+          WHERE rsID IS NOT NULL
+          GROUP BY rsID
+      ) AS a
+      `
+    )
+
+    console.log('Pre-processing feature groups by gene')
+    await db.run(
+      `
+      INSERT INTO features_by_gene (gene, minValueAvg, nFeatures, mostSignificantFeatureID)
+      SELECT gene, minValueAvg, nFeatures, (
+          SELECT id FROM peaks WHERE gene = a.gene AND valueAvg = a.minValueAvg
+      ) AS mostSignificantFeatureID
+      FROM (
+          SELECT gene, MIN(valueAvg) as minValueAvg, COUNT(*) AS nFeatures
+          FROM peaks
+          WHERE gene IS NOT NULL
+          GROUP BY gene
+      ) AS a
+      `
+    )
+
+    console.log('Pre-processing feature groups by position')
+    await db.run(
+      `
+      INSERT INTO features_by_position (chrom, position, minValueAvg, nFeatures, mostSignificantFeatureID)
+      SELECT chrom, position, minValueAvg, nFeatures, (
+          SELECT id FROM peaks WHERE chrom = a.chrom AND position = a.position AND valueAvg = a.minValueAvg
+      ) AS mostSignificantFeatureID
+      FROM (
+          SELECT chrom, position, MIN(valueAvg) as minValueAvg, COUNT(*) AS nFeatures
+          FROM peaks
+          GROUP BY chrom, position
+      ) AS a
+      `
+    )
+
     console.log('Done')
   })())
 })()
@@ -85,6 +134,7 @@ function normalizePeak(peak, index) {
 
   peak.valueNI  = peak['fdr.NI']
   peak.valueFlu = peak['fdr.Flu']
+  peak.valueAvg = (parseFloat(peak.valueNI) + parseFloat(peak.valueFlu)) / 2
   delete peak['fdr.NI']
   delete peak['fdr.Flu']
 

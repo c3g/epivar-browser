@@ -246,8 +246,7 @@ class Controls extends React.Component {
                   onClick={() => this.selectItem(i)}
                 >
                   { highlight(item.rsID ?? item.position ?? item.gene, position) }
-                  <span><strong>Min. FDR (NI):</strong> {item.minValueNI.toExponential(2)}</span>
-                  <span><strong>Min. FDR (Flu):</strong> {item.minValueFlu.toExponential(2)}</span>
+                  <span><strong>Min. Average FDR:</strong> {item.minValueAvg.toExponential(2)}</span>
                   <span><strong>Features:</strong> {item.nFeatures}</span>
                 </div>
               )
