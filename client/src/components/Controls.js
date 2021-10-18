@@ -206,7 +206,7 @@ class Controls extends React.Component {
             case 'rsID':
               return 'Search by RS ID'
             case 'gene':
-              return 'Search by gene name'
+              return 'Search RNA-seq results by gene name'
             default:
               return 'Search position'
           }
