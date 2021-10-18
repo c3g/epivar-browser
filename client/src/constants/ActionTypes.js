@@ -15,5 +15,6 @@ function createFetchConstants(namespace) {
     'REQUEST': `${namespace}.REQUEST`,
     'RECEIVE': `${namespace}.RECEIVE`,
     'ERROR':   `${namespace}.ERROR`,
+    'ABORT':   `${namespace}.ABORT`,
   }
 }

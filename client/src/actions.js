@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions'
+import axios from 'axios'
 
 import qs from './helpers/queryString.js'
 import * as api from './api'
@@ -71,18 +72,26 @@ function createFetchActions(namespace) {
     request: createAction(namespace.REQUEST, undefined),
     receive: createAction(namespace.RECEIVE, undefined),
     error: createAction(namespace.ERROR, undefined),
+    abort: createAction(namespace.ABORT, undefined),
   }
 }
 
 function createFetchFunction(fn, actions) {
-  return function (params, meta) {
+  return function (params, meta=undefined, cancelToken=undefined) {
     return (dispatch) => {
 
+      const dispatchedAt = Date.now()
       dispatch(withMeta(actions.request(), meta))
 
-      fn(params)
-      .then(result => dispatch(withMeta(actions.receive(result), meta)))
-      .catch(err =>   dispatch(withMeta(actions.error(err), meta)))
+      return fn(params, cancelToken)
+        .then(result => dispatch(withMeta(actions.receive(result), meta)))
+        .catch(err => {
+          if (axios.isCancel(err)) {
+            return dispatch(withMeta(actions.abort(err), {...(meta ?? {}), dispatchedAt}))
+          } else {
+            return dispatch(withMeta(actions.error(err), meta))
+          }
+        })
     }
   }
 }

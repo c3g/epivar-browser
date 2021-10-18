@@ -31,8 +31,8 @@ export function fetchChroms() {
   })
 }
 
-export function fetchPositions(params) {
-  return get('/autocomplete/positions', params)
+export function fetchPositions(params, cancelToken) {
+  return get('/autocomplete/positions', params, {cancelToken})
 }
 
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import axios from 'axios'
 import debounce from 'lodash/debounce'
 import {
   Input,
@@ -54,6 +55,7 @@ class Controls extends React.Component {
     index: 0,
     open: false,
     didFirstSearch: false,
+    source: undefined,
   }
 
   componentDidMount() {
@@ -62,6 +64,12 @@ class Controls extends React.Component {
       this.props.setChrom(chrom);
       this.changePosition(position);
       this.props.doSearch();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.state.source) {
+      this.state.source.cancel()
     }
   }
 
@@ -129,9 +137,15 @@ class Controls extends React.Component {
   debouncedFetch = debounce(start => {
     const {chrom} = this.props;
     if (this.searchIsLongEnough()) {
-      this.props.fetchPositions({chrom, start});
+      if (this.state.source) {
+        console.log("canceling stale autocomplete request")
+        this.state.source.cancel("stale autocomplete request")
+      }
+      this.setState({source: axios.CancelToken.source()}, () => {
+        this.props.fetchPositions({chrom, start}, undefined, this.state.source.token)
+      })
     }
-  }, 200, {leading: true, trailing: true})
+  }, 500, {leading: true, trailing: true})
 
   changePosition = pos => {
     this.props.setPosition(pos);

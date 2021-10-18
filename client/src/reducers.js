@@ -81,19 +81,26 @@ function chromsReducer(state = defaultChroms, action) {
 const defaultPositions = {
   isLoading: false,
   isLoaded: false,
+  lastRequestDispatched: 0,
   total: 0,
   list: [],
 }
 function positionsReducer(state = defaultPositions, action) {
   switch (action.type) {
     case k.POSITIONS.REQUEST: {
-      return { ...state, isLoading: true }
+      return { ...state, isLoading: true, lastRequestDispatched: Date.now() }
     }
     case k.POSITIONS.RECEIVE: {
       return { ...state, isLoading: false, isLoaded: true, list: action.payload }
     }
     case k.POSITIONS.ERROR: {
       return { ...state, isLoading: false }
+    }
+    case k.POSITIONS.ABORT: {
+      // If the last request was dispatched before or concurrent with the cancellation, set loading to false
+      // Otherwise, leave loading state as-is
+      // TODO: Should this use cancel token?
+      return {...state, isLoading: action.meta.dispatchedAt >= state.lastRequestDispatched ? false : state.isLoading}
     }
     default:
       return state;
