@@ -59,7 +59,7 @@ const PeakResults = () => {
       <Container>
         <Nav tabs>
           {
-            assays.map(assay => {
+            assays.filter(assay => chrom !== "gene" || assay === "RNA-seq").map(assay => {
               const nPeaks = peaksByAssay[assay]?.length ?? 0
               return <NavItem key={assay}>
                 <NavLink
