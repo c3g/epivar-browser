@@ -263,23 +263,23 @@ class Controls extends React.Component {
     return (
       <div className={cx('Controls', { didFirstSearch })}>
         <div className='Controls__content'>
-          <div style={{display: "flex", flexDirection: "row"}}>
-          <InputGroup>
-            { this.renderChroms() }
-            { this.renderPosition() }
-            <div className='input-group-append'>
-              <Button className='Controls__search'
-                onClick={this.onClickSearch}
-                disabled={isLoading}
-              >
-                <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
-              </Button>
-            </div>
-          </InputGroup>
-          <InputGroup style={{marginLeft: "8px"}}>
-            <Button onClick={this.props.toggleHelp || (() => {})}>
-              <Icon name="question-circle-o" /></Button>
-          </InputGroup>
+          <div style={{display: "flex", flexDirection: "row", width: "100%", maxWidth: "550px"}}>
+            <InputGroup style={{flex: 1}}>
+              { this.renderChroms() }
+              { this.renderPosition() }
+              <div className='input-group-append'>
+                <Button className='Controls__search'
+                  onClick={this.onClickSearch}
+                  disabled={isLoading}
+                >
+                  <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
+                </Button>
+              </div>
+            </InputGroup>
+            <InputGroup style={{marginLeft: "8px"}}>
+              <Button onClick={this.props.toggleHelp || (() => {})}>
+                <Icon name="question-circle-o" /></Button>
+            </InputGroup>
           </div>
           <div className='Controls__example'>
             e.g.: <b>chr11</b> <b>70310556</b> <em>Select chromosome first, then position</em>
