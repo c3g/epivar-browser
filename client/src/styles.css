@@ -347,10 +347,10 @@ body {
 .PeaksTable__row--selected:hover {
   background-color: #599eff40 !important;
 }
-.PeaksTable__feature {
-  font-size: 0.9em;
-  font-family: monospace;
-}
+/*.PeaksTable__feature {*/
+/*  font-size: 0.9em;*/
+/*  font-family: monospace;*/
+/*}*/
 .PeaksTable__tracks {
   width: 120px;
 }
