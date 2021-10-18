@@ -117,21 +117,21 @@ function autocompleteWithDetail(query) {
     if (rsID) {
       return {
         select: "rsID",
-        where: "rsID LIKE @query",
+        where: "g.rsID LIKE @query",
         params: {query: String(rsID) + '%'},
         by: "rsID",
       }
     } else if (gene) {
       return {
         select: "gene",
-        where: "gene LIKE @query",
+        where: "g.gene LIKE @query",
         params: {query: String(gene) + '%'},
         by: "gene",
       }
     } else {  // chrom + position
       return {
         select: "position",
-        where: "chrom = @chrom AND position LIKE @query",
+        where: "g.chrom = @chrom AND g.position LIKE @query",
         params: {chrom, query: String(position) + '%'},
         by: "position",
       }
@@ -142,10 +142,10 @@ function autocompleteWithDetail(query) {
 
   return database.findAll(
     `
-    SELECT ${select}, minValueAvg, nFeatures, mostSignificantFeatureID 
-    FROM features_by_${by}
-    WHERE ${where} 
-    ORDER BY minValueAvg 
+    SELECT g.${select}, g.minValueAvg, g.nFeatures, g.mostSignificantFeatureID, peaks.assay
+    FROM features_by_${by} AS g, peaks
+    WHERE ${where} AND g.mostSignificantFeatureID = peaks.id
+    ORDER BY g.minValueAvg 
     LIMIT 100
     `,
     params
