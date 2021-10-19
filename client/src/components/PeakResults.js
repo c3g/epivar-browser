@@ -70,7 +70,7 @@ const PeakResults = () => {
                 >
                   <Icon name='flask' className='PeakAssay__icon'/>
                   <strong>{assay}</strong>&nbsp;-&nbsp;
-                  {nPeaks} {assay === 'RNA-seq' ? 'gene' : 'peak'}{nPeaks !== 1 ? 's' : ''}
+                  {nPeaks} {assay === 'RNA-seq' ? 'SNP' : 'peak'}{nPeaks !== 1 ? 's' : ''}
                 </NavLink>
               </NavItem>
             })
