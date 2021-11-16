@@ -24,10 +24,16 @@ const datasetPaths = [
   'h3k27me3',
 ].map(d => `${path.join(__dirname, '../input-files')}/flu-infection-peaks-qtls-complete-${d}.csv`);
 
-const outputPath = path.join(__dirname, '../data/peaks.sqlite')
-const schemaPath = path.join(__dirname, '../models/peaks.sql')
+const genePeaksPath = path.join(__dirname, '../input-files/flu-infection-gene-peaks.csv');
 
-;(async () => {
+const outputPath = path.join(__dirname, '../data/peaks.sqlite');
+const schemaPath = path.join(__dirname, '../models/peaks.sql');
+
+(async () => {
+  const genesByPeak = Object.fromEntries(
+    parseCSV(fs.readFileSync(genePeaksPath).toString(), {columns: true})
+      .map(gp => [`${gp.feature_type}:${gp.peak_ids}`, gp]));
+
   const peaks = datasetPaths
     .flatMap(inputPath => parseCSV(fs.readFileSync(inputPath).toString(), { columns: true }))
     .map(normalizePeak)
@@ -37,7 +43,7 @@ const schemaPath = path.join(__dirname, '../models/peaks.sql')
 
   await Promise.all(peaks.map(p => {
     if (p.feature.startsWith('chr')) {
-      p.gene = null
+      p.gene = genesByPeak[`${p.assay}:${p.feature}`].symbol ?? null
       return true
     }
 

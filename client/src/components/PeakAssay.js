@@ -92,61 +92,51 @@ class PeakAssay extends Component {
   }
 }
 
-function PeaksTable({ peaks, selectedPeak, onChangeFeature, onOpenTracks}) {
-  return (
-    <Table
-      className='PeaksTable'
-      size='sm'
-      bordered
-      hover
-    >
-      <thead>
-        <tr>
-          <th>rsID</th>
-          <th>Feature</th>
-          <th>FDR (NI)</th>
-          <th>FDR (Flu)</th>
-          <th>View in UCSC</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          peaks.map(p =>
-            <tr
-              key={p.id}
-              className={'PeaksTable__row ' + (selectedPeak === p.id ? 'PeaksTable__row--selected' : '')}
-              role='button'
-              onClick={() => onChangeFeature(p)}
-            >
-              <td>{p.rsID}</td>
-              <td className='PeaksTable__feature'>{formatFeature(p)}</td>
-              <td>{p.valueNI.toPrecision(5)}</td>
-              <td>{p.valueFlu.toPrecision(5)}</td>
-              <td className='PeaksTable__tracks'>
-                <Button size='sm' color='link' onClick={() => onOpenTracks(p)}>
-                  Tracks <Icon name='external-link' />
-                </Button>
-              </td>
-            </tr>
-          )
-        }
-      </tbody>
-    </Table>
-  )
-}
+const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => (
+  <Table
+    className='PeaksTable'
+    size='sm'
+    bordered
+    hover
+  >
+    <thead>
+      <tr>
+        <th>rsID</th>
+        <th>Feature</th>
+        <th>FDR (NI)</th>
+        <th>FDR (Flu)</th>
+        <th>View in UCSC</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        peaks.map(p =>
+          <tr
+            key={p.id}
+            className={'PeaksTable__row ' + (selectedPeak === p.id ? 'PeaksTable__row--selected' : '')}
+            role='button'
+            onClick={() => onChangeFeature(p)}
+          >
+            <td>{p.rsID}</td>
+            <td className='PeaksTable__feature'>{formatFeature(p)}</td>
+            <td>{p.valueNI.toPrecision(5)}</td>
+            <td>{p.valueFlu.toPrecision(5)}</td>
+            <td className='PeaksTable__tracks'>
+              <Button size='sm' color='link' onClick={() => onOpenTracks(p)}>
+                Tracks <Icon name='external-link' />
+              </Button>
+            </td>
+          </tr>
+        )
+      }
+    </tbody>
+  </Table>
+)
 
-function conditionName(c) {
-  switch (c) {
-    case 'NI':  return 'Non-infected'
-    case 'Flu': return 'Flu'
-    default:
-      return 'Unknown'
-  }
-}
-
-function formatFeature({gene, feature}) {
+function formatFeature({assay, gene, feature}) {
   const {chrom, start, end, strand} = feature
-  return gene || `${chrom}:${start}-${end}` + (strand ? ` (${strand})` : '')
+  const featureText = `${chrom}:${start}-${end}` + (strand ? ` (${strand})` : '')
+  return assay === "RNA-seq" ? (gene || featureText) : featureText
 }
 
 export default connect(
