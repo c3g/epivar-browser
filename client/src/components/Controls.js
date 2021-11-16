@@ -169,13 +169,13 @@ class Controls extends React.Component {
   }
 
   selectItem = index => {
-    const { positions: { list }, history, chrom } = this.props
+    const { positions: { list }, navigate, chrom } = this.props
     const item = list[index]
     const position = item.rsID ?? item.position ?? item.gene
     // The item assay is the tab with the most significant result - which will be
     // selected first by nature of ordering, thus leading the user to the most interesting
     // detail from the autocomplete.
-    history.replace(`/${chrom}/${position}/${item.assay}`)
+    navigate(`/${chrom}/${position}/${item.assay}`, {replace: true})
     this.changePosition(position)
     this.props.doSearch();
   }

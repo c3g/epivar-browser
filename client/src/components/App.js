@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-import {Redirect, Route, Switch, useHistory, useParams} from "react-router-dom";
+import {Route, Routes, useNavigate, useParams} from "react-router-dom";
 
 import Controls from './Controls'
 import Header from './Header'
@@ -8,7 +8,7 @@ import HelpModal from "./HelpModal";
 
 
 const AppWithParams = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = useParams();
 
   const [helpModal, setHelpModal] = useState(false);
@@ -18,7 +18,7 @@ const AppWithParams = () => {
     <div className="RoutedApp">
       <Header>
         <HelpModal isOpen={helpModal} toggle={toggleHelp} />
-        <Controls params={params} history={history} toggleHelp={toggleHelp} />
+        <Controls params={params} navigate={navigate} toggleHelp={toggleHelp} />
       </Header>
 
       <PeakResults />
@@ -32,11 +32,11 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-        <Switch>
-          <Route path="/:chrom/:position/:assay" children={<AppWithParams />} />
-          <Route path="/:chrom/:position" children={<AppWithParams />} />
-          <Route path="/" children={<AppWithParams />} />
-        </Switch>
+        <Routes>
+          <Route path="/:chrom/:position/:assay" element={<AppWithParams />} />
+          <Route path="/:chrom/:position" element={<AppWithParams />} />
+          <Route path="/" element={<AppWithParams />} />
+        </Routes>
       </div>
     )
   }

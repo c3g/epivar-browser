@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react'
 import {useSelector} from 'react-redux';
+import {useNavigate, useParams} from "react-router-dom";
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import { groupBy, sortBy, add, prop, map, compose } from 'rambda'
 import memoizeOne from 'memoize-one'
@@ -7,7 +8,6 @@ import cx from 'clsx'
 
 import Icon from './Icon'
 import PeakAssay from './PeakAssay'
-import {useHistory, useRouteMatch} from "react-router-dom";
 
 // Sort peaks by the average FDR, lowest to highest
 // We don't have to divide by two to get the real mean, since there are
@@ -17,10 +17,9 @@ const groupAndSortPeaks = memoizeOne(
 )
 
 const PeakResults = () => {
-  const history = useHistory();
-  const match = useRouteMatch();
-  const {chrom, position} = match.params;
-  const activeAssay = match.params.assay;
+  const navigate = useNavigate();
+  const params = useParams();
+  const {chrom, position, assay: activeAssay} = params;
 
   const assays = useSelector(state => state.assays.list || []);
 
@@ -38,9 +37,9 @@ const PeakResults = () => {
 
     if (activeAssay && !(activeAssay in peaksByAssay) && peaksLoaded) {
       // Assay isn't valid for the position in question
-      history.replace(`/${chrom}/${position}` + (assaysWithFeatures.length ? `/${assays[0]}` : ""));
+      navigate(`/${chrom}/${position}` + (assaysWithFeatures.length ? `/${assays[0]}` : ""), {replace: true});
     } else if (!activeAssay && assaysWithFeatures.length && peaksLoaded) {
-      history.replace(`/${chrom}/${position}/${assaysWithFeatures[0]}`);
+      navigate(`/${chrom}/${position}/${assaysWithFeatures[0]}`, {replace: true});
     }
   }, [activeAssay, chrom, position, peaksLoaded]);
 
@@ -64,7 +63,7 @@ const PeakResults = () => {
               return <NavItem key={assay}>
                 <NavLink
                   className={cx({active: activeAssay === assay})}
-                  onClick={() => nPeaks && history.replace(`/${chrom}/${position}/${assay}`)}
+                  onClick={() => nPeaks && navigate(`/${chrom}/${position}/${assay}`, {replace: true})}
                   disabled={!nPeaks}
                   aria-disabled={true}
                 >
