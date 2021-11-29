@@ -12,6 +12,8 @@ import {
 import Icon from './Icon'
 import PeakBoxplot from './PeakBoxplot'
 import { fetchValues, mergeTracks } from '../actions'
+import {CONDITION_FLU, CONDITION_NI, conditionName} from "../helpers/conditions";
+
 
 const mapStateToProps = state => ({
   valuesByID: state.values.itemsByID
@@ -103,8 +105,8 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => (
       <tr>
         <th>rsID</th>
         <th>Feature</th>
-        <th>FDR (NI)</th>
-        <th>FDR (Flu)</th>
+        <th>FDR ({conditionName(CONDITION_NI)})</th>
+        <th>FDR ({conditionName(CONDITION_FLU)})</th>
         <th>View in UCSC</th>
       </tr>
     </thead>

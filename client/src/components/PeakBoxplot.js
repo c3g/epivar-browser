@@ -2,14 +2,15 @@ import React from 'react';
 
 import { ETHNICITY_COLOR } from '../constants/app'
 import { getDomain } from '../helpers/boxplot'
+import {CONDITION_FLU, CONDITION_NI, conditionName} from "../helpers/conditions";
 import AutoSizer from './AutoSizer'
 import BoxPlot from './BoxPlot'
 
 const defaultValues = { isLoading: true, data: {} }
 
 function PeakBoxplot({ title, values = defaultValues }) {
-  const niData  = values.data.NI  ? getDataFromValues(values.data.NI)  : []
-  const fluData = values.data.Flu ? getDataFromValues(values.data.Flu) : []
+  const niData  = values.data[CONDITION_NI]  ? getDataFromValues(values.data[CONDITION_NI])  : []
+  const fluData = values.data[CONDITION_FLU] ? getDataFromValues(values.data[CONDITION_FLU]) : []
 
   const niDomain  = getDomain(niData)
   const fluDomain = getDomain(fluData)
@@ -30,14 +31,14 @@ function PeakBoxplot({ title, values = defaultValues }) {
             return (
               <div className='PeakBoxplot__graphs'>
                 <BoxPlot
-                  title='Non-infected'
+                  title={conditionName(CONDITION_NI)}
                   domain={values.isLoading ? undefined : niDomain}
                   data={values.isLoading ? [] : niData}
                   width={boxWidth}
                   height={boxWidth}
                 />
                 <BoxPlot
-                  title='Flu'
+                  title={conditionName(CONDITION_FLU)}
                   domain={values.isLoading ? undefined : fluDomain}
                   data={values.isLoading ? [] : fluData}
                   width={boxWidth}
