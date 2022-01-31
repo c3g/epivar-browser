@@ -1,12 +1,7 @@
 import React from 'react';
 import { scaleLinear } from 'd3-scale'
-// import { ETHNICITY_COLOR } from '../constants/app'
+import { ETHNICITY_COLOR, ETHNICITY_BOX_COLOR } from '../constants/app'
 import { getDomain } from '../helpers/boxplot'
-
-const BOX_COLOR = {
-  AF: 'rgba(81, 0, 255, 0.65)',
-  EU: 'rgba(255, 138, 0, 0.65)',
-};
 
 const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺'
 
@@ -48,13 +43,17 @@ export default function BoxPlot({
 
   return (
     <svg width={width} height={height}>
-      <pattern id="diagonal" patternUnits="userSpaceOnUse" width={9} height={9} patternTransform="rotate(45 0 0)">
-        <rect x={0} y={0} width={9} height={9} style={{fill: BOX_COLOR.EU}} />
-        <line x1={0} y1={0} x2={0} y2={9} style={{
-          stroke: BOX_COLOR.AF,
-          strokeWidth: 6,
-        }} />
-      </pattern>
+      {/*<pattern id="diagonal" patternUnits="userSpaceOnUse" width={9} height={9} patternTransform="rotate(45 0 0)">*/}
+      {/*  <rect x={0} y={0} width={9} height={9} />*/}
+      {/*  <line x1={3} y1={0} x2={3} y2={9} style={{*/}
+      {/*    stroke: ETHNICITY_BOX_COLOR.AF,*/}
+      {/*    strokeWidth: 6,*/}
+      {/*  }} />*/}
+      {/*  <line x1={7.5} y1={0} x2={7.5} y2={9} style={{*/}
+      {/*    stroke: ETHNICITY_BOX_COLOR.EU,*/}
+      {/*    strokeWidth: 3,*/}
+      {/*  }} />*/}
+      {/*</pattern>*/}
 
       <YAxis domain={yDomain} step={yAxis.step} {...dimension} />
       <XAxis data={data} scale={xScale} {...dimension} />
@@ -168,7 +167,7 @@ function Bar({ data, x, y, height, domain }) {
         xStop={x}
         stats={afStats}
         yScale={yScale}
-        fill={BOX_COLOR.AF}
+        fill={ETHNICITY_BOX_COLOR.AF}
       />
 
       {/* EU */}
@@ -177,7 +176,7 @@ function Bar({ data, x, y, height, domain }) {
         xStop={xMax}
         stats={euStats}
         yScale={yScale}
-        fill={BOX_COLOR.EU} />
+        fill={ETHNICITY_BOX_COLOR.EU} />
     </g>
   )
 }
