@@ -1,7 +1,12 @@
 import React from 'react';
 import { scaleLinear } from 'd3-scale'
-import { ETHNICITY_COLOR } from '../constants/app'
+// import { ETHNICITY_COLOR } from '../constants/app'
 import { getDomain } from '../helpers/boxplot'
+
+const BOX_COLOR = {
+  AF: 'rgba(81, 0, 255, 0.5)',
+  EU: 'rgba(255, 138, 0, 0.5)',
+};
 
 const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺'
 
@@ -44,9 +49,9 @@ export default function BoxPlot({
   return (
     <svg width={width} height={height}>
       <pattern id="diagonal" patternUnits="userSpaceOnUse" width={9} height={9} patternTransform="rotate(45 0 0)">
-        <rect x={0} y={0} width={9} height={9} style={{fill: ETHNICITY_COLOR.EU}} />
+        <rect x={0} y={0} width={9} height={9} style={{fill: BOX_COLOR.EU}} />
         <line x1={0} y1={0} x2={0} y2={9} style={{
-          stroke: ETHNICITY_COLOR.AF,
+          stroke: BOX_COLOR.AF,
           strokeWidth: 6,
         }} />
       </pattern>
@@ -69,10 +74,10 @@ export default function BoxPlot({
   )
 }
 
-function InnerBar({ xStart, xStop, xLine, yScale, stats, fill }) {
+function InnerBar({ xStart, xStop, yScale, stats, fill }) {
   const border = '#666666';
 
-  xLine = xLine ?? (xStart + xStop) / 2;
+  const xLine = (xStart + xStop) / 2;
 
   return <g>
     <Rect stroke={border}
@@ -161,20 +166,18 @@ function Bar({ data, x, y, height, domain }) {
       <InnerBar
         xStart={xMin}
         xStop={x}
-        xLine={x}
         stats={afStats}
         yScale={yScale}
-        fill={ETHNICITY_COLOR.AF}
+        fill={BOX_COLOR.AF}
       />
 
       {/* EU */}
       <InnerBar
         xStart={x}
-        xStop={xMax} 
-        xLine={x}
+        xStop={xMax}
         stats={euStats}
         yScale={yScale}
-        fill={ETHNICITY_COLOR.EU} />
+        fill={BOX_COLOR.EU} />
     </g>
   )
 }
