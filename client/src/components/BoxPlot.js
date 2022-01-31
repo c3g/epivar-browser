@@ -1,6 +1,6 @@
 import React from 'react';
 import { scaleLinear } from 'd3-scale'
-import { ETHNICITY_COLOR, ETHNICITY_BOX_COLOR } from '../constants/app'
+import { ETHNICITY_BOX_COLOR } from '../constants/app'
 import { getDomain } from '../helpers/boxplot'
 
 const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺'
