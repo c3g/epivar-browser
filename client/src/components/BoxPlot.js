@@ -72,16 +72,18 @@ export default function BoxPlot({
 function InnerBar({ xStart, xStop, yScale, stats, fill }) {
   const border = '#666666';
 
+  const xMid = (xStart + xStop) / 2;
+
   return <g>
     <Line stroke={border}
-          position={[[xStart, yScale(stats.min)], [xStop, yScale(stats.max)]]} />
+          position={[[xMid, yScale(stats.min)], [xMid, yScale(stats.max)]]} />
     <Line stroke={border}
           position={[[xStart, yScale(stats.min)], [xStop, yScale(stats.min)]]} />
     <Line stroke={border}
           position={[[xStart, yScale(stats.max)], [xStop, yScale(stats.max)]]} />
     <Rect stroke={border}
           fill={fill ?? "rgba(0, 0, 0, 0)"}
-          position={[[xStart, yScale(stats.third_quartile)], [xStop, yScale(stats.first_quartile)]]} />
+          position={[[xStart, yScale(stats.quartile_3)], [xStop, yScale(stats.quartile_1)]]} />
     <Line stroke={border}
           position={[[xStart, yScale(stats.median)], [xStop, yScale(stats.median)]]} />
   </g>;
@@ -94,9 +96,9 @@ function Bar({ data, x, y, height, domain }) {
   /**
    * @type {{
    *   min: number,
-   *   first_quartile: number,
+   *   quartile_1: number,
    *   median: number,
-   *   third_quartile: number,
+   *   quartile_3: number,
    *   max: number
    * }} Stats
    */
