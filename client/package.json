@@ -12,7 +12,7 @@
     "memoize-one": "^6.0.0",
     "object-path-immutable": "^4.1.2",
     "rambda": "^6.4.0",
-    "ramda": "^0.27.1",
+    "ramda": "^0.27.2",
     "react": "^16.14.0",
     "react-bootstrap-table": "^4.0.5",
     "react-dom": "^16.14.0",
@@ -22,7 +22,7 @@
     "redux": "^4.1.2",
     "redux-actions": "^2.2.1",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.4.0"
+    "redux-thunk": "^2.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
