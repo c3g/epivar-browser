@@ -190,7 +190,7 @@ function derive(list) {
 
           // Don't reveal ethnicity-specific box plots unless we have 4 or more points
           ethPoints.length >= minPoints
-            ? getStats(ethPoints)
+            ? getStats(ethPoints.sort((a, b) => a - b))
             : null
         ])
     ),

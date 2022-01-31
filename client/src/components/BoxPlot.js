@@ -43,11 +43,11 @@ export default function BoxPlot({
 
   return (
     <svg width={width} height={height}>
-      <pattern id="diagonal" patternUnits="userSpaceOnUse" width={10} height={10} patternTransform="rotate(45 0 0)">
-        <rect x={0} y={0} width={10} height={10} style={{fill: ETHNICITY_COLOR.EU}} />
-        <line x1={0} y1={0} x2={0} y2={10} style={{
+      <pattern id="diagonal" patternUnits="userSpaceOnUse" width={9} height={9} patternTransform="rotate(45 0 0)">
+        <rect x={0} y={0} width={9} height={9} style={{fill: ETHNICITY_COLOR.EU}} />
+        <line x1={0} y1={0} x2={0} y2={9} style={{
           stroke: ETHNICITY_COLOR.AF,
-          strokeWidth: 5,
+          strokeWidth: 6,
         }} />
       </pattern>
 
@@ -69,21 +69,21 @@ export default function BoxPlot({
   )
 }
 
-function InnerBar({ xStart, xStop, yScale, stats, fill }) {
+function InnerBar({ xStart, xStop, xLine, yScale, stats, fill }) {
   const border = '#666666';
 
-  const xMid = (xStart + xStop) / 2;
+  xLine = xLine ?? (xStart + xStop) / 2;
 
   return <g>
+    <Rect stroke={border}
+          fill={fill ?? "rgba(0, 0, 0, 0)"}
+          position={[[xStart, yScale(stats.quartile_3)], [xStop, yScale(stats.quartile_1)]]} />
     <Line stroke={border}
-          position={[[xMid, yScale(stats.min)], [xMid, yScale(stats.max)]]} />
+          position={[[xLine, yScale(stats.min)], [xLine, yScale(stats.max)]]} />
     <Line stroke={border}
           position={[[xStart, yScale(stats.min)], [xStop, yScale(stats.min)]]} />
     <Line stroke={border}
           position={[[xStart, yScale(stats.max)], [xStop, yScale(stats.max)]]} />
-    <Rect stroke={border}
-          fill={fill ?? "rgba(0, 0, 0, 0)"}
-          position={[[xStart, yScale(stats.quartile_3)], [xStop, yScale(stats.quartile_1)]]} />
     <Line stroke={border}
           position={[[xStart, yScale(stats.median)], [xStop, yScale(stats.median)]]} />
   </g>;
@@ -158,10 +158,23 @@ function Bar({ data, x, y, height, domain }) {
   return (
     <g>
       {/* AF */}
-      <InnerBar xStart={xMin} xStop={x} stats={afStats} yScale={yScale} fill={ETHNICITY_COLOR.AF} />
+      <InnerBar
+        xStart={xMin}
+        xStop={x}
+        xLine={x}
+        stats={afStats}
+        yScale={yScale}
+        fill={ETHNICITY_COLOR.AF}
+      />
 
       {/* EU */}
-      <InnerBar xStart={x} xStop={xMax} stats={euStats} yScale={yScale} fill={ETHNICITY_COLOR.EU} />
+      <InnerBar
+        xStart={x}
+        xStop={xMax} 
+        xLine={x}
+        stats={euStats}
+        yScale={yScale}
+        fill={ETHNICITY_COLOR.EU} />
     </g>
   )
 }
