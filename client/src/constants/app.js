@@ -8,6 +8,6 @@ export const ETHNICITY_COLOR = {
 };
 
 export const ETHNICITY_BOX_COLOR = {
-  AF: 'rgba(81, 0, 255, 0.65)',
-  EU: 'rgba(255, 138, 0, 0.65)',
+  AF: 'rgba(81, 0, 255, 0.6)',
+  EU: 'rgba(255, 138, 0, 0.6)',
 };
