@@ -4,8 +4,8 @@ import { scaleLinear } from 'd3-scale'
 import { getDomain } from '../helpers/boxplot'
 
 const BOX_COLOR = {
-  AF: 'rgba(81, 0, 255, 0.5)',
-  EU: 'rgba(255, 138, 0, 0.5)',
+  AF: 'rgba(81, 0, 255, 0.65)',
+  EU: 'rgba(255, 138, 0, 0.65)',
 };
 
 const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺'
