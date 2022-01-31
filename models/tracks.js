@@ -113,14 +113,15 @@ function merge(tracks, session) {
         tracksByType.HET || [],
         tracksByType.HOM || []
       ].map(async tracks => {
-        if (tracks.length === 0)
-          return undefined
+        if (tracks.length === 0) {
+          return undefined;
+        }
 
-        const filepaths = tracks.map(prop('path'))
+        const filePaths = tracks.map(prop('path'))
 
-        const maxSize = await bigWigChromosomeLength(filepaths[0], session.peak.feature.chrom)
+        const maxSize = await bigWigChromosomeLength(filePaths[0], session.peak.feature.chrom)
 
-        return mergeFiles(filepaths, {
+        return mergeFiles(filePaths, {
           chrom: session.peak.feature.chrom,
           start: Math.max(session.peak.feature.start - 100000, 0),
           end:   Math.min(session.peak.feature.end + 100000, maxSize),
@@ -128,13 +129,10 @@ function merge(tracks, session) {
       })
     )
 
-  let promisedTracks
-
-  promisedTracks = 
-    Object.entries(tracksByCondition).map(([condition, tracksByType]) => {
-      return mergeTracksByType(tracksByType)
-      .then(output => {
-        return {
+  let promisedTracks =
+    Object.entries(tracksByCondition).map(([condition, tracksByType]) =>
+      mergeTracksByType(tracksByType)
+      .then(output => ({
           assay: session.peak.assay,
           condition,
           tracks,
@@ -143,9 +141,9 @@ function merge(tracks, session) {
             HET: output[1],
             HOM: output[2],
           }
-        }
-      })
-    })
+        })
+      )
+    )
 
   return Promise.all(promisedTracks)
     .then(results => results.filter(Boolean))
@@ -179,19 +177,36 @@ function derive(list) {
   const points = list.map(d => d.data).sort((a, b) => a - b)
   const pointsByEthnicity = map(mapToData, groupByEthnicity(list))
 
+  const minPoints = 3;
+
+  // noinspection JSCheckFunctionSignatures
   return {
     n: list.length,
-    min: Math.min(...points),
-    max: Math.max(...points),
     stats: getStats(points),
-    points: pointsByEthnicity,
+    statsByEthnicity: Object.fromEntries(
+      Object.entries(pointsByEthnicity)
+        .map(([eth, ethPoints]) => [
+          eth,
+
+          // Don't reveal ethnicity-specific box plots unless we have 4 or more points
+          ethPoints.length >= minPoints
+            ? getStats(ethPoints)
+            : null
+        ])
+    ),
+
+    // Do not send points to the front end – it is too easy to re-identify genotypes
+    // from a public bigWig file here.
+    // points: pointsByEthnicity,
   }
 }
 
 function getStats(points) {
   return {
-    start:  points[~~(points.length * 1/4)],
-    median: points[~~(points.length * 2/4)],
-    end:    points[~~(points.length * 3/4)],
-  }
+    min:        Math.min(...points),
+    quartile_1: points[~~(points.length * 1/4)],
+    median:     points[~~(points.length * 2/4)],
+    quartile_3: points[~~(points.length * 3/4)],
+    max:        Math.max(...points),
+  };
 }

@@ -8,10 +8,9 @@ const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺'
 const FONT_SIZE = 14
 
 const BAR_WIDTH = 40
-const BAR_HALFWIDTH = BAR_WIDTH / 2
+const BAR_HALF_WIDTH = BAR_WIDTH / 2
 
 const PADDING = 40
-const POINT_RADIUS = 4
 
 const textStyles = {
   fontSize: FONT_SIZE,
@@ -44,6 +43,14 @@ export default function BoxPlot({
 
   return (
     <svg width={width} height={height}>
+      <pattern id="diagonal" patternUnits="userSpaceOnUse" width={10} height={10} patternTransform="rotate(45 0 0)">
+        <rect x={0} y={0} width={10} height={10} style={{fill: ETHNICITY_COLOR.EU}} />
+        <line x1={0} y1={0} x2={0} y2={10} style={{
+          stroke: ETHNICITY_COLOR.AF,
+          strokeWidth: 5,
+        }} />
+      </pattern>
+
       <YAxis domain={yDomain} step={yAxis.step} {...dimension} />
       <XAxis data={data} scale={xScale} {...dimension} />
       <text x={(dimension.width / 2) + dimension.x - horizPadding - 8} y={20} textAnchor='middle'
@@ -62,13 +69,52 @@ export default function BoxPlot({
   )
 }
 
-function Bar({ data, x, y, height, domain }) {
-  const min = data.min
-  const max = data.max
-  const stats = data.stats
+function InnerBar({ xStart, xStop, yScale, stats, fill }) {
+  const border = '#666666';
 
-  const xMin = x - BAR_HALFWIDTH
-  const xMax = x + BAR_HALFWIDTH
+  return <g>
+    <Line stroke={border}
+          position={[[xStart, yScale(stats.min)], [xStop, yScale(stats.max)]]} />
+    <Line stroke={border}
+          position={[[xStart, yScale(stats.min)], [xStop, yScale(stats.min)]]} />
+    <Line stroke={border}
+          position={[[xStart, yScale(stats.max)], [xStop, yScale(stats.max)]]} />
+    <Rect stroke={border}
+          fill={fill ?? "rgba(0, 0, 0, 0)"}
+          position={[[xStart, yScale(stats.third_quartile)], [xStop, yScale(stats.first_quartile)]]} />
+    <Line stroke={border}
+          position={[[xStart, yScale(stats.median)], [xStop, yScale(stats.median)]]} />
+  </g>;
+}
+
+function Bar({ data, x, y, height, domain }) {
+  // const min = data.min
+  // const max = data.max
+
+  /**
+   * @type {{
+   *   min: number,
+   *   first_quartile: number,
+   *   median: number,
+   *   third_quartile: number,
+   *   max: number
+   * }} Stats
+   */
+  const stats = data.stats;
+
+  /**
+   * @type {{
+   *   AF: Stats,
+   *   EU: Stats
+   * }}
+   */
+  const statsByEthnicity = data.statsByEthnicity;
+
+  const afStats = statsByEthnicity.AF;
+  const euStats = statsByEthnicity.EU;
+
+  const xMin = x - BAR_HALF_WIDTH
+  const xMax = x + BAR_HALF_WIDTH
 
   const yScale = scaleLinear().range([height, y]).domain(domain)
 
@@ -99,46 +145,21 @@ function Bar({ data, x, y, height, domain }) {
     )
   }
 
-  const border = '#666666'
+  /* We've disabled point-level display for security reasons - David L, 2022-01-31 */
 
-  const afPoints = data.points.AF || []
-  const euPoints = data.points.EU || []
-
-  const padding = 5
-  const afXRange = [xMin + padding, x - padding]
-  const euXRange = [x + padding, xMax - padding]
-
-  const afScale = scaleLinear().range(afXRange).domain([0, afPoints.length || 1])
-  const euScale = scaleLinear().range(euXRange).domain([0, euPoints.length || 1])
+  if (!afStats || !euStats) {
+    // Use overall stats, since we do not have enough AF/EU points to render ethnicity-level
+    // box plots securely.
+    return <InnerBar xStart={xMin} xStop={xMax} stats={stats} yScale={yScale} fill={"url(#diagonal)"} />;
+  }
 
   return (
     <g>
-      <Line stroke={border} position={[[x, yScale(min)], [x, yScale(max)]]} />
-      <Line stroke={border} position={[[xMin, yScale(min)], [xMax, yScale(min)]]} />
-      <Line stroke={border} position={[[xMin, yScale(max)], [xMax, yScale(max)]]} />
-      <Rect stroke={border} position={[[xMin, yScale(stats.end)], [xMax, yScale(stats.start)]]} />
-      <Line stroke={border} position={[[xMin, yScale(stats.median)], [xMax, yScale(stats.median)]]} />
+      {/* AF */}
+      <InnerBar xStart={xMin} xStop={x} stats={afStats} yScale={yScale} fill={ETHNICITY_COLOR.AF} />
 
-      {afPoints.map((value, i) =>
-        <circle
-          key={i}
-          cx={afScale(i)}
-          cy={yScale(value)}
-          r={POINT_RADIUS}
-          fill={ETHNICITY_COLOR.AF}
-          opacity='0.4'
-        />
-      )}
-      {euPoints.map((value, i) =>
-        <circle
-          key={i}
-          cx={euScale(i)}
-          cy={yScale(value)}
-          r={POINT_RADIUS}
-          fill={ETHNICITY_COLOR.EU}
-          opacity='0.6'
-        />
-      )}
+      {/* EU */}
+      <InnerBar xStart={x} xStop={xMax} stats={euStats} yScale={yScale} fill={ETHNICITY_COLOR.EU} />
     </g>
   )
 }
