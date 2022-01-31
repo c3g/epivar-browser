@@ -177,7 +177,7 @@ function derive(list) {
   const points = list.map(d => d.data).sort((a, b) => a - b)
   const pointsByEthnicity = map(mapToData, groupByEthnicity(list))
 
-  const minPoints = 5;
+  const minPoints = 6;
 
   // noinspection JSCheckFunctionSignatures
   return {
