@@ -35,7 +35,7 @@ class App extends Component {
       <div className='App'>
         <svg>
           <pattern id="diagonal" patternUnits="userSpaceOnUse" width={9} height={9} patternTransform="rotate(45 0 0)">
-            <rect x={0} y={0} width={9} height={9} />
+            <rect x={0} y={0} width={9} height={9} fill="#FFFFFF" />
             <line x1={3} y1={0} x2={3} y2={9} style={{
               stroke: ETHNICITY_BOX_COLOR.AF,
               strokeWidth: 6,

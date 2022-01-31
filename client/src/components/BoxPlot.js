@@ -43,18 +43,6 @@ export default function BoxPlot({
 
   return (
     <svg width={width} height={height}>
-      {/*<pattern id="diagonal" patternUnits="userSpaceOnUse" width={9} height={9} patternTransform="rotate(45 0 0)">*/}
-      {/*  <rect x={0} y={0} width={9} height={9} />*/}
-      {/*  <line x1={3} y1={0} x2={3} y2={9} style={{*/}
-      {/*    stroke: ETHNICITY_BOX_COLOR.AF,*/}
-      {/*    strokeWidth: 6,*/}
-      {/*  }} />*/}
-      {/*  <line x1={7.5} y1={0} x2={7.5} y2={9} style={{*/}
-      {/*    stroke: ETHNICITY_BOX_COLOR.EU,*/}
-      {/*    strokeWidth: 3,*/}
-      {/*  }} />*/}
-      {/*</pattern>*/}
-
       <YAxis domain={yDomain} step={yAxis.step} {...dimension} />
       <XAxis data={data} scale={xScale} {...dimension} />
       <text x={(dimension.width / 2) + dimension.x - horizPadding - 8} y={20} textAnchor='middle'
