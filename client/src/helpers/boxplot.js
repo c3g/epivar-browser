@@ -4,23 +4,24 @@
 
 
 export function getDomain(categories) {
-  if (categories.length === 0)
-    return undefined
+  if (categories.length === 0) {
+    return undefined;
+  }
 
-  let min =  Infinity
-  let max = -Infinity
+  let min =  Infinity;
+  let max = -Infinity;
 
   categories.forEach(({ data }) => {
-    if (data.min < min)
-      min = data.min
-    if (data.max > max)
-      max = data.max
-  })
+    if (data.stats.min < min)
+      min = data.stats.min
+    if (data.stats.max > max)
+      max = data.stats.max
+  });
 
   return [
     min,
     max,
-  ]
+  ];
 }
 
 export function combineDomains(ds) {
