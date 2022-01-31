@@ -33,7 +33,7 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-        <svg>
+        <svg height={0} style={{position: "absolute"}}>
           <pattern id="diagonal" patternUnits="userSpaceOnUse" width={9} height={9} patternTransform="rotate(45 0 0)">
             <rect x={0} y={0} width={9} height={9} fill="#FFFFFF" />
             <line x1={3} y1={0} x2={3} y2={9} style={{
