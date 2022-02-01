@@ -62,7 +62,7 @@ export default function BoxPlot({
 }
 
 function InnerBar({ xStart, xStop, yScale, stats, fill }) {
-  const border = '#666666';
+  const border = '#333333';
 
   const xLine = (xStart + xStop) / 2;
 
