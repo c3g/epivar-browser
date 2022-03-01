@@ -284,7 +284,7 @@ async function boxPlot({title, data, domain, transform}) {
       ${axes.join("")}
       <text x="${(plotDimensions.width / 2) + plotDimensions.x - PLOT_HORIZ_PADDING - 8}" y="20" 
             text-anchor="middle" 
-            style="font-weight: bold; font-family: sans-serif">
+            style="font-weight: bold; font-family: sans-serif; font-size: 14px">
         ${title}
       </text>
       ${bars.join("")}
