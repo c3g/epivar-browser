@@ -4,19 +4,26 @@
 
 
 exports.errorHandler = res => err => {
-  if (err instanceof Error)
-    res.json({ ok: false, message: err.toString(), stack: err.stack.split('\n') })
-  else
-    res.json({ ok: false, message: err })
-  res.end()
-}
+  if (err instanceof Error) {
+    res.json({ok: false, message: err.toString(), stack: err.stack.split('\n')});
+  } else {
+    res.json({ok: false, message: err});
+  }
+  res.end();
+};
 
 exports.dataHandler = res => data => {
-  res.json({ ok: true, data: data })
-  res.end()
-}
+  res.json({ ok: true, data: data });
+  res.end();
+};
 
 exports.textHandler = res => text => {
-  res.header('Content-Length', text.length)
-  res.end(text)
-}
+  res.header('Content-Length', text.length);
+  res.end(text);
+};
+
+exports.pngHandler = res => buf => {
+  res.header("Content-Type", "image/png");
+  res.header("Cache-Control", "public, max-age=15768000, immutable")
+  res.end(buf);
+};

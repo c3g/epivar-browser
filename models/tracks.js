@@ -12,11 +12,13 @@ const { map, path: prop, groupBy } = require('rambda')
 
 const bigWigMerge = require('../helpers/bigwig-merge')
 const bigWigChromosomeLength = require('../helpers/bigwig-chromosome-length')
+const {PLOT_SIZE, boxPlot} = require("../helpers/boxplot");
 const valueAt = require('../helpers/value-at')
 const config = require('../config')
 const Samples = require('./samples')
 
 const source = require('./source')
+const {getDomain} = require("../helpers/boxplot");
 
 module.exports = {
   get,
@@ -24,7 +26,8 @@ module.exports = {
   group,
   merge,
   calculate,
-}
+  plot,
+};
 
 const strandToView = {
   "+": "signal_forward",
@@ -33,6 +36,8 @@ const strandToView = {
 
 const groupByEthnicity = groupBy(prop('ethnicity'))
 const mapToData = map(prop('data'))
+
+// Methods
 
 function get(peak) {
   const chrom    = peak.chrom
@@ -129,7 +134,7 @@ function merge(tracks, session) {
       })
     )
 
-  let promisedTracks =
+  const promisedTracks =
     Object.entries(tracksByCondition).map(([condition, tracksByType]) =>
       mergeTracksByType(tracksByType)
       .then(output => ({
@@ -149,8 +154,38 @@ function merge(tracks, session) {
     .then(results => results.filter(Boolean))
 }
 
+function plot(tracksByCondition) {
+  const CONDITION_NI = "NI";
+  const CONDITION_FLU = "Flu";
+
+  const niData  = tracksByCondition[CONDITION_NI]  ? getDataFromValues(tracksByCondition[CONDITION_NI])  : [];
+  const fluData = tracksByCondition[CONDITION_FLU] ? getDataFromValues(tracksByCondition[CONDITION_FLU]) : [];
+
+  const niDomain  = getDomain(niData)
+  const fluDomain = getDomain(fluData)
+
+  console.log("plottin")
+
+  return Promise.all([
+    boxPlot({title: "Non-infected", data: niData, domain: niDomain}),
+    boxPlot({title: "Flu", data: fluData, domain: fluDomain, transform: "translate(350 0)"}),
+  ]).then(plots =>
+    `<svg width="${PLOT_SIZE * 2}" height="${PLOT_SIZE}">
+       ${plots.join("")}
+     </svg>`
+  );
+}
+
 
 // Helpers
+
+function getDataFromValues(values) {
+  return [
+    { name: 'Hom Ref', data: values.REF || [] },
+    { name: 'Het',     data: values.HET || [] },
+    { name: 'Hom Alt', data: values.HOM || [] }
+  ]
+}
 
 function mergeFiles(paths, { chrom, start, end }) {
   paths.sort(Intl.Collator().compare)
