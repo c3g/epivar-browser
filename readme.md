@@ -90,9 +90,32 @@ npm run install
 npm run build
 ```
 
+#### Development
+
+To enable remote `gemini` execution:
+
+```bash
+export EXECUTE_GEMINI_REMOTELY=true
+```
+
+To use `sshfs` to mount the bigWigs from `beluga` or `narval`:
+
+```bash
+# Either
+sshfs -o defer_permissions \
+  beluga.computecanada.ca:/lustre03/project/rrg-bourqueg-ad/C3G/projects/DavidB_varwig/ \
+  /path/to/local/mnt
+# Or
+sshfs -o defer_permissions \
+  narval.computecanada.ca:/lustre03/project/rrg-bourqueg-ad/C3G/projects/DavidB_varwig/ \
+  /path/to/local/mnt
+```
+
 In development, you'd run:
  - `npm run watch`: for the backend
  - `cd client && npm start`: for the frontend
+
+#### Production
 
 In production, you may need to set up these to handle persistence & HTTPS:
  - Setup nginx or apache proxy (see `./nginx.conf`) with LetsEncrypt certificate
