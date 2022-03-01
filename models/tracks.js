@@ -54,49 +54,51 @@ redisClient.on("error", err => console.error("[redis]", err.toString()));
 async function values(peak) {
   const k = `varwig:${peak.id}`;
 
-  await redisClient.connect();
+  if (!redisClient.isOpen) await redisClient.connect();
 
-  try {
-    // noinspection JSCheckFunctionSignatures
-    const cv = await redisClient.get(k);
-    if (cv) return JSON.parse(cv);
+  // noinspection JSCheckFunctionSignatures
+  const cv = await redisClient.get(k);
+  if (cv) return JSON.parse(cv);
 
-    const tracks = await get(peak);
+  const tracks = await get(peak);
 
-    const result = (await Promise.all(tracks.filter(track =>
-      // RNA-seq results are either forward or reverse strand; we only want tracks from the direction
-      // of the selected peak (otherwise results will appear incorrectly, and we'll have 2x the # of
-      // values we should in some cases.)
-      track.assay !== "RNA-Seq" || track.view === strandToView[peak.feature.strand]
-    ).map(track =>
-      valueAt(track.path, {
-        chrom: peak.feature.chrom,
-        start: peak.feature.start,
-        end: peak.feature.end,
-        ...config.merge
-      }).then(value => (value === undefined ? undefined : {
-        id: track.id,
-        donor: track.donor,
-        assay: track.assay,
-        condition: track.condition,
-        ethnicity: track.ethnicity,
-        variant: track.variant,
-        type: track.type,
-        value: track.value,
-        data: value,
-      }))
-    ))).filter(v => v !== undefined);
+  const result = (await Promise.all(tracks.filter(track =>
+    // RNA-seq results are either forward or reverse strand; we only want tracks from the direction
+    // of the selected peak (otherwise results will appear incorrectly, and we'll have 2x the # of
+    // values we should in some cases.)
+    track.assay !== "RNA-Seq" || track.view === strandToView[peak.feature.strand]
+  ).map(track =>
+    valueAt(track.path, {
+      chrom: peak.feature.chrom,
+      start: peak.feature.start,
+      end: peak.feature.end,
+      ...config.merge
+    }).then(value => (value === undefined ? undefined : {
+      id: track.id,
+      donor: track.donor,
+      assay: track.assay,
+      condition: track.condition,
+      ethnicity: track.ethnicity,
+      variant: track.variant,
+      type: track.type,
+      value: track.value,
+      data: value,
+    }))
+  ))).filter(v => v !== undefined);
 
-    // noinspection JSCheckFunctionSignatures
-    await redisClient.set(k, JSON.stringify(result), {
-      EX: 60 * 60 * 24 * 180
-    });
+  // noinspection JSCheckFunctionSignatures
+  await redisClient.set(k, JSON.stringify(result), {
+    EX: 60 * 60 * 24 * 180
+  });
 
-    return result;
-  } finally {
+  return result;
+}
+
+process.on("SIGTERM", async () => {
+  if (redisClient.isOpen) {
     await redisClient.disconnect();
   }
-}
+});
 
 function group(tracks) {
   const tracksByCondition = {}
@@ -255,3 +257,4 @@ function getStats(points) {
     max:        Math.max(...points),
   };
 }
+
