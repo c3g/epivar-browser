@@ -2,22 +2,22 @@
  * tracks.js
  */
 
-const path = require('path')
-const fs = require('fs')
-const { promisify } = require('util')
-const exists = promisify(fs.exists)
-const md5 = require('md5')
-const Cache = require('map-expire')
-const { map, path: prop, groupBy } = require('rambda')
+const path = require('path');
+const fs = require('fs');
+const { promisify } = require('util');
+const exists = promisify(fs.exists);
+const md5 = require('md5');
+const {createClient} = require("redis");
+const { map, path: prop, groupBy } = require('rambda');
 
-const bigWigMerge = require('../helpers/bigwig-merge')
-const bigWigChromosomeLength = require('../helpers/bigwig-chromosome-length')
+const bigWigMerge = require('../helpers/bigwig-merge');
+const bigWigChromosomeLength = require('../helpers/bigwig-chromosome-length');
 const {PLOT_SIZE, boxPlot} = require("../helpers/boxplot");
-const valueAt = require('../helpers/value-at')
-const config = require('../config')
-const Samples = require('./samples')
+const valueAt = require('../helpers/value-at');
+const config = require('../config');
+const Samples = require('./samples');
 
-const source = require('./source')
+const source = require('./source');
 const {getDomain} = require("../helpers/boxplot");
 
 module.exports = {
@@ -48,27 +48,33 @@ function get(peak) {
   })
 }
 
-const valuesCache = new Cache()
-function values(peak) {
-  if (valuesCache.has(peak.id)) {
-    return Promise.resolve(valuesCache.get(peak.id))
-  }
+const redisClient = createClient();
+redisClient.on("error", err => console.error("[redis]", err.toString()));
 
-  return get(peak)
-  .then(tracks =>
-    Promise.all(tracks.filter(track =>
+async function values(peak) {
+  const k = `varwig:${peak.id}`;
+
+  await redisClient.connect();
+
+  try {
+    // noinspection JSCheckFunctionSignatures
+    const cv = await redisClient.get(k);
+    if (cv) return JSON.parse(cv);
+
+    const tracks = await get(peak);
+
+    const result = (await Promise.all(tracks.filter(track =>
       // RNA-seq results are either forward or reverse strand; we only want tracks from the direction
-      // of the selected peak (otherwise results will appear incorrectly and we'll have double the # of
-      // values we should in some cases.
+      // of the selected peak (otherwise results will appear incorrectly, and we'll have 2x the # of
+      // values we should in some cases.)
       track.assay !== "RNA-Seq" || track.view === strandToView[peak.feature.strand]
     ).map(track =>
       valueAt(track.path, {
         chrom: peak.feature.chrom,
         start: peak.feature.start,
-        end:   peak.feature.end,
+        end: peak.feature.end,
         ...config.merge
-      })
-      .then(value => (value === undefined ? undefined : {
+      }).then(value => (value === undefined ? undefined : {
         id: track.id,
         donor: track.donor,
         assay: track.assay,
@@ -79,13 +85,17 @@ function values(peak) {
         value: track.value,
         data: value,
       }))
-    ))
-    .then(values => values.filter(v => v !== undefined))
-  )
-  .then(result => {
-    valuesCache.set(peak.id, result, 60 * 60 * 1000)
-    return result
-  })
+    ))).filter(v => v !== undefined);
+
+    // noinspection JSCheckFunctionSignatures
+    await redisClient.set(k, JSON.stringify(result), {
+      EX: 60 * 60 * 24 * 180
+    });
+
+    return result;
+  } finally {
+    await redisClient.disconnect();
+  }
 }
 
 function group(tracks) {
