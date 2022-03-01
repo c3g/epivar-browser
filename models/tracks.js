@@ -176,8 +176,6 @@ function plot(tracksByCondition) {
   const niDomain  = getDomain(niData)
   const fluDomain = getDomain(fluData)
 
-  console.log("plottin")
-
   return Promise.all([
     boxPlot({title: "Non-infected", data: niData, domain: niDomain}),
     boxPlot({title: "Flu", data: fluData, domain: fluDomain, transform: "translate(350 0)"}),
@@ -224,7 +222,6 @@ function derive(list) {
   const points = list.map(d => d.data).sort((a, b) => a - b)
   const pointsByEthnicity = map(mapToData, groupByEthnicity(list))
 
-  const minPoints = 5;
 
   // noinspection JSCheckFunctionSignatures
   return {
@@ -234,17 +231,13 @@ function derive(list) {
       Object.entries(pointsByEthnicity)
         .map(([eth, ethPoints]) => [
           eth,
-
-          // Don't reveal ethnicity-specific box plots unless we have 4 or more points
-          ethPoints.length >= minPoints
-            ? getStats(ethPoints.sort((a, b) => a - b))
-            : null
+          getStats(ethPoints.sort((a, b) => a - b))
         ])
     ),
 
-    // Do not send points to the front end – it is too easy to re-identify genotypes
+    // Note: Do not send points to the front end – it is too easy to re-identify genotypes
     // from a public bigWig file here.
-    // points: pointsByEthnicity,
+    points: pointsByEthnicity,
   }
 }
 

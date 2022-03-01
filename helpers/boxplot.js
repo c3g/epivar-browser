@@ -11,6 +11,13 @@ const FONT_SIZE = 14;
 const BAR_WIDTH = 40;
 const BAR_HALF_WIDTH = BAR_WIDTH / 2;
 
+const POINT_RADIUS = 4;
+
+const ETHNICITY_COLOR = {
+  AF: '#5100FF',
+  EU: '#FF8A00',
+};
+
 const textStyles = `font-size: ${FONT_SIZE}; font-family: sans-serif; text-anchor: middle`;  /*{
   fontSize: FONT_SIZE,
   textAnchor: 'middle',
@@ -133,7 +140,7 @@ function boxPlotXAxis({data, scale, x, height, width}) {
 }
 
 function boxPlotInnerBar({xStart, xStop, yScale, stats, fill}) {
-  const stroke = '#333333';
+  const stroke = '#555555';
 
   const xLine = (xStart + xStop) / 2;
 
@@ -150,7 +157,10 @@ function boxPlotInnerBar({xStart, xStop, yScale, stats, fill}) {
     boxPlotLine({stroke, position: [[xStart, yScale(stats.median)], [xStop, yScale(stats.median)]]}),
   ]
 
-  return `<g> ${box} ${lines.join("")} </g>`;
+  return `<g> 
+    ${box} 
+    ${lines.join("")} 
+  </g>`;
 }
 
 async function boxPlotBar({data, x, y, height, domain}) {
@@ -168,20 +178,23 @@ async function boxPlotBar({data, x, y, height, domain}) {
    */
   const stats = data.stats;
 
-  /**
-   * @type {{
-   *   AF: Stats,
-   *   EU: Stats
-   * }}
-   */
-  const statsByEthnicity = data.statsByEthnicity;
+  const afPoints = data.points.AF || [];
+  const euPoints = data.points.EU || [];
 
-  const afStats = statsByEthnicity.AF;
-  const euStats = statsByEthnicity.EU;
+  shuffle(afPoints);
+  shuffle(euPoints);
 
-  const xMin = x - BAR_HALF_WIDTH
-  const xMax = x + BAR_HALF_WIDTH
+  const padding = 5;
 
+  const xMin = x - BAR_HALF_WIDTH;
+  const xMax = x + BAR_HALF_WIDTH;
+
+  const afXRange = [xMin + padding, x - padding];
+  const euXRange = [x + padding, xMax - padding];
+
+  const afScale = (await scaleLinear()).range(afXRange).domain([0, afPoints.length || 1]);
+  const euScale = (await scaleLinear()).range(euXRange).domain([0, euPoints.length || 1]);
+  
   const yScale = (await scaleLinear()).range([height, y]).domain(domain);
 
   if (data.n === 0) {
@@ -217,35 +230,39 @@ async function boxPlotBar({data, x, y, height, domain}) {
 
   /* We've disabled point-level display for security reasons - David L, 2022-01-31 */
 
-  if (!afStats || !euStats) {
-    // Use overall stats, since we do not have enough AF/EU points to render ethnicity-level
-    // box plots securely.
-    return boxPlotInnerBar({
-      xStart: xMin,
-      xStop: xMax,
-      stats,
-      yScale,
-      // fill: "url(#diagonal)",
-    });
-  }
-
-  const afBar = boxPlotInnerBar({
+  const barPart = boxPlotInnerBar({
     xStart: xMin,
-    xStop: x,
-    stats: afStats,
-    yScale,
-    // fill: ETHNICITY_BOX_COLOR.AF,
-  });
-
-  const euBar = boxPlotInnerBar({
-    xStart: x,
     xStop: xMax,
-    stats: euStats,
+    stats,
     yScale,
-    // fill: ETHNICITY_BOX_COLOR.EU,
+    // fill: "url(#diagonal)",
   });
 
-  return `<g> ${afBar} ${euBar}</g>`;
+  const afDots = afPoints.map((value, i) =>
+    `<circle
+      cx="${afScale(i)}"
+      cy="${yScale(value)}"
+      r="${POINT_RADIUS}"
+      fill="${ETHNICITY_COLOR.AF}"
+      opacity="0.4"
+    />`
+  );
+
+  const euDots = euPoints.map((value, i) =>
+    `<circle
+      cx="${euScale(i)}"
+      cy="${yScale(value)}"
+      r="${POINT_RADIUS}"
+      fill="${ETHNICITY_COLOR.EU}"
+      opacity="0.6"
+    />`
+  );
+
+  return `<g>
+    ${barPart}
+    ${afDots.join("")}
+    ${euDots.join("")}
+  </g>`;
 }
 
 async function boxPlot({title, data, domain, transform}) {
@@ -361,6 +378,22 @@ function toExponentString(n) {
     const exponent = numbers.toString().split('').map(c => SUPERSCRIPT[+c]).join('')
     return signChar + exponent
   })
+}
+
+function shuffle(array) {
+  // Adapted from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+  // Implementation of Fisher-Yates shuffle
+
+  let currentIndex = array.length;
+  let randomIndex;
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
 }
 
 // ---
