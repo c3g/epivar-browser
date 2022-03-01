@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   Alert,
   Button,
@@ -15,84 +15,70 @@ import { fetchValues, mergeTracks } from '../actions'
 import {CONDITION_FLU, CONDITION_NI, conditionName} from "../helpers/conditions";
 
 
-const mapStateToProps = state => ({
-  valuesByID: state.values.itemsByID
-})
-const mapDispatchToProps =
-  { fetchValues, mergeTracks }
+const PeakAssay = ({peaks}) => {
+  const dispatch = useDispatch();
+  // noinspection JSUnresolvedVariable
+  const valuesByID = useSelector(state => state.values.itemsByID);
 
+  const [selectedPeak, setSelectedPeak] = useState(undefined);
 
-class PeakAssay extends Component {
-  static getDerivedStateFromProps(props, state) {
-    if (state.selectedPeak !== undefined)
-      return null
-    const p = props.peaks[0]
-    return { selectedPeak: p ? p.id : undefined }
-  }
+  useEffect(() => {
+    if (selectedPeak !== undefined) return;
+    const p = peaks[0];
+    setSelectedPeak(p ? p.id : undefined);
+  }, [peaks])
 
-  state = {
-    selectedPeak: undefined,
-  }
+  const onChangeFeature = p => setSelectedPeak(p.id);
+  const onOpenTracks = p => dispatch(mergeTracks(p));
 
-  onChangeFeature = (p) => {
-    const peakID = p.id
-    this.setState({ selectedPeak: peakID })
-  }
+  const selectedPeakData = peaks.find(p => p.id === selectedPeak);
+  const selectedPeakValues = valuesByID[selectedPeak];
 
-  onOpenTracks = (p) => {
-    this.props.mergeTracks(p)
-  }
+  const fetchAll = (exclude = []) =>
+    peaks.forEach(p => {
+      if (!valuesByID[p.id] && !exclude.includes(p.id)) {
+        dispatch(fetchValues(p, {id: p.id}));
+      }
+    });
 
-  render() {
-    const { peaks, valuesByID } = this.props
-    const { selectedPeak } = this.state
-    const selectedPeakData = peaks.find(p => p.id === selectedPeak)
-    const selectedPeakValues = valuesByID[selectedPeak]
-
-    // Pre-fetch all peak values - fire off a bunch of promises without waiting
-    const fetchAll = (exclude = []) =>
-      peaks.forEach(p => {
-        if (!valuesByID[p.id] && !exclude.includes(p.id)) {
-          this.props.fetchValues(p, {id: p.id})
-        }
-      })
-
-    // Fire the selected peak request first
+  useEffect(() => {
     if (!selectedPeakValues && selectedPeakData) {
-      this.props.fetchValues(selectedPeakData, {id: selectedPeak})
+      dispatch(fetchValues(selectedPeakData, {id: selectedPeak}));
       // Give some time for the first one to get priority
-      setTimeout(() => fetchAll([selectedPeak]), 100)
+      setTimeout(() => fetchAll([selectedPeak]), 100);
     } else {
-      fetchAll()
+      fetchAll();
     }
+  }, [selectedPeakData, selectedPeakValues])
 
-    return (
-      <Container className='PeakAssay'>
-        <Row>
-          <Col xs='12'>
-            <PeaksTable
-              peaks={peaks}
-              selectedPeak={selectedPeak}
-              onChangeFeature={this.onChangeFeature}
-              onOpenTracks={this.onOpenTracks}
-            />
-            {selectedPeakValues && selectedPeakValues.message &&
-              <Alert color='danger'>
-                <strong>Error while fetching data:</strong> {selectedPeakValues.message}
-              </Alert>
-            }
-          </Col>
-          <Col xs='12' className={selectedPeakValues && selectedPeakValues.isLoading ? 'loading' : ''}>
-            <PeakBoxplot
-              title={formatFeature(selectedPeakData)}
-              values={selectedPeakValues}
-            />
-          </Col>
-        </Row>
-      </Container>
-    )
-  }
-}
+  return (
+    <Container className='PeakAssay'>
+      <Row>
+        <Col xs='12'>
+          <PeaksTable
+            peaks={peaks}
+            selectedPeak={selectedPeak}
+            onChangeFeature={onChangeFeature}
+            onOpenTracks={onOpenTracks}
+          />
+          {selectedPeakValues && selectedPeakValues.message &&
+            <Alert color='danger'>
+              <strong>Error while fetching data:</strong> {selectedPeakValues.message}
+            </Alert>
+          }
+        </Col>
+        <Col xs='12' className={selectedPeakValues && selectedPeakValues.isLoading ? 'loading' : ''}>
+          <PeakBoxplot
+            title={selectedPeakData ? formatFeature(selectedPeakData) : ""}
+            peak={selectedPeakData}
+            values={selectedPeakValues}
+          />
+        </Col>
+      </Row>
+    </Container>
+  );
+};
+
 
 const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => (
   <Table
@@ -141,7 +127,4 @@ function formatFeature({assay, gene, feature}) {
   return assay === "RNA-seq" ? (gene || featureText) : featureText
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PeakAssay);
+export default PeakAssay;
