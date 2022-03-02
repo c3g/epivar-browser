@@ -19,18 +19,22 @@ function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
     <div className={"PeakBoxplot" + (loaded ? "" : " loading")}>
       <h6 className='text-center'>{title}</h6>
       <div className='PeakBoxplot__graphs'>
-        <img width={700}
-             height={350}
-             style={{
-               width: "100%",
-               height: "auto",
-               maxWidth: 700,
-               opacity: loaded ? 1 : 0,
-               transition: "opacity ease-in-out 0.3s",
-             }}
-             onLoad={() => setLoaded(true)}
-             src={peakImg}
-             alt="Peak Box Plots" />
+        {
+          peak && (
+            <img width={700}
+                 height={350}
+                 style={{
+                   width: "100%",
+                   height: "auto",
+                   maxWidth: 700,
+                   opacity: loaded ? 1 : 0,
+                   transition: "opacity ease-in-out 0.3s",
+                 }}
+                 onLoad={() => setLoaded(true)}
+                 src={peakImg}
+                 alt="Peak Box Plots"/>
+          )
+        }
       </div>
       <div className='PeakBoxplot__legend'>
         <div className='PeakBoxplot__legend__item'>
