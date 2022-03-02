@@ -1,54 +1,37 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import { ETHNICITY_COLOR } from '../constants/app'
-import { getDomain } from '../helpers/boxplot'
-import {CONDITION_FLU, CONDITION_NI, conditionName} from "../helpers/conditions";
-import AutoSizer from './AutoSizer'
-import BoxPlot from './BoxPlot'
 
-const defaultValues = { isLoading: true, data: {} }
+function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
+  const [loaded, setLoaded] = useState(false);
+  const prevPeakRef = useRef();
 
-function PeakBoxplot({ title, values = defaultValues }) {
-  const niData  = values.data[CONDITION_NI]  ? getDataFromValues(values.data[CONDITION_NI])  : []
-  const fluData = values.data[CONDITION_FLU] ? getDataFromValues(values.data[CONDITION_FLU]) : []
+  useEffect(() => {
+    if (prevPeakRef.current !== peak?.id) {
+      setLoaded(false);
+      prevPeakRef.current = peak?.id;
+    }
+  }, [peak]);
 
-  const niDomain  = getDomain(niData)
-  const fluDomain = getDomain(fluData)
-
-  // Use this for the box plots to get y-axes on the same scale
-  // Also import: import { combineDomains } from '../helpers/boxplot'
-  // Disabled upon request by David L, 2021-10-08
-  // const domain = combineDomains([niDomain, fluDomain])
+  const peakImg = `${process.env.PUBLIC_URL}/api/tracks/plot/${encodeURIComponent(JSON.stringify(peak))}`;
 
   return (
-    <div className='PeakBoxplot'>
+    <div className={"PeakBoxplot" + (loaded ? "" : " loading")}>
       <h6 className='text-center'>{title}</h6>
-      <AutoSizer disableHeight>
-        {
-          ({ width }) => {
-            const boxWidth = Math.min(width / 2, 350)
-
-            return (
-              <div className='PeakBoxplot__graphs'>
-                <BoxPlot
-                  title={conditionName(CONDITION_NI)}
-                  domain={values.isLoading ? undefined : niDomain}
-                  data={values.isLoading ? [] : niData}
-                  width={boxWidth}
-                  height={boxWidth}
-                />
-                <BoxPlot
-                  title={conditionName(CONDITION_FLU)}
-                  domain={values.isLoading ? undefined : fluDomain}
-                  data={values.isLoading ? [] : fluData}
-                  width={boxWidth}
-                  height={boxWidth}
-                />
-              </div>
-            )
-          }
-        }
-      </AutoSizer>
+      <div className='PeakBoxplot__graphs'>
+        <img width={700}
+             height={350}
+             style={{
+               width: "100%",
+               height: "auto",
+               maxWidth: 700,
+               opacity: loaded ? 1 : 0,
+               transition: "opacity ease-in-out 0.3s",
+             }}
+             onLoad={() => setLoaded(true)}
+             src={peakImg}
+             alt="Peak Box Plots" />
+      </div>
       <div className='PeakBoxplot__legend'>
         <div className='PeakBoxplot__legend__item'>
           <span style={{ background: ETHNICITY_COLOR.AF }} /> African-American
@@ -59,14 +42,6 @@ function PeakBoxplot({ title, values = defaultValues }) {
       </div>
     </div>
   )
-}
-
-function getDataFromValues(values) {
-  return [
-    { name: 'Hom Ref', data: values.REF || [] },
-    { name: 'Het',     data: values.HET || [] },
-    { name: 'Hom Alt', data: values.HOM || [] }
-  ]
 }
 
 export default PeakBoxplot

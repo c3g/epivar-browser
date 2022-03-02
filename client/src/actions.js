@@ -20,7 +20,7 @@ export const fetchAssays    = createFetchFunction(api.fetchAssays,    assays)
 export const fetchSamples   = createFetchFunction(api.fetchSamples,   samples)
 export const fetchChroms    = createFetchFunction(api.fetchChroms,    chroms)
 export const fetchPositions = createFetchFunction(api.fetchPositions, positions)
-export const fetchValues    = createFetchFunction(api.fetchValues,    values)
+export const cacheValues    = createFetchFunction(api.cacheValues,    values)
 export const fetchPeaks     = createFetchFunction(api.fetchPeaks,     peaks)
 
 

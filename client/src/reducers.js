@@ -107,27 +107,6 @@ function positionsReducer(state = defaultPositions, action) {
   }
 }
 
-const defaultValues = {
-  isLoading: false,
-  isLoaded: false,
-  itemsByID: {},
-}
-function valuesReducer(state = defaultValues, action) {
-  switch (action.type) {
-    case k.VALUES.REQUEST: {
-      return merge(state, ['itemsByID', action.meta.id], { isLoading: true, isLoaded: false, data: {}, message: undefined, })
-    }
-    case k.VALUES.RECEIVE: {
-      return merge(state, ['itemsByID', action.meta.id], { isLoading: false, isLoaded: true, data: action.payload })
-    }
-    case k.VALUES.ERROR: {
-      return merge(state, ['itemsByID', action.meta.id], { isLoading: false, message: action.payload.message })
-    }
-    default:
-      return state;
-  }
-}
-
 const defaultPeaks = {
   isLoading: false,
   isLoaded: false,
@@ -182,7 +161,6 @@ export const rootReducer = combineReducers({
   samples: samplesReducer,
   chroms: chromsReducer,
   positions: positionsReducer,
-  values: valuesReducer,
   peaks: peaksReducer,
   assays: assaysReducer,
 })

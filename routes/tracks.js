@@ -21,10 +21,14 @@ router.use((req, res, next) => {
 router.post('/values', (req, res) => {
   const peak = req.body
 
+  // We're re-purposing this endpoint as basically a way to pre-cache any desired calculations,
+  // without actually returning any values (since those are too close to re-identifiable.)
+  //  - David L, 2022-03-02
+
   Tracks.values(peak)
     .then(Tracks.group)
     .then(Tracks.calculate)
-    .then(dataHandler(res))
+    .then(() => dataHandler(res)(undefined))  // Return an ok message without any data
     .catch(errorHandler(res))
 })
 

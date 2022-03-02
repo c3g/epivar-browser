@@ -51,7 +51,7 @@ export function fetchPositions(params, cancelToken) {
 /**
  * @param {ValuesOptions} params
  */
-export function fetchValues(params) {
+export function cacheValues(params) {
   return post('/tracks/values', params)
 }
 

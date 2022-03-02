@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {
-  Alert,
   Button,
   Container,
   Col,
@@ -11,14 +10,12 @@ import {
 
 import Icon from './Icon'
 import PeakBoxplot from './PeakBoxplot'
-import { fetchValues, mergeTracks } from '../actions'
+import { cacheValues, mergeTracks } from '../actions'
 import {CONDITION_FLU, CONDITION_NI, conditionName} from "../helpers/conditions";
 
 
 const PeakAssay = ({peaks}) => {
   const dispatch = useDispatch();
-  // noinspection JSUnresolvedVariable
-  const valuesByID = useSelector(state => state.values.itemsByID);
 
   const [selectedPeak, setSelectedPeak] = useState(undefined);
 
@@ -32,24 +29,23 @@ const PeakAssay = ({peaks}) => {
   const onOpenTracks = p => dispatch(mergeTracks(p));
 
   const selectedPeakData = peaks.find(p => p.id === selectedPeak);
-  const selectedPeakValues = valuesByID[selectedPeak];
 
   const fetchAll = (exclude = []) =>
     peaks.forEach(p => {
-      if (!valuesByID[p.id] && !exclude.includes(p.id)) {
-        dispatch(fetchValues(p, {id: p.id}));
+      if (!exclude.includes(p.id)) {
+        dispatch(cacheValues(p, {id: p.id}));
       }
     });
 
   useEffect(() => {
-    if (!selectedPeakValues && selectedPeakData) {
-      dispatch(fetchValues(selectedPeakData, {id: selectedPeak}));
+    if (selectedPeakData) {
+      dispatch(cacheValues(selectedPeakData, {id: selectedPeak}));
       // Give some time for the first one to get priority
       setTimeout(() => fetchAll([selectedPeak]), 100);
     } else {
       fetchAll();
     }
-  }, [selectedPeakData, selectedPeakValues])
+  }, [selectedPeakData])
 
   return (
     <Container className='PeakAssay'>
@@ -61,17 +57,11 @@ const PeakAssay = ({peaks}) => {
             onChangeFeature={onChangeFeature}
             onOpenTracks={onOpenTracks}
           />
-          {selectedPeakValues && selectedPeakValues.message &&
-            <Alert color='danger'>
-              <strong>Error while fetching data:</strong> {selectedPeakValues.message}
-            </Alert>
-          }
         </Col>
-        <Col xs='12' className={selectedPeakValues && selectedPeakValues.isLoading ? 'loading' : ''}>
+        <Col xs='12'>
           <PeakBoxplot
             title={selectedPeakData ? formatFeature(selectedPeakData) : ""}
             peak={selectedPeakData}
-            values={selectedPeakValues}
           />
         </Col>
       </Row>

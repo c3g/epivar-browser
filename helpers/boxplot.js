@@ -194,7 +194,7 @@ async function boxPlotBar({data, x, y, height, domain}) {
 
   const afScale = (await scaleLinear()).range(afXRange).domain([0, afPoints.length || 1]);
   const euScale = (await scaleLinear()).range(euXRange).domain([0, euPoints.length || 1]);
-  
+
   const yScale = (await scaleLinear()).range([height, y]).domain(domain);
 
   if (data.n === 0) {
