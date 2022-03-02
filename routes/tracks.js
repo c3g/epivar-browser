@@ -71,7 +71,7 @@ router.get('/plot/:peakData', (req, res) => {
           .then(pngHandler(res.status(500)));
       });
   } catch (err) {
-    console.error(err.toString(), err.stack);
+    console.error(err.stack);
     res.status(400).end();
   }
 })

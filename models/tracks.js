@@ -7,12 +7,12 @@ const fs = require('fs');
 const { promisify } = require('util');
 const exists = promisify(fs.exists);
 const md5 = require('md5');
-const {createClient} = require("redis");
 const { map, path: prop, groupBy } = require('rambda');
 
 const bigWigMerge = require('../helpers/bigwig-merge');
 const bigWigChromosomeLength = require('../helpers/bigwig-chromosome-length');
 const {PLOT_SIZE, boxPlot} = require("../helpers/boxplot");
+const cache = require("../helpers/cache");
 const valueAt = require('../helpers/value-at');
 const config = require('../config');
 const Samples = require('./samples');
@@ -48,17 +48,14 @@ function get(peak) {
   })
 }
 
-const redisClient = createClient();
-redisClient.on("error", err => console.error("[redis]", err.toString()));
-
 async function values(peak) {
-  const k = `varwig:${peak.id}`;
+  const k = `varwig:values:${peak.id}`;
 
-  if (!redisClient.isOpen) await redisClient.connect();
+  await cache.open();
 
   // noinspection JSCheckFunctionSignatures
-  const cv = await redisClient.get(k);
-  if (cv) return JSON.parse(cv);
+  const cv = await cache.getJSON(k);
+  if (cv) return cv;
 
   const tracks = await get(peak);
 
@@ -86,19 +83,10 @@ async function values(peak) {
     }))
   ))).filter(v => v !== undefined);
 
-  // noinspection JSCheckFunctionSignatures
-  await redisClient.set(k, JSON.stringify(result), {
-    EX: 60 * 60 * 24 * 180
-  });
+  await cache.setJSON(k, result, 60 * 60 * 24 * 180);
 
   return result;
 }
-
-process.on("SIGTERM", async () => {
-  if (redisClient.isOpen) {
-    await redisClient.disconnect();
-  }
-});
 
 function group(tracks) {
   const tracksByCondition = {}

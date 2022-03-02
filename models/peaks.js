@@ -4,6 +4,8 @@
 
 
 const Database = require('sqlite-objects').Database
+
+const cache = require("../helpers/cache");
 const parseFeature = require('../helpers/parse-feature')
 const config = require('../config')
 
@@ -57,18 +59,29 @@ function queryByGene(gene) {
     .then(normalizePeaks)
 }
 
-let cachedChroms = config.development.chroms || undefined
-function chroms() {
-  if (cachedChroms)
-    return Promise.resolve(cachedChroms)
+let cachedDevChroms = config.development.chroms || undefined
+async function chroms() {
+  if (cachedDevChroms) {
+    return cachedDevChroms;
+  }
 
-  return database.findAll(
+  await cache.open();
+
+  const k = "varwig:chroms";
+  const r = await cache.getJSON(k);
+
+  if (r) return r;
+
+  const cs = await database.findAll(
     `
-     SELECT DISTINCT(chrom)
-       FROM peaks
-    `
-  )
-  .then(rows => rows.map(r => r.chrom))
+       SELECT DISTINCT(chrom)
+         FROM peaks
+      `
+  ).then(rows => rows.map(r => r.chrom));
+
+  await cache.setJSON(k, cs, 60 * 60 * 24 * 180);
+
+  return cs;
 }
 
 function assays() {
@@ -110,8 +123,22 @@ function positions(chrom, position) {
   .then(rows => rows.map(r => r.position))
 }
 
-function autocompleteWithDetail(query) {
+async function autocompleteWithDetail(query) {
   const {rsID, gene, chrom, position} = query;
+
+  if ((!rsID && !gene && !chrom && !position) ||
+      (!rsID && !gene && chrom && !position) ||
+      (!rsID && !gene && !chrom && position)) {
+    return [];
+  }
+
+  await cache.open();
+
+  // Caching key for autocomplete
+  const k = `varwig:autocomplete:${[rsID, gene, chrom, position].join("|")}`;
+
+  const r = await cache.getJSON(k);
+  if (r) return r;
 
   const {select, where, params, by} = (() => {
     if (rsID) {
@@ -140,16 +167,20 @@ function autocompleteWithDetail(query) {
 
   // Order peaks in query by average FDR
 
-  return database.findAll(
+  const res = await database.findAll(
     `
     SELECT g.${select}, g.minValueAvg, g.nFeatures, g.mostSignificantFeatureID, peaks.assay
     FROM features_by_${by} AS g, peaks
     WHERE ${where} AND g.mostSignificantFeatureID = peaks.id
     ORDER BY g.minValueAvg 
-    LIMIT 100
+    LIMIT 50
     `,
     params
-  )
+  );
+
+  await cache.setJSON(k, res, 60 * 60 * 24 * 180);
+
+  return res;
 }
 
 

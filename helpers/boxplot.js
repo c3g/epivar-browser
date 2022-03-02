@@ -341,7 +341,7 @@ function getYAxisDetails(domain) {
   const delta = max !== min ? max - min : 1
 
   const padding = Math.round(delta * 0.1 * 5) / 5
-  
+
   let start = min - padding
   let end   = max + padding
 
