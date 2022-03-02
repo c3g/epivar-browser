@@ -145,7 +145,7 @@ class Controls extends React.Component {
         this.props.fetchPositions({chrom, start}, undefined, this.state.source.token)
       })
     }
-  }, 500, {leading: true, trailing: true})
+  }, 200, {leading: false, trailing: true})
 
   changePosition = pos => {
     this.props.setPosition(pos);
@@ -241,19 +241,21 @@ class Controls extends React.Component {
                 }</span>
               </div>
             }
-            {
-              list.map((item, i) =>
-                <div
-                  key={item.rsID ?? item.position ?? item.gene}
-                  className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
-                  onClick={() => this.selectItem(i)}
-                >
-                  { highlight(item.rsID ?? item.position ?? item.gene, position) }
-                  <span><strong>Min. Average FDR:</strong> {item.minValueAvg.toExponential(2)}</span>
-                  <span><strong>Features:</strong> {item.nFeatures}</span>
-                </div>
-              )
-            }
+            <div className={(list.length > 0 && isLoading) ? "loading" : ""}>
+              {
+                list.map((item, i) =>
+                  <div
+                    key={item.rsID ?? item.position ?? item.gene}
+                    className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
+                    onClick={() => this.selectItem(i)}
+                  >
+                    { highlight(item.rsID ?? item.position ?? item.gene, position) }
+                    <span><strong>Min. Average FDR:</strong> {item.minValueAvg.toExponential(2)}</span>
+                    <span><strong>Features:</strong> {item.nFeatures}</span>
+                  </div>
+                )
+              }
+            </div>
           </div>
       }
     </>;
