@@ -38,7 +38,7 @@ router.get('/plot/:peakData', (req, res) => {
     sharp().resize(1, 1).png().toBuffer()
       .then(pngHandler(res.status(400)))
       .catch(err => {
-        console.error(err.toString(), err.stack);
+        console.error(err.stack);
         res.status(500).end();
       });
   }
@@ -51,13 +51,24 @@ router.get('/plot/:peakData', (req, res) => {
       .then(Tracks.plot)
       .then(data =>
         sharp(Buffer.from(data), {density: 300})
-          .resize(700*2, 350*2)
+          .resize(700 * 2, 350 * 2)
           .toBuffer()
       )
       .then(pngHandler(res))
       .catch(err => {
-        console.error(err.toString(), err.stack);
-        res.status(500).end();
+        console.error(err.stack);
+
+        // Display error in PNG form
+        sharp(
+          Buffer.from(`<svg width="700" height="350">
+            <text x="20" y="30" fill="#C33" style="font-size: 16px; font-family: sans-serif; font-weight: bold;">
+              Error while plotting:
+            </text>
+            <text x="20" y="50" fill="#933" style="font-size: 16px; font-family: sans-serif">${err.toString()}</text>
+          </svg>`), {density: 300})
+          .resize(700*2, 350*2)
+          .toBuffer()
+          .then(pngHandler(res.status(500)));
       });
   } catch (err) {
     console.error(err.toString(), err.stack);
