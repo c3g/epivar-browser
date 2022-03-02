@@ -13,7 +13,7 @@ function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
     }
   }, [peak]);
 
-  const peakImg = `${process.env.PUBLIC_URL}/api/tracks/plot/${encodeURIComponent(JSON.stringify(peak))}`;
+  const peakImg = `${process.env.PUBLIC_URL}/api/tracks/plot/${peak?.id}`;
 
   return (
     <div className={"PeakBoxplot" + (loaded ? "" : " loading")}>

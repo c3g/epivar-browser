@@ -4,6 +4,7 @@ const router = express.Router()
 
 const { dataHandler, pngHandler, errorHandler } = require('../helpers/handlers')
 const Tracks = require('../models/tracks')
+const Peaks = require("../models/peaks");
 
 router.use((req, res, next) => {
   res.header('Accept-Ranges', 'bytes')
@@ -32,19 +33,17 @@ router.post('/values', (req, res) => {
     .catch(errorHandler(res))
 })
 
-router.get('/plot/:peakData', (req, res) => {
-  const peakData = req.params.peakData || "";
-  if (!peakData) {
-    sharp().resize(1, 1).png().toBuffer()
-      .then(pngHandler(res.status(400)))
-      .catch(err => {
-        console.error(err.stack);
-        res.status(500).end();
-      });
-  }
+router.get('/plot/:peakID', (req, res) => {
+  Peaks.selectByID(req.params.peakID || -1).then(peak => {
+    if (!peak) {
+      sharp().resize(1, 1).png().toBuffer()
+        .then(pngHandler(res.status(400)))
+        .catch(err => {
+          console.error(err.stack);
+          res.status(500).end();
+        });
+    }
 
-  try {
-    const peak = JSON.parse(peakData);
     Tracks.values(peak)
       .then(Tracks.group)
       .then(Tracks.calculate)
@@ -70,10 +69,7 @@ router.get('/plot/:peakData', (req, res) => {
           .toBuffer()
           .then(pngHandler(res.status(500)));
       });
-  } catch (err) {
-    console.error(err.stack);
-    res.status(400).end();
-  }
+  });
 })
 
 module.exports = router

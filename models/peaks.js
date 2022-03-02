@@ -12,6 +12,7 @@ const config = require('../config')
 const database = new Database(config.paths.peaks)
 
 module.exports = {
+  selectByID,
   query,
   queryByRsID,
   queryByGene,
@@ -20,6 +21,12 @@ module.exports = {
   rsIDs,
   positions,
   autocompleteWithDetail,
+}
+
+function selectByID(peakID) {
+  return database
+    .findOne("SELECT * FROM peaks WHERE id = @peakID", {peakID})
+    .then(normalizePeak);
 }
 
 function query(chrom, position) {
@@ -186,9 +193,11 @@ async function autocompleteWithDetail(query) {
 
 // Helpers
 
+function normalizePeak(peak) {
+  peak.feature = parseFeature(peak.feature)
+  return peak;
+}
+
 function normalizePeaks(peaks) {
-  return peaks.map(p => {
-    p.feature = parseFeature(p.feature)
-    return p
-  })
+  return peaks.map(normalizePeak);
 }
