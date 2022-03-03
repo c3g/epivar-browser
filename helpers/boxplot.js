@@ -7,6 +7,7 @@ const scaleLinear = (...args) => import("d3-scale").then(
 const SUPERSCRIPT = '⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺';
 
 const FONT_SIZE = 14;
+const SCALE_FONT_SIZE = 12;
 
 const BAR_WIDTH = 40;
 const BAR_HALF_WIDTH = BAR_WIDTH / 2;
@@ -90,17 +91,18 @@ async function boxPlotYAxis({domain, step, x, y, height}) {
       (abs < 0.01 || abs > 999) && abs !== 0 ?
         toExponentString(rounded) : rounded.toString();
 
-    const s = Math.abs(lastY - y) > FONT_SIZE ?
+    const s = Math.abs(lastY - y) > SCALE_FONT_SIZE ?
       `<text
-         x="${15 + (5 - text.length) * 8}"
+         text-anchor="end"
+         x="${x - 8}"
          y="${scale(point)}"
-         dy="${FONT_SIZE / 4}" 
-         style="font-size: ${FONT_SIZE}; font-family: monospace"
+         dy="${SCALE_FONT_SIZE / 4}" 
+         style="font-size: ${SCALE_FONT_SIZE}; font-family: monospace"
        >${text}</text>` : "";
 
     const result = `<g>${boxPlotLine({position: [[x - 5, y], [x, y]]})}${s}</g>`;
 
-    if (Math.abs(lastY - y) > FONT_SIZE) {
+    if (Math.abs(lastY - y) > SCALE_FONT_SIZE) {
       lastY = y;
     }
 
@@ -111,7 +113,7 @@ async function boxPlotYAxis({domain, step, x, y, height}) {
     ${boxPlotLine({position: [[x, y], [x, height]]})}
     <text style="font-size: ${FONT_SIZE}; font-family: sans-serif"
           x="${-(height / 2)}"
-          y="20"
+          y="16"
           text-anchor="end"
           transform="rotate(-90)">${label}</text>
     ${ps.join("")}
