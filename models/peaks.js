@@ -66,7 +66,7 @@ function queryByGene(gene) {
     .then(normalizePeaks)
 }
 
-let cachedDevChroms = config.development.chroms || undefined
+const cachedDevChroms = config.development?.chroms;
 async function chroms() {
   if (cachedDevChroms) {
     return cachedDevChroms;
@@ -74,7 +74,7 @@ async function chroms() {
 
   await cache.open();
 
-  const k = "varwig:chroms";
+  const k = "varwig:chroms:peaks";
   const r = await cache.getJSON(k);
 
   if (r) return r;

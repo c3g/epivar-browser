@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 /*
  * samples.js
  */
@@ -11,6 +13,7 @@ const exec = command =>
       err ? reject(err) : resolve({ stdout, stderr })))
 
 const config = require('../config.js')
+const cache = require("../helpers/cache");
 
 module.exports = {
   query,
@@ -60,16 +63,25 @@ function queryMap(chrom, start, end = start + 1) {
   .then(normalizeSamplesMap)
 }
 
-let cachedChroms = config.development.chroms || undefined
-function getChroms() {
-  if (cachedChroms)
-    return Promise.resolve(cachedChroms)
-  return gemini(`SELECT DISTINCT(chrom) FROM variants WHERE ${config.samples.filter}`)
-    .then(parseLines)
-    .then(chroms => {
-      cachedChroms = chroms
-      return chroms
-    })
+const cachedDevChroms = config.development?.chroms;
+async function getChroms() {
+  if (cachedDevChroms) {
+    return cachedDevChroms;
+  }
+
+  await cache.open();
+
+  const k = "varwig:chroms:gemini";
+  const r = await cache.getJSON(k);
+
+  if (r) return r;
+
+  const cs = await gemini(`SELECT DISTINCT(chrom) FROM variants WHERE ${config.samples.filter}`)
+    .then(parseLines);
+
+  await cache.setJSON(k, cs, 60 * 60 * 24 * 180);
+
+  return cs;
 }
 
 function getPositions(chrom, start) {
@@ -146,7 +158,7 @@ function normalizeSamplesMap(samples) {
   const res = samples[0]
 
   const variants    = new Set(res.variant_samples.split(','))
-  const hetVariants = new Set(res.het_samples.split(','))
+  // const hetVariants = new Set(res.het_samples.split(','))
 
   const newRes = { samples: {} }
 
