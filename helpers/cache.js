@@ -4,14 +4,32 @@ const redisClient = createClient();
 
 redisClient.on("error", err => console.error("[redis]", err.toString()));
 
-process.on("SIGTERM", async () => {
-  if (redisClient.isOpen) {
-    await redisClient.disconnect();
-  }
-});
-
 const open = async () => {
   if (!redisClient.isOpen) await redisClient.connect();
+};
+
+const close = async () => {
+  if (redisClient.isOpen) await redisClient.disconnect();
+}
+
+const _cleanup = async () => {
+  await close();
+};
+
+process.on("SIGTERM", _cleanup);
+process.on("exit", _cleanup);
+
+const NAMESPACE = "varwig";
+const ns = k => `${NAMESPACE}:${k}`;
+
+const clear = async () => {
+  // noinspection JSCheckFunctionSignatures
+  const keys = await redisClient.keys(ns("*"));
+  console.log(`    found ${keys.length} cache entries`);
+  if (keys.length) {
+    // noinspection JSCheckFunctionSignatures
+    await redisClient.del(keys);
+  }
 };
 
 const getJSON = async k => {
@@ -27,7 +45,11 @@ const setJSON = async (k, v, e) =>
 
 module.exports = {
   redisClient,
+  NAMESPACE,
+  ns,
   open,
+  close,
+  clear,
   getJSON,
   setJSON,
 };
