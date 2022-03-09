@@ -1,42 +1,41 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const { dataHandler, textHandler, errorHandler } = require('../helpers/handlers')
-const UCSC = require('../models/ucsc')
-const Sessions = require('../models/sessions')
-const Tracks = require('../models/tracks')
+const { textHandler, errorHandler } = require('../helpers/handlers');
+const UCSC = require('../models/ucsc');
+const Sessions = require('../models/sessions');
+const Tracks = require('../models/tracks');
 
-router.use('/hub/:session', (req, res) => {
+router.get('/hub/:session', ({params}, res) => {
 
-  Promise.resolve(UCSC.generateHub(req.params.session))
-  .then(textHandler(res))
-  .catch(errorHandler(res))
-})
+  Promise.resolve(UCSC.generateHub(params.session))
+    .then(textHandler(res))
+    .catch(errorHandler(res));
+});
 
-router.use('/genome/:session', (req, res) => {
+router.get('/genome/:session', ({params}, res) => {
 
-  const assemblyName = 'hg19'
+  const assemblyName = 'hg19';
 
-  Promise.resolve(UCSC.generateGenome(req.params.session, assemblyName))
-  .then(textHandler(res))
-  .catch(errorHandler(res))
-})
+  Promise.resolve(UCSC.generateGenome(params.session, assemblyName))
+    .then(textHandler(res))
+    .catch(errorHandler(res));
+});
 
 // UCSC Browser tries to get track descriptions here
-router.use('/track-db/*.html', (req, res) => {
-  res.end()
-})
+router.get('/track-db/*.html', (_req, res) => {
+  res.end();
+});
 
-router.use('/track-db/:session', (req, res) => {
+router.get('/track-db/:session', ({params}, res) => {
+  Sessions.get(params.session)
+    .then(session =>
+      Tracks.get(session.peak)
+        .then(tracks => Tracks.merge(tracks, session))
+    )
+    .then(UCSC.generateTracks)
+    .then(textHandler(res))
+    .catch(errorHandler(res));
+});
 
-  Sessions.get(req.params.session)
-  .then(session =>
-    Tracks.get(session.peak)
-      .then(tracks => Tracks.merge(tracks, session))
-  )
-  .then(UCSC.generateTracks)
-  .then(textHandler(res))
-  .catch(errorHandler(res))
-})
-
-module.exports = router
+module.exports = router;

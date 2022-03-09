@@ -3,22 +3,22 @@
  */
 
 
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const { dataHandler, errorHandler } = require('../helpers/handlers')
-const Peaks = require('../models/peaks.js')
+const { dataHandler, errorHandler } = require('../helpers/handlers');
+const Peaks = require('../models/peaks.js');
 
-router.use('/chroms', (req, res) => {
+router.get('/chroms', (_req, res) => {
   Peaks.chroms()
   .then(dataHandler(res))
-  .catch(errorHandler(res))
-})
+  .catch(errorHandler(res));
+});
 
-router.use('/positions', (req, res) => {
-  const { chrom, start } = req.query
+router.get('/positions', ({query}, res) => {
+  const { chrom, start } = query;
 
-  const query = (() => {
+  const queryResults = (() => {
     switch (chrom) {
       case 'rsID':
         return Peaks.autocompleteWithDetail({rsID: start})
@@ -29,9 +29,9 @@ router.use('/positions', (req, res) => {
     }
   })();
 
-  query
-  .then(dataHandler(res))
-  .catch(errorHandler(res))
-})
+  queryResults
+    .then(dataHandler(res))
+    .catch(errorHandler(res));
+});
 
-module.exports = router
+module.exports = router;

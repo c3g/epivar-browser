@@ -2,17 +2,17 @@
  * sessions.js
  */
 
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const { okHandler, dataHandler, errorHandler } = require('../helpers/handlers')
-const Sessions = require('../models/sessions.js')
+const { dataHandler, errorHandler } = require('../helpers/handlers');
+const Sessions = require('../models/sessions.js');
 
-router.post('/create', (req, res) => {
+router.post('/create', ({body}, res) => {
 
-  Sessions.create(req.body)
-  .then(dataHandler(res))
-  .catch(errorHandler(res))
-})
+  Sessions.create(body)
+    .then(dataHandler(res))
+    .catch(errorHandler(res));
+});
 
-module.exports = router
+module.exports = router;

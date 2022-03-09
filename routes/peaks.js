@@ -3,29 +3,29 @@
  */
 
 
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const { dataHandler, errorHandler } = require('../helpers/handlers')
-const Peaks = require('../models/peaks.js')
+const { dataHandler, errorHandler } = require('../helpers/handlers');
+const Peaks = require('../models/peaks.js');
 
-router.use('/query', (req, res) => {
-  const { chrom, position } = req.query
+router.get('/query', ({query}, res) => {
+  const { chrom, position } = query;
 
-  const query = (() => {
+  const queryResults = (() => {
     switch (chrom) {
       case 'rsID':
-        return Peaks.queryByRsID(position)
+        return Peaks.queryByRsID(position);
       case 'gene':
-        return Peaks.queryByGene(position)
+        return Peaks.queryByGene(position);
       default:
-        return Peaks.query(chrom, Number(position))
+        return Peaks.query(chrom, Number(position));
     }
-  })()
+  })();
 
-  query
-  .then(dataHandler(res))
-  .catch(errorHandler(res))
-})
+  queryResults
+    .then(dataHandler(res))
+    .catch(errorHandler(res));
+});
 
-module.exports = router
+module.exports = router;
