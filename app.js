@@ -4,6 +4,8 @@ const favicon = require('serve-favicon')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
+const passport = require("passport");
+const { createClient } = require("redis");
 
 const app = express()
 
@@ -18,6 +20,32 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+
+// Set up auth if it's enabled
+if (!process.env.VARWIG_DISABLE_AUTH) {
+  const session = require("express-session");
+  const connectRedis = require("connect-redis");
+
+  const {authStrategy} = require("./auth");
+
+  const RedisStore = connectRedis(session);
+
+  // Legacy mode redis client for connect-redis
+  const redisClient = createClient({legacyMode: true});
+  redisClient.connect().catch(console.error);
+
+  app.use(session({
+    secret: process.env.VARWIG_SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: new RedisStore({client: redisClient}),
+  }));
+
+  passport.use(authStrategy);
+
+  app.use(passport.authenticate("session"));
+  app.use("/api/auth",       require("./routes/auth"));
+}
 
 app.use('/api/assays',       require('./routes/assays'))
 app.use('/api/autocomplete', require('./routes/autocomplete'))
@@ -36,14 +64,14 @@ app.use((req, res, next) => {
 })
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
 
   // render the error page
-  res.status(err.status || 500)
+  res.status(err?.status ?? 500)
   res.render('error')
 })
 
-module.exports = app
+module.exports = app;

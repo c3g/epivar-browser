@@ -12,5 +12,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="@types/express" level="application" />
     <orderEntry type="library" name="@types/d3-scale" level="application" />
+    <orderEntry type="library" name="@types/passport" level="application" />
+    <orderEntry type="library" name="@types/express-session" level="application" />
   </component>
 </module>
