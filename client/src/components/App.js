@@ -1,16 +1,22 @@
 import React, {Component, useState} from 'react';
-import {Route, Routes, useNavigate, useParams} from "react-router-dom";
+import {Navigate, Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
 
 import Controls from './Controls'
 import Header from './Header'
 import PeakResults from './PeakResults'
 import HelpModal from "./HelpModal";
+import Intro from "./Intro";
+
 import {ETHNICITY_BOX_COLOR} from "../constants/app";
+import {useSelector} from "react-redux";
 
 
 const AppWithParams = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const location = useLocation();
+
+  const userData = useSelector(state => state.user);
 
   const [helpModal, setHelpModal] = useState(false);
   const toggleHelp = () => setHelpModal(!helpModal);
@@ -22,7 +28,11 @@ const AppWithParams = () => {
         <Controls params={params} navigate={navigate} toggleHelp={toggleHelp} />
       </Header>
 
-      <PeakResults />
+      {userData.isLoaded && !userData.data ? (
+        <Intro />
+      ) : (
+        <PeakResults />
+      )}
     </div>
   )
 };
@@ -48,9 +58,10 @@ class App extends Component {
         </svg>
 
         <Routes>
-          <Route path="/:chrom/:position/:assay" element={<AppWithParams />} />
-          <Route path="/:chrom/:position" element={<AppWithParams />} />
-          <Route path="/" element={<AppWithParams />} />
+          <Route path="/locus/:chrom/:position/:assay" element={<AppWithParams />} />
+          <Route path="/locus/:chrom/:position" element={<AppWithParams />} />
+          <Route path="/" exact={true} element={<AppWithParams />} />
+          <Route path="*" element={<Navigate to="/" />}/>
         </Routes>
       </div>
     )

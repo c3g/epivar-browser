@@ -156,6 +156,32 @@ function assaysReducer(state = defaultAssays, action) {
   }
 }
 
+const defaultUser = {
+  isLoading: false,
+  isLoaded: false,
+  data: undefined,
+};
+function userReducer(state = defaultUser, action) {
+  switch (action.type) {
+    case k.USER.REQUEST: {
+      return { ...state, isLoading: true };
+    }
+    case k.USER.RECEIVE: {
+      return {
+        ...state,
+        isLoading: false,
+        isLoaded: true,
+        data: action.payload,
+      };
+    }
+    case k.USER.ERROR: {
+      return { ...state, isLoading: false };
+    }
+    default:
+      return state;
+  }
+}
+
 export const rootReducer = combineReducers({
   ui: uiReducer,
   samples: samplesReducer,
@@ -163,4 +189,5 @@ export const rootReducer = combineReducers({
   positions: positionsReducer,
   peaks: peaksReducer,
   assays: assaysReducer,
+  user: userReducer,
 })

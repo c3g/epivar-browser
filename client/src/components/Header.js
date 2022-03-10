@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import {useSelector} from "react-redux";
 import {Button, Container} from 'reactstrap'
 import {Link} from "react-router-dom";
 
@@ -13,7 +14,16 @@ export default function Header({ children }) {
   const aboutToggle = () => setAboutModal(!aboutModal);
   const contactToggle = () => setContactModal(!contactModal);
 
+  const userData = useSelector(state => state.user);
+
   return <div className='Header'>
+    <div className="Header__auth">
+      {userData.data
+        ? (
+          <a href="/api/auth/logout">{userData.data?.username ?? userData.data?.id} (Log Out)</a>
+        ) : <a href="/api/auth/login">Log In</a>
+      }
+    </div>
     <Container>
       <h1 className='Header__title'><Link to="/" className='Link'>IMMUNPOP</Link></h1>
       <h4 className='Header__subtitle'>Epigenetic & Expression QTLs</h4>

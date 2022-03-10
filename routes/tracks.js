@@ -2,6 +2,8 @@ const sharp = require('sharp');
 const express = require('express');
 const router = express.Router();
 
+const {ensureLogIn} = require("../helpers/auth");
+
 const { dataHandler, pngHandler, errorHandler } = require('../helpers/handlers');
 const Tracks = require('../models/tracks');
 const Peaks = require("../models/peaks");
@@ -11,7 +13,7 @@ router.use((_req, res, next) => {
   return next();
 });
 
-router.post('/values', ({body: peak}, res) => {
+router.post('/values', ensureLogIn, ({body: peak}, res) => {
   // We're re-purposing this endpoint as basically a way to pre-cache any desired calculations,
   // without actually returning any values (since those are too close to re-identifiable.)
   //  - David L, 2022-03-02
@@ -28,7 +30,7 @@ const svgToPng = data =>
     .resize(700 * 2, 350 * 2)
     .toBuffer();
 
-router.get('/plot/:peakID', ({params}, res) => {
+router.get('/plot/:peakID', ensureLogIn, ({params}, res) => {
   // We go through a lot of headache to generate plots on the server side
   // (despite it being a nice modern front end) not because we're naive but
   // because we're trying to make the site more secure against

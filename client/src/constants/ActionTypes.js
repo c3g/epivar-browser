@@ -8,6 +8,7 @@ export const CHROMS    = createFetchConstants('CHROMS')
 export const POSITIONS = createFetchConstants('POSITIONS')
 export const VALUES    = createFetchConstants('VALUES')
 export const PEAKS     = createFetchConstants('PEAKS')
+export const USER      = createFetchConstants('USER')
 
 
 function createFetchConstants(namespace) {

@@ -3,6 +3,8 @@ const passport = require("passport");
 
 const DEBUG_KEYCLOAK_ISSUER = "http://localhost:8080/realms/varwig";
 
+const ensureLogIn = require('connect-ensure-login').ensureLoggedIn("/api/auth/login");
+
 const authStrategy = new OpenIDConnectStrategy({
   // Set some defaults for a local keycloak instance
   // (which won't work in production, environment vars should be set)
@@ -25,7 +27,6 @@ const authStrategy = new OpenIDConnectStrategy({
 });
 
 passport.serializeUser((user, cb) => process.nextTick(() => {
-  console.log(user);
   cb(null, {id: user.id, username: user.username});
 }));
 passport.deserializeUser((user, cb) => process.nextTick(() => {
@@ -33,5 +34,6 @@ passport.deserializeUser((user, cb) => process.nextTick(() => {
 }));
 
 module.exports = {
+  ensureLogIn,
   authStrategy,
 };

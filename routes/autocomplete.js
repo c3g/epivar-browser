@@ -6,6 +6,7 @@
 const express = require('express');
 const router = express.Router();
 
+const {ensureLogIn} = require("../helpers/auth");
 const { dataHandler, errorHandler } = require('../helpers/handlers');
 const Peaks = require('../models/peaks.js');
 
@@ -15,7 +16,7 @@ router.get('/chroms', (_req, res) => {
   .catch(errorHandler(res));
 });
 
-router.get('/positions', ({query}, res) => {
+router.get('/positions', ensureLogIn, ({query}, res) => {
   const { chrom, start } = query;
 
   const queryResults = (() => {

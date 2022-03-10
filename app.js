@@ -7,7 +7,9 @@ const bodyParser = require('body-parser')
 const passport = require("passport");
 const { createClient } = require("redis");
 
-const app = express()
+require('dotenv').config();
+
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -26,7 +28,7 @@ if (!process.env.VARWIG_DISABLE_AUTH) {
   const session = require("express-session");
   const connectRedis = require("connect-redis");
 
-  const {authStrategy} = require("./auth");
+  const {authStrategy} = require("./helpers/auth");
 
   const RedisStore = connectRedis(session);
 
@@ -36,6 +38,7 @@ if (!process.env.VARWIG_DISABLE_AUTH) {
 
   app.use(session({
     secret: process.env.VARWIG_SESSION_SECRET,
+    httpOnly: false,
     resave: false,
     saveUninitialized: false,
     store: new RedisStore({client: redisClient}),

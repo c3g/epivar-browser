@@ -217,6 +217,14 @@ body {
   padding-top: 2rem;
   padding-bottom: 1rem;
 }
+.Header__auth {
+  position: absolute;
+  top: 1rem; right: 2rem;
+  color: white;
+}
+.Header__auth a {
+  color: white;
+}
 .Header__title {
   text-align: center;
   font-size: 50px;

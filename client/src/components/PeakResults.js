@@ -37,9 +37,9 @@ const PeakResults = () => {
 
     if (activeAssay && !(activeAssay in peaksByAssay) && peaksLoaded) {
       // Assay isn't valid for the position in question
-      navigate(`/${chrom}/${position}` + (assaysWithFeatures.length ? `/${assays[0]}` : ""), {replace: true});
+      navigate(`/locus/${chrom}/${position}` + (assaysWithFeatures.length ? `/${assays[0]}` : ""), {replace: true});
     } else if (!activeAssay && assaysWithFeatures.length && peaksLoaded) {
-      navigate(`/${chrom}/${position}/${assaysWithFeatures[0]}`, {replace: true});
+      navigate(`/locus/${chrom}/${position}/${assaysWithFeatures[0]}`, {replace: true});
     }
   }, [activeAssay, chrom, position, peaksLoaded]);
 

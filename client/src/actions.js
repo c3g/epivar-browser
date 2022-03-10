@@ -15,6 +15,7 @@ export const chroms    = createFetchActions(k.CHROMS)
 export const positions = createFetchActions(k.POSITIONS)
 export const values    = createFetchActions(k.VALUES)
 export const peaks     = createFetchActions(k.PEAKS)
+export const user      = createFetchActions(k.USER)
 
 export const fetchAssays    = createFetchFunction(api.fetchAssays,    assays)
 export const fetchSamples   = createFetchFunction(api.fetchSamples,   samples)
@@ -22,6 +23,7 @@ export const fetchChroms    = createFetchFunction(api.fetchChroms,    chroms)
 export const fetchPositions = createFetchFunction(api.fetchPositions, positions)
 export const cacheValues    = createFetchFunction(api.cacheValues,    values)
 export const fetchPeaks     = createFetchFunction(api.fetchPeaks,     peaks)
+export const fetchUser      = createFetchFunction(api.fetchUser,      user)
 
 
 export function doSearch() {
@@ -43,24 +45,24 @@ export function mergeTracks(peak) {
     }
 
     api.createSession(session)
-    .then(sessionID => {
-      const db = 'hg19'
-      const position = `${session.chrom}:${session.feature.start}-${session.feature.end}`
-      const baseURL = `${window.location.origin}${process.env.PUBLIC_URL || ''}`
-      const hubURL = `${baseURL}/api/ucsc/hub/${sessionID}`
-      const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs({
-        db,
-        hubClear: hubURL,
-        position,
-        highlight: `${db}.${session.chrom}:${session.position}-${session.position+1}#FFAAAA`,
+      .then(sessionID => {
+        const db = 'hg19'
+        const position = `${session.chrom}:${session.feature.start}-${session.feature.end}`
+        const baseURL = `${window.location.origin}${process.env.PUBLIC_URL || ''}`
+        const hubURL = `${baseURL}/api/ucsc/hub/${sessionID}`
+        const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs({
+          db,
+          hubClear: hubURL,
+          position,
+          highlight: `${db}.${session.chrom}:${session.position}-${session.position+1}#FFAAAA`,
+        })
+
+        console.log('Hub:',  hubURL)
+        console.log('UCSC:', ucscURL)
+
+        window.open(ucscURL)
       })
-
-      console.log('Hub:',  hubURL)
-      console.log('UCSC:', ucscURL)
-
-      window.open(ucscURL)
-    })
-    .catch(err => dispatch(handleError(err)))
+      .catch(err => dispatch(handleError(err)))
   }
 }
 
@@ -77,7 +79,7 @@ function createFetchActions(namespace) {
 }
 
 function createFetchFunction(fn, actions) {
-  return function (params, meta=undefined, cancelToken=undefined) {
+  return function (params=undefined, meta=undefined, cancelToken=undefined) {
     return (dispatch) => {
 
       const dispatchedAt = Date.now()

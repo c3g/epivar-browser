@@ -59,34 +59,38 @@ export function createSession(params) {
   return post('/sessions/create', params)
 }
 
+export function fetchUser() {
+  return get('/auth/user');
+}
+
 
 // Helpers
 
 function fetchAPI(url, params, options = {}) {
-  let { method = 'get', ...other } = options
+  let { method = 'get', ...other } = options;
 
-  let finalURL = process.env.PUBLIC_URL + '/api' + url
-  let data = undefined
+  const finalURL = process.env.PUBLIC_URL + '/api' + url + (
+    (method === 'get' && params) ? `?${queryString(params)}` : "");
 
-  if (method === 'post' && params)
-    data = params
-
-  if (method === 'get' && params)
-    finalURL += `?${queryString(params)}`
+  const data = (method === 'post' && params)
+    ? params
+    : undefined;
 
   const config = {
-    method: method,
+    method,
     url: finalURL,
-    data: data,
-    ...other
-  }
+    data,
+    withCredentials: true,
+    ...other,
+  };
 
   return axios(config).then(({ data }) => {
-    if (data.ok)
-      return Promise.resolve(data.data)
-    else
-      return Promise.reject(new Error(data.message))
-  })
+    if (data.ok) {
+      return Promise.resolve(data.data);
+    } else {
+      return Promise.reject(new Error(data.message));
+    }
+  });
 }
 
 function get(url, params, options) {

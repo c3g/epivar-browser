@@ -26,15 +26,16 @@ import {
 } from '../actions.js'
 
 const mapStateToProps = state => ({
-    isLoading: state.samples.isLoading
-  , samples: state.samples.list
-  , chroms: state.chroms
-  , chrom: state.ui.chrom
-  , windowStart: state.ui.windowStart
-  , windowEnd: state.ui.windowEnd
-  , positions: state.positions
-  , position: state.ui.position
-  , range: state.ui.range
+  isLoading: state.samples.isLoading,
+  samples: state.samples.list,
+  chroms: state.chroms,
+  chrom: state.ui.chrom,
+  windowStart: state.ui.windowStart,
+  windowEnd: state.ui.windowEnd,
+  positions: state.positions,
+  position: state.ui.position,
+  range: state.ui.range,
+  userData: state.user,
 })
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({
@@ -175,7 +176,7 @@ class Controls extends React.Component {
     // The item assay is the tab with the most significant result - which will be
     // selected first by nature of ordering, thus leading the user to the most interesting
     // detail from the autocomplete.
-    navigate(`/${chrom}/${position}/${item.assay}`, {replace: true})
+    navigate(`/locus/${chrom}/${position}/${item.assay}`, {replace: true})
     this.changePosition(position)
     this.props.doSearch();
   }
@@ -208,7 +209,7 @@ class Controls extends React.Component {
 
   renderPosition() {
     const { open, index } = this.state
-    const { chrom, position, positions: { isLoading, list } } = this.props
+    const { chrom, position, positions: { isLoading, list }, userData } = this.props
 
     return <>
       <Input
@@ -218,6 +219,7 @@ class Controls extends React.Component {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         value={position || ""}
+        disabled={!userData.isLoaded || !userData.data}
         placeholder={(chrom => {
           switch (chrom) {
             case 'rsID':
@@ -263,7 +265,7 @@ class Controls extends React.Component {
 
   render() {
     const { didFirstSearch } = this.state
-    const { isLoading } = this.props
+    const { isLoading, userData } = this.props
 
     return (
       <div className={cx('Controls', { didFirstSearch })}>
@@ -275,7 +277,7 @@ class Controls extends React.Component {
               <div className='input-group-append'>
                 <Button className='Controls__search'
                   onClick={this.onClickSearch}
-                  disabled={isLoading}
+                  disabled={isLoading || !userData.isLoaded || !userData.data}
                 >
                   <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
                 </Button>

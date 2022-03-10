@@ -13,7 +13,7 @@ import './styles.css';
 import registerServiceWorker from './registerServiceWorker';
 import { rootReducer } from './reducers';
 import App from './components/App';
-import { fetchAssays, fetchChroms } from './actions.js'
+import { fetchAssays, fetchChroms, fetchUser } from './actions.js'
 
 
 const initialState = {}
@@ -32,6 +32,8 @@ render(
   </Provider>,
   document.querySelector('#root')
 )
+
+store.dispatch(fetchUser())
 
 store.dispatch(fetchAssays())
 store.dispatch(fetchChroms())
