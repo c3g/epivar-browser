@@ -105,26 +105,28 @@ function getPositions(chrom, start) {
 // IMPORTANT: Do not use this in production!!
 const EXECUTE_GEMINI_REMOTELY = process.env.EXECUTE_GEMINI_REMOTELY || false;
 
+// Values for beluga
+// const REMOTE_GEMINI_DB_PATH = "~/projects/rrg-bourqueg-ad/C3G/projects/DavidB_varwig/WGS_VCFs/allSamples_WGS.gemini.db";
+// const REMOTE_GEMINI_BASE_PATH = "/cvmfs/soft.mugqic/CentOS6/software/gemini/gemini-0.20.1/shared";
+// const REMOTE_HOST = "beluga";
+
+// Values for flu-infection.vhost38
+const REMOTE_GEMINI_DB_PATH = "/flu-infection-data/allSamples_WGS.gemini.db";
+const REMOTE_GEMINI_BASE_PATH = "/flu-infection-data/gemini/data";
+const REMOTE_HOST="flu-infection.vhost38";
+
+
 function gemini(query, params = '') {
-  const remoteGeminiBaseDir = '/cvmfs/soft.mugqic/CentOS6/software/gemini/gemini-0.20.1'
-
-  const path = EXECUTE_GEMINI_REMOTELY
-    ? '~/projects/rrg-bourqueg-ad/C3G/projects/DavidB_varwig/WGS_VCFs/allSamples_WGS.gemini.db'
-    : config.paths.gemini
-  const gemini = EXECUTE_GEMINI_REMOTELY
-      ? `${remoteGeminiBaseDir}/shared/anaconda/bin/gemini`
-      : 'gemini'
+  const path = EXECUTE_GEMINI_REMOTELY ? REMOTE_GEMINI_DB_PATH : config.paths.gemini;
+  const gemini = EXECUTE_GEMINI_REMOTELY ? `${REMOTE_GEMINI_BASE_PATH}/anaconda/bin/gemini` : 'gemini';
+  const queryEsc = query.replace(/"/g, '\\"');
   const command = EXECUTE_GEMINI_REMOTELY
-    ? `ssh beluga '\
-        PYTHONPATH=${remoteGeminiBaseDir}/shared/anaconda/lib/python2.7/site-packages \
-        ${gemini} query ${path} \
-        ${params} \
-        -q "${query.replace(/"/g, '\\"')}"'`
-    : `${gemini} query ${path} \
-        ${params} \
-        -q "${query.replace(/"/g, '\\"')}"`
+    ? `ssh ${REMOTE_HOST} '\
+        PYTHONPATH=${REMOTE_GEMINI_BASE_PATH}/anaconda/lib/python2.7/site-packages \
+        ${gemini} query ${path} ${params} -q "${queryEsc}"'`
+    : `${gemini} query ${path} ${params} -q "${queryEsc}"`;
 
-  return exec(command)
+  return exec(command);
 }
 
 
