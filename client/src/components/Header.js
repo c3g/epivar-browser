@@ -18,6 +18,7 @@ export default function Header({ children }) {
   const contactToggle = () => setContactModal(!contactModal);
 
   const userData = useSelector(state => state.user);
+  const messages = useSelector(state => state.messages);
 
   return <div>
     <div className='Header'>
@@ -45,13 +46,20 @@ export default function Header({ children }) {
       </Container>
     </div>
 
-    {location.pathname === "/auth-failure" ? (
+    {location.pathname === "/auth-failure" && (
       <Container>
         <Alert color="danger" style={{marginTop: 16}} toggle={() => navigate("/")}>
-          An error was encountered during log in. Please try again
-          or <a href="#" onClick={contactToggle}>contact us</a> for assistance.
+          <p>
+            An error was encountered during log in. Please try again
+            or <a href="#" onClick={contactToggle}>contact us</a> for assistance.
+          </p>
+          {messages.list.length && (
+            <p>
+              <strong>Message(s):</strong> '{messages.list.join("', '")}'
+            </p>
+          )}
         </Alert>
       </Container>
-    ) : null}
+    )}
   </div>;
 }
