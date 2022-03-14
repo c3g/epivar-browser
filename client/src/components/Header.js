@@ -26,7 +26,7 @@ export default function Header({ children }) {
         {userData.data
           ? (
             <a href="/api/auth/logout">{userData.data?.displayName ?? userData.data?.id} (Log Out)</a>
-          ) : <a href="/api/auth/login">Log In</a>
+          ) : <a href="/api/auth/login">Log In / Sign Up</a>
         }
       </div>
       <Container>
