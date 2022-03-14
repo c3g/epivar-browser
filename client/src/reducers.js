@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import { merge } from 'object-path-immutable'
 import * as k from './constants/ActionTypes'
 
 
@@ -54,7 +53,6 @@ function samplesReducer(state = defaultSamples, action) {
 const defaultChroms = {
   isLoading: false,
   isLoaded: false,
-  total: 0,
   list: ['rsID', 'gene'],
 }
 function chromsReducer(state = defaultChroms, action) {
@@ -82,7 +80,6 @@ const defaultPositions = {
   isLoading: false,
   isLoaded: false,
   lastRequestDispatched: 0,
-  total: 0,
   list: [],
 }
 function positionsReducer(state = defaultPositions, action) {
@@ -110,7 +107,6 @@ function positionsReducer(state = defaultPositions, action) {
 const defaultPeaks = {
   isLoading: false,
   isLoaded: false,
-  total: 0,
   list: [],
 }
 function peaksReducer(state = defaultPeaks, action) {
@@ -132,7 +128,6 @@ function peaksReducer(state = defaultPeaks, action) {
 const defaultAssays = {
   isLoading: false,
   isLoaded: false,
-  total: 0,
   list: ['RNA-seq', 'ATAC-seq', 'H3K4me1', 'H3K4me3', 'H3K27ac', 'H3K27me3'],
 }
 function assaysReducer(state = defaultAssays, action) {
@@ -182,6 +177,34 @@ function userReducer(state = defaultUser, action) {
   }
 }
 
+const defaultMessages = {
+  isLoading: false,
+  isLoaded: false,
+  total: 0,
+  list: [],
+};
+function messagesReducer(state = defaultMessages, action) {
+  switch (action.type) {
+    case k.MESSAGES.REQUEST: {
+      return {...state, isLoading: true};
+    }
+    case k.MESSAGES.RECEIVE: {
+      return {
+        ...state,
+        isLoading: false,
+        isLoaded: true,
+        list: action.payload,
+      };
+    }
+    case k.MESSAGES.ERROR: {
+      return {...state, isLoading: false};
+    }
+    default:
+      return state;
+  }
+}
+
+
 export const rootReducer = combineReducers({
   ui: uiReducer,
   samples: samplesReducer,
@@ -190,4 +213,5 @@ export const rootReducer = combineReducers({
   peaks: peaksReducer,
   assays: assaysReducer,
   user: userReducer,
-})
+  messages: messagesReducer,
+});

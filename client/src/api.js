@@ -63,6 +63,10 @@ export function fetchUser() {
   return get('/auth/user');
 }
 
+export function fetchMessages() {
+  return get('/messages/list');
+}
+
 
 // Helpers
 

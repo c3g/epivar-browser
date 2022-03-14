@@ -13,7 +13,7 @@ import './styles.css';
 import registerServiceWorker from './registerServiceWorker';
 import { rootReducer } from './reducers';
 import App from './components/App';
-import { fetchAssays, fetchChroms, fetchUser } from './actions.js'
+import {fetchAssays, fetchChroms, fetchMessages, fetchUser} from './actions.js'
 
 
 const initialState = {}
@@ -34,6 +34,7 @@ render(
 )
 
 store.dispatch(fetchUser())
+store.dispatch(fetchMessages())  // Server-side messages, e.g. auth errors
 
 store.dispatch(fetchAssays())
 store.dispatch(fetchChroms())

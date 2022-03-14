@@ -16,6 +16,7 @@ export const positions = createFetchActions(k.POSITIONS)
 export const values    = createFetchActions(k.VALUES)
 export const peaks     = createFetchActions(k.PEAKS)
 export const user      = createFetchActions(k.USER)
+export const messages  = createFetchActions(k.MESSAGES)
 
 export const fetchAssays    = createFetchFunction(api.fetchAssays,    assays)
 export const fetchSamples   = createFetchFunction(api.fetchSamples,   samples)
@@ -24,6 +25,7 @@ export const fetchPositions = createFetchFunction(api.fetchPositions, positions)
 export const cacheValues    = createFetchFunction(api.cacheValues,    values)
 export const fetchPeaks     = createFetchFunction(api.fetchPeaks,     peaks)
 export const fetchUser      = createFetchFunction(api.fetchUser,      user)
+export const fetchMessages  = createFetchFunction(api.fetchMessages,  messages)
 
 
 export function doSearch() {
