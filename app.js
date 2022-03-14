@@ -50,13 +50,14 @@ if (!process.env.VARWIG_DISABLE_AUTH) {
   app.use("/api/auth",       require("./routes/auth"));
 }
 
-app.use('/api/assays',       require('./routes/assays'))
-app.use('/api/autocomplete', require('./routes/autocomplete'))
-app.use('/api/peaks',        require('./routes/peaks'))
-app.use('/api/ucsc',         require('./routes/ucsc'))
-app.use('/api/sessions',     require('./routes/sessions'))
-app.use('/api/samples',      require('./routes/samples'))
-app.use('/api/tracks',       require('./routes/tracks'))
+app.use('/api/assays',       require('./routes/assays'));
+app.use('/api/autocomplete', require('./routes/autocomplete'));
+app.use('/api/peaks',        require('./routes/peaks'));
+app.use('/api/ucsc',         require('./routes/ucsc'));
+app.use('/api/sessions',     require('./routes/sessions'));
+app.use('/api/samples',      require('./routes/samples'));
+app.use('/api/tracks',       require('./routes/tracks'));
+app.use('/api/messages',     require('./routes/messages'));
 
 
 // catch 404 and forward to error handler
