@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-import {Navigate, Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
+import {Navigate, Route, Routes, useNavigate, useParams} from "react-router-dom";
 
 import Controls from './Controls'
 import Header from './Header'
@@ -14,7 +14,6 @@ import {useSelector} from "react-redux";
 const AppWithParams = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const location = useLocation();
 
   const userData = useSelector(state => state.user);
 
@@ -39,7 +38,6 @@ const AppWithParams = () => {
 
 
 class App extends Component {
-
   render() {
     return (
       <div className='App'>
@@ -61,6 +59,7 @@ class App extends Component {
           <Route path="/locus/:chrom/:position/:assay" element={<AppWithParams />} />
           <Route path="/locus/:chrom/:position" element={<AppWithParams />} />
           <Route path="/" exact={true} element={<AppWithParams />} />
+          <Route path="/auth-failure" exact={true} element={<AppWithParams />} />
           <Route path="*" element={<Navigate to="/" />}/>
         </Routes>
       </div>
