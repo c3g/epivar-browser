@@ -54,7 +54,7 @@ export default function Header({ children }) {
             or <a href="#" onClick={contactToggle}>contact us</a> for assistance.
           </p>
           {messages.list.length && (
-            <p>
+            <p style={{marginBottom: 0}}>
               <strong>Message(s):</strong> '{messages.list.join("', '")}'
             </p>
           )}
