@@ -47,7 +47,8 @@ export default function Header({ children }) {
     {location.pathname === "/auth-failure" ? (
       <Container>
         <Alert color="danger" style={{marginTop: 16}}>
-          An error was encountered during log in. Please try again or contact us for assistance.
+          An error was encountered during log in. Please try again
+          or <a href="#" onClick={contactToggle}>contact us</a> for assistance.
         </Alert>
       </Container>
     ) : null}
