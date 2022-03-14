@@ -17,7 +17,7 @@ const authStrategy = new OpenIDConnectStrategy({
   clientID: process.env.VARWIG_CLIENT_ID,
   clientSecret: process.env.VARWIG_CLIENT_SECRET,
 
-  callbackURL: "/api/auth/callback",
+  callbackURL: `${process.env.VARWIG_BASE_URL ?? ""}/api/auth/callback`,
 
   scope: ["profile"],  // TODO: Configurable
   state: true,  // TODO: ?

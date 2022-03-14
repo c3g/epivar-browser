@@ -121,6 +121,23 @@ In production, you may need to set up these to handle persistence & HTTPS:
  - Setup nginx or apache proxy (see `./nginx.conf`) with LetsEncrypt certificate
  - Setup systemd service (see `./varwig.service`) that runs `node ./bin/www`
 
+You will also need to set up authentication via an OIDC layer. This is configured via
+environment variables (which can either be typed into the service run command, or placed
+into a `.env` file and loaded at service start time).
+
+Here is an example, with secrets redacted, for a development setup via Auth0:
+
+```bash
+VARWIG_CLIENT_ID=some_client
+VARWIG_CLIENT_SECRET=some_secret
+VARWIG_SESSION_SECRET=some_session_secret
+VARWIG_ISSUER=https://dev-###.us.auth0.com
+VARWIG_AUTH_URL=https://dev-###.us.auth0.com/authorize
+VARWIG_TOKEN_URL=https://dev-###.us.auth0.com/oauth/token
+VARWIG_USERINFO_URL=https://dev-###.us.auth0.com/userinfo
+VARWIG_BASE_URL=https://flu-infection.vhost38.genap.ca
+```
+
 ## Architecture
 
 This is a standard express backend + react frontend application. Frontend files
