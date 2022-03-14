@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {useSelector} from "react-redux";
 import {Alert, Button, Container} from 'reactstrap'
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 
 import AboutModal from "./AboutModal";
 import ContactModal from "./ContactModal";
@@ -9,6 +9,7 @@ import Icon from "./Icon";
 
 export default function Header({ children }) {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [aboutModal, setAboutModal] = useState(false);
   const [contactModal, setContactModal] = useState(false);
@@ -46,7 +47,7 @@ export default function Header({ children }) {
 
     {location.pathname === "/auth-failure" ? (
       <Container>
-        <Alert color="danger" style={{marginTop: 16}}>
+        <Alert color="danger" style={{marginTop: 16}} toggle={() => navigate("/")}>
           An error was encountered during log in. Please try again
           or <a href="#" onClick={contactToggle}>contact us</a> for assistance.
         </Alert>
