@@ -14,8 +14,8 @@ router.get("/user", (req, res) => {
 
 router.get("/login", passport.authenticate("openidconnect"));
 router.get("/callback", passport.authenticate("openidconnect", {
-  successReturnToOrRedirect: `${process.env.VARWIG_BASE_URL}/` || "/",
-  failureRedirect: "/api/auth/login",
+  successReturnToOrRedirect: `${process.env.VARWIG_BASE_URL ?? ""}/`,
+  failureRedirect: `${process.env.VARWIG_BASE_URL ?? ""}/`,  // TODO: message
 }));
 
 router.get('/logout', (req, res) => {
