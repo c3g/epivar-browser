@@ -131,12 +131,15 @@ Here is an example, with secrets redacted, for a development setup via Auth0:
 VARWIG_CLIENT_ID=some_client
 VARWIG_CLIENT_SECRET=some_secret
 VARWIG_SESSION_SECRET=some_session_secret
-VARWIG_ISSUER=https://dev-###.us.auth0.com
+VARWIG_ISSUER=https://dev-###.us.auth0.com/
 VARWIG_AUTH_URL=https://dev-###.us.auth0.com/authorize
 VARWIG_TOKEN_URL=https://dev-###.us.auth0.com/oauth/token
 VARWIG_USERINFO_URL=https://dev-###.us.auth0.com/userinfo
 VARWIG_BASE_URL=https://flu-infection.vhost38.genap.ca
 ```
+
+Note that trailing slashes are very important here; for example, a missing trailing slash for `VARWIG_ISSUER` will
+prevent successful authentication.
 
 ## Architecture
 
