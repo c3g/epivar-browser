@@ -20,7 +20,7 @@ export default function Header({ children }) {
     <div className="Header__auth">
       {userData.data
         ? (
-          <a href="/api/auth/logout">{userData.data?.username ?? userData.data?.id} (Log Out)</a>
+          <a href="/api/auth/logout">{userData.data?.displayName ?? userData.data?.id} (Log Out)</a>
         ) : <a href="/api/auth/login">Log In</a>
       }
     </div>

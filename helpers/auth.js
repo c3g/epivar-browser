@@ -27,7 +27,7 @@ const authStrategy = new OpenIDConnectStrategy({
 });
 
 passport.serializeUser((user, cb) => process.nextTick(() => {
-  cb(null, {id: user.id, username: user.username});
+  cb(null, {id: user.id, displayName: user.displayName ?? user.username});
 }));
 passport.deserializeUser((user, cb) => process.nextTick(() => {
   cb(null, user);
