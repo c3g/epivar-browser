@@ -63,7 +63,7 @@ const PeakResults = () => {
               return <NavItem key={assay}>
                 <NavLink
                   className={cx({active: activeAssay === assay})}
-                  onClick={() => nPeaks && navigate(`/${chrom}/${position}/${assay}`, {replace: true})}
+                  onClick={() => nPeaks && navigate(`/locus/${chrom}/${position}/${assay}`, {replace: true})}
                   disabled={!nPeaks}
                   aria-disabled={true}
                 >
