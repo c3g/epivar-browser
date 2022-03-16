@@ -10,12 +10,12 @@
     "build": "rm -rf ./public && mkdir public && cd client && npm run build && cp -r build/* ../public"
   },
   "dependencies": {
-    "@gmod/bbi": "^1.0.33",
+    "@gmod/bbi": "^1.0.34",
     "await-semaphore": "^0.1.3",
     "body-parser": "^1.19.2",
     "color-js": "^1.0.5",
     "connect-ensure-login": "^0.1.1",
-    "connect-redis": "^6.1.1",
+    "connect-redis": "^6.1.2",
     "cookie-parser": "~1.4.6",
     "csv-parse": "^4.16.3",
     "cuid": "^2.1.8",
@@ -35,7 +35,7 @@
     "rambda": "^6.9.0",
     "redis": "^4.0.4",
     "serve-favicon": "~2.5.0",
-    "sharp": "^0.30.2",
+    "sharp": "^0.30.3",
     "sqlite-objects": "^2.0.3",
     "sqlite3": "^5.0.2"
   },
