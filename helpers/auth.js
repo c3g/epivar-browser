@@ -33,8 +33,7 @@ const authStrategy = new OpenIDConnectStrategy({
   scope: ["profile"],  // TODO: Configurable; add CILogon scopes when required
   state: true,  // TODO: ?
 }, (issuer, profile, cb) => {
-  // TODO: validate issuer, institution field
-  // TODO: fetch consentedToTerms from database
+  // TODO: validate issuer, assert presence of institution field if not in dev
   cb(null, {...profile, issuer});
 });
 
