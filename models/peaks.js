@@ -176,10 +176,10 @@ async function autocompleteWithDetail(query) {
 
   const res = await database.findAll(
     `
-    SELECT g.${select}, g.minValueAvg, g.nFeatures, g.mostSignificantFeatureID, peaks.assay
+    SELECT g.${select}, g.minValueMin, g.nFeatures, g.mostSignificantFeatureID, peaks.assay
     FROM features_by_${by} AS g, peaks
     WHERE ${where} AND g.mostSignificantFeatureID = peaks.id
-    ORDER BY g.minValueAvg 
+    ORDER BY g.minValueMin
     LIMIT 50
     `,
     params

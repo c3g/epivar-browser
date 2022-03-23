@@ -2,19 +2,14 @@ import React, {useEffect} from 'react'
 import {useSelector} from 'react-redux';
 import {useNavigate, useParams} from "react-router-dom";
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
-import { groupBy, sortBy, add, prop, map, compose } from 'rambda'
+import { groupBy, prop } from 'rambda'
 import memoizeOne from 'memoize-one'
 import cx from 'clsx'
 
 import Icon from './Icon'
 import PeakAssay from './PeakAssay'
 
-// Sort peaks by the average FDR, lowest to highest
-// We don't have to divide by two to get the real mean, since there are
-// always two values
-const groupAndSortPeaks = memoizeOne(
-  compose(map(sortBy(compose(add, prop('valueNI'), prop('valueFlu')))), groupBy(prop('assay')))
-)
+const groupAndSortPeaks = memoizeOne(groupBy(prop('assay')));
 
 const PeakResults = () => {
   const navigate = useNavigate();

@@ -14,7 +14,7 @@ create table peaks (
     feature   text    not null, -- chrom_start_end
     valueNI   double  not null,
     valueFlu  double  not null,
-    valueAvg  double  not null,  -- for prioritizing items in search
+    valueMin  double  not null,  -- for prioritizing items in search
     assay     text    not null
 );
 
@@ -27,14 +27,14 @@ create index chrom_position_idx
 create index gene_idx
     on peaks(gene);
 
-create index valueAvg_idx
-    on peaks(valueAvg);
+create index valueMin_idx
+    on peaks(valueMin);
 
 
 create table features_by_rsID (
     id                       integer primary key,
     rsID                     text    not null unique,
-    minValueAvg              double  not null,
+    minValueMin              double  not null,
     mostSignificantFeatureID integer not null,
     nFeatures                integer not null,
 
@@ -44,7 +44,7 @@ create table features_by_rsID (
 create table features_by_gene (
     id                       integer primary key,
     gene                     text    not null unique,
-    minValueAvg              double  not null,
+    minValueMin              double  not null,
     mostSignificantFeatureID integer not null,
     nFeatures                integer not null,
 
@@ -55,7 +55,7 @@ create table features_by_position (
     id                       integer primary key,
     chrom                    text    not null,
     position                 integer not null,
-    minValueAvg              double  not null,
+    minValueMin              double  not null,
     mostSignificantFeatureID integer not null,
     nFeatures                integer not null,
 
