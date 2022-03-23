@@ -12,6 +12,7 @@ const ensureLogIn = require("connect-ensure-login").ensureLoggedIn("/api/auth/lo
 const ensureAgreedToTerms = (req, res, next) => {
   if (req.user?.consentedToTerms) {
     next();
+    return;
   }
   errorHandler(res)("user has not consented to terms");
 };
