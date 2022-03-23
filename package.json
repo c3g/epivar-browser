@@ -15,12 +15,12 @@
     "body-parser": "^1.19.2",
     "color-js": "^1.0.5",
     "connect-ensure-login": "^0.1.1",
-    "connect-redis": "^6.1.2",
+    "connect-redis": "^6.1.3",
     "cookie-parser": "~1.4.6",
     "csv-parse": "^4.16.3",
     "cuid": "^2.1.8",
     "d3-scale": "^4.0.2",
-    "debug": "~4.3.3",
+    "debug": "~4.3.4",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-session": "^1.17.2",
@@ -32,7 +32,7 @@
     "passport": "^0.5.2",
     "passport-openidconnect": "^0.1.1",
     "pug": "~3.0.2",
-    "rambda": "^6.9.0",
+    "rambda": "^7.0.3",
     "redis": "^4.0.4",
     "serve-favicon": "~2.5.0",
     "sharp": "^0.30.3",
@@ -41,6 +41,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.15",
-    "xlsx": "^0.17.5"
+    "xlsx": "^0.18.2"
   }
 }
