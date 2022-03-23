@@ -1,34 +1,67 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {Navigate, Route, Routes, useNavigate, useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
 import Controls from './Controls'
 import Header from './Header'
 import PeakResults from './PeakResults'
 import HelpModal from "./HelpModal";
 import Intro from "./Intro";
+import TermsModal from "./TermsModal";
 
-import {ETHNICITY_BOX_COLOR} from "../constants/app";
-import {useSelector} from "react-redux";
+import {ETHNICITY_BOX_COLOR, LOGIN_PATH} from "../constants/app";
+import {saveUser} from "../actions";
 
 
 const AppWithParams = () => {
   const navigate = useNavigate();
   const params = useParams();
 
+  const dispatch = useDispatch();
   const userData = useSelector(state => state.user);
 
   const [helpModal, setHelpModal] = useState(false);
+  const [termsModal, setTermsModal] = useState(false);
   const toggleHelp = () => setHelpModal(!helpModal);
+  const toggleTerms = () => setTermsModal(!termsModal);
+
+  useEffect(() => {
+    if (userData.isLoaded && userData.data && !userData.data.consentedToTerms) {
+      // If the user has signed in and has not yet consented to the current terms version,
+      // show the terms modal.
+      setTermsModal(true);
+    } else if (userData.data?.consentedToTerms) {
+      // Just consented, close the modal
+      setTermsModal(false);
+    }
+  }, [userData]);
 
   return (
     <div className="RoutedApp">
+      <TermsModal isOpen={termsModal}
+                  toggle={toggleTerms}
+                  showAgree={!userData.data?.consentedToTerms}
+                  onAgree={() => {
+                    if (userData.isLoaded) {
+                      dispatch(saveUser({consentedToTerms: true}));
+                    }
+                  }} />
+
       <Header>
         <HelpModal isOpen={helpModal} toggle={toggleHelp} />
         <Controls params={params} navigate={navigate} toggleHelp={toggleHelp} />
       </Header>
 
-      {userData.isLoaded && !userData.data ? (
-        <Intro />
+      {(userData.isLoaded && !userData.data?.consentedToTerms) ? (
+        <Intro onAccess={() => {
+          if (!userData.data) {
+            // Redirect to sign in, so we can capture some information about their identity
+            window.location.href = LOGIN_PATH;
+          } else {
+            // Signed in but terms not accepted yet; show the modal.
+            setTermsModal(true);
+          }
+        }} />
       ) : (
         <PeakResults />
       )}

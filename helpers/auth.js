@@ -1,9 +1,20 @@
 const OpenIDConnectStrategy = require('passport-openidconnect');
 const passport = require("passport");
 
-const DEBUG_KEYCLOAK_ISSUER = "http://localhost:8080/realms/varwig";
+const CURRENT_TERMS_VERSION = 1;
+const DEBUG_KEYCLOAK_ISSUER = "http://localhost:8080/realms/master";
 
-const ensureLogIn = require('connect-ensure-login').ensureLoggedIn("/api/auth/login");
+const {errorHandler} = require("./handlers");
+const {getTermsConsent} = require("../models/consents");
+
+const ensureLogIn = require("connect-ensure-login").ensureLoggedIn("/api/auth/login");
+
+const ensureAgreedToTerms = (req, res, next) => {
+  if (req.user?.consentedToTerms) {
+    next();
+  }
+  errorHandler(res)("user has not consented to terms");
+};
 
 const authStrategy = new OpenIDConnectStrategy({
   // Set some defaults for a local keycloak instance
@@ -19,21 +30,29 @@ const authStrategy = new OpenIDConnectStrategy({
 
   callbackURL: `${process.env.VARWIG_BASE_URL ?? ""}/api/auth/callback`,
 
-  scope: ["profile"],  // TODO: Configurable
+  scope: ["profile"],  // TODO: Configurable; add CILogon scopes when required
   state: true,  // TODO: ?
 }, (issuer, profile, cb) => {
-  console.log(issuer, profile);
-  cb(null, profile);
+  // TODO: validate issuer, institution field
+  // TODO: fetch consentedToTerms from database
+  cb(null, {...profile, issuer});
 });
 
 passport.serializeUser((user, cb) => process.nextTick(() => {
-  cb(null, {id: user.id, displayName: user.displayName ?? user.username});
+  cb(null, {
+    id: user.id,
+    displayName: user.displayName ?? user.username,
+    issuer: user.issuer,
+  });
 }));
 passport.deserializeUser((user, cb) => process.nextTick(() => {
-  cb(null, user);
+  getTermsConsent(user.issuer, user.id, CURRENT_TERMS_VERSION)
+    .then(consentedToTerms => cb(null, {...user, consentedToTerms}))
 }));
 
 module.exports = {
+  CURRENT_TERMS_VERSION,
   ensureLogIn,
+  ensureAgreedToTerms,
   authStrategy,
 };

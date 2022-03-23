@@ -1,5 +1,4 @@
 import React from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import debounce from 'lodash/debounce'
@@ -21,7 +20,6 @@ import {
   setPosition,
   fetchSamples,
   fetchPositions,
-  mergeTracks,
   handleError,
 } from '../actions.js'
 
@@ -37,16 +35,14 @@ const mapStateToProps = state => ({
   range: state.ui.range,
   userData: state.user,
 })
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({
-    setChrom,
-    doSearch,
-    setPosition,
-    fetchSamples,
-    fetchPositions,
-    mergeTracks,
-    handleError
-  }, dispatch)
+const mapDispatchToProps = {
+  setChrom,
+  doSearch,
+  setPosition,
+  fetchSamples,
+  fetchPositions,
+  handleError
+};
 
 const defaultChrom = "rsID";
 
@@ -219,7 +215,7 @@ class Controls extends React.Component {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         value={position || ""}
-        disabled={!userData.isLoaded || !userData.data}
+        disabled={!userData.isLoaded || !userData.data?.consentedToTerms}
         placeholder={(chrom => {
           switch (chrom) {
             case 'rsID':
@@ -277,7 +273,7 @@ class Controls extends React.Component {
               <div className='input-group-append'>
                 <Button className='Controls__search'
                   onClick={this.onClickSearch}
-                  disabled={isLoading || !userData.isLoaded || !userData.data}
+                  disabled={isLoading || !userData.isLoaded || !userData.data?.consentedToTerms}
                 >
                   <Icon name={ isLoading ? 'spinner' : 'search' } spin={isLoading} /> Search
                 </Button>

@@ -36,6 +36,9 @@ module.exports = {
     /* Used to save sessions, no need to create it, the application
      * handles that. */
     sessions:     `${dataDirname}/sessions.sqlite`,
+
+    // User consents for terms
+    consents:     `${dataDirname}/consents.sqlite`,
   },
 
   source: {

@@ -78,4 +78,9 @@ app.use((err, req, res, _next) => {
   res.render('error')
 })
 
+// Set up consents DB if it hasn't already been initialized
+require("./models/consents")
+  .initializeConsentTables()
+  .catch(console.error);
+
 module.exports = app;

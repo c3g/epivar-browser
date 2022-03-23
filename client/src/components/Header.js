@@ -7,6 +7,8 @@ import AboutModal from "./AboutModal";
 import ContactModal from "./ContactModal";
 import Icon from "./Icon";
 
+import {LOGIN_PATH} from "../constants/app";
+
 export default function Header({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,7 +28,7 @@ export default function Header({ children }) {
         {userData.data
           ? (
             <a href="/api/auth/logout">{userData.data?.displayName ?? userData.data?.id} (Log Out)</a>
-          ) : <a href="/api/auth/login">Log In / Sign Up</a>
+          ) : <a href={LOGIN_PATH}>Log In / Sign Up</a>
         }
       </div>
       <Container>

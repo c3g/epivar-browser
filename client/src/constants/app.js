@@ -2,6 +2,8 @@
  * app.js
  */
 
+export const LOGIN_PATH = "/api/auth/login";
+
 export const ETHNICITY_COLOR = {
   AF: '#5100FF',
   EU: '#FF8A00',

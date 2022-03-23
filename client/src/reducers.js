@@ -159,7 +159,7 @@ const defaultUser = {
 function userReducer(state = defaultUser, action) {
   switch (action.type) {
     case k.USER.REQUEST: {
-      return { ...state, isLoading: true };
+      return {...state, isLoading: true};
     }
     case k.USER.RECEIVE: {
       return {
@@ -170,7 +170,7 @@ function userReducer(state = defaultUser, action) {
       };
     }
     case k.USER.ERROR: {
-      return { ...state, isLoading: false };
+      return {...state, isLoading: false};
     }
     default:
       return state;

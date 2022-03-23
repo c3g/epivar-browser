@@ -6,11 +6,31 @@ const passport = require("passport");
 const express = require("express");
 const router = express.Router();
 
-const { dataHandler } = require('../helpers/handlers');
+const {CURRENT_TERMS_VERSION, ensureLogIn} = require("../helpers/auth");
+const {dataHandler} = require("../helpers/handlers");
+const {setTermsConsent} = require("../models/consents");
 
-router.get("/user", (req, res) => {
-  dataHandler(res)(req.user);
-});
+// deserializeUser takes care of loading consentedToTerms
+const respondWithUser = (req, res) => dataHandler(res)(req.user ?? undefined);
+
+router.get("/user", respondWithUser);
+
+router.put(
+  "/user",
+  ensureLogIn,
+  (req, res) => {
+    // TODO: Validate body
+
+    console.log(req.body);
+
+    const consent = Boolean(req.body.consentedToTerms);
+
+    setTermsConsent(req.user.issuer, req.user.id, CURRENT_TERMS_VERSION, consent)
+      .then(() => {
+        req.user.consentedToTerms = consent;
+        return respondWithUser(req, res);
+      });
+  });
 
 router.get("/login", passport.authenticate("openidconnect"));
 router.get("/callback", passport.authenticate("openidconnect", {

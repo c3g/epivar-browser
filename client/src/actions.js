@@ -25,48 +25,42 @@ export const fetchPositions = createFetchFunction(api.fetchPositions, positions)
 export const cacheValues    = createFetchFunction(api.cacheValues,    values)
 export const fetchPeaks     = createFetchFunction(api.fetchPeaks,     peaks)
 export const fetchUser      = createFetchFunction(api.fetchUser,      user)
+export const saveUser       = createFetchFunction(api.saveUser,       user)
 export const fetchMessages  = createFetchFunction(api.fetchMessages,  messages)
 
 
-export function doSearch() {
-  return (dispatch, getState) => {
-    const { ui: { chrom, position } } = getState()
+export const doSearch = () => (dispatch, getState) => {
+  const { ui: { chrom, position } } = getState();
 
-    if (chrom && position) {
-      const query = { chrom, position }
-      dispatch(fetchPeaks(query))
-    }
+  if (chrom && position) {
+    const query = { chrom, position };
+    dispatch(fetchPeaks(query));
   }
-}
+};
 
-export function mergeTracks(peak) {
-  return (dispatch) => {
+export const mergeTracks = peak => dispatch => {
+  const session = {...peak};
 
-    const session = {
-      ...peak,
-    }
-
-    api.createSession(session)
-      .then(sessionID => {
-        const db = 'hg19'
-        const position = `${session.chrom}:${session.feature.start}-${session.feature.end}`
-        const baseURL = `${window.location.origin}${process.env.PUBLIC_URL || ''}`
-        const hubURL = `${baseURL}/api/ucsc/hub/${sessionID}`
-        const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs({
-          db,
-          hubClear: hubURL,
-          position,
-          highlight: `${db}.${session.chrom}:${session.position}-${session.position+1}#FFAAAA`,
-        })
-
-        console.log('Hub:',  hubURL)
-        console.log('UCSC:', ucscURL)
-
-        window.open(ucscURL)
+  api.createSession(session)
+    .then(sessionID => {
+      const db = 'hg19'
+      const position = `${session.chrom}:${session.feature.start}-${session.feature.end}`
+      const baseURL = `${window.location.origin}${process.env.PUBLIC_URL || ''}`
+      const hubURL = `${baseURL}/api/ucsc/hub/${sessionID}`
+      const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs({
+        db,
+        hubClear: hubURL,
+        position,
+        highlight: `${db}.${session.chrom}:${session.position}-${session.position+1}#FFAAAA`,
       })
-      .catch(err => dispatch(handleError(err)))
-  }
-}
+
+      console.log('Hub:',  hubURL)
+      console.log('UCSC:', ucscURL)
+
+      window.open(ucscURL)
+    })
+    .catch(err => dispatch(handleError(err)))
+};
 
 
 // Helpers
@@ -77,31 +71,29 @@ function createFetchActions(namespace) {
     receive: createAction(namespace.RECEIVE, undefined),
     error: createAction(namespace.ERROR, undefined),
     abort: createAction(namespace.ABORT, undefined),
-  }
+  };
 }
 
 function createFetchFunction(fn, actions) {
-  return function (params=undefined, meta=undefined, cancelToken=undefined) {
-    return (dispatch) => {
+  return (params=undefined, meta=undefined, cancelToken=undefined) => dispatch => {
+    const dispatchedAt = Date.now();
+    dispatch(withMeta(actions.request(), meta));
 
-      const dispatchedAt = Date.now()
-      dispatch(withMeta(actions.request(), meta))
-
-      return fn(params, cancelToken)
-        .then(result => dispatch(withMeta(actions.receive(result), meta)))
-        .catch(err => {
-          if (axios.isCancel(err)) {
-            return dispatch(withMeta(actions.abort(err), {...(meta ?? {}), dispatchedAt}))
-          } else {
-            return dispatch(withMeta(actions.error(err), meta))
-          }
-        })
-    }
+    return fn(params, cancelToken)
+      .then(result => dispatch(withMeta(actions.receive(result), meta)))
+      .catch(err => {
+        if (axios.isCancel(err)) {
+          return dispatch(withMeta(actions.abort(err), {...(meta ?? {}), dispatchedAt}))
+        } else {
+          return dispatch(withMeta(actions.error(err), meta))
+        }
+      });
   }
 }
 
 function withMeta(action, meta) {
-  if (meta)
-    action.meta = meta
-  return action
+  if (meta) {
+    action.meta = meta;
+  }
+  return action;
 }

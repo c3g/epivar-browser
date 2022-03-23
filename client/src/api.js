@@ -63,6 +63,12 @@ export function fetchUser() {
   return get('/auth/user');
 }
 
+export function saveUser(user) {
+  // Only terms agreement info is actually save-able. Everything else is
+  // read-only from the identity provider.
+  return put('/auth/user', user);
+}
+
 export function fetchMessages() {
   return get('/messages/list');
 }
@@ -71,12 +77,12 @@ export function fetchMessages() {
 // Helpers
 
 function fetchAPI(url, params, options = {}) {
-  let { method = 'get', ...other } = options;
+  const {method = "get", ...other} = options;
 
   const finalURL = process.env.PUBLIC_URL + '/api' + url + (
-    (method === 'get' && params) ? `?${queryString(params)}` : "");
+    (method === "get" && params) ? `?${queryString(params)}` : "");
 
-  const data = (method === 'post' && params)
+  const data = (["patch", "post", "put"].includes(method) && params)
     ? params
     : undefined;
 
@@ -88,13 +94,11 @@ function fetchAPI(url, params, options = {}) {
     ...other,
   };
 
-  return axios(config).then(({ data }) => {
-    if (data.ok) {
-      return Promise.resolve(data.data);
-    } else {
-      return Promise.reject(new Error(data.message));
-    }
-  });
+  return axios(config).then(({ data }) => (
+    data.ok
+      ? Promise.resolve(data.data)
+      : Promise.reject(new Error(data.message))
+  ));
 }
 
 function get(url, params, options) {
@@ -103,4 +107,8 @@ function get(url, params, options) {
 
 function post(url, params, options = {}) {
   return fetchAPI(url, params, { ...options, method: 'post' })
+}
+
+function put(url, params, options = {}) {
+  return fetchAPI(url, params, { ...options, method: 'put' })
 }
