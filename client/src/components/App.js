@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 import Controls from './Controls'
 import Header from './Header'
+import Footer from './Footer'
 import PeakResults from './PeakResults'
 import HelpModal from "./HelpModal";
 import Intro from "./Intro";
@@ -11,6 +12,8 @@ import TermsModal from "./TermsModal";
 
 import {ETHNICITY_BOX_COLOR, LOGIN_PATH} from "../constants/app";
 import {saveUser} from "../actions";
+import AboutModal from "./AboutModal";
+import ContactModal from "./ContactModal";
 
 
 const AppWithParams = () => {
@@ -21,8 +24,13 @@ const AppWithParams = () => {
   const userData = useSelector(state => state.user);
 
   const [helpModal, setHelpModal] = useState(false);
+  const [aboutModal, setAboutModal] = useState(false);
+  const [contactModal, setContactModal] = useState(false);
   const [termsModal, setTermsModal] = useState(false);
+
   const toggleHelp = () => setHelpModal(!helpModal);
+  const toggleAbout = () => setAboutModal(!aboutModal);
+  const toggleContact = () => setContactModal(!contactModal);
   const toggleTerms = () => setTermsModal(!termsModal);
 
   useEffect(() => {
@@ -47,7 +55,10 @@ const AppWithParams = () => {
                     }
                   }} />
 
-      <Header>
+      <AboutModal isOpen={aboutModal} toggle={toggleAbout} />
+      <ContactModal isOpen={contactModal} toggle={toggleContact} />
+
+      <Header onAbout={toggleAbout} onContact={toggleContact}>
         <HelpModal isOpen={helpModal} toggle={toggleHelp} />
         <Controls params={params} navigate={navigate} toggleHelp={toggleHelp} />
       </Header>
@@ -65,6 +76,8 @@ const AppWithParams = () => {
       ) : (
         <PeakResults />
       )}
+
+      <Footer onHelp={toggleHelp} onAbout={toggleAbout} onContact={toggleContact} onTerms={toggleTerms} />
     </div>
   )
 };

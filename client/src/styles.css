@@ -462,6 +462,31 @@ body {
 }
 
 
+.Footer {
+  border-top: 2px solid #E9E9E9;
+  padding: 1rem 0;
+  margin-top: 2rem;
+
+  display: flex;
+  flex-direction: row;
+}
+.Footer__text {
+  flex: 1;
+  color: #333;
+}
+.Footer__nav {
+
+}
+.Footer__nav > ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+}
+.Footer__nav > ul > li {
+  margin-left: 1rem;
+}
+
+
 /*
  * Loading overlay
  */

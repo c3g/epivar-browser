@@ -1,23 +1,15 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {useSelector} from "react-redux";
 import {Alert, Button, Container} from 'reactstrap'
 import {Link, useLocation, useNavigate} from "react-router-dom";
 
-import AboutModal from "./AboutModal";
-import ContactModal from "./ContactModal";
 import Icon from "./Icon";
 
 import {LOGIN_PATH} from "../constants/app";
 
-export default function Header({ children }) {
+export default function Header({ children, onAbout, onContact }) {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const [aboutModal, setAboutModal] = useState(false);
-  const [contactModal, setContactModal] = useState(false);
-
-  const aboutToggle = () => setAboutModal(!aboutModal);
-  const contactToggle = () => setContactModal(!contactModal);
 
   const userData = useSelector(state => state.user);
   const messages = useSelector(state => state.messages);
@@ -35,15 +27,13 @@ export default function Header({ children }) {
         <h1 className='Header__title'><Link to="/" className='Link'>IMMUNPOP</Link></h1>
         <h4 className='Header__subtitle'>Epigenetic & Expression QTLs</h4>
         <div className="Header__links">
-          <Button color="link" onClick={aboutToggle}>
+          <Button color="link" onClick={onAbout}>
             <Icon name="users" /> About
           </Button>
-          <Button color="link" onClick={contactToggle}>
+          <Button color="link" onClick={onContact}>
             <Icon name="envelope" /> Contact
           </Button>
         </div>
-        <AboutModal isOpen={aboutModal} toggle={aboutToggle} />
-        <ContactModal isOpen={contactModal} toggle={contactToggle} />
         { children }
       </Container>
     </div>
@@ -53,7 +43,7 @@ export default function Header({ children }) {
         <Alert color="danger" style={{marginTop: 16}} toggle={() => navigate("/")}>
           <p>
             An error was encountered during log in. Please try again
-            or <a href="#" onClick={contactToggle}>contact us</a> for assistance.
+            or <a href="#" onClick={onContact}>contact us</a> for assistance.
           </p>
           {messages.list.length && (
             <p style={{marginBottom: 0}}>
