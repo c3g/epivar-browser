@@ -32,7 +32,20 @@ router.put(
       });
   });
 
-router.get("/login", passport.authenticate("openidconnect"));
+router.get("/login",
+  // Add some middleware to handle specified redirects
+  (req, res, next) => {
+    // We are fine not to sanitize this, since the IdP will not redirect if it's an invalid destination
+    const returnTo = req.query.redirect;
+    if (returnTo) {
+      req.session.returnTo = `${process.env.VARWIG_BASE_URL}${returnTo}`;
+      req.session.save(err => {if (err) console.error(err); next();});
+    } else {
+      next();
+    }
+  },
+  passport.authenticate("openidconnect"));
+
 router.get("/callback", passport.authenticate("openidconnect", {
   successReturnToOrRedirect: `${process.env.VARWIG_BASE_URL ?? ""}/`,
   failureRedirect: `${process.env.VARWIG_BASE_URL ?? ""}/auth-failure`,

@@ -56,7 +56,7 @@ const AppWithParams = () => {
         <Intro onAccess={() => {
           if (!userData.data) {
             // Redirect to sign in, so we can capture some information about their identity
-            window.location.href = LOGIN_PATH;
+            window.location.href = `${LOGIN_PATH}?redirect=${window.location.pathname}`;
           } else {
             // Signed in but terms not accepted yet; show the modal.
             setTermsModal(true);
