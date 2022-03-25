@@ -24,13 +24,6 @@ module.exports = {
     peaks:        `${dataDirname}/peaks.sqlite`,
     genes:        `${dataDirname}/genes.sqlite`,
 
-    // In production:
-    tracks:       `${dataDirname}/tracks`,
-    gemini:       `${dataDirname}/gemini.db`,
-    // In development:
-    //tracks:       belugaDirname,
-    //gemini:       path.join(belugaDirname, 'WGS_VCFs/allSamples_WGS.gemini.db'),
-
     mergedTracks: `${dataDirname}/mergedTracks`,
 
     /* Used to save sessions, no need to create it, the application
@@ -39,6 +32,13 @@ module.exports = {
 
     // User consents for terms
     consents:     `${dataDirname}/consents.sqlite`,
+
+    // In production:
+    tracks:       `${dataDirname}/tracks`,
+    gemini:       `${dataDirname}/gemini.db`,
+    // In development:
+    //tracks:       belugaDirname,
+    //gemini:       path.join(belugaDirname, 'WGS_VCFs/allSamples_WGS.gemini.db'),
   },
 
   source: {
