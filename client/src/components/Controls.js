@@ -128,7 +128,10 @@ class Controls extends React.Component {
 
   searchIsLongEnough = () => {
     const {chrom, position} = this.props;
-    return chrom !== "rsID" || position.toString().length > 2;
+    const pStr = position.toString().toLowerCase();
+    return chrom !== "rsID"
+      || (pStr.startsWith("rs") && pStr.length > 2)
+      || !(pStr.startsWith("rs") && pStr.length);
   }
 
   debouncedFetch = debounce(start => {
