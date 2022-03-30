@@ -48,7 +48,7 @@ const AppWithParams = () => {
     <div className="RoutedApp">
       <TermsModal isOpen={termsModal}
                   toggle={toggleTerms}
-                  showAgree={!userData.data?.consentedToTerms}
+                  showAgree={userData.data && !userData.data.consentedToTerms}
                   onAgree={() => {
                     if (userData.isLoaded) {
                       dispatch(saveUser({consentedToTerms: true}));
