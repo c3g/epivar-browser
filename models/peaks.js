@@ -149,26 +149,31 @@ async function autocompleteWithDetail(query) {
 
   const {select, where, params, by} = (() => {
     if (rsID) {
+      let query = String(rsID).trim();
+      if (!query.startsWith("rs")) { query = "rs" + query; }
+      query += "%";
+
       return {
         select: "rsID",
         where: "g.rsID LIKE @query",
-        params: {query: String(rsID) + '%'},
+        params: {query},
         by: "rsID",
-      }
+      };
     } else if (gene) {
       return {
         select: "gene",
         where: "g.gene LIKE @query",
-        params: {query: String(gene) + '%'},
+        params: {query: String(gene).trim() + '%'},
         by: "gene",
-      }
+      };
     } else {  // chrom + position
+      const query = (String(position).replace(/[., ]/g, "")) + "%";
       return {
         select: "position",
         where: "g.chrom = @chrom AND g.position LIKE @query",
-        params: {chrom, query: String(position) + '%'},
+        params: {chrom, query},
         by: "position",
-      }
+      };
     }
   })();
 
