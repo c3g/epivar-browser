@@ -24,9 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build": "react-scripts build"
   },
   "proxy": "http://localhost:3002",
   "browserslist": [
@@ -37,6 +35,6 @@
   ],
   "devDependencies": {
     "http-proxy-middleware": "^2.0.5",
-    "react-scripts": "^4.0.3"
+    "react-scripts": "^5.0.1"
   }
 }
