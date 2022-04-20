@@ -42,7 +42,7 @@ The different data sources to generate/prepare are:
        unique `name_norm` column used for genes.
  
  - **Peaks:** list of peaks names mapped to their characteristics.
-     - **Import with:** `node ./scripts/peaks-to-sqlite.js`
+     - **Import with:** `node ./scripts/import-peaks.js`
      - **Input:** `./input-files/QTLS_complete_*.csv`
      - **Notes:** The peak's associated feature is usually different from where the
       peak position is. Eg, the peak can be at `chr1:1000`, but the feature is
