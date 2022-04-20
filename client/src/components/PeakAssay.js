@@ -79,10 +79,10 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => (
   >
     <thead>
       <tr>
-        <th>rsID</th>
+        <th>SNP</th>
         <th>Feature</th>
-        <th>FDR ({conditionName(CONDITION_NI)})</th>
-        <th>FDR ({conditionName(CONDITION_FLU)})</th>
+        <th><span style={{fontFamily: "serif"}}>p</span> Value ({conditionName(CONDITION_NI)})</th>
+        <th><span style={{fontFamily: "serif"}}>p</span> Value ({conditionName(CONDITION_FLU)})</th>
         <th>View in UCSC</th>
       </tr>
     </thead>
@@ -95,7 +95,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => (
             role='button'
             onClick={() => onChangeFeature(p)}
           >
-            <td>{p.rsID}</td>
+            <td>{p.snp}</td>
             <td className='PeaksTable__feature'>{formatFeature(p)}</td>
             <td>{p.valueNI.toPrecision(5)}</td>
             <td>{p.valueFlu.toPrecision(5)}</td>
@@ -111,9 +111,10 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => (
   </Table>
 )
 
-function formatFeature({assay, gene, feature}) {
-  const {chrom, start, end, strand} = feature
-  const featureText = `${chrom}:${start}-${end}` + (strand ? ` (${strand})` : '')
+function formatFeature({assay, gene, chrom, start, end, strand}) {
+  // chrom, start, end, strand are associated with the feature;
+  // position (unused here) is associated with the SNP
+  const featureText = `chr${chrom}:${start}-${end}` + (strand ? ` (${strand})` : '')
   return assay === "RNA-seq" ? (gene || featureText) : featureText
 }
 
