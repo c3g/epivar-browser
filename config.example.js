@@ -21,17 +21,7 @@ const dataDirname = path.join(__dirname, './data')
 module.exports = {
   paths: {
     data:         dataDirname,
-    peaks:        `${dataDirname}/peaks.sqlite`,
-    genes:        `${dataDirname}/genes.sqlite`,
-
     mergedTracks: `${dataDirname}/mergedTracks`,
-
-    /* Used to save sessions, no need to create it, the application
-     * handles that. */
-    sessions:     `${dataDirname}/sessions.sqlite`,
-
-    // User consents for terms
-    consents:     `${dataDirname}/consents.sqlite`,
 
     // In production:
     tracks:       `${dataDirname}/tracks`,

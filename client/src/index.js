@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { createLogger } from 'redux-logger';
 import {BrowserRouter as Router} from 'react-router-dom';
 import thunkMiddleware from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
+import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 
 import './styles.css';
 import registerServiceWorker from './registerServiceWorker';

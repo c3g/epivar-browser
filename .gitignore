@@ -1,6 +1,8 @@
 /data/*
 !/data/.gitkeep
 !/data/otherData
+/input-files/*.csv
+!/input-files/flu-infection-gene-peaks.csv
 /config.js
 /public/*
 node_modules
