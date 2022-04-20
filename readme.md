@@ -32,8 +32,8 @@ exists with `mkdir -p ./data`.
 
 The different data sources to generate/prepare are:
 
- - Genes: list of gene names mapped to their characteristics.
-     - **Generate with:** `node ./scripts/genes-to-sqlite.js`
+ - **Genes:** list of gene names mapped to their characteristics.
+     - **Import with:** `node ./scripts/import-genes.js`
      - **Input:** `./input-files/flu-infection-genes.txt`
      - **Notes:** The `name` column contains their name as provided in the input file,
        however there are inconsistencies in the notation of names, where sometimes
@@ -41,21 +41,21 @@ The different data sources to generate/prepare are:
        normalized by replacing all non-digits/non-letters with `-`, and that is the
        unique `name_norm` column used for genes.
  
- - Peaks: list of peaks names mapped to their characteristics.
-     - **Generate with:** `node ./scripts/peaks-to-sqlite.js`
+ - **Peaks:** list of peaks names mapped to their characteristics.
+     - **Import with:** `node ./scripts/peaks-to-sqlite.js`
      - **Input:** `./input-files/QTLS_complete_*.csv`
      - **Notes:** The peak's associated feature is usually different from where the
       peak position is. Eg, the peak can be at `chr1:1000`, but the feature is
       at the range `chr1:3500-3600`
  
- - Metadata: This is the track's metadata
+ - **Metadata:** This is the track's metadata
      - **Generate with:** `node ./scripts/metadata-to-json.js`
      - **Input:** `./input-files/flu-infection.xlsx`
      - **Data:** `./data/metadata.json`
      - **Config:** `config.source.metadata.path` (filepath)
      - **Notes:** This is really just an XLSX to JSON transformation.
  
- - Tracks: There are the bigWig files that contain the signal data.
+ - **Tracks:** There are the bigWig files that contain the signal data.
      - **Generate with:** You will need to either copy the files, or
        in development mount them with `sshfs` to have access to them.
        See comment inside `config.example.js` for more details.
