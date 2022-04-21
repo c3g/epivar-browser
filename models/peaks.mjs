@@ -149,7 +149,7 @@ function positions(chrom, position) {
      SELECT DISTINCT("position")
        FROM snps
       WHERE "chrom" = $1
-        AND "position" LIKE $2
+        AND "position"::text LIKE $2
     `,
     [chrom, String(position) + '%']
   )
@@ -196,7 +196,7 @@ async function autocompleteWithDetail(query) {
       const query = (String(position).replace(/[., ]/g, "")) + "%";
       return {
         select: "s.position",
-        where: "s.chrom = $1 AND s.position LIKE $2",
+        where: "s.chrom = $1 AND s.position::text LIKE $2",
         params: [chrom, query],
         by: "snp",
       };
