@@ -8,6 +8,7 @@ import db from "./db.mjs";
 import cache from "../helpers/cache.mjs";
 import config from "../config.js";
 import Gene from "./genes.mjs";
+import {CHROM_ORDER} from "../helpers/genome.mjs";
 
 export default {
   selectByID,
@@ -108,15 +109,17 @@ async function chroms() {
 
   await cache.open();
 
+  // Technically this is SNP chrom, not Peaks chrom...
+
   const k = "varwig:chroms:peaks";
   const r = await cache.getJSON(k);
 
   if (r) return r;
 
-  const cs = await (
-    db.findAll(`SELECT DISTINCT("chrom") FROM features`)
+  const cs = (await (
+    db.findAll(`SELECT DISTINCT("chrom") FROM snps`)
       .then(rows => rows.map(r => r.chrom))
-  );
+  )).sort((a, b) => CHROM_ORDER.indexOf(a) - CHROM_ORDER.indexOf(b));
 
   await cache.setJSON(k, cs, 60 * 60 * 24 * 180);
 
