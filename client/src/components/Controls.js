@@ -180,6 +180,10 @@ class Controls extends React.Component {
     this.props.doSearch();
   }
 
+  renderChromName(chr) {
+    return ["gene", "rsID"].includes(chr) ? chr : `chr${chr}`;
+  }
+
   renderChroms() {
     const { chrom, chroms: { isLoading, list }, setChrom } = this.props
 
@@ -191,14 +195,14 @@ class Controls extends React.Component {
           }
           {
             !isLoading &&
-              (chrom || 'Chrom.')
+              (chrom ? this.renderChromName(chrom) : 'Chrom.')
           }
         </DropdownToggle>
         <DropdownMenu>
           {
             list.map(chr =>
               <DropdownItem key={chr} onClick={() => setChrom(chr)}>
-                { chr }</DropdownItem>
+                {this.renderChromName(chr)}</DropdownItem>
             )
           }
         </DropdownMenu>
