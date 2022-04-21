@@ -126,10 +126,11 @@ async function chroms() {
   return cs;
 }
 
-let cachedRsIDs = config.development.rsIDs || undefined
+const cachedRsIDs = config.development.rsIDs || undefined;
 function rsIDs(query) {
-  if (cachedRsIDs)
-    return Promise.resolve(cachedRsIDs)
+  if (cachedRsIDs) {
+    return Promise.resolve(cachedRsIDs);
+  }
 
   return db.findAll(
     `

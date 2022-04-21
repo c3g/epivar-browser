@@ -369,6 +369,21 @@ body {
 }
 
 
+.pagination {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2em;
+}
+.pagination__page, .pagination__goto {
+  padding-left: 1em;
+  height: 38px;
+  line-height: 38px;
+}
+.pagination__goto {
+  flex: 1;
+}
+
+
 .PeakBoxplot {
   margin-bottom: 2em;
 }

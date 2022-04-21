@@ -37,12 +37,12 @@ const valueCommand = (file, options) => [
 
 /**
  * @param {string} file
- * @param {Object} option
- * @param {string} option.chrom
- * @param {number} option.position
- * @param {number} option.start
- * @param {number} option.end
- * @param {string} [option.bin]
+ * @param {Object} userOptions
+ * @param {string} userOptions.chrom
+ * @param {number} userOptions.position
+ * @param {number} userOptions.start
+ * @param {number} userOptions.end
+ * @param {string} [userOptions.bin]
  */
 function valueAt(file, userOptions) {
   const options = { ...defaultOptions, ...userOptions }

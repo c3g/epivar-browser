@@ -2,7 +2,6 @@
  * sessions.js
  */
 
-import path from 'path';
 import md5 from 'md5';
 
 import db from "./db.mjs";

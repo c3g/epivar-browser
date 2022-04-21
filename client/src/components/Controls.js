@@ -171,7 +171,7 @@ class Controls extends React.Component {
   selectItem = index => {
     const { positions: { list }, navigate, chrom } = this.props
     const item = list[index]
-    const position = item.nat_id ?? item.position ?? item.gene
+    const position = item.nat_id ?? item.position ?? item.name
     // The item assay is the tab with the most significant result - which will be
     // selected first by nature of ordering, thus leading the user to the most interesting
     // detail from the autocomplete.
@@ -250,11 +250,11 @@ class Controls extends React.Component {
               {
                 list.map((item, i) =>
                   <div
-                    key={item.nat_id ?? item.position ?? item.gene}
+                    key={item.nat_id ?? item.position ?? item.name}
                     className={ 'autocomplete__item ' + (i === index ? 'autocomplete__item--selected' : '') }
                     onClick={() => this.selectItem(i)}
                   >
-                    { highlight(item.nat_id ?? item.position ?? item.gene, position) }
+                    { highlight(item.nat_id ?? item.position ?? item.name, position) }
                     <span>
                       <strong>Min. <span style={{fontFamily: "serif"}}>p</span> value:</strong>
                       {' '}
