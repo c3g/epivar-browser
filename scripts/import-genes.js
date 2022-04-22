@@ -76,13 +76,14 @@ const genesFeaturesPath = path.join(__dirname, '../input-files/flu-infection-gen
   const geneAssayFeatures = parseCSVSync(fs.readFileSync(genesFeaturesPath), {columns: true});
 
   const assayFeatures = geneAssayFeatures.flatMap(row => {
+    const featureStr = row.peak_ids.slice(3);
     const feature = row.peak_ids.slice(3).split("_");
     const assayID = assaysByName[row.feature_type];
 
     const gene = genesByNormName[Gene.normalizeName(row.symbol)];
     if (!gene) return [];
     return [[
-      `${row.peak_ids}:${assayID}`,
+      `${featureStr}:${assayID}`,
       feature.slice(0, feature.length-2).join("_"),  // Some unknown chromosomes have _ in them, how annoying
       +feature.at(-2),
       +feature.at(-1),
