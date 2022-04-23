@@ -32,7 +32,7 @@ const PeakAssay = ({peaks}) => {
   const selectedPeakData = peaks.find(p => p.id === selectedPeak);
 
   const fetchSome = (exclude = []) =>
-    peaks.filter(p => !exclude.includes(p.id)).slice(0, 20).forEach(p => {
+    peaks.filter(p => !exclude.includes(p.id)).slice(0, 10).forEach(p => {
       if (!exclude.includes(p.id)) {
         dispatch(cacheValues(p, {id: p.id}));
       }
