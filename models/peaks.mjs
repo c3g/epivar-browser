@@ -198,7 +198,7 @@ async function autocompleteWithDetail(query) {
 
   const {select, where, params, by} = (() => {
     if (rsID) {
-      let query = String(rsID).trim();
+      let query = String(rsID).toLowerCase().trim();
       if (!query.startsWith("rs")) { query = "rs" + query; }
       query += "%";
 
@@ -211,7 +211,7 @@ async function autocompleteWithDetail(query) {
     } else if (gene) {
       return {
         select: "g.name",
-        where: "g.name LIKE $1",
+        where: "g.name ILIKE $1",
         params: [String(gene).trim() + '%'],
         by: "gene",
       };
