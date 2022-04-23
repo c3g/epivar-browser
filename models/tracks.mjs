@@ -40,8 +40,7 @@ const mapToData = map(prop("data"));
 
 // Methods
 
-function get(peak) {
-  const {chrom, position} = peak;
+function get({snp: {chrom, position}}) {
   // FIXME remove position - 1 hack (needs clean data)
   return Samples.queryMap(chrom, position - 1)
     .then(info => source.getTracks(info.samples, peak));
