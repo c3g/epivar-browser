@@ -54,7 +54,9 @@ const PeakResults = () => {
         <Nav tabs>
           {
             assays.map(assay => {
-              const nPeaks = peaksByAssay[assay]?.length ?? 0
+              const nPeaks = peaksByAssay[assay]?.length ?? 0;
+              const nUniqueGenes = new Set((peaksByAssay[assay] ?? []).map(p => p.gene));
+              const countDisplay = assay === 'RNA-seq' ? nUniqueGenes : nPeaks;
               return <NavItem key={assay}>
                 <NavLink
                   className={cx({active: activeAssay === assay})}
@@ -64,7 +66,7 @@ const PeakResults = () => {
                 >
                   <Icon name='flask' className='PeakAssay__icon'/>
                   <strong>{assay}</strong>&nbsp;-&nbsp;
-                  {nPeaks} {assay === 'RNA-seq' ? 'SNP' : 'peak'}{nPeaks !== 1 ? 's' : ''}
+                  {countDisplay} {assay === 'RNA-seq' ? 'gene' : 'peak'}{countDisplay !== 1 ? 's' : ''}
                 </NavLink>
               </NavItem>
             })
