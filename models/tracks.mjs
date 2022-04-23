@@ -65,9 +65,9 @@ async function values(peak) {
     track.assay !== "RNA-Seq" || track.view === strandToView[peak.strand]
   ).map(track =>
     valueAt(track.path, {
-      chrom: `chr${peak.chrom}`,
-      start: peak.start,  // peak.start pulled from join with feature
-      end: peak.end,  // peak.end pulled from join with feature
+      chrom: `chr${peak.feature.chrom}`,
+      start: peak.feature.start,
+      end: peak.feature.end,
       ...config.merge
     }).then(value => (value === undefined ? undefined : {
       id: track.id,
@@ -126,7 +126,7 @@ function merge(tracks, session) {
         const maxSize = await bigWigChromosomeLength(filePaths[0], session.peak.feature.chrom)
 
         return mergeFiles(filePaths, {
-          chrom: session.peak.feature.chrom,
+          chrom: `chr${session.peak.feature.chrom}`,
           start: Math.max(session.peak.feature.start - 100000, 0),
           end:   Math.min(session.peak.feature.end + 100000, maxSize),
         })
@@ -144,7 +144,7 @@ function merge(tracks, session) {
             REF: output[0],
             HET: output[1],
             HOM: output[2],
-          }
+          },
         })
       )
     )

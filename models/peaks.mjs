@@ -25,29 +25,53 @@ const peakSelect = `
 p."id" AS "id",
 p."valueNI" AS "valueNI",
 p."valueFlu" AS "valueFlu",
-f."nat_id" AS "feature",
-f."chrom" AS "chrom",
-f."start" AS "start",
-f."end" AS "end",
-f."strand" AS "strand",
-s."nat_id" AS "snp",
-s."position" AS "position",
+f."nat_id" AS "feature_str",
+f."chrom" AS "feature_chrom",
+f."start" AS "feature_start",
+f."end" AS "feature_end",
+f."strand" AS "feature_strand",
+s."nat_id" AS "snp_id",
+s."chrom" AS "snp_chrom",
+s."position" AS "snp_position",
 a."name" AS "assay",
 g."name_norm" AS "gene"
 `;
 
+// noinspection JSUnresolvedVariable
+const normalizePeak = peak => peak && ({
+  id: peak.id,
+  valueNI: peak.valueNI,
+  valueFlu: peak.valueFlu,
+  assay: peak.assay,
+  gene: peak.gene,
+  feature: {
+    str: peak.feature_str,
+    chrom: peak.feature_chrom,
+    start: peak.feature_start,
+    end: peak.feature_end,
+    strand: peak.feature_strand,
+  },
+  snp: {
+    id: peak.snp_id,
+    chrom: peak.snp_chrom,
+    position: peak.snp_position,
+  },
+});
+const normalizePeaks = peaks => peaks.map(normalizePeak);
+
 function selectByID(peakID) {
-  return db
-    .findOne(`
-       SELECT ${peakSelect}
-       FROM peaks p 
-           JOIN features f on p."feature" = f."id"
-           JOIN assays a ON f."assay" = a."id"
-           JOIN snps s on p."snp" = s."id"
-           LEFT JOIN genes g ON f."gene" = g."id" -- having an associated gene is optional
-       WHERE p."id" = $1
-    `, [peakID]);
-    // .then(normalizePeak);
+  return db.findOne(
+    `
+      SELECT ${peakSelect}
+      FROM peaks p 
+          JOIN features f on p."feature" = f."id"
+          JOIN assays a ON f."assay" = a."id"
+          JOIN snps s on p."snp" = s."id"
+          LEFT JOIN genes g ON f."gene" = g."id" -- having an associated gene is optional
+      WHERE p."id" = $1
+    `,
+    [peakID]
+  ).then(normalizePeak);
 }
 
 function query(chrom, position) {
@@ -64,8 +88,7 @@ function query(chrom, position) {
       ORDER BY LEAST(p."valueFlu", p."valueNI")
     `,
     [chrom, position]
-  );
-  // .then(normalizePeaks)
+  ).then(normalizePeaks);
 }
 
 function queryBySNP(rsID) {
@@ -81,8 +104,7 @@ function queryBySNP(rsID) {
       ORDER BY LEAST(p."valueFlu", p."valueNI")
     `,
     [rsID]
-  );
-  // .then(normalizePeaks)
+  ).then(normalizePeaks);
 }
 
 function queryByGene(gene) {
@@ -98,7 +120,7 @@ function queryByGene(gene) {
       ORDER BY LEAST(p."valueFlu", p."valueNI")
     `,
     [Gene.normalizeName(gene)]
-  ); //.then(normalizePeaks);
+  ).then(normalizePeaks);
 }
 
 const cachedDevChroms = config.development?.chroms;

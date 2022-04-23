@@ -62,7 +62,7 @@ const PeakAssay = ({peaks}) => {
         </Col>
         <Col xs='12'>
           <PeakBoxplot
-            title={selectedPeakData ? `${selectedPeakData.snp} — ${formatFeature(selectedPeakData)}` : ""}
+            title={selectedPeakData ? `${selectedPeakData.snp.id} — ${formatFeature(selectedPeakData)}` : ""}
             peak={selectedPeakData}
           />
         </Col>
@@ -74,8 +74,9 @@ const PeakAssay = ({peaks}) => {
 const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
   const columns = useMemo(() => [
     {
+      id: "snp",
       Header: "SNP",
-      accessor: "snp",
+      accessor: row => row.snp.id,
     },
     {
       id: "feature",
@@ -208,9 +209,8 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
   </>;
 }
 
-function formatFeature({assay, gene, chrom, start, end, strand}) {
-  // chrom, start, end, strand are associated with the feature;
-  // position (unused here) is associated with the SNP
+function formatFeature({assay, gene, feature}) {
+  const {chrom, start, end, strand} = feature;
   const featureText = `chr${chrom}:${start}-${end}` + (strand ? ` (${strand})` : '')
   return assay === "RNA-seq" ? (gene || featureText) : featureText
 }
