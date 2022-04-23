@@ -55,7 +55,7 @@ const PeakResults = () => {
           {
             assays.map(assay => {
               const nPeaks = peaksByAssay[assay]?.length ?? 0;
-              const nUniqueGenes = new Set((peaksByAssay[assay] ?? []).map(p => p.gene));
+              const nUniqueGenes = (new Set((peaksByAssay[assay] ?? []).map(p => p.gene))).size;
               const countDisplay = assay === 'RNA-seq' ? nUniqueGenes : nPeaks;
               return <NavItem key={assay}>
                 <NavLink
