@@ -17,6 +17,7 @@ import valueAt from "../helpers/value-at.js";
 import config from "../config.js";
 import Samples from "./samples.mjs";
 import source from "./source/index.js";
+import {normalizeChrom} from "../helpers/genome.mjs";
 
 const exists = promisify(fs.exists);
 
@@ -49,6 +50,7 @@ function get(peak) {
 
 async function values(peak) {
   const k = `varwig:values:${peak.id}`;
+  const chrom = normalizeChrom(peak.feature.chrom);
 
   await cache.open();
 
@@ -65,7 +67,7 @@ async function values(peak) {
     track.assay !== "RNA-Seq" || track.view === strandToView[peak.strand]
   ).map(track =>
     valueAt(track.path, {
-      chrom: `chr${peak.feature.chrom}`,
+      chrom,
       start: peak.feature.start,
       end: peak.feature.end,
       ...config.merge
@@ -108,7 +110,8 @@ function calculate(tracksByCondition) {
 
 function merge(tracks, session) {
 
-  const tracksByCondition = group(tracks)
+  const tracksByCondition = group(tracks);
+  const chrom = normalizeChrom(session.peak.feature.chrom);
 
   const mergeTracksByType = tracksByType =>
     Promise.all(
@@ -122,11 +125,10 @@ function merge(tracks, session) {
         }
 
         const filePaths = tracks.map(prop('path'))
-
-        const maxSize = await bigWigChromosomeLength(filePaths[0], session.peak.feature.chrom)
+        const maxSize = await bigWigChromosomeLength(filePaths[0], chrom)
 
         return mergeFiles(filePaths, {
-          chrom: `chr${session.peak.feature.chrom}`,
+          chrom,
           start: Math.max(session.peak.feature.start - 100000, 0),
           end:   Math.min(session.peak.feature.end + 100000, maxSize),
         })

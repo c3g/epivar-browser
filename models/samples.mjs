@@ -9,6 +9,7 @@ import csvParse from "csv-parse/lib/sync.js";
 
 import config from "../config.js";
 import cache from "../helpers/cache.mjs";
+import {normalizeChrom} from "../helpers/genome.mjs";
 
 const exec = command =>
   new Promise((resolve, reject) =>
@@ -27,9 +28,6 @@ export default {
   parseLines,
   parseCSV,
 };
-
-const normalizeChrom = chrom =>
-  (chrom.indexOf("chr") === -1) ? `chr${chrom}` : chrom;
 
 export function query(chrom, start, end = start + 1) {
   const params = `--header --show-samples --format sampledetail`
