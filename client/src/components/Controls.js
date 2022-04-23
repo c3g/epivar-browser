@@ -304,18 +304,26 @@ class Controls extends React.Component {
   }
 }
 
+/**
+ * Renders a highlighted search prefix, handling case-insensitive searching.
+ * @param {number|string} item
+ * @param {string} prefix
+ * @returns {JSX.Element}
+ */
 function highlight(item, prefix) {
-  const text = String(item)
-  if (!text.startsWith(prefix))
-    return <span>{ text }</span>
+  const text = String(item).trimStart();
+  const textLower = text.toLowerCase();
+  const prefixLower = prefix.trimStart().toLowerCase();
 
-  const rest = text.replace(prefix, '')
-  return (
-    <span>
-      <span className='highlight'>{ prefix }</span>
-      { rest }
-    </span>
-  )
+  if (!textLower.startsWith(prefixLower)) {
+    // Prefix isn't in search text, so don't render any highlighting.
+    return <span>{text}</span>;
+  }
+
+  return <span>
+    <span className="highlight">{text.substring(0, prefix.length)}</span>
+    {text.substring(prefix.length)}
+  </span>;
 }
 
 export default connect(
