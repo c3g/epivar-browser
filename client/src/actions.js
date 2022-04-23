@@ -44,14 +44,16 @@ export const mergeTracks = peak => dispatch => {
   api.createSession(session)
     .then(sessionID => {
       const db = 'hg19'
-      const position = `${session.feature.chrom}:${session.feature.start}-${session.feature.end}`
+      const featureChrom = `chr${session.feature.chrom}`;
+      const snpChrom = `chr${session.snp.chrom}`;
+      const position = `${featureChrom}:${session.feature.start}-${session.feature.end}`
       const baseURL = `${window.location.origin}${process.env.PUBLIC_URL || ''}`
       const hubURL = `${baseURL}/api/ucsc/hub/${sessionID}`
       const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs({
         db,
         hubClear: hubURL,
         position,
-        highlight: `${db}.${session.feature.chrom}:${session.snp.position}-${session.snp.position+1}#FFAAAA`,
+        highlight: `${db}.${snpChrom}:${session.snp.position}-${session.snp.position+1}#FFAAAA`,
       })
 
       console.log('Hub:',  hubURL)
