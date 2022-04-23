@@ -2,11 +2,10 @@
  * sessions.js
  */
 
-import md5 from 'md5';
+import md5 from "md5";
 
 import db from "./db.mjs";
-
-const Tracks = await import('./tracks.mjs');
+import Tracks from "./tracks.mjs";
 
 export default {
   create,
