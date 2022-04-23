@@ -54,9 +54,22 @@ const PeakResults = () => {
         <Nav tabs>
           {
             assays.map(assay => {
-              const nPeaks = peaksByAssay[assay]?.length ?? 0;
-              const nUniqueGenes = (new Set((peaksByAssay[assay] ?? []).map(p => p.gene))).size;
-              const countDisplay = assay === 'RNA-seq' ? nUniqueGenes : nPeaks;
+              const pba = peaksByAssay[assay] ?? [];
+              const nPeaks = pba.length;
+              const nUniqueGenes = (new Set(pba.map(p => p.gene))).size;
+              const nUniqueSNPs = (new Set(pba.map(p => p.snp.id))).size;
+
+              // If we've searched by gene (i.e. # of unique genes = 1), use # SNPs, otherwise use # genes
+              // for the RNA-seq tab header. Basically, show the most meaningful count.
+              const countDisplay = assay === "RNA-seq"
+                ? (nUniqueGenes === 1 ? nUniqueSNPs : nUniqueGenes)
+                : nPeaks;
+              const countStr = (
+                assay === "RNA-seq"
+                  ? (nUniqueGenes === 1 ? "SNP" : "gene")
+                  : "peak"
+              ) + (countDisplay !== 1 ? "s" : "");  // Use != rather than >, cause English likes 0 quantities plural
+
               return <NavItem key={assay}>
                 <NavLink
                   className={cx({active: activeAssay === assay})}
@@ -66,7 +79,7 @@ const PeakResults = () => {
                 >
                   <Icon name='flask' className='PeakAssay__icon'/>
                   <strong>{assay}</strong>&nbsp;-&nbsp;
-                  {countDisplay} {assay === 'RNA-seq' ? 'gene' : 'peak'}{countDisplay !== 1 ? 's' : ''}
+                  {countDisplay}&nbsp;{countStr}
                 </NavLink>
               </NavItem>
             })
