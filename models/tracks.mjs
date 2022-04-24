@@ -90,11 +90,11 @@ async function values(peak) {
 }
 
 function group(tracks) {
-  const tracksByCondition = {}
-  Object.entries(groupBy(x => x.condition, tracks)).forEach(([condition, tracks]) => {
-    tracksByCondition[condition] = groupBy(prop('type'), tracks)
-  })
-  return tracksByCondition
+  return Object.fromEntries(
+    Object.entries(groupBy(x => x.condition, tracks))
+      .map(([condition, tracks]) =>
+        [condition, groupBy(prop('type'), tracks)])
+  );
 }
 
 function calculate(tracksByCondition) {
