@@ -32,14 +32,18 @@ const clear = async () => {
   }
 };
 
-const getJSON = async k => {
-  const r = await redisClient.get(k);
+// noinspection JSCheckFunctionSignatures
+export const has = k => redisClient.exists(ns(k));
+
+export const getJSON = async k => {
+  // noinspection JSCheckFunctionSignatures
+  const r = await redisClient.get(ns(k));
   return r ? JSON.parse(r) : r;
 };
 
 // noinspection JSCheckFunctionSignatures
-const setJSON = async (k, v, e) =>
-  await redisClient.set(k, JSON.stringify(v), {
+export const setJSON = async (k, v, e) =>
+  await redisClient.set(ns(k), JSON.stringify(v), {
     EX: e || undefined
   });
 
@@ -50,6 +54,7 @@ export default {
   open,
   close,
   clear,
+  has,
   getJSON,
   setJSON,
 };

@@ -72,7 +72,7 @@ export async function getChroms() {
 
   await cache.open();
 
-  const k = "varwig:chroms:gemini";
+  const k = "chroms:gemini";
   const r = await cache.getJSON(k);
 
   if (r) return r;

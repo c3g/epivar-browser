@@ -13,7 +13,7 @@ import bigWigMerge from "../helpers/bigwig-merge.js";
 import bigWigChromosomeLength from "../helpers/bigwig-chromosome-length.js";
 import {boxPlot, getDomain, PLOT_SIZE} from "../helpers/boxplot.js";
 import cache from "../helpers/cache.mjs";
-import valueAt from "../helpers/value-at.js";
+import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";
 import Samples from "./samples.mjs";
 import source from "./source/index.js";
@@ -49,7 +49,7 @@ function get(peak) {
 }
 
 async function values(peak) {
-  const k = `varwig:values:${peak.id}`;
+  const k = `values:${peak.id}`;
   const chrom = normalizeChrom(peak.feature.chrom);
 
   await cache.open();
@@ -64,7 +64,7 @@ async function values(peak) {
     // RNA-seq results are either forward or reverse strand; we only want tracks from the direction
     // of the selected peak (otherwise results will appear incorrectly, and we'll have 2x the # of
     // values we should in some cases.)
-    track.assay !== "RNA-Seq" || track.view === strandToView[peak.strand]
+    track.assay !== "RNA-Seq" || track.view === strandToView[peak.feature.strand]
   ).map(track =>
     valueAt(track.path, {
       chrom,

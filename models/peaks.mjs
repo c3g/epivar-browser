@@ -133,7 +133,7 @@ async function chroms() {
 
   // Technically this is SNP chrom, not Peaks chrom...
 
-  const k = "varwig:chroms:peaks";
+  const k = "chroms:peaks";
   const r = await cache.getJSON(k);
 
   if (r) return r;
@@ -191,7 +191,7 @@ async function autocompleteWithDetail(query) {
   await cache.open();
 
   // Caching key for autocomplete
-  const k = `varwig:autocomplete:${[rsID, gene, chrom, position].join("|")}`;
+  const k = `autocomplete:${[rsID, gene, chrom, position].join("|")}`;
 
   const r = await cache.getJSON(k);
   if (r) return r;
