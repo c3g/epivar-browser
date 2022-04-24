@@ -169,14 +169,14 @@ class Controls extends React.Component {
   }
 
   selectItem = index => {
-    const { positions: { list }, navigate, chrom } = this.props
-    const item = list[index]
-    const position = item.nat_id ?? item.position ?? item.name
+    const {positions: {list}, navigate, chrom} = this.props;
+    const item = list[index];
+    const position = item.nat_id ?? item.position ?? item.name;
     // The item assay is the tab with the most significant result - which will be
     // selected first by nature of ordering, thus leading the user to the most interesting
     // detail from the autocomplete.
-    navigate(`/locus/${chrom}/${position}/${item.assay}`, {replace: true})
-    this.changePosition(position)
+    navigate(`/locus/${chrom}/${position}/${item.assay}`, {replace: true});
+    this.changePosition(position);
     this.props.doSearch();
   }
 

@@ -228,12 +228,14 @@ async function autocompleteWithDetail(query) {
 
   // Order peaks in query by minimum p-value
 
+  // noinspection SqlResolve
   const res = await db.findAll(
     `
-    SELECT ${select}, fb."minValueMin", fb."nFeatures", fb."mostSignificantFeatureID", f.assay
+    SELECT ${select}, fb."minValueMin", fb."nFeatures", fb."mostSignificantFeatureID", a."name" AS assay
     FROM peaks p 
         JOIN snps s ON p."snp" = s."id"
         JOIN features f ON p."feature" = f."id"
+        JOIN assays a ON f."assay" = a."id"
         JOIN genes g ON f."gene" = g."id"
         JOIN features_by_${by} fb ON fb."mostSignificantFeatureID" = p."id"
     WHERE ${where}
