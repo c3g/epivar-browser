@@ -8,6 +8,7 @@ import db from "./db.mjs";
 import cache from "../helpers/cache.mjs";
 import config from "../config.js";
 import Gene from "./genes.mjs";
+import {P_VALUE_MAXIMUM} from "../helpers/associations.mjs";
 import {CHROM_ORDER} from "../helpers/genome.mjs";
 
 export default {
@@ -85,7 +86,8 @@ function query(chrom, position) {
           LEFT JOIN genes g ON f."gene" = g."id" -- having an associated gene is optional
       WHERE s."chrom" = $1
         AND s."position" = $2
-      ORDER BY LEAST(p."valueFlu", p."valueNI")
+        AND LEAST(p."valueNI", p."valueFlu") <= ${P_VALUE_MAXIMUM}
+      ORDER BY LEAST(p."valueNI", p."valueFlu")
     `,
     [chrom, position]
   ).then(normalizePeaks);
@@ -100,8 +102,9 @@ function queryBySNP(rsID) {
           JOIN assays a ON f."assay" = a."id"
           JOIN snps s ON p."snp" = s."id"
           LEFT JOIN genes g ON f."gene" = g."id"
-      WHERE s."nat_id" = $1
-      ORDER BY LEAST(p."valueFlu", p."valueNI")
+      WHERE s."nat_id" = $1 
+        AND LEAST(p."valueNI", p."valueFlu") <= ${P_VALUE_MAXIMUM}
+      ORDER BY LEAST(p."valueNI", p."valueFlu")
     `,
     [rsID]
   ).then(normalizePeaks);
@@ -117,7 +120,8 @@ function queryByGene(gene) {
           JOIN snps s ON p."snp" = s."id"
           JOIN genes g ON f."gene" = g."id"  -- no left join here; it's no longer optional to have a gene associated
       WHERE g."name_norm" = $1
-      ORDER BY LEAST(p."valueFlu", p."valueNI")
+        AND LEAST(p."valueNI", p."valueFlu") <= ${P_VALUE_MAXIMUM}
+      ORDER BY LEAST(p."valueNI", p."valueFlu")
     `,
     [Gene.normalizeName(gene)]
   ).then(normalizePeaks);
@@ -238,7 +242,7 @@ async function autocompleteWithDetail(query) {
         JOIN assays a ON f."assay" = a."id"
         JOIN genes g ON f."gene" = g."id"
         JOIN features_by_${by} fb ON fb."mostSignificantFeatureID" = p."id"
-    WHERE ${where}
+    WHERE ${where} AND fb."minValueMin" <= ${P_VALUE_MAXIMUM}
     ORDER BY fb."minValueMin"
     LIMIT 50
     `,
