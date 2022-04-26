@@ -5,7 +5,7 @@ import {
   Container,
   Col,
   Row,
-  Table, ButtonGroup, Input,
+  Table, ButtonGroup, Input, Tooltip,
 } from 'reactstrap'
 import {useTable, usePagination} from "react-table";
 
@@ -72,17 +72,46 @@ const PeakAssay = ({peaks}) => {
 };
 
 const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
+  const [tooltipsShown, setTooltipsShown] = useState({});
+
+  const toggleTooltip = tooltipID => () => setTooltipsShown({
+    ...tooltipsShown,
+    [tooltipID]: tooltipsShown[tooltipID] ? undefined : true,
+  });
+
   const columns = useMemo(() => [
     {
       id: "snp",
       Header: "SNP",
-      accessor: row => row.snp.id,
+      accessor: row => {
+        const k = `row${row.id}-snp`;
+        return <div>
+          <a id={k} style={{textDecoration: "underline"}}>{row.snp.id}</a>
+          <Tooltip target={k} placement="top" isOpen={tooltipsShown[k]} toggle={toggleTooltip(k)} autohide={false}>
+            [hg19] chr{row.snp.chrom}:{row.snp.position}
+          </Tooltip>
+        </div>;
+      },
     },
     {
       id: "feature",
       Header: "Feature",
       className: "PeaksTable__feature",
-      accessor: row => formatFeature(row),
+      accessor: row => {
+        const k = `row${row.id}-feature`;
+        const featureText = formatFeature(row);
+        const showTooltip = !featureText.startsWith("chr");
+        return <div>
+          <a id={k} style={{textDecoration: showTooltip ? "underline" : "none"}}>{featureText}</a>
+          {showTooltip ? (
+            <Tooltip target={k} placement="top" isOpen={tooltipsShown[k]} toggle={toggleTooltip(k)} autohide={false}>
+              [hg19] chr{row.feature.chrom}:{row.feature.start}-{row.feature.end}
+              {" "}
+              {row.feature.strand ? `(strand: ${row.feature.strand})` : null}
+            </Tooltip>
+          ) : null}
+        </div>;
+      },
     },
     {
       id: "valueNI",
@@ -102,7 +131,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
         Tracks <Icon name='external-link' />
       </Button>,
     },
-  ], [onOpenTracks]);
+  ], [onOpenTracks, tooltipsShown]);
   const data = useMemo(() => peaks, []);
 
   // noinspection JSCheckFunctionSignatures
