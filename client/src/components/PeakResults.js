@@ -67,7 +67,7 @@ const PeakResults = () => {
               const countStr = (
                 assay === "RNA-seq"
                   ? (nUniqueGenes === 1 ? "SNP" : "gene")
-                  : "peak"
+                  : "assoc"  // TODO: revert to peak + do unique peaks instead?
               ) + (countDisplay !== 1 ? "s" : "");  // Use != rather than >, cause English likes 0 quantities plural
 
               return <NavItem key={assay}>
