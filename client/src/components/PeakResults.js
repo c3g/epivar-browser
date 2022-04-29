@@ -40,17 +40,8 @@ const PeakResults = () => {
 
   return <div className={'PeakResults ' + (peaksLoading ? 'loading' : '')}>
     {
-      isEmpty &&
-      <Container>
-        <div className='PeakResults__empty'>
-          No results for the selected range.<br/>
-          Try with a different range.
-        </div>
-      </Container>
-    }
-    {
       chrom && position && (peaksLoading || peaksLoaded) &&
-      <Container>
+      <Container fluid={true} style={{maxWidth: 1240}}>
         <Nav tabs>
           {
             assays.map(assay => {
@@ -94,6 +85,15 @@ const PeakResults = () => {
             )
           }
         </TabContent>
+      </Container>
+    }
+    {
+      isEmpty &&
+      <Container>
+        <div className='PeakResults__empty'>
+          No results for the selected range.<br/>
+          Try with a different range.
+        </div>
       </Container>
     }
   </div>;

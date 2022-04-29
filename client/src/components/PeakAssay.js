@@ -50,7 +50,7 @@ const PeakAssay = ({peaks}) => {
   }, [selectedPeakData]);
 
   return (
-    <Container className='PeakAssay'>
+    <Container className='PeakAssay' fluid={true}>
       <Row>
         <Col xs='12'>
           <PeaksTable
@@ -116,12 +116,20 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
     {
       id: "valueNI",
       Header: <span><span style={{fontFamily: "serif"}}>p</span> Value ({conditionName(CONDITION_NI)})</span>,
-      accessor: row => row.valueNI.toPrecision(5),
+      accessor: row => {
+        const fixed = row.valueNI.toPrecision(5);
+        const floatStr = row.valueNI.toString();
+        return floatStr.length < fixed.length ? floatStr : fixed;
+      },
     },
     {
       id: "valueFlu",
       Header: <span><span style={{fontFamily: "serif"}}>p</span> Value ({conditionName(CONDITION_FLU)})</span>,
-      accessor: row => row.valueFlu.toPrecision(5),
+      accessor: row => {
+        const fixed = row.valueFlu.toPrecision(5);
+        const floatStr = row.valueFlu.toString();
+        return floatStr.length < fixed.length ? floatStr : fixed;
+      },
     },
     {
       id: "ucsc",
