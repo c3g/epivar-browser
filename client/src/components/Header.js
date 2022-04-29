@@ -24,7 +24,7 @@ export default function Header({ children, onAbout, onContact }) {
         }
       </div>
       <Container>
-        <h1 className='Header__title'><Link to="/" className='Link'>IMMUNPOP</Link></h1>
+        <h1 className='Header__title'><Link to="/" className='Link'>EpiVar Browser</Link></h1>
         <h4 className='Header__subtitle'>Epigenetic & Expression QTLs</h4>
         <div className="Header__links">
           <Button color="link" onClick={onAbout}>

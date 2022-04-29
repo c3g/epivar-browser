@@ -228,12 +228,12 @@ body {
 }
 .Header__title {
   text-align: center;
-  font-size: 50px;
-  line-height: 50px;
+  font-size: 48px;
+  line-height: 52px;
   font-family: 'PT Sans', sans-serif;
   font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  /*text-transform: uppercase;*/
+  letter-spacing: -2px;
   margin-bottom: 0;
 }
 .Header__title > .Link {
