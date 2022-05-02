@@ -74,7 +74,7 @@ const RoutedApp = () => {
         {/*<Controls params={params} navigate={navigate} toggleHelp={toggleHelp} />*/}
       </Header>
 
-      <Outlet context={{termsModal, setTermsModal}} />
+      <Outlet context={{termsModal, setTermsModal, toggleHelp}} />
 
       <Footer onHelp={toggleHelp} onContact={toggleContact} onTerms={toggleTerms} />
     </div>

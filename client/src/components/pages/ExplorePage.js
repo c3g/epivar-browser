@@ -1,12 +1,13 @@
 import Controls from "../Controls";
-import {Outlet, useNavigate, useParams} from "react-router-dom";
+import {Outlet, useNavigate, useOutletContext, useParams} from "react-router-dom";
 
 const ExplorePage = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const {toggleHelp} = useOutletContext();
 
   return <div>
-    <Controls params={params} navigate={navigate} toggleHelp={() => alert("TODO")} />
+    <Controls params={params} navigate={navigate} toggleHelp={toggleHelp} />
     <Outlet />
   </div>
 };
