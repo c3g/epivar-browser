@@ -6,7 +6,7 @@ const ExplorePage = () => {
   const navigate = useNavigate();
   const {toggleHelp} = useOutletContext();
 
-  return <div>
+  return <div className="Page">
     <Controls params={params} navigate={navigate} toggleHelp={toggleHelp} />
     <Outlet />
   </div>

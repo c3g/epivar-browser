@@ -280,7 +280,8 @@ body {
   align-items: center;
 }
 .Controls__content {
-  padding: 1em 4em 0;
+  /*padding: 1em 4em 0;*/
+  padding: 0 4em;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -332,6 +333,8 @@ body {
 
 .Page {
   margin-top: 24px;
+  /* Roughly: viewport height - header - page top margin - footer height - footer top margin */
+  min-height: calc(100vh - 173px - 24px - 71px - 2rem);
 }
 .Page figure {
   max-width: 600px;
