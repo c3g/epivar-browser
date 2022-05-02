@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {
   Button,
@@ -7,7 +7,7 @@ import {
   Row,
   Table, ButtonGroup, Input, Tooltip,
 } from 'reactstrap'
-import {useTable, usePagination} from "react-table";
+import {useTable, usePagination, useSortBy} from "react-table";
 
 import Icon from "./Icon";
 import PeakBoxplot from "./PeakBoxplot";
@@ -92,6 +92,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
           </Tooltip>
         </div>;
       },
+      disableSortBy: true,
     },
     {
       id: "feature",
@@ -112,6 +113,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
           ) : null}
         </div>;
       },
+      disableSortBy: true,
     },
     {
       id: "valueNI",
@@ -121,6 +123,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
         const floatStr = row.valueNI.toString();
         return floatStr.length < fixed.length ? floatStr : fixed;
       },
+      sortType: (r1, r2, col) => r1.original[col] < r2.original[col] ? -1 : 1,
     },
     {
       id: "valueFlu",
@@ -130,6 +133,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
         const floatStr = row.valueFlu.toString();
         return floatStr.length < fixed.length ? floatStr : fixed;
       },
+      sortType: (r1, r2, col) => r1.original[col] < r2.original[col] ? -1 : 1,
     },
     {
       id: "ucsc",
@@ -138,12 +142,17 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       accessor: row => <Button size='sm' color='link' onClick={() => onOpenTracks(row)}>
         Tracks <Icon name='external-link' />
       </Button>,
+      disableSortBy: true,
     },
   ], [onOpenTracks, tooltipsShown]);
   const data = useMemo(() => peaks, []);
 
   // noinspection JSCheckFunctionSignatures
-  const tableInstance = useTable({columns, data}, usePagination);
+  const tableInstance = useTable(
+    {columns, data},
+    // Order matters for below hooks
+    useSortBy,
+    usePagination);
 
   const {
     getTableProps,
@@ -176,7 +185,10 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
         headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                {column.render("Header")}
+                <span>{column.isSorted ? (column.isSortedDesc ? " ▼" : " ▲") : ''}</span>
+              </th>
             ))}
           </tr>
         ))
