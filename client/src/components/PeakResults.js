@@ -32,9 +32,10 @@ const PeakResults = () => {
 
     if (activeAssay && !(activeAssay in peaksByAssay) && peaksLoaded) {
       // Assay isn't valid for the position in question
-      navigate(`/locus/${chrom}/${position}` + (assaysWithFeatures.length ? `/${assays[0]}` : ""), {replace: true});
+      navigate(`/explore/locus/${chrom}/${position}` +
+        (assaysWithFeatures.length ? `/${assays[0]}` : ""), {replace: true});
     } else if (!activeAssay && assaysWithFeatures.length && peaksLoaded) {
-      navigate(`/locus/${chrom}/${position}/${assaysWithFeatures[0]}`, {replace: true});
+      navigate(`/explore/locus/${chrom}/${position}/${assaysWithFeatures[0]}`, {replace: true});
     }
   }, [activeAssay, chrom, position, peaksLoaded]);
 
@@ -64,7 +65,7 @@ const PeakResults = () => {
               return <NavItem key={assay}>
                 <NavLink
                   className={cx({active: activeAssay === assay})}
-                  onClick={() => nPeaks && navigate(`/locus/${chrom}/${position}/${assay}`, {replace: true})}
+                  onClick={() => nPeaks && navigate(`/explore/locus/${chrom}/${position}/${assay}`, {replace: true})}
                   disabled={!nPeaks}
                   aria-disabled={true}
                 >

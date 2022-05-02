@@ -7,7 +7,7 @@ import Icon from "./Icon";
 
 import {LOGIN_PATH} from "../constants/app";
 
-export default function Header({ children, onAbout, onContact }) {
+export default function Header({children, onAbout, onDatasets, onExplore, onContact}) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -27,12 +27,16 @@ export default function Header({ children, onAbout, onContact }) {
         <h1 className='Header__title'><Link to="/" className='Link'>EpiVar Browser</Link></h1>
         <h4 className='Header__subtitle'>Epigenetic & Expression QTLs</h4>
         <div className="Header__links">
-          <Button color="link" onClick={onAbout}>
-            <Icon name="users" /> About
-          </Button>
-          <Button color="link" onClick={onContact}>
-            <Icon name="envelope" /> Contact
-          </Button>
+          <Button color="link"
+                  className={location.pathname.startsWith("/about") ? "active" : ""}
+                  onClick={onAbout}><Icon name="users" />About</Button>
+          <Button color="link"
+                  className={location.pathname.startsWith("/datasets") ? "active" : ""}
+                  onClick={onDatasets}><Icon name="table" />Datasets</Button>
+          <Button color="link"
+                  className={location.pathname.startsWith("/explore") ? "active" : ""}
+                  onClick={onExplore}><Icon name="search" />Explore</Button>
+          <Button color="link" onClick={onContact}><Icon name="envelope" />Contact</Button>
         </div>
         { children }
       </Container>

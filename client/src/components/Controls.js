@@ -175,7 +175,7 @@ class Controls extends React.Component {
     // The item assay is the tab with the most significant result - which will be
     // selected first by nature of ordering, thus leading the user to the most interesting
     // detail from the autocomplete.
-    navigate(`/locus/${chrom}/${position}/${item.assay}`, {replace: true});
+    navigate(`/explore/locus/${chrom}/${position}/${item.assay}`, {replace: true});
     this.changePosition(position);
     this.props.doSearch();
   }

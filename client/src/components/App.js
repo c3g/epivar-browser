@@ -1,37 +1,44 @@
 import React, {Component, useEffect, useState} from 'react';
-import {Navigate, Route, Routes, useNavigate, useParams} from "react-router-dom";
+import {Navigate, Outlet, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
-import Controls from './Controls'
 import Header from './Header'
 import Footer from './Footer'
 import PeakResults from './PeakResults'
 import HelpModal from "./HelpModal";
-import Intro from "./Intro";
 import TermsModal from "./TermsModal";
 
-import {ETHNICITY_BOX_COLOR, LOGIN_PATH} from "../constants/app";
+import {ETHNICITY_BOX_COLOR} from "../constants/app";
 import {saveUser} from "../actions";
-import AboutModal from "./AboutModal";
 import ContactModal from "./ContactModal";
+import AboutPage from "./pages/AboutPage";
+import ProtectedPageContainer from "./pages/ProtectedPageContainer";
+import HomePage from "./pages/HomePage";
+import ExplorePage from "./pages/ExplorePage";
+import DatasetsPage from "./pages/DatasetsPage";
 
 
-const AppWithParams = () => {
+const RoutedApp = () => {
+  const location = useLocation();
   const navigate = useNavigate();
-  const params = useParams();
 
   const dispatch = useDispatch();
   const userData = useSelector(state => state.user);
 
   const [helpModal, setHelpModal] = useState(false);
-  const [aboutModal, setAboutModal] = useState(false);
   const [contactModal, setContactModal] = useState(false);
   const [termsModal, setTermsModal] = useState(false);
 
   const toggleHelp = () => setHelpModal(!helpModal);
-  const toggleAbout = () => setAboutModal(!aboutModal);
   const toggleContact = () => setContactModal(!contactModal);
   const toggleTerms = () => setTermsModal(!termsModal);
+
+  const navigateAbout = () => navigate("/about");
+  const navigateDatasets = () => navigate("/datasets");
+  const navigateExplore = () => {
+    if (location.pathname.startsWith("/explore")) return;
+    navigate("/explore");
+  }
 
   useEffect(() => {
     if (userData.isLoaded && userData.data && !userData.data.consentedToTerms) {
@@ -46,38 +53,30 @@ const AppWithParams = () => {
 
   return (
     <div className="RoutedApp">
-      <TermsModal isOpen={termsModal}
-                  toggle={toggleTerms}
-                  showAgree={userData.data && !userData.data.consentedToTerms}
-                  onAgree={() => {
-                    if (userData.isLoaded) {
-                      dispatch(saveUser({consentedToTerms: true}));
-                    }
-                  }} />
+      <TermsModal
+        isOpen={termsModal}
+        toggle={toggleTerms}
+        showAgree={userData.data && !userData.data.consentedToTerms}
+        onAgree={() => {
+          if (userData.isLoaded) {
+            dispatch(saveUser({consentedToTerms: true}));
+          }
+        }}
+      />
 
-      <AboutModal isOpen={aboutModal} toggle={toggleAbout} />
       <ContactModal isOpen={contactModal} toggle={toggleContact} />
 
-      <Header onAbout={toggleAbout} onContact={toggleContact}>
+      <Header onAbout={navigateAbout}
+              onDatasets={navigateDatasets}
+              onExplore={navigateExplore}
+              onContact={toggleContact}>
         <HelpModal isOpen={helpModal} toggle={toggleHelp} />
-        <Controls params={params} navigate={navigate} toggleHelp={toggleHelp} />
+        {/*<Controls params={params} navigate={navigate} toggleHelp={toggleHelp} />*/}
       </Header>
 
-      {(userData.isLoaded && !userData.data?.consentedToTerms) ? (
-        <Intro onAccess={() => {
-          if (!userData.data) {
-            // Redirect to sign in, so we can capture some information about their identity
-            window.location.href = `${LOGIN_PATH}?redirect=${window.location.pathname}`;
-          } else {
-            // Signed in but terms not accepted yet; show the modal.
-            setTermsModal(true);
-          }
-        }} />
-      ) : (
-        <PeakResults />
-      )}
+      <Outlet context={{termsModal, setTermsModal}} />
 
-      <Footer onHelp={toggleHelp} onAbout={toggleAbout} onContact={toggleContact} onTerms={toggleTerms} />
+      <Footer onHelp={toggleHelp} onContact={toggleContact} onTerms={toggleTerms} />
     </div>
   )
 };
@@ -102,10 +101,21 @@ class App extends Component {
         </svg>
 
         <Routes>
-          <Route path="/locus/:chrom/:position/:assay" element={<AppWithParams />} />
-          <Route path="/locus/:chrom/:position" element={<AppWithParams />} />
-          <Route path="/" exact={true} element={<AppWithParams />} />
-          <Route path="/auth-failure" exact={true} element={<AppWithParams />} />
+          <Route path="/" element={<RoutedApp />}>
+            <Route index={true} element={<ProtectedPageContainer>
+              <HomePage />
+            </ProtectedPageContainer>} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="datasets" element={<DatasetsPage />} />
+            <Route path="explore" element={<ProtectedPageContainer>
+              <ExplorePage />
+            </ProtectedPageContainer>}>
+              <Route index={true} element={<div />} />
+              <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
+              <Route path="locus/:chrom/:position" element={<PeakResults />} />
+            </Route>
+            <Route path="auth-failure" element={<div />} />
+          </Route>
           <Route path="*" element={<Navigate to="/" />}/>
         </Routes>
       </div>
