@@ -55,7 +55,27 @@ const AboutPage = () => {
         </p>
         <h3>Team</h3>
         <ul>
-          <li>TODO</li>
+          <li>Katherine A Aracena</li>
+          <li>Yen-Lung Lin</li>
+          <li>Kaixuan Luo</li>
+          <li>Alain Pacis</li>
+          <li>Saideep Gona</li>
+          <li>Zepeng Mu</li>
+          <li>Vania Yotova</li>
+          <li>Renata Sindeaux</li>
+          <li>Albena Pramatarova</li>
+          <li>Marie-Michelle Simon</li>
+          <li>Xun Chen</li>
+          <li>Cristian Groza</li>
+          <li>David Lougheed</li>
+          <li>Romain Gregoire</li>
+          <li>David Brownlee</li>
+          <li>Yang Li</li>
+          <li>Xin He</li>
+          <li>David Bujold</li>
+          <li>Tomi Pastinen</li>
+          <li>Guillaume Bourque</li>
+          <li>Luis B Barreiro</li>
         </ul>
         <h3>Funding and Support</h3>
         <p>
