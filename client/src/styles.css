@@ -307,7 +307,10 @@ body {
   opacity: 0.8;
 }
 .Controls__chromosome {
-  width: 100px;
+  width: 82px;
+}
+.Controls__chromosome button {
+  text-align: left;
 }
 .Controls__chromosome .dropdown-menu {
   max-height: calc(100vh - 240px);  /* Roughly the full screen height minus the top offset */
