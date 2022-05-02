@@ -228,8 +228,8 @@ body {
 }
 .Header__title {
   text-align: center;
-  font-size: 48px;
-  line-height: 52px;
+  font-size: 43px;
+  line-height: 46px;
   font-family: 'PT Sans', sans-serif;
   font-weight: 800;
   /*text-transform: uppercase;*/
@@ -247,7 +247,7 @@ body {
 .Header__subtitle {
   text-align: center;
   color: #8FA1FF;
-  font-size: 22px;
+  font-size: 19px;
   font-family: 'PT Sans', sans-serif;
   font-weight: 500;
   letter-spacing: .025em;
