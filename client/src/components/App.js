@@ -29,6 +29,9 @@ const RoutedApp = () => {
   const [contactModal, setContactModal] = useState(false);
   const [termsModal, setTermsModal] = useState(false);
 
+  const chrom = useSelector(state => state.ui.chrom);
+  const position = useSelector(state => state.ui.position);
+
   const toggleHelp = () => setHelpModal(!helpModal);
   const toggleContact = () => setContactModal(!contactModal);
   const toggleTerms = () => setTermsModal(!termsModal);
@@ -37,7 +40,11 @@ const RoutedApp = () => {
   const navigateDatasets = () => navigate("/datasets");
   const navigateExplore = () => {
     if (location.pathname.startsWith("/explore")) return;
-    navigate("/explore");
+    if (chrom && position) {
+      navigate(`/explore/locus/${chrom}/${position}`);
+    } else {
+      navigate("/explore");
+    }
   }
 
   useEffect(() => {
@@ -110,7 +117,7 @@ class App extends Component {
             <Route path="explore" element={<ProtectedPageContainer>
               <ExplorePage />
             </ProtectedPageContainer>}>
-              <Route index={true} element={<div />} />
+              <Route index={true} element={<PeakResults />} />
               <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
               <Route path="locus/:chrom/:position" element={<PeakResults />} />
             </Route>
