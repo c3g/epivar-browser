@@ -33,8 +33,7 @@ export const authStrategy = new OpenIDConnectStrategy({
 
   callbackURL: `${process.env.VARWIG_BASE_URL ?? ""}/api/auth/callback`,
 
-  scope: ["profile"],  // TODO: Configurable; add CILogon scopes when required
-  state: true,  // TODO: ?
+  scope: (process.env.VARWIG_AUTH_SCOPE ?? "openid").trim().split(/\s+/),
 }, (issuer, profile, cb) => {
   // TODO: validate issuer, assert presence of institution field if not in dev
   cb(null, {...profile, issuer});

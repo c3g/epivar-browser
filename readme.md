@@ -125,9 +125,10 @@ You will also need to set up authentication via an OIDC layer. This is configure
 environment variables (which can either be typed into the service run command, or placed
 into a `.env` file and loaded at service start time).
 
-Here is an example, with secrets redacted, for a development setup via Auth0:
+Here is an example, with secrets redacted, for a setup via Auth0:
 
 ```bash
+VARWIG_AUTH_SCOPE="openid profile"
 VARWIG_CLIENT_ID=some_client
 VARWIG_CLIENT_SECRET=some_secret
 VARWIG_SESSION_SECRET=some_session_secret
@@ -140,6 +141,12 @@ VARWIG_BASE_URL=https://flu-infection.vhost38.genap.ca
 
 Note that trailing slashes are very important here; for example, a missing trailing slash for `VARWIG_ISSUER` will
 prevent successful authentication.
+
+In production with CILogon, the auth scopes would be configured as follows:
+
+```bash
+VARWIG_AUTH_SCOPE="openid email org.cilogon.userinfo"
+```
 
 ## Architecture
 
