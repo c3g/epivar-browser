@@ -83,7 +83,7 @@ const RoutedApp = () => {
 
       <Outlet context={{termsModal, setTermsModal, toggleHelp}} />
 
-      <Footer onHelp={toggleHelp} onContact={toggleContact} onTerms={toggleTerms} />
+      <Footer onContact={toggleContact} onTerms={toggleTerms} />
     </div>
   )
 };
