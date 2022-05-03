@@ -12,11 +12,15 @@ const DatasetsPage = () => {
           of the raw datasets will require a formal data access request. Please cite{" "}
           <Link to="/about#papers">the appropriate paper(s)</Link> if you use data from this project.
         </p>
+      </Col>
+    </Row>
+    <Row>
+      <Col sm="12" md="6" lg={{size: 5, offset: 1}}>
         <h3>Data Download</h3>
         <h4>RNA-seq, ATAC-seq and ChIPmentation</h4>
         <p>
           Sequence data for RNA-seq, ATAC-seq and ChIPmentation have been deposited at the
-          European Genome-phenome Archive (EGA), under accession numbers{" "}
+          European Genome-phenome Archive (EGA), under accession number{" "}
           <a href="https://ega-archive.org/datasets/EGAD00001008422"
              target="_blank"
              rel="noreferrer">EGAD00001008422</a>.
@@ -24,11 +28,7 @@ const DatasetsPage = () => {
         <h4>WGS and WGBS</h4>
         <p>
           Sequence data for WGS and WGBS have been deposited at the European Genome-phenome Archive (EGA), under
-          accession numbers{" "}
-          <a href="https://ega-archive.org/datasets/EGAD00001008422"
-             target="_blank"
-             rel="noreferrer">EGAD00001008422</a>{" "}
-          (RNA-seq, ATAC-seq and ChIPmentation) and{" "}
+          accession number{" "}
           <a href="https://ega-archive.org/datasets/EGAD00001008359"
              target="_blank"
              rel="noreferrer">EGAD00001008359</a>.
@@ -37,6 +37,9 @@ const DatasetsPage = () => {
         <p>N/A for now</p>
         <h4>ChIP-seq on NA12878</h4>
         <p>N/A for now</p>
+      </Col>
+      <Col sm="12" md="6" lg="5">
+        <h3>Data visualization</h3>
       </Col>
     </Row>
   </Container>;
