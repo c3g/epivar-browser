@@ -69,7 +69,7 @@ const AboutPage = () => {
           <li>Xun Chen</li>
           <li>Cristian Groza</li>
           <li>David Lougheed</li>
-          <li>Romain Gregoire</li>
+          <li>Romain Gr&eacute;goire</li>
           <li>David Brownlee</li>
           <li>Yang Li</li>
           <li>Xin He</li>
