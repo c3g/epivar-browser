@@ -346,6 +346,7 @@ body {
 }
 .Page figure img {
   width: 100%;
+  height: auto;
 }
 
 
