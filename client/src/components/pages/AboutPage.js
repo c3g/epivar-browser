@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {Col, Container, Row} from "reactstrap";
-import {useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 const AboutPage = () => {
   const location = useLocation();
@@ -23,7 +23,7 @@ const AboutPage = () => {
           infection with influenza A virus (IAV) (see below).
         </p>
         <figure>
-          <img src="/figure1A.png" alt="Figure showing methodology" />
+          <img width={600} height={387} src="/figure1A.png" alt="Figure showing methodology" />
         </figure>
         <p id="papers">
           The results of this project are summarized in 3 papers:
@@ -43,15 +43,16 @@ const AboutPage = () => {
           </li>
         </ol>
         <p>
-          All the datasets that have been generated as part of this project are summarized and made available here
-          [TODO: link]. Access to some of the raw datasets require a formal data access request but all resources are
-          available freely. Please cite the appropriate paper(s) if you use the data.
+          All the datasets that have been generated as part of this project are summarized and{" "}
+          <Link to="/datasets">made available here</Link>. Access to some of the raw datasets require a formal data
+          access request but all resources are available freely. Please cite the appropriate paper(s) if you use
+          the data.
         </p>
         <p>
-          We have also built a browser tool [TODO: link] that allows navigation of these rich datasets by condition,
-          ancestry and, importantly, haplotype. This allows an in-depth exploration of the quantitative trait loci and
-          other key results reported in the studies above. Using this tool requires a simple registration to ensure
-          data privacy conditions are respected.
+          We have also built a <Link to="/explore">browser tool</Link> that allows navigation of these rich datasets by
+          condition, ancestry and, importantly, haplotype. This allows an in-depth exploration of the quantitative
+          trait loci and other key results reported in the studies above. Using this tool requires a simple registration
+          to ensure data privacy conditions are respected.
         </p>
         <h3>Team</h3>
         <ul>
