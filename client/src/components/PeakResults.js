@@ -92,8 +92,8 @@ const PeakResults = () => {
       isEmpty &&
       <Container>
         <div className='PeakResults__empty'>
-          No results for the selected range.<br/>
-          Try with a different range.
+          No results for the selected search term.<br/>
+          Try something different.
         </div>
       </Container>
     }
