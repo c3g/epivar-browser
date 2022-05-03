@@ -40,6 +40,29 @@ const DatasetsPage = () => {
       </Col>
       <Col sm="12" md="6" lg="5">
         <h3>Data visualization</h3>
+        <p>
+          We constructed <Link to="/explore">a versatile QTL browser</Link>, which allows users to explore and visualize
+          mapped QTLs for gene expression, chromatin accessibility, histone modifications and DNA methylation.
+        </p>
+        <p>
+          To generate plots, we use the UCSC <em>bigWigSummary</em> tool to calculate average signal across a feature
+          for each sample upon request. These values are combined with genotype information extracted from a{" "}
+          <a href="https://gemini.readthedocs.io/en/latest/"
+             target="_blank"
+             rel="noreferrer">Gemini database</a> into a box plot on a server, which is
+          then sent to the user’s browser if they have signed in and agreed to the terms of use. Plots are generated as
+          needed, rather than in advance, and are derived directly from the track and genotype data.
+        </p>
+        <p>
+          Genome browser tracks were created with the HOMER <em>makeUCSCfile</em> command and <em>bedGraphToBigWig</em>
+          {" "}utility from UCSC. Tracks were normalized so that each value represents the read count per base pair per
+          10 million reads.  We generate{" "}
+          <a href="https://genome.ucsc.edu/"
+             target="_blank"
+             rel="noreferrer">UCSC Genome Browser</a> track hubs upon
+          request to visualize averaged track segments for a given genomic feature. These tracks are created on the fly
+          by averaging bigWig regions of samples sharing an experimental treatment and genotype.
+        </p>
       </Col>
     </Row>
   </Container>;
