@@ -146,10 +146,10 @@ const Controls = ({toggleHelp}) => {
     // The item assay is the tab with the most significant result - which will be
     // selected first by nature of ordering, thus leading the user to the most interesting
     // detail from the autocomplete.
-    console.log(item);
     navigate(`/explore/locus/${chrom}/${position}/${item.assay}`, {replace: true});
     changePosition(position);
     dispatch(doSearch());
+    setDidFirstSearch(true);
   }, [list, dispatch, navigate, changePosition]);
 
   const moveSelection = useCallback(n => {
@@ -196,9 +196,9 @@ const Controls = ({toggleHelp}) => {
   }, [dispatch]);
 
   const onClickSearch = useCallback(() => {
-    console.log(chrom, position);
     navigate(`/explore/locus/${chrom}/${position}`, {replace: true});
     dispatch(doSearch());
+    setDidFirstSearch(true);
   }, [navigate, chrom, position]);
 
   return <div className={cx('Controls', { didFirstSearch })}>
@@ -244,10 +244,10 @@ const Controls = ({toggleHelp}) => {
                   >
                     { highlight(item.nat_id ?? item.position ?? item.name, position) }
                     <span>
-                          <strong>Min. <span style={{fontFamily: "serif"}}>p</span> value:</strong>
+                      <strong>Min. <span style={{fontFamily: "serif"}}>p</span> value:</strong>
                       {' '}
                       {item.minValueMin.toExponential(2)}
-                        </span>
+                    </span>
                     <span><strong>Features:</strong> {item.nFeatures}</span>
                   </div>
                 )}
