@@ -291,7 +291,9 @@ const Controls = ({toggleHelp}) => {
 function highlight(item, prefix) {
   const text = String(item).trimStart();
   const textLower = text.toLowerCase();
-  const prefixLower = prefix.trimStart().toLowerCase();
+
+  const prefixLower = (textLower.startsWith("rs") ? "rs" : "")
+    + prefix.trimStart().toLowerCase().replace(/^rs/, "");
 
   if (!textLower.startsWith(prefixLower)) {
     // Prefix isn't in search text, so don't render any highlighting.
@@ -299,8 +301,8 @@ function highlight(item, prefix) {
   }
 
   return <span>
-    <span className="highlight">{text.substring(0, prefix.length)}</span>
-    {text.substring(prefix.length)}
+    <span className="highlight">{text.substring(0, prefixLower.length)}</span>
+    {text.substring(prefixLower.length)}
   </span>;
 }
 
