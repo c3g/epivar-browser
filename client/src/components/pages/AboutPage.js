@@ -73,6 +73,8 @@ const AboutPage = () => {
           <li>David Brownlee</li>
           <li>Yang Li</li>
           <li>Xin He</li>
+          <li>Hanshi Liu</li>
+          <li>Yann Joly</li>
           <li>David Bujold</li>
           <li>Tomi Pastinen</li>
           <li>Guillaume Bourque</li>
