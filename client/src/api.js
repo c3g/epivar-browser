@@ -18,10 +18,6 @@ export function fetchPeaks(params) {
   return get('/peaks/query', params)
 }
 
-export function fetchSamples(params) {
-  return get('/samples/query', params)
-}
-
 export function fetchChroms() {
   return get('/autocomplete/chroms')
   .then(chroms => {

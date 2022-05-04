@@ -19,7 +19,6 @@ export const user      = createFetchActions(k.USER)
 export const messages  = createFetchActions(k.MESSAGES)
 
 export const fetchAssays    = createFetchFunction(api.fetchAssays,    assays)
-export const fetchSamples   = createFetchFunction(api.fetchSamples,   samples)
 export const fetchChroms    = createFetchFunction(api.fetchChroms,    chroms)
 export const fetchPositions = createFetchFunction(api.fetchPositions, positions)
 export const cacheValues    = createFetchFunction(api.cacheValues,    values)
@@ -41,27 +40,39 @@ export const doSearch = () => (dispatch, getState) => {
 export const mergeTracks = peak => dispatch => {
   const session = {...peak};
 
+  const padding = 10;
+
+  const featureChrom = `chr${session.feature.chrom}`;
+  const snpChrom = `chr${session.snp.chrom}`;
+
   api.createSession(session)
     .then(sessionID => {
-      const db = 'hg19'
-      const featureChrom = `chr${session.feature.chrom}`;
-      const snpChrom = `chr${session.snp.chrom}`;
-      const position = `${featureChrom}:${session.feature.start}-${session.feature.end}`
-      const baseURL = `${window.location.origin}${process.env.PUBLIC_URL || ''}`
-      const hubURL = `${baseURL}/api/ucsc/hub/${sessionID}`
+      const db = 'hg19';
+      const snpPosition = session.snp.position;
+      const displayWindow = featureChrom === snpChrom
+        ? [Math.min(session.feature.start, snpPosition), Math.max(session.feature.end, snpPosition)]
+        : [session.feature.start, session.feature.end];
+      const position = `${featureChrom}:${displayWindow[0]-padding}-${displayWindow[1]+padding}`;
+      const baseURL = `${window.location.origin}${process.env.PUBLIC_URL || ''}`;
+      const hubURL = `${baseURL}/api/ucsc/hub/${sessionID}`;
       const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs({
         db,
         hubClear: hubURL,
         position,
-        highlight: `${db}.${snpChrom}:${session.snp.position}-${session.snp.position+1}#FFAAAA`,
-      })
 
-      console.log('Hub:',  hubURL)
-      console.log('UCSC:', ucscURL)
+        // Highlight the SNP in red, and the feature in light yellow
+        highlight: [
+          `${db}.${snpChrom}:${session.snp.position}-${session.snp.position+1}#FFAAAA`,
+          `${db}.${featureChrom}:${session.feature.start}-${session.feature.end}#FFEECC`,
+        ].join("|"),
+      });
 
-      window.open(ucscURL)
+      console.log('Hub:',  hubURL);
+      console.log('UCSC:', ucscURL);
+
+      window.open(ucscURL);
     })
-    .catch(err => dispatch(handleError(err)))
+    .catch(err => dispatch(handleError(err)));
 };
 
 
