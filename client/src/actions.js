@@ -63,7 +63,7 @@ export const mergeTracks = peak => dispatch => {
         // Highlight the SNP in red, and the feature in light yellow
         highlight: [
           `${db}.${featureChrom}:${session.feature.start}-${session.feature.end}#FFEECC`,
-          `${db}.${snpChrom}:${session.snp.position}-${session.snp.position+1}#FF9999`,
+          `${db}.${snpChrom}:${session.snp.position}-${session.snp.position+1}#FF9F9F`,
         ].join("|"),
       });
 
