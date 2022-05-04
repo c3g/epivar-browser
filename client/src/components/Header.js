@@ -7,7 +7,7 @@ import Icon from "./Icon";
 
 import {LOGIN_PATH} from "../constants/app";
 
-export default function Header({children, onAbout, onDatasets, onExplore, onContact}) {
+export default function Header({children, onAbout, onDatasets, onExplore, onFAQ/*, onContact*/}) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -36,7 +36,10 @@ export default function Header({children, onAbout, onDatasets, onExplore, onCont
           <Button color="link"
                   className={location.pathname.startsWith("/explore") ? "active" : ""}
                   onClick={onExplore}><Icon name="search" />Explore</Button>
-          <Button color="link" onClick={onContact}><Icon name="envelope" />Contact</Button>
+          <Button color="link"
+                  className={location.pathname.startsWith("/faq") ? "active" : ""}
+                  onClick={onFAQ}><Icon name="question-circle" />FAQ</Button>
+          {/*<Button color="link" onClick={onContact}><Icon name="envelope" />Contact</Button>*/}
         </div>
         { children }
       </Container>

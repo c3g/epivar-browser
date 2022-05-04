@@ -16,6 +16,7 @@ import ProtectedPageContainer from "./pages/ProtectedPageContainer";
 import HomePage from "./pages/HomePage";
 import ExplorePage from "./pages/ExplorePage";
 import DatasetsPage from "./pages/DatasetsPage";
+import FAQPage from "./pages/FAQPage";
 
 
 const RoutedApp = () => {
@@ -46,6 +47,7 @@ const RoutedApp = () => {
       navigate("/explore");
     }
   }
+  const navigateFAQ = () => navigate("/faq");
 
   useEffect(() => {
     if (userData.isLoaded && userData.data && !userData.data.consentedToTerms) {
@@ -76,6 +78,7 @@ const RoutedApp = () => {
       <Header onAbout={navigateAbout}
               onDatasets={navigateDatasets}
               onExplore={navigateExplore}
+              onFAQ={navigateFAQ}
               onContact={toggleContact}>
         <HelpModal isOpen={helpModal} toggle={toggleHelp} />
         {/*<Controls params={params} navigate={navigate} toggleHelp={toggleHelp} />*/}
@@ -121,6 +124,7 @@ class App extends Component {
               <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
               <Route path="locus/:chrom/:position" element={<PeakResults />} />
             </Route>
+            <Route path="faq" element={<FAQPage />} />
             <Route path="auth-failure" element={<div />} />
           </Route>
           <Route path="*" element={<Navigate to="/" />}/>
