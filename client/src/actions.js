@@ -40,7 +40,7 @@ export const doSearch = () => (dispatch, getState) => {
 export const mergeTracks = peak => dispatch => {
   const session = {...peak};
 
-  const padding = 10;
+  const padding = 200;
 
   const featureChrom = `chr${session.feature.chrom}`;
   const snpChrom = `chr${session.snp.chrom}`;
@@ -62,8 +62,8 @@ export const mergeTracks = peak => dispatch => {
 
         // Highlight the SNP in red, and the feature in light yellow
         highlight: [
-          `${db}.${snpChrom}:${session.snp.position}-${session.snp.position+1}#FFAAAA`,
           `${db}.${featureChrom}:${session.feature.start}-${session.feature.end}#FFEECC`,
+          `${db}.${snpChrom}:${session.snp.position}-${session.snp.position+1}#FF9999`,
         ].join("|"),
       });
 
