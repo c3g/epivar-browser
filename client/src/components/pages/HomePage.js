@@ -4,7 +4,8 @@ const HomePage = () => {
   return <Container className="Page">
     <Row>
       <Col md="12" lg={{size: 10, offset: 1}}>
-        TODO: Homepage
+        &nbsp;
+        {/*TODO: Homepage*/}
       </Col>
     </Row>
   </Container>;
