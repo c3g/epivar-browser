@@ -40,7 +40,7 @@ export const doSearch = () => (dispatch, getState) => {
 export const mergeTracks = peak => dispatch => {
   const session = {...peak};
 
-  const padding = 200;
+  const padding = 500;
 
   const featureChrom = `chr${session.feature.chrom}`;
   const snpChrom = `chr${session.snp.chrom}`;
