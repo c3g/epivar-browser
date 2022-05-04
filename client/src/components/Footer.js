@@ -2,11 +2,14 @@ import React from "react";
 import {Container} from "reactstrap";
 import {Link} from "react-router-dom";
 
+import packageJson from "../../package.json";
+
 const Footer = ({onContact, onTerms}) => (
   <Container>
     <div className="Footer">
       <div className="Footer__text">
-      TODO: Some footer text here.
+        <span>TODO: Some footer text here.</span>{" "}
+        <em>Version {packageJson.version}</em>
       </div>
       <nav className="Footer__nav">
         <ul>

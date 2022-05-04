@@ -1,6 +1,6 @@
 {
   "name": "flu-infection",
-  "version": "0.9.0",
+  "version": "0.9.0-alpha.0",
   "private": true,
   "scripts": {
     "postinstall": "cd client && npm install",
@@ -35,7 +35,7 @@
     "pg-copy-streams": "^6.0.2",
     "pug": "~3.0.2",
     "rambda": "^7.0.3",
-    "redis": "^4.0.6",
+    "redis": "~4.0.6",
     "serve-favicon": "~2.5.0",
     "sharp": "^0.30.4"
   },

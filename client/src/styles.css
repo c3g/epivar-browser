@@ -526,6 +526,10 @@ details summary {
   flex: 1;
   color: #333;
 }
+.Footer__text em {
+  font-style: italic;
+  color: #777;
+}
 .Footer__nav {
 
 }
