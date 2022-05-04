@@ -35,7 +35,7 @@ export default function Header({children, onAbout, onDatasets, onExplore, onFAQ/
                   onClick={onDatasets}><Icon name="table" />Datasets</Button>
           <Button color="link"
                   className={"highlight" + (location.pathname.startsWith("/explore") ? " active" : "")}
-                  onClick={onExplore}><Icon name="search" />Explore Data</Button>
+                  onClick={onExplore}><Icon name="search" />Explore</Button>
           <Button color="link"
                   className={location.pathname.startsWith("/faq") ? "active" : ""}
                   onClick={onFAQ}><Icon name="question-circle" />FAQ</Button>
