@@ -8,7 +8,7 @@ const Intro = ({onAccess, onTerms, signedIn}) => (
       <Col md="12" lg={{size: 10, offset: 1}}>
         <p>
           To explore the data, you must first{" "}
-          {!signedIn && <><a href="#" onClick={onAccess}>sign up or sign in</a> and</>}{" "}agree to our
+          {!signedIn && <><a href="#" onClick={onAccess}>log in or sign up</a> and</>}{" "}agree to our
           {" "}<a href="#" onClick={onTerms}>terms of use</a>.
         </p>
         <Button onClick={onAccess}>Access the Data</Button>
