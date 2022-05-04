@@ -54,32 +54,48 @@ const AboutPage = () => {
           trait loci and other key results reported in the studies above. Using this tool requires a simple registration
           to ensure data privacy conditions are respected.
         </p>
+      </Col>
+    </Row>
+    <Row>
+      <Col md="12" lg={{size: 10, offset: 1}}>
         <h3>Team</h3>
+      </Col>
+      <Col sm="12" md="6" lg={{size: 5, offset: 1}}>
+        <h5>McGill University</h5>
         <ul>
-          <li>Katherine A Aracena</li>
-          <li>Yen-Lung Lin</li>
-          <li>Kaixuan Luo</li>
           <li>Alain Pacis</li>
-          <li>Saideep Gona</li>
-          <li>Zepeng Mu</li>
-          <li>Vania Yotova</li>
-          <li>Renata Sindeaux</li>
+          <li>David Lougheed</li>
           <li>Albena Pramatarova</li>
           <li>Marie-Michelle Simon</li>
           <li>Xun Chen</li>
           <li>Cristian Groza</li>
-          <li>David Lougheed</li>
-          <li>Romain Gr&eacute;goire</li>
+          <li>Romain Gregoire</li>
           <li>David Brownlee</li>
-          <li>Yang Li</li>
-          <li>Xin He</li>
           <li>Hanshi Liu</li>
           <li>Yann Joly</li>
           <li>David Bujold</li>
           <li>Tomi Pastinen</li>
           <li>Guillaume Bourque</li>
+        </ul>
+      </Col>
+      <Col sm="12" md="6" lg="5">
+        <h5>University of Chicago / Universit&eacute; de Montr&eacute;al</h5>
+        <ul>
+          <li>Katherine A Aracena</li>
+          <li>Yen-Lung Lin</li>
+          <li>Kaixuan Luo</li>
+          <li>Saideep Gona</li>
+          <li>Zepeng Mu</li>
+          <li>Vania Yotova</li>
+          <li>Renata Sindeaux</li>
+          <li>Yang Li</li>
+          <li>Xin He</li>
           <li>Luis B Barreiro</li>
         </ul>
+      </Col>
+    </Row>
+    <Row>
+      <Col md="12" lg={{size: 10, offset: 1}}>
         <h3>Funding and Support</h3>
         <p>
           This work was supported by a Canada Institute of Health Research (CIHR) program grant (CEE-151618) for the
