@@ -12,10 +12,6 @@ const DatasetsPage = () => {
           of the raw datasets will require a formal data access request. Please cite{" "}
           <Link to="/about#papers">the appropriate paper(s)</Link> if you use data from this project.
         </p>
-      </Col>
-    </Row>
-    <Row>
-      <Col sm="12" md="6" lg={{size: 5, offset: 1}}>
         <h3>Data Download</h3>
         <h4>RNA-seq, ATAC-seq and ChIPmentation</h4>
         <p>
@@ -37,8 +33,6 @@ const DatasetsPage = () => {
         <p>Under submission to EGA.</p>
         <h4>ChIP-seq on NA12878</h4>
         <p>Under submission to EGA.</p>
-      </Col>
-      <Col sm="12" md="6" lg="5">
         <h3>Data visualization</h3>
         <p>
           We constructed <Link to="/explore">a versatile QTL browser</Link>, which allows users to explore and visualize

@@ -60,8 +60,8 @@ const AboutPage = () => {
       <Col md="12" lg={{size: 10, offset: 1}}>
         <h3>Team</h3>
       </Col>
-      <Col sm="12" md="6" lg={{size: 5, offset: 1}}>
-        <h5>McGill University</h5>
+      <Col sm="12" md="5" lg={{size: 4, offset: 1}}>
+        <h4>McGill University</h4>
         <ul>
           <li>Alain Pacis</li>
           <li>David Lougheed</li>
@@ -78,8 +78,8 @@ const AboutPage = () => {
           <li>Guillaume Bourque</li>
         </ul>
       </Col>
-      <Col sm="12" md="6" lg="5">
-        <h5>University of Chicago / Universit&eacute; de Montr&eacute;al</h5>
+      <Col sm="12" md="7" lg="6">
+        <h4>University of Chicago / Universit&eacute; de Montr&eacute;al</h4>
         <ul>
           <li>Katherine A Aracena</li>
           <li>Yen-Lung Lin</li>

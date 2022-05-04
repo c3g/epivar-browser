@@ -24,7 +24,7 @@ export default function Header({children, onAbout, onDatasets, onExplore, onFAQ/
         }
       </div>
       <Container>
-        <h1 className='Header__title'><Link to="/" className='Link'>EpiVar Browser</Link></h1>
+        <h1 className='Header__title'><Link to="/about" className='Link'>EpiVar Browser</Link></h1>
         <h4 className='Header__subtitle'>Epigenetic & Expression QTLs</h4>
         <div className="Header__links">
           <Button color="link"
@@ -34,8 +34,8 @@ export default function Header({children, onAbout, onDatasets, onExplore, onFAQ/
                   className={location.pathname.startsWith("/datasets") ? "active" : ""}
                   onClick={onDatasets}><Icon name="table" />Datasets</Button>
           <Button color="link"
-                  className={location.pathname.startsWith("/explore") ? "active" : ""}
-                  onClick={onExplore}><Icon name="search" />Explore</Button>
+                  className={"highlight" + (location.pathname.startsWith("/explore") ? " active" : "")}
+                  onClick={onExplore}><Icon name="search" />Explore Data</Button>
           <Button color="link"
                   className={location.pathname.startsWith("/faq") ? "active" : ""}
                   onClick={onFAQ}><Icon name="question-circle" />FAQ</Button>

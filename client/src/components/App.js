@@ -13,7 +13,6 @@ import {saveUser} from "../actions";
 import ContactModal from "./ContactModal";
 import AboutPage from "./pages/AboutPage";
 import ProtectedPageContainer from "./pages/ProtectedPageContainer";
-import HomePage from "./pages/HomePage";
 import ExplorePage from "./pages/ExplorePage";
 import DatasetsPage from "./pages/DatasetsPage";
 import FAQPage from "./pages/FAQPage";
@@ -112,9 +111,7 @@ class App extends Component {
 
         <Routes>
           <Route path="/" element={<RoutedApp />}>
-            <Route index={true} element={<ProtectedPageContainer>
-              <HomePage />
-            </ProtectedPageContainer>} />
+            <Route index={true} element={<Navigate to="/about" replace={true} />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="datasets" element={<DatasetsPage />} />
             <Route path="explore" element={<ProtectedPageContainer>
