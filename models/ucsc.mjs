@@ -2,14 +2,14 @@
  * ucsc.js
  */
 
+import Color from "color-js";
 import fs from "fs";
 import path from "path";
-// const fs = require('fs')
-// const path = require('path')
-import Color from "color-js";
+import {fileURLToPath} from "url";
 
 import unindent from "../helpers/unindent.mjs";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const otherTracks = fs.readFileSync(path.join(__dirname, './ucsc.other-tracks.txt')).toString();
 
 export default {
