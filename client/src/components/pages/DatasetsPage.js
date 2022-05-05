@@ -1,6 +1,18 @@
 import React from "react";
 import {Col, Container, Row} from "reactstrap";
 import {Link} from "react-router-dom";
+import {ASSEMBLY, BASE_URL} from "../../constants/app";
+import {constructUCSCUrl} from "../../helpers/ucsc";
+
+const openTracks = () => {
+  const permaHubURL = `${BASE_URL}/api/ucsc/perma/hub/other-tracks`;
+  const ucscURL = constructUCSCUrl([
+    ["db", ASSEMBLY],
+    ["hubClear", permaHubURL],
+  ]);
+  console.log("UCSC:", ucscURL);
+  window.open(ucscURL);
+};
 
 const DatasetsPage = () => {
   return <Container className="Page">
@@ -34,6 +46,9 @@ const DatasetsPage = () => {
         <h4>ChIP-seq on NA12878</h4>
         <p>Under submission to EGA.</p>
         <h3>Data visualization</h3>
+        <p>
+          Genomic tracks by condition and ancestry are available <a href="#" onClick={openTracks}>here</a>.
+        </p>
         <p>
           We constructed <Link to="/explore">a versatile QTL browser</Link>, which allows users to explore and visualize
           mapped QTLs for gene expression, chromatin accessibility, histone modifications and DNA methylation.

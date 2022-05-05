@@ -12,6 +12,7 @@ import {useTable, usePagination, useSortBy} from "react-table";
 import Icon from "./Icon";
 import PeakBoxplot from "./PeakBoxplot";
 import {cacheValues, mergeTracks} from "../actions";
+import {ASSEMBLY} from "../constants/app";
 import {CONDITION_FLU, CONDITION_NI, conditionName} from "../helpers/conditions";
 
 
@@ -88,7 +89,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
         return <div>
           <a id={k} style={{textDecoration: "underline"}}>{row.snp.id}</a>
           <Tooltip target={k} placement="top" isOpen={tooltipsShown[k]} toggle={toggleTooltip(k)} autohide={false}>
-            [hg19] chr{row.snp.chrom}:{row.snp.position}
+            [{ASSEMBLY}] chr{row.snp.chrom}:{row.snp.position}
           </Tooltip>
         </div>;
       },
@@ -106,7 +107,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
           <a id={k} style={{textDecoration: showTooltip ? "underline" : "none"}}>{featureText}</a>
           {showTooltip ? (
             <Tooltip target={k} placement="top" isOpen={tooltipsShown[k]} toggle={toggleTooltip(k)} autohide={false}>
-              [hg19] chr{row.feature.chrom}:{row.feature.start}-{row.feature.end}
+              [{ASSEMBLY}] chr{row.feature.chrom}:{row.feature.start}-{row.feature.end}
               {" "}
               {row.feature.strand ? `(strand: ${row.feature.strand})` : null}
             </Tooltip>

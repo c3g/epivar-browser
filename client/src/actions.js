@@ -1,9 +1,10 @@
 import { createAction } from 'redux-actions'
 import axios from 'axios'
 
-import {queryStringFromEntries as qs} from './helpers/queryString.js'
 import * as api from './api'
 import * as k from './constants/ActionTypes.js'
+import {ASSEMBLY, BASE_URL} from "./constants/app";
+import {constructUCSCUrl} from "./helpers/ucsc";
 
 export const setChrom       = createAction(k.SET_CHROM)
 export const setPosition    = createAction(k.SET_POSITION)
@@ -47,25 +48,22 @@ export const mergeTracks = peak => dispatch => {
 
   api.createSession(session)
     .then(sessionID => {
-      const db = 'hg19';
       const snpPosition = session.snp.position;
       const displayWindow = featureChrom === snpChrom
         ? [Math.min(session.feature.start, snpPosition), Math.max(session.feature.end, snpPosition)]
         : [session.feature.start, session.feature.end];
       const position = `${featureChrom}:${displayWindow[0]-padding}-${displayWindow[1]+padding}`;
-      const baseURL = `${window.location.origin}${process.env.PUBLIC_URL || ''}`;
-      const hubURL = `${baseURL}/api/ucsc/hub/${sessionID}`;
-      const permaHubURL = `${baseURL}/api/ucsc/perma/hub/other-tracks`;
-      const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs([
-        ["db", db],
+      const hubURL = `${BASE_URL}/api/ucsc/hub/${sessionID}`;
+      const ucscURL = constructUCSCUrl([
+        ["db", ASSEMBLY],
         ["hubClear", hubURL],
         // ["hubClear", permaHubURL],
         ["position", position],
 
         // Highlight the SNP in red, and the feature in light yellow
         ["highlight", [
-          `${db}.${featureChrom}:${session.feature.start}-${session.feature.end}#FFEECC`,
-          `${db}.${snpChrom}:${session.snp.position}-${session.snp.position+1}#FF9F9F`,
+          `${ASSEMBLY}.${featureChrom}:${session.feature.start}-${session.feature.end}#FFEECC`,
+          `${ASSEMBLY}.${snpChrom}:${session.snp.position}-${session.snp.position+1}#FF9F9F`,
         ].join("|")],
       ]);
 
