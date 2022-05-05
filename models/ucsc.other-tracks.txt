@@ -13,7 +13,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 1
+    priority 101
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -49,7 +49,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 2
+    priority 102
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -85,7 +85,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 3
+    priority 103
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -121,7 +121,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 4
+    priority 104
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -155,7 +155,7 @@ bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/H3K27me3_AF_NI_avg.bw
 viewLimits 0:500
 alwaysZero on
 maxHeightPixels 300:30:10
-priority 4.5
+priority 104.5
 color 255,255,255
 
 
@@ -174,7 +174,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 5
+    priority 105
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -210,7 +210,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 6
+    priority 106
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -246,7 +246,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 7
+    priority 107
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -282,7 +282,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 8
+    priority 108
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -316,7 +316,7 @@ bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/H3K27me3_AF_NI_avg.bw
 viewLimits 0:500
 alwaysZero on
 maxHeightPixels 300:30:10
-priority 8.5
+priority 108.5
 color 255,255,255
 
 
@@ -335,7 +335,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 9
+    priority 109
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -371,7 +371,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 10
+    priority 1010
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -407,7 +407,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 11
+    priority 1011
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -443,7 +443,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 12
+    priority 1012
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -477,7 +477,7 @@ bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/H3K27me3_AF_NI_avg.bw
 viewLimits 0:500
 alwaysZero on
 maxHeightPixels 300:30:10
-priority 12.5
+priority 1012.5
 color 255,255,255
 
 
@@ -496,7 +496,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 13
+    priority 1013
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -532,7 +532,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 14
+    priority 1014
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -568,7 +568,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 15
+    priority 1015
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -604,7 +604,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 16
+    priority 1016
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -638,7 +638,7 @@ bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/H3K27me3_AF_NI_avg.bw
 viewLimits 0:500
 alwaysZero on
 maxHeightPixels 300:30:10
-priority 16.5
+priority 1016.5
 color 255,255,255
 
 
@@ -657,7 +657,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 17
+    priority 1017
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -693,7 +693,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 18
+    priority 1018
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -729,7 +729,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 19
+    priority 1019
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -765,7 +765,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 20
+    priority 1020
     configurable on
     dragAndDrop subTracks
     autoScale off
@@ -799,7 +799,7 @@ bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/H3K27me3_AF_NI_avg.bw
 viewLimits 0:500
 alwaysZero on
 maxHeightPixels 300:30:10
-priority 20.5
+priority 1020.5
 color 255,255,255
 
 hub hub1
@@ -825,7 +825,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 21
+    priority 1021
     dragAndDrop subTracks
     autoScale off
     viewLimits 0:500
@@ -834,7 +834,7 @@ longLabel
     color 0,179,116
 
         track RNAseq_EU_NI_fwd_avg
-        priority 22
+        priority 1022
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_EU_NI_fwd_avg.bw
         shortLabel RNAseq_EU_NI_fwd_avg
         longLabel  
@@ -844,7 +844,7 @@ longLabel
         type bigWig
 
         track RNAseq_EU_NI_fwd_stdev
-        priority 23
+        priority 1023
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_EU_NI_fwd_stdev.bw
         shortLabel RNAseq_EU_NI_fwd_stdev
         longLabel  
@@ -854,7 +854,7 @@ longLabel
         type bigWig
 
         track RNAseq_EU_NI_rev_avg
-        priority 24
+        priority 1024
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_EU_NI_rev_avg.bw
         shortLabel RNAseq_EU_NI_rev_avg
         longLabel  
@@ -864,7 +864,7 @@ longLabel
         type bigWig
 
         track RNAseq_EU_NI_rev_stdev
-        priority 25
+        priority 1025
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_EU_NI_rev_stdev.bw
         shortLabel RNAseq_EU_NI_rev_stdev
         longLabel  
@@ -884,7 +884,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 26
+    priority 1026
     dragAndDrop subTracks
     autoScale off
     viewLimits 0:500
@@ -893,7 +893,7 @@ longLabel
     color 0,179,116
 
         track RNAseq_EU_Flu_fwd_avg
-        priority 27
+        priority 1027
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_EU_Flu_fwd_avg.bw
         shortLabel RNAseq_EU_Flu_fwd_avg
         longLabel  
@@ -903,7 +903,7 @@ longLabel
         type bigWig
 
         track RNAseq_EU_Flu_fwd_stdev
-        priority 28
+        priority 1028
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_EU_Flu_fwd_stdev.bw
         shortLabel RNAseq_EU_Flu_fwd_stdev
         longLabel  
@@ -913,7 +913,7 @@ longLabel
         type bigWig
 
         track RNAseq_EU_Flu_rev_avg
-        priority 29
+        priority 1029
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_EU_Flu_rev_avg.bw
         shortLabel RNAseq_EU_Flu_rev_avg
         longLabel  
@@ -923,7 +923,7 @@ longLabel
         type bigWig
 
         track RNAseq_EU_Flu_rev_stdev
-        priority 30
+        priority 1030
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_EU_Flu_rev_stdev.bw
         shortLabel RNAseq_EU_Flu_rev_stdev
         longLabel  
@@ -942,7 +942,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 31
+    priority 1031
     dragAndDrop subTracks
     autoScale off
     viewLimits 0:500
@@ -951,7 +951,7 @@ longLabel
     color 255,123,0
 
         track RNAseq_AF_NI_fwd_avg
-        priority 32
+        priority 1032
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_AF_NI_fwd_avg.bw
         shortLabel RNAseq_AF_NI_fwd_avg
         longLabel  
@@ -961,7 +961,7 @@ longLabel
         type bigWig
 
         track RNAseq_AF_NI_fwd_stdev
-        priority 33
+        priority 1033
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_AF_NI_fwd_stdev.bw
         shortLabel RNAseq_AF_NI_fwd_stdev
         longLabel  
@@ -971,7 +971,7 @@ longLabel
         type bigWig
 
         track RNAseq_AF_NI_rev_avg
-        priority 34
+        priority 1034
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_AF_NI_rev_avg.bw
         shortLabel RNAseq_AF_NI_rev_avg
         longLabel  
@@ -981,7 +981,7 @@ longLabel
         type bigWig
 
         track RNAseq_AF_NI_rev_stdev
-        priority 35
+        priority 1035
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_AF_NI_rev_stdev.bw
         shortLabel RNAseq_AF_NI_rev_stdev
         longLabel  
@@ -1001,7 +1001,7 @@ longLabel
     aggregate transparentOverlay
     showSubtrackColorOnUi on
     windowingFunction mean
-    priority 36
+    priority 1036
     dragAndDrop subTracks
     autoScale off
     viewLimits 0:500
@@ -1010,7 +1010,7 @@ longLabel
     color 255,123,0
 
         track RNAseq_AF_Flu_fwd_avg
-        priority 37
+        priority 1037
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_AF_Flu_fwd_avg.bw
         shortLabel RNAseq_AF_Flu_fwd_avg
         longLabel  
@@ -1020,7 +1020,7 @@ longLabel
         type bigWig
 
         track RNAseq_AF_Flu_fwd_stdev
-        priority 38
+        priority 1038
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_AF_Flu_fwd_stdev.bw
         shortLabel RNAseq_AF_Flu_fwd_stdev
         longLabel  
@@ -1030,7 +1030,7 @@ longLabel
         type bigWig
 
         track RNAseq_AF_Flu_rev_avg
-        priority 39
+        priority 1039
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_AF_Flu_rev_avg.bw
         shortLabel RNAseq_AF_Flu_rev_avg
         longLabel  
@@ -1040,7 +1040,7 @@ longLabel
         type bigWig
 
         track RNAseq_AF_Flu_rev_stdev
-        priority 40
+        priority 1040
         bigDataUrl https://emc.genome.mcgill.ca/hg19/barreiro/RNAseq_AF_Flu_rev_stdev.bw
         shortLabel RNAseq_AF_Flu_rev_stdev
         longLabel  
