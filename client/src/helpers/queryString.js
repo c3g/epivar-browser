@@ -1,5 +1,9 @@
 export default function queryString(params) {
-  return Object.entries(params)
+  return queryStringFromEntries(Object.entries(params));
+}
+
+export function queryStringFromEntries(params) {
+  return params
     .filter(([_key, value]) => value !== undefined)
     .map(([key, value]) =>
       `${encodeURIComponent(key)}=${encodeURIComponent(asString(value))}`)

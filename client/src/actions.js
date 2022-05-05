@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions'
 import axios from 'axios'
 
-import qs from './helpers/queryString.js'
+import {queryStringFromEntries as qs} from './helpers/queryString.js'
 import * as api from './api'
 import * as k from './constants/ActionTypes.js'
 
@@ -56,18 +56,18 @@ export const mergeTracks = peak => dispatch => {
       const baseURL = `${window.location.origin}${process.env.PUBLIC_URL || ''}`;
       const hubURL = `${baseURL}/api/ucsc/hub/${sessionID}`;
       const permaHubURL = `${baseURL}/api/ucsc/perma/hub/other-tracks`;
-      const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs({
-        db,
-        hubClear: hubURL,
-        hubUrl: permaHubURL,
-        position,
+      const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs([
+        ["db", db],
+        ["hubUrl", hubURL],
+        ["hubUrl", permaHubURL],
+        ["position", position],
 
         // Highlight the SNP in red, and the feature in light yellow
-        highlight: [
+        ["highlight", [
           `${db}.${featureChrom}:${session.feature.start}-${session.feature.end}#FFEECC`,
           `${db}.${snpChrom}:${session.snp.position}-${session.snp.position+1}#FF9F9F`,
-        ].join("|"),
-      });
+        ].join("|")],
+      ]);
 
       console.log('Hub:',  hubURL);
       console.log('UCSC:', ucscURL);
