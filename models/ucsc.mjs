@@ -55,7 +55,7 @@ function generateTracks(mergedTracks) {
       aggregate transparentOverlay
       showSubtrackColorOnUi on
       windowingFunction maximum
-      priority 0.${idx}
+      priority 0.${idx+1}
       configurable on
       dragAndDrop subTracks
       autoScale on
@@ -94,7 +94,7 @@ function generateTracks(mergedTracks) {
     bigDataUrl /otherData/legendItem.bb
     color ${getColor(t)[0]}
     visibility dense
-    priority 2.${i}
+    priority 0.${i+mergedTracks.length+1}
   `))
 
   return (
