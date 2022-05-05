@@ -55,7 +55,7 @@ function generateTracks(mergedTracks) {
       aggregate transparentOverlay
       showSubtrackColorOnUi on
       windowingFunction maximum
-      priority 1.${idx}
+      priority 0.${idx}
       configurable on
       dragAndDrop subTracks
       autoScale on
