@@ -59,7 +59,7 @@ export const mergeTracks = peak => dispatch => {
       const ucscURL = 'https://genome.ucsc.edu/cgi-bin/hgTracks?' + qs([
         ["db", db],
         ["hubClear", hubURL],
-        ["hubClear", permaHubURL],
+        // ["hubClear", permaHubURL],
         ["position", position],
 
         // Highlight the SNP in red, and the feature in light yellow

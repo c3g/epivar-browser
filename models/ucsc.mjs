@@ -101,8 +101,8 @@ function generateTracks(mergedTracks) {
     trackBlocks.join('\n\n')
     // 2021-10-05: Disable these for now at the request of Alain
     //              - David L
-    // + '\n\n'
-    // + otherTracks
+    + '\n\n'
+    + otherTracks
   )
 }
 
