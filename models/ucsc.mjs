@@ -2,15 +2,18 @@
  * ucsc.js
  */
 
+import fs from "fs";
+import path from "path";
 // const fs = require('fs')
 // const path = require('path')
 import Color from "color-js";
 
-// 2021-10-05: Disable these for now at the request of Alain
-//              - David L
-// const otherTracks = fs.readFileSync(path.join(__dirname, './ucsc.other-tracks.txt')).toString()
+import unindent from "../helpers/unindent.mjs";
+
+export const otherTracks = fs.readFileSync(path.join(__dirname, './ucsc.other-tracks.txt')).toString();
 
 export default {
+  otherTracks,
   generateHub,
   generateGenome,
   generateTracks,
@@ -18,9 +21,9 @@ export default {
 
 function generateHub(session) {
   return unindent`
-    hub DIGV_Hub
-    shortLabel DIG Viewer Dynamic Track Hub (Session ID: ${session})
-    longLabel DIG Viewer Dynamic Track Hub (Session ID: ${session})
+    hub EpiVar_Dyn_Hub
+    shortLabel EpiVar Browser Dynamic Track Hub (Session ID: ${session})
+    longLabel EpiVar Browser Dynamic Track Hub (Session ID: ${session})
     genomesFile ../genome/${session}
     email info@epigenomesportal.ca
   `
@@ -158,16 +161,6 @@ function colorToRGB(c) {
   const g = Math.floor(color.getGreen() * 255)
   const b = Math.floor(color.getBlue() * 255)
   return [r, g, b].join(',')
-}
-
-function unindent(strings, ...args) {
-  let result = ''
-  for (let i = 0; i < strings.length; i++) {
-    result += strings[i]
-    if (i < args.length)
-      result += args[i]
-  }
-  return result.replace(/^\s+/mg, '').replace(/\n+$/, '')
 }
 
 function indent(n, string) {
