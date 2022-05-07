@@ -4,12 +4,20 @@ import {Link} from "react-router-dom";
 
 import packageJson from "../../package.json";
 
-const Footer = ({onContact, onTerms}) => (
+const Footer = ({/*onContact, */onTerms}) => (
   <Container>
     <div className="Footer">
       <div className="Footer__text">
-        <span>TODO: Some footer text here.</span>{" "}
-        <em>Version {packageJson.version}</em>
+        <div className="Footer__logo">
+          <a href="https://computationalgenomics.ca" target="_blank" rel="nofollow">
+            <img src="/c3g_logo_small.png" alt="Canadian Centre for Computational Genomics" />
+          </a>
+          <div>
+            <span>Developed by <a href="https://computationalgenomics.ca" target="_blank" rel="nofollow">
+              C3G</a> at McGill University{" "}</span><br />
+            <em>Version {packageJson.version}</em><br />
+          </div>
+        </div>
       </div>
       <nav className="Footer__nav">
         <ul>
@@ -17,7 +25,7 @@ const Footer = ({onContact, onTerms}) => (
           <li><Link to="/about">About</Link></li>
           <li><Link to="/datasets">Datasets</Link></li>
           <li><Link to="/explore">Explore</Link></li>
-          <li><a href="#" onClick={onContact}>Contact</a></li>
+          {/*<li><a href="#" onClick={onContact}>Contact</a></li>*/}
           <li><a href="#" onClick={onTerms}>Terms of Use</a></li>
         </ul>
       </nav>
