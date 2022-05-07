@@ -25,7 +25,7 @@ function generateHub(session) {
     shortLabel EpiVar Browser Dynamic Track Hub (Session ID: ${session})
     longLabel EpiVar Browser Dynamic Track Hub (Session ID: ${session})
     genomesFile ../genome/${session}
-    email data.epivar@computationalgenomics.ca
+    email epivar@computationalgenomics.ca
   `
 }
 

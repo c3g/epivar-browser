@@ -23,7 +23,7 @@ router.get("/perma/hub/other-tracks", (_req, res) => {
     shortLabel EpiVar Browser Track Hub
     longLabel EpiVar Browser Track Hub
     genomesFile ../genome/other-tracks
-    email data.epivar@computationalgenomics.ca
+    email epivar@computationalgenomics.ca
   `).then(textHandler(res))
     .catch(errorHandler(res));
 });
