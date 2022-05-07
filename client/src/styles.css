@@ -7,7 +7,7 @@ html, body, #root {
 body {
   margin: 0;
   padding: 0;
-  font-size: 14px;
+  font-size: 16px;
   font-family: Roboto, Ubuntu, Arial, sans-serif;
 }
 
@@ -379,6 +379,7 @@ details summary {
 
 .PeakResults {
   padding-top: 1em;
+  font-size: 14px;
 }
 .PeakResults__empty {
   font-size: 24px;
@@ -386,6 +387,10 @@ details summary {
   padding: 3em 0;
   text-align: center;
   opacity: 0.3;
+}
+
+.PeakResults .nav-tabs {
+  font-size: 13px;
 }
 
 
