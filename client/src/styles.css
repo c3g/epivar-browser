@@ -369,6 +369,17 @@ body {
   color: #666;
 }
 
+.modal-body h3 {
+  color: #333;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+.modal-body h4 {
+  color: #555;
+  font-size: 1.15em;
+  font-weight: bold;
+}
+
 
 details summary {
   font-style: italic;
