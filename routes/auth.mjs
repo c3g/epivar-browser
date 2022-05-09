@@ -25,7 +25,7 @@ router.put(
 
     const consent = Boolean(req.body.consentedToTerms);
 
-    setTermsConsent(req.user.issuer, req.user.id, CURRENT_TERMS_VERSION, consent)
+    setTermsConsent(req.user.issuer, req.user.id, CURRENT_TERMS_VERSION, consent, req.body.extra || {})
       .then(() => {
         req.user.consentedToTerms = consent;
         return respondWithUser(req, res);

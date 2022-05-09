@@ -65,9 +65,9 @@ const RoutedApp = () => {
         isOpen={termsModal}
         toggle={toggleTerms}
         showAgree={userData.data && !userData.data.consentedToTerms}
-        onAgree={() => {
+        onAgree={institution => {
           if (userData.isLoaded) {
-            dispatch(saveUser({consentedToTerms: true}));
+            dispatch(saveUser({consentedToTerms: true, institution}));
           }
         }}
       />

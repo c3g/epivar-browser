@@ -4,6 +4,9 @@ import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, Mo
 
 const TermsModal = ({isOpen, toggle, showAgree, onAgree}) => {
   const [agreeChecked, setAgreeChecked] = useState(false);
+  const [institution, setInstitution] = useState("");
+  
+  const canSubmit = agreeChecked && institution.trim() !== "";
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} style={{maxWidth: 720}}>
@@ -134,24 +137,35 @@ const TermsModal = ({isOpen, toggle, showAgree, onAgree}) => {
             website.
           </p>
         </div>
-        
-        {showAgree && (
-          <Form>
-            <FormGroup check={true}>
+      </ModalBody>
+      {showAgree && (
+        <ModalFooter>
+          <Form inline={true}>
+            <FormGroup check={true} style={{marginRight: 16}}>
               <Input id="terms-checkbox" type="checkbox" onChange={e => setAgreeChecked(e.target.checked)} />
               {" "}
               <Label check={true} for="terms-checkbox">
                 I agree to these terms
               </Label>
             </FormGroup>
+            <FormGroup>
+              <Label for="terms-institution" style={{marginRight: "0.5em"}}>
+                Institution:
+              </Label>
+              <Input id="terms-institution" 
+                     placeholder="Enter your institution" 
+                     value={institution} 
+                     onChange={e => setInstitution(e.target.value)} />
+            </FormGroup>
           </Form>
-        )}
-      </ModalBody>
-      {showAgree && (
-        <ModalFooter>
-          <Button color="primary" disabled={!agreeChecked} onClick={() => {
-            if (agreeChecked) onAgree();
-          }}>Agree</Button>
+          <div style={{flex: 1}} />
+          <Button 
+            color="primary" 
+            disabled={!canSubmit} 
+            style={{cursor: canSubmit ? "pointer" : "not-allowed"}}
+            onClick={() => {
+              if (canSubmit) onAgree(institution);
+            }}>Agree</Button>
           {" "}
           <Button onClick={toggle}>Cancel</Button>
         </ModalFooter>
