@@ -24,8 +24,12 @@ router.put(
     console.log(req.body);
 
     const consent = Boolean(req.body.consentedToTerms);
+    
+    const extra = {
+      institution: req.body?.institution ?? undefined,
+    };
 
-    setTermsConsent(req.user.issuer, req.user.id, CURRENT_TERMS_VERSION, consent, req.body.extra || {})
+    setTermsConsent(req.user.issuer, req.user.id, CURRENT_TERMS_VERSION, consent, extra)
       .then(() => {
         req.user.consentedToTerms = consent;
         return respondWithUser(req, res);
