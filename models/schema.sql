@@ -5,11 +5,20 @@
 -- CONSENTS -------------------------------------------------------------------
 create table if not exists term_consents
 (
-    id      serial  primary key,
-    issuer  text    not null,
-    sub     text    not null, -- subject - user ID within the issuer
-    version integer not null check (version > 0),
-    consent bool not null,  -- has the user consented to this version of the terms
+    -- Core columns related to consents
+    id       serial  primary key,
+    issuer   text    not null,
+    sub      text    not null, -- subject - user ID within the issuer
+    version  integer not null check (version > 0),
+    consent  bool    not null,  -- has the user consented to this version of the terms
+
+    -- Extra profile information for identification
+    idp      text    not null default '',  -- Blank until we get CILogon going
+    idp_name text    not null default '',  -- Blank until we get CILogon going
+    email    text    not null default '',  -- Blank until we get CILogon going
+    
+    -- Extra profile information, unstructured
+    extra    jsonb   not null default '{}'::jsonb,
 
     UNIQUE (issuer, sub)
 );
