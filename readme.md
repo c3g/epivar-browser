@@ -157,7 +157,7 @@ We use `pm2` to run multiple processes of the application at a time to handle mo
 The `PM2_HOME` folder is set to `/home/dlougheed/.pm2` currently (sorry).
 
 **Note that all code should be written with the assumption that multiple processes can run at a time.**
-Thus, Redis/Postgres should generally be used.
+Thus, Redis/Postgres should generally be used for any cached/persistent data.
 
 ## Architecture
 
