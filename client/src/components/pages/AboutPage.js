@@ -30,16 +30,18 @@ const AboutPage = () => {
         </p>
         <ol>
           <li>
-            Aracena et al. [TODO: link]. Epigenetic variation impacts ancestry-associated differences in the
+            Aracena <em>et al</em>. Epigenetic variation impacts ancestry-associated differences in the
             transcriptional response to influenza infection.
           </li>
           <li>
-            Chen et al. [TODO: link]. Transposable elements are associated with the variable response to
+            Chen <em>et al</em>. Transposable elements are associated with the variable response to
             influenza infection.
           </li>
           <li>
-            Groza et al. [TODO: link]. Genome graphs detect human polymorphisms in active epigenomic state during
-            influenza infection.
+            <a href="https://www.biorxiv.org/content/10.1101/2021.09.29.462206v2" target="_blank" rel="nofollow">
+              Groza <em>et al</em>. Genome graphs detect human polymorphisms in active epigenomic state during
+              influenza infection.
+            </a>
           </li>
         </ol>
         <p>
