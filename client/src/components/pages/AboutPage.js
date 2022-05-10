@@ -63,7 +63,7 @@ const AboutPage = () => {
         <h3>Team</h3>
       </Col>
       <Col sm="12" md="5" lg={{size: 4, offset: 1}}>
-        <h4>McGill University</h4>
+        <h4>McGill University / Kyoto University</h4>
         <ul>
           <li>Alain Pacis</li>
           <li>David Lougheed</li>
