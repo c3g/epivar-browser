@@ -148,6 +148,12 @@ In production with CILogon, the auth scopes would be configured as follows:
 VARWIG_AUTH_SCOPE="openid email org.cilogon.userinfo"
 ```
 
+We use `pm2` to run multiple processes of the application at a time to handle more simultaneous requests.
+The `PM2_HOME` folder is set to `/home/dlougheed/.pm2` currently (sorry).
+
+**Note that all code should be written with the assumption that multiple processes can run at a time.**
+Thus, Redis/Postgres should generally be used.
+
 ## Architecture
 
 This is a standard express backend + react frontend application. Frontend files
