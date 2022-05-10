@@ -118,8 +118,13 @@ In development, you'd run:
 #### Production
 
 In production, you may need to set up these to handle persistence & HTTPS:
- - Setup nginx or apache proxy (see `./nginx.conf`) with LetsEncrypt certificate
- - Setup systemd service (see `./varwig.service`) that runs `node ./bin/www`
+ - Set up nginx or apache proxy (see `./nginx.conf`) with LetsEncrypt certificate
+ - Set up Redis to handle caching
+ - Set up Postgres to handle persistent data
+    - In production, make sure to configure Postgres with **lots of RAM** and 4+ workers for gathers! 
+      Otherwise, autocomplete queries will be really slow.
+ - Set up `pm2` to run `node ./bin/www` with multiple workers 
+   (e.g. `pm2 start ./bin/www --name epivar -i 0`)
 
 You will also need to set up authentication via an OIDC layer. This is configured via
 environment variables (which can either be typed into the service run command, or placed
