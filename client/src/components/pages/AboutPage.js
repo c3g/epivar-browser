@@ -30,12 +30,16 @@ const AboutPage = () => {
         </p>
         <ol>
           <li>
-            Aracena <em>et al</em>. Epigenetic variation impacts ancestry-associated differences in the
-            transcriptional response to influenza infection.
+            <a href="https://www.biorxiv.org/content/10.1101/2022.05.10.491413v1" target="_blank" rel="nofollow">
+              Aracena <em>et al</em>. Epigenetic variation impacts ancestry-associated differences in the
+              transcriptional response to influenza infection.
+            </a>
           </li>
           <li>
-            Chen <em>et al</em>. Transposable elements are associated with the variable response to
-            influenza infection.
+            <a href="https://www.biorxiv.org/content/10.1101/2022.05.10.491101v1"  target="_blank" rel="nofollow">
+              Chen <em>et al</em>. Transposable elements are associated with the variable response to
+              influenza infection.
+            </a>
           </li>
           <li>
             <a href="https://www.biorxiv.org/content/10.1101/2021.09.29.462206v2" target="_blank" rel="nofollow">
