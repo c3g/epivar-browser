@@ -1,6 +1,6 @@
 {
   "name": "flu-infection",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "private": true,
   "scripts": {
     "postinstall": "cd client && npm install",
@@ -21,7 +21,7 @@
     "cuid": "^2.1.8",
     "d3-scale": "^4.0.2",
     "debug": "~4.3.4",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-session": "^1.17.2",
     "lodash": "^4.17.21",
@@ -34,8 +34,8 @@
     "pg": "^8.7.3",
     "pg-copy-streams": "^6.0.2",
     "pug": "~3.0.2",
-    "rambda": "^7.0.3",
-    "redis": "~4.0.6",
+    "rambda": "^7.1.4",
+    "redis": "~4.1.0",
     "serve-favicon": "~2.5.0",
     "sharp": "^0.30.4"
   },
