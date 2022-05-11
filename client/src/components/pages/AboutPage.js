@@ -103,7 +103,8 @@ const AboutPage = () => {
           This work was supported by a Canada Institute of Health Research (CIHR) program grant (CEE-151618) for the
           McGill Epigenomics Mapping Center, which is part of the Canadian Epigenetics, Environment and Health Research
           Consortium (CEEHRC) Network. The work on EpiVar was also supported by a Genome Canada grant called EpiShare
-          (TODO: add nb) and a Technology Platform grant for the Canadian Center for Computational Genomics (C3G).
+          (Genome Canada - 15502) and a Technology Platform grant for the 
+          Canadian Center for Computational Genomics (C3G).
           This project was also supported by National Institute of Health Research grants R01-GM134376 and
           P30-DK042086 to L.B.B. GB is supported by a Canada Research Chair Tier 1 award, a FRQ-S, Distinguished Research
           Scholar award and by the World Premier International Research Center Initiative (WPI), NEXT, Japan. K.A.A. is
