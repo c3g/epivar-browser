@@ -1,4 +1,4 @@
-# flu-infection
+# The EpiVar Browser
 
 A web application to search for variant and merge bigWig tracks.
 
