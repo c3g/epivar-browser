@@ -1,6 +1,7 @@
 # The EpiVar Browser
 
-A web application to search for variant and merge bigWig tracks.
+A web application to search for variants and merge bigWig tracks; available at 
+[https://flu-infection.vhost38.genap.ca/](https://flu-infection.vhost38.genap.ca/).
 
 ## Installation
 
