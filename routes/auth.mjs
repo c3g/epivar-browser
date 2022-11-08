@@ -56,11 +56,13 @@ router.get("/callback", passport.authenticate("openidconnect", {
   failureMessage: true,
 }));
 
-router.get('/logout', (req, res) => {
-  req.logout();
-  req.session.destroy(err => {
-    if (err) console.error(err);
-    res.redirect('/');
+router.get('/logout', (req, res, next) => {
+  req.logout(err => {
+    if (err) return next(err);
+    req.session.destroy(err => {
+      if (err) return next(err);
+      res.redirect('/');
+    });
   });
 });
 
