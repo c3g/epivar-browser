@@ -134,7 +134,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
         // Otherwise, SNP is outside the feature, either L/R of it.
 
         // Distance in base pairs
-        const distance = Math.abs(Math.min(snpPos - start, snpPos - end));
+        const distance = Math.min(Math.abs(snpPos - start), Math.abs(snpPos - end));
 
         return distance > 1000
           ? `${(distance / 1000).toFixed(1)} kb`
