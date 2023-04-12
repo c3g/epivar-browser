@@ -36,13 +36,13 @@ const AboutPage = () => {
             </a>
           </li>
           <li>
-            <a href="https://www.biorxiv.org/content/10.1101/2022.05.10.491101v1"  target="_blank" rel="nofollow">
+            <a href="https://doi.org/10.1016/j.xgen.2023.100292"  target="_blank" rel="nofollow">
               Chen <em>et al</em>. Transposable elements are associated with the variable response to
               influenza infection.
             </a>
           </li>
           <li>
-            <a href="https://www.biorxiv.org/content/10.1101/2021.09.29.462206v2" target="_blank" rel="nofollow">
+            <a href="https://doi.org/10.1016/j.xgen.2023.100294" target="_blank" rel="nofollow">
               Groza <em>et al</em>. Genome graphs detect human polymorphisms in active epigenomic state during
               influenza infection.
             </a>
