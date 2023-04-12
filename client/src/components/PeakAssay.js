@@ -124,13 +124,17 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
         const snpPos = row.snp.position;
         const {start, end} = row.feature;
 
+        if (start <= snpPos && snpPos <= end) {
+          return "contained";
+        }
+
+        // Otherwise, SNP is outside the feature, either L/R of it.
+
         // Distance in base pairs
-        const distance = (start <= snpPos && snpPos <= end)
-          ? 0  // SNP is inside the feature
-          : Math.abs(Math.min(snpPos - start, snpPos - end));  // SNP is outside the feature, either L/R of
+        const distance = Math.abs(Math.min(snpPos - start, snpPos - end));
 
         return distance > 1000
-          ? `${(distance / 1000).toFixed(3)} kb`
+          ? `${(distance / 1000).toFixed(1)} kb`
           : `${distance.toFixed(0)} bp`;
       },
       disableSortBy: true,
