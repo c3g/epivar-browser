@@ -117,6 +117,25 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       disableSortBy: true,
     },
     {
+      id: "distance",
+      Header: "SNP-Feature Distance",
+      className: "PeaksTable__distance",
+      accessor: row => {
+        const snpPos = row.snp.position;
+        const {start, end} = row.feature;
+
+        // Distance in base pairs
+        const distance = (start <= snpPos && snpPos <= end)
+          ? 0  // SNP is inside the feature
+          : Math.abs(Math.min(snpPos - start, snpPos - end));  // SNP is outside the feature, either L/R of
+
+        return distance > 1000
+          ? `${(distance / 1000).toFixed(3)} kb`
+          : `${distance.toFixed(0)} bp`;
+      },
+      disableSortBy: true,
+    },
+    {
       id: "valueNI",
       Header: <span><span style={{fontFamily: "serif"}}>p</span> Value ({conditionName(CONDITION_NI)})</span>,
       accessor: row => {
