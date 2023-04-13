@@ -5,7 +5,10 @@ import {
   Container,
   Col,
   Row,
-  Table, ButtonGroup, Input, Tooltip,
+  Table,
+  ButtonGroup,
+  Input,
+  Tooltip,
 } from 'reactstrap'
 import {useTable, usePagination, useSortBy} from "react-table";
 
@@ -117,6 +120,29 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       disableSortBy: true,
     },
     {
+      id: "distance",
+      Header: "SNP-Feature Distance",
+      className: "PeaksTable__distance",
+      accessor: row => {
+        const snpPos = row.snp.position;
+        const {start, end} = row.feature;
+
+        if (start <= snpPos && snpPos <= end) {
+          return "contained";
+        }
+
+        // Otherwise, SNP is outside the feature, either L/R of it.
+
+        // Distance in base pairs
+        const distance = Math.min(Math.abs(snpPos - start), Math.abs(snpPos - end));
+
+        return distance > 1000
+          ? `${(distance / 1000).toFixed(1)} kb`
+          : `${distance.toFixed(0)} bp`;
+      },
+      disableSortBy: true,
+    },
+    {
       id: "valueNI",
       Header: <span><span style={{fontFamily: "serif"}}>p</span> Value ({conditionName(CONDITION_NI)})</span>,
       accessor: row => {
@@ -174,47 +200,49 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
   } = tableInstance;
 
   return <>
-    <Table
-      className="PeaksTable"
-      size="sm"
-      bordered
-      hover
-      {...getTableProps()}
-    >
-      <thead>
-      {
-        headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                {column.render("Header")}
-                <span>{column.isSorted ? (column.isSortedDesc ? " ▼" : " ▲") : ''}</span>
-              </th>
-            ))}
-          </tr>
-        ))
-      }
-      </thead>
-      <tbody {...getTableBodyProps()}>
-      {
-        page.map(row => {
-          prepareRow(row);
-          const p = row.original;
-          // noinspection JSCheckFunctionSignatures,JSUnresolvedVariable,JSUnusedGlobalSymbols
-          return (
-            <tr {...row.getRowProps([{
-              className: "PeaksTable__row " + (selectedPeak === p.id ? "PeaksTable__row--selected" : ""),
-              onClick: () => onChangeFeature(p),
-            }])}>
-              {row.cells.map(cell => <td {...cell.getCellProps([{
-                className: cell.column.className,
-              }])}>{cell.render("Cell")}</td>)}
+    <div className="PeaksTableContainer">
+      <Table
+        className="PeaksTable"
+        size="sm"
+        bordered
+        hover
+        {...getTableProps()}
+      >
+        <thead>
+        {
+          headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render("Header")}
+                  <span>{column.isSorted ? (column.isSortedDesc ? " ▼" : " ▲") : ''}</span>
+                </th>
+              ))}
             </tr>
-          )
-        })
-      }
-      </tbody>
-    </Table>
+          ))
+        }
+        </thead>
+        <tbody {...getTableBodyProps()}>
+        {
+          page.map(row => {
+            prepareRow(row);
+            const p = row.original;
+            // noinspection JSCheckFunctionSignatures,JSUnresolvedVariable,JSUnusedGlobalSymbols
+            return (
+              <tr {...row.getRowProps([{
+                className: "PeaksTable__row " + (selectedPeak === p.id ? "PeaksTable__row--selected" : ""),
+                onClick: () => onChangeFeature(p),
+              }])}>
+                {row.cells.map(cell => <td {...cell.getCellProps([{
+                  className: cell.column.className,
+                }])}>{cell.render("Cell")}</td>)}
+              </tr>
+            )
+          })
+        }
+        </tbody>
+      </Table>
+    </div>
 
     {/*
         Pagination can be built however you'd like.

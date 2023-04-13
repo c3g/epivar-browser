@@ -419,7 +419,13 @@ details summary {
 }
 
 
-/* .PeaksTable {} */
+.PeaksTableContainer {
+  width: 100%;
+  overflow-x: auto;  /* Allow for overflow scrolling */
+}
+.PeaksTable {
+  min-width: 800px;  /* Use horizontal scrolling below this width, otherwise it's awkward to navigate */
+}
 .PeaksTable__row {
   cursor: pointer;
 }
