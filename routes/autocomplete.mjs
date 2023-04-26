@@ -4,11 +4,12 @@
 
 
 import express from "express";
-const router = express.Router();
 
 import {ensureLogIn} from "../helpers/auth.mjs";
 import { dataHandler, errorHandler } from "../helpers/handlers.mjs";
 import Peaks from "../models/peaks.mjs";
+
+const router = express.Router();
 
 router.get('/chroms', (_req, res) => {
   Peaks.chroms()
