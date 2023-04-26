@@ -20,7 +20,7 @@ router.get("/config", (_req, res) => {
   });
 });
 
-router.get("/assay/:assay/topBinned/:chrom", ({params}, res) => {
+router.get("/assays/:assay/topBinned/:chrom", ({params}, res) => {
   const {assay, chrom} = params;
   Peaks.topBinnedForAssayAndChrom(assay, chrom)
     .then(dataHandler(res))
