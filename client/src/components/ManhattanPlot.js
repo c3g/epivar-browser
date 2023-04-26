@@ -72,7 +72,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
     options={{
       title: "TODO",
       mode: 2, // ?
-      width: 1000,
+      width: 1110,
       height: 300,
       scales: {
         x: {time: false},
@@ -86,8 +86,8 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
         {},  // weird uPlot hack to make scatter plots
         {
           label: "Most significant regional peak",
-          stroke: "red",
-          fill: "rgba(255, 255, 255, 0.1)",
+          stroke: "#26A69A",
+          fill: "#26A69A",
           paths: drawPoints,
         },
       ],
