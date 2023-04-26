@@ -25,18 +25,22 @@ const config = require("../config");
         `
         SELECT p."id" 
         FROM peaks p 
-            JOIN features f on p."feature" = f."id"
+            JOIN features f ON p."feature" = f."id"
+            JOIN snps s ON p."snp" = s."id"
             JOIN (
                 SELECT f."assay" AS a_id, MIN(LEAST(p2."valueFlu", p2."valueNI")) AS p_min
                 FROM peaks p2
-                    JOIN snps s on p2."snp" = s."id"
+                    JOIN snps s2 on p2."snp" = s2."id"
                     JOIN features f on f."id" = p2."feature"
-                WHERE s."chrom" = $1
-                  AND s."position" >= $2
-                  AND s."position" <= $3
+                WHERE s2."chrom" = $1
+                  AND s2."position" >= $2
+                  AND s2."position" <= $3
                 GROUP BY a_id
                 HAVING MIN(LEAST(p2."valueFlu", p2."valueNI")) <= $4
             ) j ON f.assay = j.a_id AND LEAST(p."valueFlu", p."valueNI") = j.p_min
+        WHERE s."chrom" = $1
+          AND s."position" >= $2
+          AND s."position" <= $3
         LIMIT 1
         `,
         [chrom, binLeft, binRight, minPValue]
@@ -50,6 +54,7 @@ const config = require("../config");
 
       if (i % 10 === 0) {
         console.log(`chr${chrom}: processed ${i}/${nBins} bins`);
+
       }
     }
     console.log(`done chr${chrom}`);
