@@ -46,7 +46,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
 
   const x = useMemo(() => data.filter(d => d[pValueProp]).map(d => d[positionProp] / 1000000), [data]);
   const y = useMemo(() => data.filter(d => d[pValueProp]).map(d => -1 * Math.log10(d[pValueProp])), [data]);
-  const finalData = useMemo(() => [x, y], [x, y]);
+  const finalData = useMemo(() => [null, x, y], [x, y]);
 
   return <UplotReact
     options={{
