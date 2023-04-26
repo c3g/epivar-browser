@@ -56,6 +56,10 @@ The different data sources to generate/prepare are:
      - **Config:** `config.source.metadata.path` (filepath)
      - **Notes:** This is really just an XLSX to JSON transformation.
  
+ - **Binned top peaks for assays:** Used to generate Manhattan plots for
+   chromosome/assay pairs, binned by SNP position.
+     - **Generate with:** `node ./scripts/calculate-top-peaks.js`
+ 
  - **Tracks:** There are the bigWig files that contain the signal data.
      - **Generate with:** You will need to either copy the files, or
        in development mount them with `sshfs` to have access to them.
@@ -66,12 +70,12 @@ The different data sources to generate/prepare are:
        `metadata.path = 'RNAseq/AF02_Flu.forward.bw'`
        `filepath = path.join(config.paths.tracks, metadata.path)`
  
- - Merged tracks: The directory to store the merged tracks.
+ - **Merged tracks:** The directory to store the merged tracks.
      - **Generate with:** `mkdir -p ./data/mergedTracks`
      - **Config:** `config.paths.mergedTracks` (directory)
      - **Notes:** Make sure there is enough space for those tracks.
  
- - Gemini database: This contains variants' data.
+ - **Gemini database:** This contains variants' data.
      - **Generate with:** Copy it or mount over `sshfs`.
      - **Notes:** Accessing it over `sshfs` in development is slow because the
        `gemini` command needs to read it a lot. It might be easier to call
