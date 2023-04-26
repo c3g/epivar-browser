@@ -48,10 +48,10 @@ const config = require("../config");
          VALUES ($1, $2, $3)`,
         [chrom, binLeft, peak]);
 
-      if (i % 100 === 0) {
-        console.log(`processed ${i}/${nBins} bins`);
+      if (i % 10 === 0) {
+        console.log(`chr${chrom}: processed ${i}/${nBins} bins`);
       }
     }
-    console.log(`done chromosome ${chrom}`);
+    console.log(`done chr${chrom}`);
   }
 })();
