@@ -9,13 +9,13 @@ const ManhattanTest = () => {
     (async () => {
       const res = await fetch("/api/overview/assays/RNA-seq/topBinned/1");
       const resJSON = await res.json();
-      setChr1RnaSeq(resJSON);
+      setChr1RnaSeq(resJSON.data);
     })();
   }, []);
 
   return <Row>
     <Col md="12" lg={{size: 10, offset: 1}}>
-      <ManhattanPlot data={chr1RnaSeq} positionProp="pos_bin" pValueProp="p_val" />
+      <ManhattanPlot data={chr1RnaSeq ?? []} positionProp="pos_bin" pValueProp="p_val" />
     </Col>
   </Row>;
 };
