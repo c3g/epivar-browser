@@ -20,6 +20,7 @@ export default {
   rsIDs,
   positions,
   autocompleteWithDetail,
+  topBinnedForAssayAndChrom,
 };
 
 const peakSelect = `
@@ -252,4 +253,20 @@ async function autocompleteWithDetail(query) {
   await cache.setJSON(k, res, 60 * 60 * 24 * 180);
 
   return res;
+}
+
+function topBinnedForAssayAndChrom(assay, chrom) {
+  return db.findAll(
+    `
+    SELECT msp."pos_bin", s."nat_id" AS snp_nat_id, f."nat_id" AS feature_nat_id
+    FROM binned_most_significant_peaks msp 
+        JOIN peaks p ON msp."peak" = p."id"
+        JOIN snps s ON p."snp" = s."id"
+        JOIN features f on p."feature" = f."id"
+        JOIN assays a on a."id" = f."assay"
+    WHERE msp."chrom" = $1 AND a."name" = $2
+    ORDER BY msp."pos_bin"
+    `,
+    [assay, chrom]
+  );
 }
