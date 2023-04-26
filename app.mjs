@@ -55,12 +55,13 @@ if (!process.env.VARWIG_DISABLE_AUTH) {
 
 app.use('/api/assays',       (await import('./routes/assays.mjs')).default);
 app.use('/api/autocomplete', (await import('./routes/autocomplete.mjs')).default);
+app.use('/api/messages',     (await import('./routes/messages.mjs')).default);
+app.use('/api/overview',     (await import('./routes/overview.mjs')).default);
 app.use('/api/peaks',        (await import('./routes/peaks.mjs')).default);
-app.use('/api/ucsc',         (await import('./routes/ucsc.mjs')).default);
 app.use('/api/sessions',     (await import('./routes/sessions.mjs')).default);
 app.use('/api/samples',      (await import('./routes/samples.mjs')).default);
 app.use('/api/tracks',       (await import('./routes/tracks.mjs')).default);
-app.use('/api/messages',     (await import('./routes/messages.mjs')).default);
+app.use('/api/ucsc',         (await import('./routes/ucsc.mjs')).default);
 
 
 // catch 404 and forward to error handler
