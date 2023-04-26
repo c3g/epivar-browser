@@ -31,7 +31,7 @@ console.log("Loading peaks");
   const db = await import("../models/db.mjs");
   const Gene = await import('../models/genes.mjs');
 
-  // Clear relevant table of existing data
+  // Clear relevant tables of existing data
   await db.run("TRUNCATE TABLE snps RESTART IDENTITY CASCADE");
   await db.run("TRUNCATE TABLE peaks RESTART IDENTITY CASCADE");
 
