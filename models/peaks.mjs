@@ -258,7 +258,11 @@ async function autocompleteWithDetail(query) {
 function topBinnedForAssayAndChrom(assay, chrom) {
   return db.findAll(
     `
-    SELECT msp."pos_bin", s."nat_id" AS snp_nat_id, f."nat_id" AS feature_nat_id
+    SELECT 
+        msp."pos_bin", 
+        LEAST(p."valueNI", p."valueFlu") AS p_val, 
+        s."nat_id" AS snp_nat_id, 
+        f."nat_id" AS feature_nat_id
     FROM binned_most_significant_peaks msp 
         JOIN peaks p ON msp."peak" = p."id"
         JOIN snps s ON p."snp" = s."id"
