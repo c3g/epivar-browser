@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import ManhattanPlot from "./ManhattanPlot";
 
 const ManhattanTest = () => {
-  const [chr1RnaSeq, setChr1RnaSeq] = useState(null);
+  const [chr1RnaSeq, setChr1RnaSeq] = useState([]);
 
   useEffect(() => {
     (async () => {
