@@ -16,6 +16,7 @@ import ProtectedPageContainer from "./pages/ProtectedPageContainer";
 import ExplorePage from "./pages/ExplorePage";
 import DatasetsPage from "./pages/DatasetsPage";
 import FAQPage from "./pages/FAQPage";
+import ManhattanTest from "./ManhattanTest";
 
 
 const RoutedApp = () => {
@@ -120,6 +121,7 @@ class App extends Component {
               <Route index={true} element={<PeakResults />} />
               <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
               <Route path="locus/:chrom/:position" element={<PeakResults />} />
+              <Route path="manhattan" element={<ManhattanTest />} />
             </Route>
             <Route path="faq" element={<FAQPage />} />
             <Route path="auth-failure" element={<div />} />
