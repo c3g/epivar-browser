@@ -15,7 +15,8 @@ const config = require("../config");
 
   for (const chrom in chromSizes) {
     const size = chromSizes[chrom];
-    for (let i = 0; i < Math.ceil(size / binSize); i++) {
+    const nBins = Math.ceil(size / binSize);
+    for (let i = 0; i < nBins; i++) {
       const binLeft = i * binSize;
       const binRight = (i + 1) * binSize - 1;
 
@@ -46,6 +47,11 @@ const config = require("../config");
         `INSERT INTO binned_most_significant_peaks ("chrom", "pos_bin", "peak")
          VALUES ($1, $2, $3)`,
         [chrom, binLeft, peak]);
+
+      if (i % 100 === 0) {
+        console.log(`processed ${i}/${nBins} bins`);
+      }
     }
+    console.log(`done chromosome ${chrom}`);
   }
 })();
