@@ -28,10 +28,10 @@ const config = require("../config");
             JOIN features f ON p."feature" = f."id"
             JOIN snps s ON p."snp" = s."id"
             JOIN (
-                SELECT f."assay" AS a_id, MIN(LEAST(p2."valueFlu", p2."valueNI")) AS p_min
+                SELECT f2."assay" AS a_id, MIN(LEAST(p2."valueFlu", p2."valueNI")) AS p_min
                 FROM peaks p2
                     JOIN snps s2 on p2."snp" = s2."id"
-                    JOIN features f on f."id" = p2."feature"
+                    JOIN features f2 on f2."id" = p2."feature"
                 WHERE s2."chrom" = $1
                   AND s2."position" >= $2
                   AND s2."position" <= $3
