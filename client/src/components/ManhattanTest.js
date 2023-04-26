@@ -13,11 +13,9 @@ const ManhattanTest = () => {
     })();
   }, []);
 
-  return <Row>
-    <Col md="12" lg={{size: 10, offset: 1}}>
-      <ManhattanPlot data={chr1RnaSeq ?? []} positionProp="pos_bin" pValueProp="p_val" />
-    </Col>
-  </Row>;
+  return <div style={{maxWidth: 1110, margin: "auto"}}>
+    <ManhattanPlot data={chr1RnaSeq ?? []} positionProp="pos_bin" pValueProp="p_val" />
+  </div>;
 };
 
 export default ManhattanTest;
