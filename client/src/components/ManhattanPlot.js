@@ -58,6 +58,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
       //   x: {time: false},
       // },
       series: [
+        {},
         {
           stroke: "red",
           fill: "rgba(255, 255, 255, 0.1)",
