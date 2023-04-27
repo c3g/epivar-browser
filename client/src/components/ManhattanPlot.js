@@ -115,9 +115,9 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
           // D3-quadtree: index 0 is X, index 1 is Y, rest can be other stuff
           newQt.add([
             // cx - halfPointSize - STROKE_WIDTH / 2 - u.bbox.left,
-            cx - u.bbox.left - halfPointSize,
+            cx - u.bbox.left - halfPointSize - STROKE_WIDTH,
             // cy - halfPointSize - STROKE_WIDTH / 2 - u.bbox.top,
-            cy - u.bbox.top - halfPointSize,
+            cy - u.bbox.top - halfPointSize - STROKE_WIDTH,
             i,
           ]);
         }
@@ -180,7 +180,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
         return res ? res[2] : null;
       },
       points: {
-        size: POINT_SIZE * pxr,
+        size: POINT_SIZE * pxr + STROKE_WIDTH,
       },
     },
     hooks: {
@@ -194,7 +194,8 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
   }), [maxY, drawPoints, qt, pxr, halfPointSize])
 
   // noinspection JSValidateTypes
-  return <div style={{boxSizing: "border-box", paddingTop: 16, textAlign: "center"}}>
+  return <div style={{boxSizing: "border-box", paddingTop: 16, textAlign: "center"}}
+              onMouseLeave={() => {document.body.style.cursor = "default";}}>
     <UplotReact options={uPlotOptions} data={finalData} />
     <em style={{color: "#999"}}>Double-click to reset zoom.</em>
   </div>;
