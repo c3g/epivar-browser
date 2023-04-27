@@ -25,7 +25,6 @@ const PeakAssay = ({peaks}) => {
   const [selectedPeak, setSelectedPeak] = useState(undefined);
 
   useEffect(() => {
-    console.log("peaks changed", peaks, selectedPeak);
     if (selectedPeak !== undefined && peaks.map(p => p.id).includes(selectedPeak)) return;
     // If we do not have a selected peak which is in the current list of peaks for all assays, select one.
     const p = peaks[0];
