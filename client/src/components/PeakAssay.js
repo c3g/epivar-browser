@@ -37,9 +37,7 @@ const PeakAssay = ({peaks}) => {
 
   const fetchSome = (exclude = []) =>
     peaks.filter(p => !exclude.includes(p.id)).slice(0, 10).forEach(p => {
-      if (!exclude.includes(p.id)) {
-        dispatch(cacheValues(p, {id: p.id}));
-      }
+      dispatch(cacheValues(p, {id: p.id}));
     });
 
   // Fetch some peaks at the start for performance
@@ -172,11 +170,11 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       disableSortBy: true,
     },
   ], [onOpenTracks, tooltipsShown]);
-  const data = useMemo(() => peaks, []);
+  // const data = useMemo(() => peaks, []);
 
   // noinspection JSCheckFunctionSignatures
   const tableInstance = useTable(
-    {columns, data},
+    {columns, data: peaks},
     // Order matters for below hooks
     useSortBy,
     usePagination);
