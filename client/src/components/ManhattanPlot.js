@@ -167,6 +167,12 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
       bind: {
         mouseup: (u, t, h) => {
           console.log(u, t, h);
+          return e => {
+            if (e.button === 0) {
+              console.log(e);
+            }
+            h(e);
+          }
         },
       },
     },
