@@ -156,7 +156,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
         const cx = left * pxr;
         const cy = top * pxr;
 
-        const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, POINT_SIZE * 1.6 * pxr);c
+        const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, POINT_SIZE * 1.6 * pxr);
         const hi = res ? res[2] : undefined;
         hoveredItem.current = hi;
         return hi ?? null;
