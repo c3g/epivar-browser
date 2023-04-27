@@ -262,12 +262,14 @@ function topBinnedForAssayAndChrom(assay, chrom) {
         msp."pos_bin", 
         LEAST(p."valueNI", p."valueFlu") AS p_val, 
         s."nat_id" AS snp_nat_id, 
-        f."nat_id" AS feature_nat_id
+        f."nat_id" AS feature_nat_id,
+        g."name" AS gene_name
     FROM binned_most_significant_peaks msp 
         JOIN peaks p ON msp."peak" = p."id"
         JOIN snps s ON p."snp" = s."id"
         JOIN features f on p."feature" = f."id"
         JOIN assays a on a."id" = f."assay"
+        JOIN genes g on g."id" = f."gene"
     WHERE msp."chrom" = $2 AND a."name" = $1
     ORDER BY msp."pos_bin"
     `,
