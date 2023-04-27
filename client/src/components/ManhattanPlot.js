@@ -16,7 +16,7 @@ const Cytoband = React.memo(({start, end, containerWidth}) => {
   // TODO
 });
 
-const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, featureProp}) => {
+const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, featureProp, geneProp}) => {
   const pxr = useDevicePixelRatio({maxDpr: 50});
   const qt = useRef(null);
 
@@ -130,16 +130,18 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
         stroke: "#26A69A",
         fill: "rgba(38, 166, 154, 0.15)",
         paths: drawPoints,
-        values: (u, s, d) =>
-          (!dataNoNulls.length || [u, s, d].includes(null)) ? ({
+        values: (u, s, d) => {
+          const dd =  [u, s, d].includes(null) ? undefined : dataNoNulls[d];  // still undefined if data is empty
+          return dd === undefined ? ({
             "SNP": "——————",
             "Feature": "————————————",
             "p": "—————",
           }) : ({
-            "SNP": dataNoNulls[d][snpProp],
-            "Feature": dataNoNulls[d][featureProp],
-            "p": dataNoNulls[d][pValueProp].toPrecision(3),
-          }),
+            "SNP": dd[snpProp],
+            "Feature": dd[geneProp] ?? dd[featureProp],
+            "p": dd[pValueProp].toPrecision(3),
+          });
+        },
       },
     ],
     cursor: {

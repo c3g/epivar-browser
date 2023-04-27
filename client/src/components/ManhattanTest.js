@@ -20,6 +20,7 @@ const ManhattanTest = () => {
       pValueProp="p_val"
       snpProp="snp_nat_id"
       featureProp="feature_nat_id"
+      geneProp="gene_name"
     />
   </div>;
 };
