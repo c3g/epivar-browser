@@ -131,7 +131,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
         fill: "rgba(38, 166, 154, 0.15)",
         paths: drawPoints,
         values: (u, s, d) =>
-          console.log(u, s, d) || [u, s, d].includes(null) ? ({
+          console.log(, dataNoNulls.length, s, d) || (!dataNoNulls.length || [u, s, d].includes(null)) ? ({
             "SNP": "—",
             "Feature": "—",
             "p": "—",
