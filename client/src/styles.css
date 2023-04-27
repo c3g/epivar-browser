@@ -389,7 +389,7 @@ details summary {
 
 
 /* Manhattan plot styling/assistance */
-.uplot .cursor-pt {
+.uplot .u-cursor-pt {
   pointer-events: auto !important;
   cursor: pointer;
 }
