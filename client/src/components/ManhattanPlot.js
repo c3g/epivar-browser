@@ -167,7 +167,7 @@ const ManhattanPlot = React.memo(
           return hi ?? null;
         },
         points: {
-          size: halfPointSize * 2 + strokeWidth,
+          size: POINT_SIZE + STROKE_WIDTH,
         },
         bind: {
           mouseup: (u, t, h) => e => {
