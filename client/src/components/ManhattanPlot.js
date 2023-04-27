@@ -134,7 +134,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
           const dd =  [u, s, d].includes(null) ? undefined : dataNoNulls[d];  // still undefined if data is empty
           return dd === undefined ? ({
             "SNP": "——————",
-            "Feature": "————————————",
+            "Feature": "————",
             "p": "—————",
           }) : ({
             "SNP": dd[snpProp],
@@ -164,6 +164,11 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
       points: {
         size: POINT_SIZE * pxr + STROKE_WIDTH,
       },
+      bind: {
+        mouseup: (u, t, h) => {
+          console.log(u, t, h);
+        },
+      },
     },
     hooks: {
       drawClear: [u => {
@@ -173,7 +178,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
         });
       }],
     },
-  }), [dataNoNulls, maxY, drawPoints, qt, pxr, halfPointSize])
+  }), [dataNoNulls, maxY, drawPoints, qt, pxr, halfPointSize]);
 
   // noinspection JSValidateTypes
   return <div style={{boxSizing: "border-box", paddingTop: 16, textAlign: "center"}}>
