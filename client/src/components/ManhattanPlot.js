@@ -166,7 +166,7 @@ const ManhattanPlot = React.memo(
           size: POINT_SIZE * pxr + STROKE_WIDTH,
         },
         bind: {
-          click: (u, t, h) => {
+          mouseup: (u, t, h) => {
             console.log(u, t, h);
             return e => {
               if (e.button === 0 && hoveredItem.current) {
