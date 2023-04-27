@@ -105,6 +105,8 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
     return null;
   }, [pxr]);
 
+  const hoveredItem = useRef(undefined);
+
   // noinspection JSUnusedGlobalSymbols
   const uPlotOptions = useMemo(() => ({
     title: "chr1 RNA-seq: Most significant peaks by SNP position (25kb bins)",
@@ -154,12 +156,10 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
         const cx = left * pxr;
         const cy = top * pxr;
 
-        const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, POINT_SIZE * 1.6 * pxr);
-
-        // Update cursor to pointer if we're hovering over a point; otherwise, reset.
-        // document.body.style.cursor = res ? "pointer" : "default";
-
-        return res ? res[2] : null;
+        const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, POINT_SIZE * 1.6 * pxr);c
+        const hi = res ? res[2] : undefined;
+        hoveredItem.current = hi;
+        return hi ?? null;
       },
       points: {
         size: POINT_SIZE * pxr + STROKE_WIDTH,
@@ -168,8 +168,8 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
         mouseup: (u, t, h) => {
           console.log(u, t, h);
           return e => {
-            if (e.button === 0) {
-              console.log(e);
+            if (e.button === 0 && hoveredItem.current) {
+              console.log(dataNoNulls[hoveredItem.current[2]]);
             }
             h(e);
           }
