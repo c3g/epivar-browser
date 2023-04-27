@@ -191,7 +191,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
         });
       }],
     },
-  }), [qt, pxr, halfPointSize])
+  }), [maxY, drawPoints, qt, pxr, halfPointSize])
 
   // noinspection JSValidateTypes
   return <div style={{boxSizing: "border-box", paddingTop: 16, textAlign: "center"}}>
