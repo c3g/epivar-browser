@@ -7,6 +7,7 @@
     "bootstrap": "^4.6.2",
     "classname": "0.0.0",
     "clsx": "^1.2.1",
+    "d3-quadtree": "^3.0.1",
     "d3-scale": "^4.0.2",
     "font-awesome": "^4.7.0",
     "memoize-one": "^6.0.0",
@@ -22,7 +23,8 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.2",
     "uplot": "^1.6.24",
-    "uplot-react": "^1.1.4"
+    "uplot-react": "^1.1.4",
+    "use-device-pixel-ratio": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
