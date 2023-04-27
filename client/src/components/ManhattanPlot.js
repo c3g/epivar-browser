@@ -16,7 +16,7 @@ const Cytoband = React.memo(({start, end, containerWidth}) => {
   // TODO
 });
 
-const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
+const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, featureProp}) => {
   const pxr = useDevicePixelRatio({maxDpr: 50});
   const qt = useRef(null);
 
@@ -82,8 +82,8 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
         if (x >= scaleX.min && x <= scaleX.max && y >= scaleY.min && y <= scaleY.max) {
           const cx = valToPosX(x, scaleX, xDim, xOff);
           const cy = valToPosY(y, scaleY, yDim, yOff);
-          p.moveTo(cx + halfPointSize, cy);
-          arc(p, cx, cy, halfPointSize, 0, TAU);
+          p.moveTo(cx + halfPointSize + STROKE_WIDTH / 2, cy);
+          arc(p, cx + STROKE_WIDTH / 2, cy + STROKE_WIDTH / 2, halfPointSize, 0, TAU);
 
           // D3-quadtree: index 0 is X, index 1 is Y, rest can be other stuff
           newQt.add([
@@ -130,6 +130,16 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
         stroke: "#26A69A",
         fill: "rgba(38, 166, 154, 0.15)",
         paths: drawPoints,
+        values: (u, s, d) =>
+          [u, s, d].includes(null) ? ({
+            "SNP": "—",
+            "Feature": "—",
+            "p": "—",
+          }) : ({
+            "SNP": dataNoNulls[d][snpProp],
+            "Feature": dataNoNulls[d][featureProp],
+            "p": dataNoNulls[d][pValueProp].toFixed(3),
+          }),
       },
     ],
     cursor: {
@@ -161,7 +171,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
         });
       }],
     },
-  }), [maxY, drawPoints, qt, pxr, halfPointSize])
+  }), [dataNoNulls, maxY, drawPoints, qt, pxr, halfPointSize])
 
   // noinspection JSValidateTypes
   return <div style={{boxSizing: "border-box", paddingTop: 16, textAlign: "center"}}
