@@ -21,7 +21,11 @@ const ManhattanPlot = React.memo(
     const pxr = useDevicePixelRatio({maxDpr: 50});
     const qt = useRef(null);
 
+    /** @type number */
     const halfPointSize = useMemo(() => POINT_SIZE * pxr * 0.5, [pxr]);
+
+    /** @type number */
+    const strokeWidth = useMemo(() => STROKE_WIDTH * pxr, [pxr]);
 
     const dataNoNulls = useMemo(() => data.filter(d => !!d[pValueProp]), [data]);
 
@@ -72,7 +76,7 @@ const ManhattanPlot = React.memo(
 
         u.ctx.fillStyle = series.fill();
         u.ctx.strokeStyle = series.stroke();
-        u.ctx.lineWidth = STROKE_WIDTH;
+        u.ctx.lineWidth = strokeWidth;
 
         const p = new Path2D();
 
@@ -83,15 +87,15 @@ const ManhattanPlot = React.memo(
           if (x >= scaleX.min && x <= scaleX.max && y >= scaleY.min && y <= scaleY.max) {
             const cx = valToPosX(x, scaleX, xDim, xOff);
             const cy = valToPosY(y, scaleY, yDim, yOff);
-            p.moveTo(cx + halfPointSize + STROKE_WIDTH / 2, cy);
-            arc(p, cx + STROKE_WIDTH / 2, cy + STROKE_WIDTH / 2, halfPointSize, 0, TAU);
+            p.moveTo(cx + halfPointSize + strokeWidth / 2, cy);
+            arc(p, cx + strokeWidth / 2, cy + strokeWidth / 2, halfPointSize, 0, TAU);
 
             // D3-quadtree: index 0 is X, index 1 is Y, rest can be other stuff
             newQt.add([
               // cx - halfPointSize - STROKE_WIDTH / 2 - u.bbox.left,
-              cx - u.bbox.left - halfPointSize - STROKE_WIDTH,
+              cx - u.bbox.left - halfPointSize - strokeWidth,
               // cy - halfPointSize - STROKE_WIDTH / 2 - u.bbox.top,
-              cy - u.bbox.top - halfPointSize - STROKE_WIDTH,
+              cy - u.bbox.top - halfPointSize - strokeWidth,
               i,
             ]);
           }
@@ -157,22 +161,20 @@ const ManhattanPlot = React.memo(
           const cx = left * pxr;
           const cy = top * pxr;
 
-          const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, POINT_SIZE * 1.6 * pxr);
+          const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, halfPointSize * 3.2);
           const hi = res ? res[2] : undefined;
           hoveredItem.current = hi;
           return hi ?? null;
         },
         points: {
-          size: POINT_SIZE * pxr + STROKE_WIDTH,
+          size: halfPointSize * 2 + strokeWidth,
         },
         bind: {
-          mouseup: (u, t, h) => {
-            return e => {
-              if (e.button === 0 && hoveredItem.current && Array.from(e.target.classList).includes("u-cursor-pt")) {
-                onPointClick(dataNoNulls[hoveredItem.current]);
-              }
-              h(e);
+          mouseup: (u, t, h) => e => {
+            if (e.button === 0 && hoveredItem.current && Array.from(e.target.classList).includes("u-cursor-pt")) {
+              onPointClick(dataNoNulls[hoveredItem.current]);
             }
+            h(e);
           },
         },
       },
@@ -184,7 +186,7 @@ const ManhattanPlot = React.memo(
           });
         }],
       },
-    }), [dataNoNulls, maxY, drawPoints, qt, pxr, halfPointSize]);
+    }), [dataNoNulls, maxY, drawPoints, qt, pxr, halfPointSize, strokeWidth]);
 
     // noinspection JSValidateTypes
     return <div style={{boxSizing: "border-box", paddingTop: 16, textAlign: "center"}}>
