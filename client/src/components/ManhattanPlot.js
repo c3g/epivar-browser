@@ -101,7 +101,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
           p.moveTo(cx + pointSize / 2, cy);
           arc(p, cx, cy, pointSize / 2, 0, TAU);
 
-          newQt.add([cx - u.bbox.left, cy - y.bbox.top]);
+          newQt.add([cx - u.bbox.left, cy - u.bbox.top]);
         }
       }
 
