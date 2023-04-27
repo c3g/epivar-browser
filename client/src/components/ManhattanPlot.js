@@ -131,14 +131,14 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
         fill: "rgba(38, 166, 154, 0.15)",
         paths: drawPoints,
         values: (u, s, d) =>
-          console.log(dataNoNulls.length, u, s, d) || (!dataNoNulls.length || [u, s, d].includes(null)) ? ({
-            "SNP": "—",
-            "Feature": "—",
-            "p": "—",
+          (!dataNoNulls.length || [u, s, d].includes(null)) ? ({
+            "SNP": "——————",
+            "Feature": "————————————",
+            "p": "—————",
           }) : ({
             "SNP": dataNoNulls[d][snpProp],
             "Feature": dataNoNulls[d][featureProp],
-            "p": dataNoNulls[d][pValueProp].toFixed(3),
+            "p": dataNoNulls[d][pValueProp].toPrecision(3),
           }),
       },
     ],
