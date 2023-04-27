@@ -73,6 +73,8 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
   const pxr = useDevicePixelRatio({maxDpr: 50});
   const qt = useRef(null);
 
+  const halfPointSize = useMemo(() => POINT_SIZE * pxr * 0.5, [pxr]);
+
   const dataNoNulls = useMemo(() => data.filter(d => !!d[pValueProp]), [data]);
 
   const x = useMemo(() => dataNoNulls.map(d => d[positionProp] / 1000000), [dataNoNulls]);
@@ -82,7 +84,6 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
   const maxY = useMemo(() => Math.max(...y) * 1.1, [y]);
 
   const drawPoints = useCallback((u, seriesIdx) => {
-    const halfPointSize = POINT_SIZE * pxr * 0.5;
     const newQt = quadtree();
 
     uPlot.orient(u, seriesIdx, (
@@ -113,14 +114,17 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
 
           // D3-quadtree: index 0 is X, index 1 is Y, rest can be other stuff
           newQt.add([
-            cx - halfPointSize - STROKE_WIDTH / 2 - u.bbox.left,
-            cy - halfPointSize - STROKE_WIDTH / 2 - u.bbox.top,
+            // cx - halfPointSize - STROKE_WIDTH / 2 - u.bbox.left,
+            cx - u.bbox.left,
+            // cy - halfPointSize - STROKE_WIDTH / 2 - u.bbox.top,
+            cy - u.bbox.top,
             i,
           ]);
         }
       }
 
       u.ctx.fill(p);
+      u.ctx.restore();
     });
 
     qt.current = newQt;
