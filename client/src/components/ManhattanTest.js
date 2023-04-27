@@ -1,10 +1,19 @@
 import {useEffect, useState} from "react";
-import ManhattanPlot from "./ManhattanPlot";
+import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
+
+import ManhattanPlot from "./ManhattanPlot";
+
+import {
+  setChrom,
+  doSearch,
+  setPosition,
+} from '../actions.js'
 
 const SNP_PROP = "snp_nat_id";
 
 const ManhattanTest = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const assay = "RNA-seq";
@@ -28,7 +37,12 @@ const ManhattanTest = () => {
       featureProp="feature_nat_id"
       geneProp="gene_name"
       onPointClick={peak => {
-        navigate(`/explore/locus/rsID/${peak[SNP_PROP]}/${assay}`);
+        if (!dispatch) return;
+        const snp = peak[SNP_PROP];
+        navigate(`/explore/locus/rsID/${snp}/${assay}`);
+        dispatch(setChrom("rsID"));
+        dispatch(setPosition(snp));
+        dispatch(doSearch());
       }}
     />
   </div>;
