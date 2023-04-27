@@ -109,8 +109,8 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
         if (x >= scaleX.min && x <= scaleX.max && y >= scaleY.min && y <= scaleY.max) {
           const cx = valToPosX(x, scaleX, xDim, xOff);
           const cy = valToPosY(y, scaleY, yDim, yOff);
-          p.moveTo(cx + halfPointSize, cy);
-          arc(p, cx, cy, halfPointSize, 0, TAU);
+          p.moveTo(cx + halfPointSize + STROKE_WIDTH, cy);
+          arc(p, cx + STROKE_WIDTH, cy + STROKE_WIDTH, halfPointSize, 0, TAU);
 
           // D3-quadtree: index 0 is X, index 1 is Y, rest can be other stuff
           newQt.add([
