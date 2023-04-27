@@ -10,7 +10,7 @@ import {useDevicePixelRatio} from "use-device-pixel-ratio";
 
 const TAU = 2 * Math.PI;
 const STROKE_WIDTH = 1;
-const POINT_SIZE = 5;
+const POINT_SIZE = 15;
 
 // The below function is adapted from uPlot example, used under the terms of the MIT license.
 // See https://github.com/leeoniya/uPlot/blob/master/demos/scatter.html
