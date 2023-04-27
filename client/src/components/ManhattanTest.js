@@ -27,9 +27,9 @@ const ManhattanTest = () => {
       snpProp={SNP_PROP}
       featureProp="feature_nat_id"
       geneProp="gene_name"
-      onPointClick={peak => (
+      onPointClick={peak => {
         navigate(`/explore/locus/rsID/${peak[SNP_PROP]}/${assay}`);
-      )}
+      }}
     />
   </div>;
 };
