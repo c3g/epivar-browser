@@ -388,6 +388,13 @@ details summary {
 }
 
 
+/* Manhattan plot styling/assistance */
+.uplot .cursor-pt {
+  pointer-events: auto !important;
+  cursor: pointer;
+}
+
+
 .PeakResults {
   padding-top: 1em;
   font-size: 14px;

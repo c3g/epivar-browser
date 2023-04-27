@@ -155,7 +155,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
         const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, POINT_SIZE * 1.6 * pxr);
 
         // Update cursor to pointer if we're hovering over a point; otherwise, reset.
-        document.body.style.cursor = res ? "pointer" : "default";
+        // document.body.style.cursor = res ? "pointer" : "default";
 
         return res ? res[2] : null;
       },
@@ -174,8 +174,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
   }), [dataNoNulls, maxY, drawPoints, qt, pxr, halfPointSize])
 
   // noinspection JSValidateTypes
-  return <div style={{boxSizing: "border-box", paddingTop: 16, textAlign: "center"}}
-              onMouseLeave={() => {document.body.style.cursor = "default";}}>
+  return <div style={{boxSizing: "border-box", paddingTop: 16, textAlign: "center"}}>
     <UplotReact options={uPlotOptions} data={finalData} />
     <em style={{color: "#999"}}>Double-click to reset zoom.</em>
   </div>;
