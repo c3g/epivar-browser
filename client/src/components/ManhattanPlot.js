@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef} from "react";
+import React, {useCallback, useMemo, useRef} from "react";
 
 import uPlot from "uplot";
 import UplotReact from "uplot-react";
@@ -72,8 +72,10 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
   const pxr = useDevicePixelRatio({maxDpr: 50});
   const qt = useRef(null);
 
-  const x = useMemo(() => data.filter(d => d[pValueProp]).map(d => d[positionProp] / 1000000), [data]);
-  const y = useMemo(() => data.filter(d => d[pValueProp]).map(d => -1 * Math.log10(d[pValueProp])), [data]);
+  const dataNoNulls = useMemo(() => data.filter(d => !!d[pValueProp]), [data]);
+
+  const x = useMemo(() => dataNoNulls.map(d => d[positionProp] / 1000000), [dataNoNulls]);
+  const y = useMemo(() => dataNoNulls.map(d => -1 * Math.log10(d[pValueProp])), [dataNoNulls]);
   const finalData = useMemo(() => [[[], []], [x, y]], [x, y]);
 
   const maxY = useMemo(() => Math.max(...y) * 1.1, [y]);
@@ -101,7 +103,8 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
           p.moveTo(cx + pointSize / 2, cy);
           arc(p, cx, cy, pointSize / 2, 0, TAU);
 
-          newQt.add([cx - u.bbox.left, cy - u.bbox.top]);
+          // D3-quadtree: index 0 is X, index 1 is Y, rest can be other stuff
+          newQt.add([cx - u.bbox.left, cy - u.bbox.top, i]);
         }
       }
 
@@ -113,7 +116,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
   }, [pxr]);
 
   // noinspection JSValidateTypes
-  return <div style={{boxSizing: "border-box", paddingTop: 16}}>
+  return <div style={{boxSizing: "border-box", paddingTop: 16, textAlign: "center"}}>
     <UplotReact
       options={{
         title: "chr1 RNA-seq: Most significant peaks by SNP position (25kb bins)",
@@ -151,7 +154,15 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
             const cx = left * pxr;
             const cy = top * pxr;
 
-            console.log(qt.current.find(cx, cy, POINT_SIZE * 2 * pxr));
+            const res = qt.current.find(cx, cy, POINT_SIZE * 2 * pxr);
+
+            if (res) {
+              document.body.style.cursor = "pointer";
+            } else {
+              document.body.style.cursor = "default";
+            }
+
+            return res ? res[2] : null;
           },
         },
       }}
