@@ -169,6 +169,7 @@ const ManhattanPlot = React.memo(
           mouseup: (u, t, h) => {
             console.log(u, t, h);
             return e => {
+              console.log(e);
               if (e.button === 0 && hoveredItem.current) {
                 onPointClick(dataNoNulls[hoveredItem.current]);
               }
