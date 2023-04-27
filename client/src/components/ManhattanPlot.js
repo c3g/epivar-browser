@@ -153,7 +153,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
     series: [
       {},  // weird uPlot hack to make scatter plots
       {
-        label: "Most significant regional peak",
+        label: "Most significant peak in bin",
         stroke: "#26A69A",
         fill: "rgba(38, 166, 154, 0.15)",
         paths: drawPoints,
