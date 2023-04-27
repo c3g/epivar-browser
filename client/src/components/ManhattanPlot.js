@@ -184,12 +184,12 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
       },
     },
     hooks: {
-      drawClear(u) {
+      drawClear: [u => {
         qt.current = quadtree();
         u.series.forEach((s, i) => {
           if (i > 0) s._paths = null;  // Force a redraw to populate the quadtree
         });
-      },
+      }],
     },
   }), [qt, pxr, halfPointSize])
 
