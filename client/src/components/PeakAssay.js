@@ -25,6 +25,7 @@ const PeakAssay = ({peaks}) => {
   const [selectedPeak, setSelectedPeak] = useState(undefined);
 
   useEffect(() => {
+    console.log("peaks changed", peaks, selectedPeak);
     if (selectedPeak !== undefined) return;
     const p = peaks[0];
     setSelectedPeak(p ? p.id : undefined);
