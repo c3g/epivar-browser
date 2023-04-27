@@ -169,7 +169,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp, snpProp, feat
           console.log(u, t, h);
           return e => {
             if (e.button === 0 && hoveredItem.current) {
-              console.log(dataNoNulls[hoveredItem.current[2]]);
+              console.log(dataNoNulls[hoveredItem.current]);
             }
             h(e);
           }
