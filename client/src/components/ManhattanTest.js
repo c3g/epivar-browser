@@ -14,7 +14,13 @@ const ManhattanTest = () => {
   }, []);
 
   return <div style={{maxWidth: 1110, margin: "auto"}}>
-    <ManhattanPlot data={chr1RnaSeq ?? []} positionProp="pos_bin" pValueProp="p_val" />
+    <ManhattanPlot
+      data={chr1RnaSeq ?? []}
+      positionProp="pos_bin"
+      pValueProp="p_val"
+      snpProp="snp_nat_id"
+      featureProp="feature_nat_id"
+    />
   </div>;
 };
 
