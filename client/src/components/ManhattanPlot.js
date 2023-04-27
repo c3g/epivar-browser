@@ -115,9 +115,9 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
           // D3-quadtree: index 0 is X, index 1 is Y, rest can be other stuff
           newQt.add([
             // cx - halfPointSize - STROKE_WIDTH / 2 - u.bbox.left,
-            cx - u.bbox.left,
+            cx - u.bbox.left - halfPointSize,
             // cy - halfPointSize - STROKE_WIDTH / 2 - u.bbox.top,
-            cy - u.bbox.top,
+            cy - u.bbox.top - halfPointSize,
             i,
           ]);
         }
