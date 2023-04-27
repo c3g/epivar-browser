@@ -124,6 +124,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
       }
 
       u.ctx.fill(p);
+      u.ctx.stroke(p);
       u.ctx.restore();
     });
 
@@ -170,7 +171,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
             const cx = left * pxr;
             const cy = top * pxr;
 
-            const res = qt.current.find(cx, cy, POINT_SIZE * 1.6 * pxr);
+            const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, POINT_SIZE * 1.6 * pxr);
 
             if (res) {
               document.body.style.cursor = "pointer";
