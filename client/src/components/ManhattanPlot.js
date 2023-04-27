@@ -132,59 +132,70 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
     return null;
   }, [pxr]);
 
+  // noinspection JSUnusedGlobalSymbols
+  const uPlotOptions = useMemo(() => ({
+    title: "chr1 RNA-seq: Most significant peaks by SNP position (25kb bins)",
+    mode: 2, // ?
+    width: 1110,
+    height: 300,
+    scales: {
+      x: {time: false},
+      y: {range: [1, maxY]},
+    },
+    axes: [
+      {
+        label: "Position",
+        // scale: "Mb",
+        values: (self, ticks) => ticks.map(v => `${v.toFixed(0)} Mb`),
+      },
+      {label: "-log10(p)"},
+    ],
+    series: [
+      {},  // weird uPlot hack to make scatter plots
+      {
+        label: "Most significant regional peak",
+        stroke: "#26A69A",
+        fill: "rgba(38, 166, 154, 0.15)",
+        paths: drawPoints,
+      },
+    ],
+    cursor: {
+      dataIdx(u, s) {
+        if (s !== 1) return;  // Wrong series
+        if (qt.current === null) return;  // No quadtree
+
+        const {left, top} = u.cursor;
+
+        const cx = left * pxr;
+        const cy = top * pxr;
+
+        const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, POINT_SIZE * 1.6 * pxr);
+
+        if (res) {
+          document.body.style.cursor = "pointer";
+        } else {
+          document.body.style.cursor = "default";
+        }
+
+        return res ? res[2] : null;
+      },
+      points: {
+        size: POINT_SIZE * pxr,
+      },
+    },
+    hooks: {
+      drawClear(u) {
+        qt.current = quadtree();
+        u.series.forEach((s, i) => {
+          if (i > 0) s._paths = null;  // Force a redraw to populate the quadtree
+        });
+      },
+    },
+  }), [qt, pxr, halfPointSize])
+
   // noinspection JSValidateTypes
   return <div style={{boxSizing: "border-box", paddingTop: 16, textAlign: "center"}}>
-    <UplotReact
-      options={{
-        title: "chr1 RNA-seq: Most significant peaks by SNP position (25kb bins)",
-        mode: 2, // ?
-        width: 1110,
-        height: 300,
-        scales: {
-          x: {time: false},
-          y: {range: [1, maxY]},
-        },
-        axes: [
-          {
-            label: "Position",
-            // scale: "Mb",
-            values: (self, ticks) => ticks.map(v => `${v.toFixed(0)} Mb`),
-          },
-          {label: "-log10(p)"},
-        ],
-        series: [
-          {},  // weird uPlot hack to make scatter plots
-          {
-            label: "Most significant regional peak",
-            stroke: "#26A69A",
-            fill: "rgba(38, 166, 154, 0.15)",
-            paths: drawPoints,
-          },
-        ],
-        cursor: {
-          dataIdx(u, s) {
-            if (s !== 1) return;  // Wrong series
-            if (qt.current === null) return;  // No quadtree
-
-            const {left, top} = u.cursor;
-
-            const cx = left * pxr;
-            const cy = top * pxr;
-
-            const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, POINT_SIZE * 1.6 * pxr);
-
-            if (res) {
-              document.body.style.cursor = "pointer";
-            } else {
-              document.body.style.cursor = "default";
-            }
-
-            return res ? res[2] : null;
-          },
-        },
-      }}
-      data={finalData}
-    />
+    <UplotReact options={uPlotOptions} data={finalData} />
     <em style={{color: "#999"}}>Double-click to reset zoom.</em>
   </div>;
 });
