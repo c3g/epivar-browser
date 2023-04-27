@@ -9,6 +9,7 @@ import {quadtree} from "d3-quadtree";
 import {useDevicePixelRatio} from "use-device-pixel-ratio";
 
 const TAU = 2 * Math.PI;
+const STROKE_WIDTH = 1;
 const POINT_SIZE = 5;
 
 // The below function is adapted from uPlot example, used under the terms of the MIT license.
@@ -81,7 +82,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
   const maxY = useMemo(() => Math.max(...y) * 1.1, [y]);
 
   const drawPoints = useCallback((u, seriesIdx) => {
-    const pointSize = POINT_SIZE * pxr;
+    const halfPointSize = POINT_SIZE * pxr * 0.5;
     const newQt = quadtree();
 
     uPlot.orient(u, seriesIdx, (
@@ -89,7 +90,14 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
     ) => {
       const d = u.data[seriesIdx];
 
-      u.ctx.fillStyle = series.stroke();
+      u.ctx.save();
+
+      u.ctx.rect(u.bbox.left, u.bbox.top, u.bbox.width, u.bbox.height);
+      u.ctx.clip();
+
+      u.ctx.fillStyle = series.fill();
+      u.ctx.strokeStyle = series.stroke();
+      u.ctx.lineWidth = STROKE_WIDTH;
 
       const p = new Path2D();
 
@@ -100,11 +108,15 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
         if (x >= scaleX.min && x <= scaleX.max && y >= scaleY.min && y <= scaleY.max) {
           const cx = valToPosX(x, scaleX, xDim, xOff);
           const cy = valToPosY(y, scaleY, yDim, yOff);
-          p.moveTo(cx + pointSize / 2, cy);
-          arc(p, cx, cy, pointSize / 2, 0, TAU);
+          p.moveTo(cx + halfPointSize, cy);
+          arc(p, cx, cy, halfPointSize, 0, TAU);
 
           // D3-quadtree: index 0 is X, index 1 is Y, rest can be other stuff
-          newQt.add([cx - u.bbox.left, cy - u.bbox.top, i]);
+          newQt.add([
+            cx - halfPointSize - STROKE_WIDTH / 2 - u.bbox.left,
+            cy - halfPointSize - STROKE_WIDTH / 2 - u.bbox.top,
+            i,
+          ]);
         }
       }
 
@@ -140,7 +152,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
           {
             label: "Most significant regional peak",
             stroke: "#26A69A",
-            fill: "#26A69A",
+            fill: "rgba(38, 166, 154, 0.15)",
             paths: drawPoints,
           },
         ],
@@ -154,7 +166,7 @@ const ManhattanPlot = React.memo(({data, positionProp, pValueProp}) => {
             const cx = left * pxr;
             const cy = top * pxr;
 
-            const res = qt.current.find(cx, cy, POINT_SIZE * 2 * pxr);
+            const res = qt.current.find(cx, cy, POINT_SIZE * 1.6 * pxr);
 
             if (res) {
               document.body.style.cursor = "pointer";
