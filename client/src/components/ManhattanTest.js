@@ -52,20 +52,20 @@ const ManhattanTest = () => {
     if (!assaysIsLoaded || !selectedChrom) return;
 
     (async () => {
-      await Promise.all(assays.map((assay => (async () => {
+      await Promise.all(assays.map((assay => (async (a) => {
         // If already loaded, don't load again
-        if ((binnedDataByChromAndAssay[selectedChrom]?.[assay] ?? []).length > 0) return;
+        if ((binnedDataByChromAndAssay[selectedChrom]?.[a] ?? []).length > 0) return;
 
-        const res = await fetch(`/api/overview/assays/${assay}/topBinned/${selectedChrom}`);
+        const res = await fetch(`/api/overview/assays/${a}/topBinned/${selectedChrom}`);
         const resJSON = await res.json();
         setBinnedDataByChromAndAssay({
           ...binnedDataByChromAndAssay,
           [selectedChrom]: {
             ...(binnedDataByChromAndAssay[selectedChrom] ?? {}),
-            [assay]: resJSON.data,
+            [a]: resJSON.data,
           },
         });
-      })()))).catch(console.error);
+      })(assay)))).catch(console.error);
 
       setAttemptedLoadingBinnedData(true);
     })();
