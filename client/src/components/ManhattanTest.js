@@ -88,7 +88,7 @@ const ManhattanTest = () => {
 
       setAttemptedLoadingBinnedData(true);
     })();
-  }, [assaysIsLoaded, assays, selectedChrom, binnedDataByChromAndAssay]);
+  }, [assaysIsLoaded, assays, selectedChrom]);
 
   const isLoading = assaysIsLoading || !attemptedLoadingBinnedData;  // TODO: more terms
 
