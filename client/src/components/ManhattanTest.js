@@ -55,15 +55,19 @@ const ManhattanTest = () => {
       await Promise.all(assays.map((assay => (async (a) => {
         // If already loaded, don't load again
 
-        const existingAssayRecord = binnedDataByChromAndAssay[selectedChrom]?.[a] ?? {isFetching: false, data: []};
+        const existingAssayRecord = binnedDataByChromAndAssay[selectedChrom]?.[a] ?? {
+          isFetching: false,
+          isFetched: false,
+          data: [],
+        };
 
-        if (existingAssayRecord.isFetching || existingAssayRecord.data.length > 0) return;
+        if (existingAssayRecord.isFetching || existingAssayRecord.isFetched) return;
 
         setBinnedDataByChromAndAssay({
           ...binnedDataByChromAndAssay,
           [selectedChrom]: {
             ...(binnedDataByChromAndAssay[selectedChrom] ?? {}),
-            [a]: {isFetching: true, data: []},
+            [a]: {isFetching: true, isFetched: false, data: []},
           },
         });
 
@@ -77,7 +81,7 @@ const ManhattanTest = () => {
           ...binnedDataByChromAndAssay,
           [selectedChrom]: {
             ...(binnedDataByChromAndAssay[selectedChrom] ?? {}),
-            [a]: {isFetching: false, data: resJSON.data},
+            [a]: {isFetching: false, isFetched: true, data: resJSON.data},
           },
         });
       })(assay)))).catch(console.error);
