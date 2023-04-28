@@ -74,11 +74,21 @@ const ManhattanTest = () => {
   const isLoading = assaysIsLoading || !attemptedLoadingBinnedData;  // TODO: more terms
 
   // noinspection JSValidateTypes
-  return <div style={{maxWidth: 1110, margin: "auto"}} className={"Overview" + (isLoading ? " loading" : "")}>
-    <Input type="select" name="Manhattan__chrom-selector" id="Manhattan__chrom-selector" value={selectedChrom}>
-      <option value=""></option>
-      {chroms.map(chr => <option key={chr} value={chr}>chr{chr}</option>)}
-    </Input>
+  return <div style={{maxWidth: 1110, margin: "auto", paddingTop: 16}}
+              className={"Overview" + (isLoading ? " loading" : "")}>
+    <div style={{display: "flex", gap: 12, flexDirection: "row"}}>
+      <label htmlFor="Manhattan__chrom-selector">Chromosome:</label>
+      <Input
+        type="select"
+        name="Manhattan__chrom-selector"
+        id="Manhattan__chrom-selector"
+        value={selectedChrom}
+        onChange={e => setSelectedChrom(e.target.value)}
+      >
+        <option value=""></option>
+        {chroms.map(chr => <option key={chr} value={chr}>chr{chr}</option>)}
+      </Input>
+    </div>
 
     {(selectedChrom !== "") && assays.map(assay => (
       <ManhattanPlot
