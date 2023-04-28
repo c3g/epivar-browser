@@ -82,6 +82,7 @@ const ManhattanTest = () => {
 
     {(selectedChrom !== "") && assays.map(assay => (
       <ManhattanPlot
+        key={assay}
         title={`chr${selectedChrom} ${assay}: Most significant peaks by SNP position (${binSizeKb}kb bins)`}
         data={binnedDataByChromAndAssay[selectedChrom]?.[assay] ?? []}
         positionProp="pos_bin"
