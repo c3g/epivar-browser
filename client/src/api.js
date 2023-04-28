@@ -31,6 +31,10 @@ export function fetchPositions(params, cancelToken) {
   return get('/autocomplete/positions', params, {cancelToken})
 }
 
+export const fetchOverviewConfig = () => get('/overview/config');
+
+export const fetchManhattanData = ({chrom, assay}) => get(`/overview/assays/${assay}/topBinned/${chrom}`);
+
 
 /**
  * @typedef ValuesOptions

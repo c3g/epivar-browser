@@ -151,6 +151,34 @@ function assaysReducer(state = defaultAssays, action) {
   }
 }
 
+const defaultOverview = {
+  isLoading: false,
+  isLoaded: false,
+  config: {},
+};
+const overviewReducer = (state = defaultOverview, action) => {
+  switch (action.type) {
+    case k.OVERVIEW_CONFIG.REQUEST: {
+      return {...state, isLoading: true};
+    }
+    case k.OVERVIEW_CONFIG.RECEIVE: {
+      return {...state, isLoading: false, isLoaded: true, config: action.payload};
+    }
+    case k.OVERVIEW_CONFIG.ERROR: {
+      return {...state, isLoading: false};
+    }
+    default:
+      return state;
+  }
+};
+
+const defaultManhattan = {
+  byChromAndAssay: {},
+};
+const manhattanReducer = (state = defaultManhattan, action) => {
+  return state;  // TODO
+};
+
 const defaultUser = {
   isLoading: false,
   isLoaded: false,
@@ -207,11 +235,16 @@ function messagesReducer(state = defaultMessages, action) {
 
 export const rootReducer = combineReducers({
   ui: uiReducer,
+
   samples: samplesReducer,
   chroms: chromsReducer,
   positions: positionsReducer,
   peaks: peaksReducer,
   assays: assaysReducer,
+
+  overview: overviewReducer,
+  manhattan: manhattanReducer,
+
   user: userReducer,
   messages: messagesReducer,
 });

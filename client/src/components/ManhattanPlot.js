@@ -17,7 +17,7 @@ const Cytoband = React.memo(({start, end, containerWidth}) => {
 });
 
 const ManhattanPlot = React.memo(
-  ({data, positionProp, pValueProp, snpProp, featureProp, geneProp, onPointClick}) => {
+  ({title, data, positionProp, pValueProp, snpProp, featureProp, geneProp, onPointClick}) => {
     const pxr = useDevicePixelRatio({maxDpr: 50});
     const qt = useRef(null);
 
@@ -114,7 +114,7 @@ const ManhattanPlot = React.memo(
 
     // noinspection JSUnusedGlobalSymbols
     const uPlotOptions = useMemo(() => ({
-      title: "chr1 RNA-seq: Most significant peaks by SNP position (25kb bins)",
+      title,
       mode: 2, // ?
       width: 1110,
       height: 300,
