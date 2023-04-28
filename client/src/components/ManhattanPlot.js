@@ -126,7 +126,7 @@ const ManhattanPlot = React.memo(
         {
           label: "Position",
           // scale: "Mb",
-          values: (self, ticks) => ticks.map(v => `${v.toFixed(0)} Mb`),
+          values: (self, ticks) => ticks.map(v => `${v.toFixed(1)} Mb`),
         },
         {label: "-log10(p)"},
       ],
