@@ -11,6 +11,7 @@ import {
   doSearch,
   setPosition,
   fetchOverviewConfig,
+  fetchManhattanData,
 } from '../actions.js'
 
 const SNP_PROP = "snp_nat_id";
@@ -45,62 +46,25 @@ const ManhattanTest = () => {
     list: assays,
   } = useSelector(state => state.assays);
 
-  const [binnedDataByChromAndAssay, setBinnedDataByChromAndAssay] = useState({});
-  const [attemptedLoadingBinnedData, setAttemptedLoadingBinnedData] = useState(false);
+  const binnedDataByChromAndAssay = useSelector(state => state.manhattan.byChromAndAssay);
 
   useEffect(() => {
     if (!assaysIsLoaded || !selectedChrom) return;
 
     (async () => {
-      await Promise.all(assays.map((assay => (async (a) => {
-        // If already loaded, don't load again
-
-        const existingAssayRecord = binnedDataByChromAndAssay[selectedChrom]?.[a] ?? {
-          isFetching: false,
-          isFetched: false,
-          data: [],
-        };
-
-        if (existingAssayRecord.isFetching || existingAssayRecord.isFetched) return;
-
-        setBinnedDataByChromAndAssay({
-          ...binnedDataByChromAndAssay,
-          [selectedChrom]: {
-            ...(binnedDataByChromAndAssay[selectedChrom] ?? {}),
-            [a]: {isFetching: true, isFetched: false, data: []},
-          },
-        });
-
-        const url = `/api/overview/assays/${a}/topBinned/${selectedChrom}`;
-        const res = await fetch(url);
-        const resJSON = await res.json();
-
-        console.debug("recieved for url: ", url, resJSON, {
-          ...binnedDataByChromAndAssay,
-          [selectedChrom]: {
-            ...(binnedDataByChromAndAssay[selectedChrom] ?? {}),
-            [a]: {isFetching: false, isFetched: true, data: resJSON.data},
-          },
-        });
-
-        setBinnedDataByChromAndAssay({
-          ...binnedDataByChromAndAssay,
-          [selectedChrom]: {
-            ...(binnedDataByChromAndAssay[selectedChrom] ?? {}),
-            [a]: {isFetching: false, isFetched: true, data: resJSON.data},
-          },
-        });
-      })(assay)))).catch(console.error);
-
-      setAttemptedLoadingBinnedData(true);
+      await Promise.all(assays.filter(assay => {
+        // TODO: filter out assays already loaded for chrom
+        return true;
+      }).map(assay => {
+        const params = {chrom: selectedChrom, assay};
+        return dispatch(fetchManhattanData(params, params));
+      }));
     })();
   }, [assaysIsLoaded, assays, selectedChrom]);
 
-  const isLoading = assaysIsLoading || !attemptedLoadingBinnedData;  // TODO: more terms
-
   // noinspection JSValidateTypes
   return <div style={{maxWidth: 1110, margin: "auto", paddingTop: 16}}
-              className={"Overview" + (isLoading ? " loading" : "")}>
+              className={"Overview" + (assaysIsLoading ? " loading" : "")}>
     <div style={{display: "flex", gap: 12, flexDirection: "row"}}>
       <label htmlFor="Manhattan__chrom-selector">Chromosome:</label>
       <Input

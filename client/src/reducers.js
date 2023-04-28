@@ -176,7 +176,55 @@ const defaultManhattan = {
   byChromAndAssay: {},
 };
 const manhattanReducer = (state = defaultManhattan, action) => {
-  return state;  // TODO
+  switch (action.type) {
+    case k.MANHATTAN_DATA.REQUEST: {
+      const {chrom, assay} = action.meta;
+      const chromData = state.byChromAndAssay[chrom] ?? {};
+      return {
+        ...state,
+        byChromAndAssay: {
+          ...state.byChromAndAssay,
+          [chrom]: {
+            ...chromData,
+            [assay]: {...chromData[assay] ?? {}, isFetching: true, isFetched: false, data: []},
+          },
+        },
+      };
+    }
+
+    case k.MANHATTAN_DATA.RECEIVE: {
+      const {chrom, assay} = action.meta;
+      const chromData = state.byChromAndAssay[chrom] ?? {};
+      return {
+        ...state,
+        byChromAndAssay: {
+          ...state.byChromAndAssay,
+          [chrom]: {
+            ...chromData,
+            [assay]: {...chromData[assay] ?? {}, isFetching: false, isFetched: true, data: action.payload},
+          },
+        },
+      };
+    }
+
+    case k.MANHATTAN_DATA.ERROR: {
+      const {chrom, assay} = action.meta;
+      const chromData = state.byChromAndAssay[chrom] ?? {};
+      return {
+        ...state,
+        byChromAndAssay: {
+          ...state.byChromAndAssay,
+          [chrom]: {
+            ...chromData,
+            [assay]: {...chromData[assay] ?? {}, isFetching: false},
+          },
+        },
+      };
+    }
+
+    default:
+      return state;
+  }
 };
 
 const defaultUser = {

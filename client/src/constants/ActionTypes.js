@@ -9,6 +9,7 @@ export const POSITIONS        = createFetchConstants('POSITIONS');
 export const VALUES           = createFetchConstants('VALUES');
 export const PEAKS            = createFetchConstants('PEAKS');
 export const OVERVIEW_CONFIG  = createFetchConstants('OVERVIEW_CONFIG');
+export const MANHATTAN_DATA   = createFetchConstants('MANHATTAN_DATA');
 export const USER             = createFetchConstants('USER');
 export const MESSAGES         = createFetchConstants('MESSAGES');
 
