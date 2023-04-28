@@ -152,6 +152,10 @@ const ManhattanPlot = React.memo(
         },
       ],
       cursor: {
+        y: false,
+        drag: {
+          y: false,
+        },
         dataIdx(u, s) {
           if (s !== 1) return;  // Wrong series
           if (qt.current === null) return;  // No quadtree
