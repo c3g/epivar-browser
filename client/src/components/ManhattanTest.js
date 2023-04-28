@@ -54,22 +54,37 @@ const ManhattanTest = () => {
     (async () => {
       await Promise.all(assays.map((assay => (async (a) => {
         // If already loaded, don't load again
-        if ((binnedDataByChromAndAssay[selectedChrom]?.[a] ?? []).length > 0) return;
 
-        const res = await fetch(`/api/overview/assays/${a}/topBinned/${selectedChrom}`);
-        const resJSON = await res.json();
+        const existingAssayRecord = binnedDataByChromAndAssay[selectedChrom]?.[a] ?? {isFetching: false, data: []};
+
+        if (existingAssayRecord.isFetching || existingAssayRecord.data.length > 0) return;
+
         setBinnedDataByChromAndAssay({
           ...binnedDataByChromAndAssay,
           [selectedChrom]: {
             ...(binnedDataByChromAndAssay[selectedChrom] ?? {}),
-            [a]: resJSON.data,
+            [a]: {isFetching: true, data: []},
+          },
+        });
+
+        const url = `/api/overview/assays/${a}/topBinned/${selectedChrom}`;
+        const res = await fetch(url);
+        const resJSON = await res.json();
+
+        console.debug("recieved for url: ", url, resJSON);
+
+        setBinnedDataByChromAndAssay({
+          ...binnedDataByChromAndAssay,
+          [selectedChrom]: {
+            ...(binnedDataByChromAndAssay[selectedChrom] ?? {}),
+            [a]: {isFetching: false, data: resJSON.data},
           },
         });
       })(assay)))).catch(console.error);
 
       setAttemptedLoadingBinnedData(true);
     })();
-  }, [assaysIsLoaded, assays, selectedChrom]);
+  }, [assaysIsLoaded, assays, selectedChrom, binnedDataByChromAndAssay]);
 
   const isLoading = assaysIsLoading || !attemptedLoadingBinnedData;  // TODO: more terms
 
@@ -90,11 +105,12 @@ const ManhattanTest = () => {
       </Input>
     </div>
 
-    {(selectedChrom !== "") && assays.map(assay => (
-      <ManhattanPlot
+    {(selectedChrom !== "") && assays.map(assay => {
+      const assayRecord = binnedDataByChromAndAssay[selectedChrom]?.[assay];
+      return <ManhattanPlot
         key={assay}
         title={`chr${selectedChrom} ${assay}: Most significant peaks by SNP position (${binSizeKb}kb bins)`}
-        data={binnedDataByChromAndAssay[selectedChrom]?.[assay] ?? []}
+        data={assayRecord?.data ?? []}
         positionProp="pos_bin"
         pValueProp="p_val"
         snpProp={SNP_PROP}
@@ -108,8 +124,9 @@ const ManhattanTest = () => {
           dispatch(setPosition(snp));
           dispatch(doSearch());
         }}
-      />
-    ))}
+        className={assayRecord?.isLoading ? 'loading' : ''}
+      />;
+    })}
   </div>;
 };
 
