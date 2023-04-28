@@ -75,7 +75,13 @@ const ManhattanTest = () => {
         const res = await fetch(url);
         const resJSON = await res.json();
 
-        console.debug("recieved for url: ", url, resJSON);
+        console.debug("recieved for url: ", url, resJSON, {
+          ...binnedDataByChromAndAssay,
+          [selectedChrom]: {
+            ...(binnedDataByChromAndAssay[selectedChrom] ?? {}),
+            [a]: {isFetching: false, isFetched: true, data: resJSON.data},
+          },
+        });
 
         setBinnedDataByChromAndAssay({
           ...binnedDataByChromAndAssay,
