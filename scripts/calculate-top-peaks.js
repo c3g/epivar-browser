@@ -11,7 +11,7 @@ const config = require("../config");
   // Only calculate top binned peaks by assay for chromosomes whose size has been provided in config.js
   const chromSizes = config.plots?.manhattan?.chromosomeSizes ?? {};
   const minPValue = config.plots?.manhattan?.minPValue ?? 0.10;
-  const binSize = config.plots?.manhattan?.binSize ?? 25000;
+  const binSize = config.plots?.manhattan?.binSize ?? 100000;
 
   for (const chrom in chromSizes) {
     const size = chromSizes[chrom];

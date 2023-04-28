@@ -69,7 +69,7 @@ module.exports = {
   plots: {
     manhattan: {
       minPValue: 0.10,
-      binSize: 25000,  // 25 kb bins
+      binSize: 100000,  // 100 kb bins
       chromosomeSizes: {
         "1": 249250621,
         "2": 243199373,
