@@ -117,7 +117,7 @@ const ManhattanPlot = React.memo(
       title,
       mode: 2, // ?
       width: 1110,
-      height: 300,
+      height: 275,
       scales: {
         x: {time: false},
         y: {range: [1, maxY]},
