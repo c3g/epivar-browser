@@ -52,13 +52,12 @@ const ManhattanTest = () => {
     if (!assaysIsLoaded || !selectedChrom) return;
 
     (async () => {
-      await Promise.all(assays.filter(assay => {
-        // TODO: filter out assays already loaded for chrom
-        return true;
-      }).map(assay => {
-        const params = {chrom: selectedChrom, assay};
-        return dispatch(fetchManhattanData(params, params));
-      }));
+      await Promise.all(assays
+        .filter(assay => !binnedDataByChromAndAssay[selectedChrom]?.[assay]?.isLoaded)
+        .map(assay => {
+          const params = {chrom: selectedChrom, assay};
+          return dispatch(fetchManhattanData(params, params));
+        }));
     })();
   }, [assaysIsLoaded, assays, selectedChrom]);
 
