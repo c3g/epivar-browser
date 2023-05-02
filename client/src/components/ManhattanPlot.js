@@ -17,7 +17,17 @@ const Cytoband = React.memo(({start, end, containerWidth}) => {
 });
 
 const ManhattanPlot = React.memo(
-  ({title, data, positionProp, pValueProp, snpProp, featureProp, geneProp, onPointClick, ...props}) => {
+  ({
+    title,
+    data,
+    positionProp,
+    pValueProp,
+    snpProp,
+    featureProp,
+    geneProp,
+    onPointClick,
+    ...props
+  }) => {
     const pxr = useDevicePixelRatio({maxDpr: 50});
     const qt = useRef(null);
 
