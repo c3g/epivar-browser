@@ -62,10 +62,17 @@ const ManhattanTest = () => {
   }, [assaysIsLoaded, assays, selectedChrom]);
 
   // noinspection JSValidateTypes
-  return <div style={{maxWidth: 1110, margin: "auto", paddingTop: 16}}
+  return <div style={{maxWidth: 1110, margin: "auto", paddingTop: 24}}
               className={"Overview" + (assaysIsLoading ? " loading" : "")}>
-    <div style={{display: "flex", gap: 12, flexDirection: "row"}}>
-      <label htmlFor="Manhattan__chrom-selector">Chromosome:</label>
+    <div style={{
+      display: "flex",
+      gap: 12,
+      flexDirection: "row",
+      alignItems: "baseline",
+      maxWidth: 560,
+      margin: "auto",
+    }}>
+      <label htmlFor="Manhattan__chrom-selector">Plot chromosome:</label>
       <Input
         type="select"
         name="Manhattan__chrom-selector"
@@ -82,6 +89,8 @@ const ManhattanTest = () => {
       const assayRecord = binnedDataByChromAndAssay[selectedChrom]?.[assay];
       return <ManhattanPlot
         key={assay}
+        width={1110}
+        height={275}
         title={`chr${selectedChrom} ${assay}: Most significant peaks by SNP position (${binSizeKb}kb bins)`}
         data={assayRecord?.data ?? []}
         group="overview"
