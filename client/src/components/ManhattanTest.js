@@ -85,6 +85,7 @@ const ManhattanTest = () => {
         key={assay}
         title={`chr${selectedChrom} ${assay}: Most significant peaks by SNP position (${binSizeKb}kb bins)`}
         data={assayRecord?.data ?? []}
+        group="overview"
         positionProp="pos_bin"
         pValueProp="p_val"
         snpProp={SNP_PROP}

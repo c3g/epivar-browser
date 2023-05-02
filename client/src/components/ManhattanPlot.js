@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef} from "react";
+import React, {useCallback, useEffect, useMemo, useRef} from "react";
 
 import uPlot from "uplot";
 import UplotReact from "uplot-react";
@@ -20,6 +20,7 @@ const ManhattanPlot = React.memo(
   ({
     title,
     data,
+    group,
     positionProp,
     pValueProp,
     snpProp,
@@ -30,6 +31,12 @@ const ManhattanPlot = React.memo(
   }) => {
     const pxr = useDevicePixelRatio({maxDpr: 50});
     const qt = useRef(null);
+
+    const sync = useRef(group ? uPlot.sync(group) : null);
+    useEffect(() => {
+      if (!group) return;
+      sync.current = uPlot.sync(group);
+    }, [group]);
 
     /** @type number */
     const halfPointSize = useMemo(() => POINT_SIZE * pxr * 0.5, [pxr]);
@@ -162,10 +169,17 @@ const ManhattanPlot = React.memo(
         },
       ],
       cursor: {
+        lock: true,
+        ...(sync.current ? {
+          sync: {
+            key: sync.current.key,
+            setSeries: true,
+          },
+        } : {}),
+
         y: false,
-        drag: {
-          y: false,
-        },
+        drag: {y: false},
+
         dataIdx(u, s) {
           if (s !== 1) return;  // Wrong series
           if (qt.current === null) return;  // No quadtree
