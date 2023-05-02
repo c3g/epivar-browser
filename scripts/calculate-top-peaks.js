@@ -41,20 +41,17 @@ const config = require("../config");
         WHERE s."chrom" = $1
           AND s."position" >= $2
           AND s."position" <= $3
-        LIMIT 1
         `,
         [chrom, binLeft, binRight, minPValue]
       );
 
-      const peak = res.length ? res[0].id : null;
-      await db.insert(
+      await db.insertMany(
         `INSERT INTO binned_most_significant_peaks ("chrom", "pos_bin", "peak")
          VALUES ($1, $2, $3)`,
-        [chrom, binLeft, peak]);
+        res.map(r => [chrom, binLeft, r.id]));
 
       if (i % 10 === 0) {
         console.log(`chr${chrom}: processed ${i}/${nBins} bins`);
-
       }
     }
     console.log(`done chr${chrom}`);
