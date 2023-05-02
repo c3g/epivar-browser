@@ -186,7 +186,7 @@ const manhattanReducer = (state = defaultManhattan, action) => {
           ...state.byChromAndAssay,
           [chrom]: {
             ...chromData,
-            [assay]: {...chromData[assay] ?? {}, isFetching: true, isFetched: false, data: []},
+            [assay]: {...chromData[assay] ?? {}, isLoading: true, isLoaded: false, data: []},
           },
         },
       };
@@ -201,7 +201,7 @@ const manhattanReducer = (state = defaultManhattan, action) => {
           ...state.byChromAndAssay,
           [chrom]: {
             ...chromData,
-            [assay]: {...chromData[assay] ?? {}, isFetching: false, isFetched: true, data: action.payload},
+            [assay]: {...chromData[assay] ?? {}, isLoading: false, isLoaded: true, data: action.payload},
           },
         },
       };
@@ -216,7 +216,7 @@ const manhattanReducer = (state = defaultManhattan, action) => {
           ...state.byChromAndAssay,
           [chrom]: {
             ...chromData,
-            [assay]: {...chromData[assay] ?? {}, isFetching: false},
+            [assay]: {...chromData[assay] ?? {}, isLoading: false},
           },
         },
       };
