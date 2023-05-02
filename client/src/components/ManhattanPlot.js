@@ -18,17 +18,26 @@ const Cytoband = React.memo(({start, end, containerWidth}) => {
 
 const ManhattanPlot = React.memo(
   ({
+    width,
+    height,
+
     title,
     data,
     group,
+
     positionProp,
     pValueProp,
     snpProp,
     featureProp,
     geneProp,
+
     onPointClick,
+
     ...props
   }) => {
+    width = width ?? 1110;
+    height = height ?? 275;
+
     const pxr = useDevicePixelRatio({maxDpr: 50});
     const qt = useRef(null);
 
@@ -133,8 +142,8 @@ const ManhattanPlot = React.memo(
     const uPlotOptions = useMemo(() => ({
       title,
       mode: 2, // ?
-      width: 1110,
-      height: 275,
+      width,
+      height,
       scales: {
         x: {time: false},
         y: {range: [1, maxY]},
@@ -217,7 +226,12 @@ const ManhattanPlot = React.memo(
     }), [dataNoNulls, maxY, drawPoints, qt, pxr, halfPointSize, strokeWidth]);
 
     // noinspection JSValidateTypes
-    return <div style={{boxSizing: "border-box", paddingTop: 16, textAlign: "center"}} {...props}>
+    return <div style={{
+      boxSizing: "border-box",
+      paddingTop: 16,
+      textAlign: "center",
+      minHeight: height + 27 + 16,  // plot height + title height (27 in Firefox) + top padding
+    }} {...props}>
       <UplotReact options={uPlotOptions} data={finalData} />
       <em style={{color: "#999"}}>Double-click to reset zoom.</em>
     </div>;
