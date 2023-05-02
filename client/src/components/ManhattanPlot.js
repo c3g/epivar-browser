@@ -10,7 +10,7 @@ import {useDevicePixelRatio} from "use-device-pixel-ratio";
 
 const TAU = 2 * Math.PI;
 const STROKE_WIDTH = 1;
-const POINT_SIZE = 7;
+const POINT_SIZE = 8;
 
 const Cytoband = React.memo(({start, end, containerWidth}) => {
   // TODO
@@ -165,13 +165,13 @@ const ManhattanPlot = React.memo(
           const cx = left * pxr;
           const cy = top * pxr;
 
-          const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, halfPointSize * 3.2);
+          const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, halfPointSize + strokeWidth);
           const hi = res ? res[2] : undefined;
           hoveredItem.current = hi;
           return hi ?? null;
         },
         points: {
-          size: POINT_SIZE + STROKE_WIDTH,
+          size: POINT_SIZE + STROKE_WIDTH + 1,
         },
         bind: {
           mouseup: (u, t, h) => e => {
