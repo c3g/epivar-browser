@@ -56,7 +56,7 @@ const ManhattanTest = () => {
     [selectedChrom, selectedAssay]);
 
   useEffect(() => {
-    if (!assaysIsLoaded || !selectedChrom || !selectedAssay) return;
+    if (!assaysIsLoaded || selectedChrom === "" || selectedAssay === "") return;
     if (assayRecord?.isLoaded) return;
     const params = {chrom: selectedChrom, assay: selectedAssay};
     dispatch(fetchManhattanData(params, params)).catch(console.error);
@@ -70,8 +70,6 @@ const ManhattanTest = () => {
       gap: 12,
       flexDirection: "row",
       alignItems: "baseline",
-      maxWidth: 800,
-      margin: "auto",
     }}>
       <label htmlFor="Manhattan__chrom-selector">Plot chromosome:</label>
       <Input
@@ -104,7 +102,6 @@ const ManhattanTest = () => {
         height={275}
         title={`chr${selectedChrom} ${selectedAssay}: Most significant peaks by SNP position (${binSizeKb}kb bins)`}
         data={assayRecord?.data ?? []}
-        group="overview"
         positionProp="pos_bin"
         pValueProp="p_val"
         snpProp={SNP_PROP}
