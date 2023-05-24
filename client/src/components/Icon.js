@@ -1,13 +1,21 @@
 import React from 'react'
 
 
-export default function Icon({ name, spin, className, ...rest }) {
+const Icon = ({ name, spin, className, bootstrap, ...rest }) => {
+  const prefix = bootstrap ? "bi" : "fa";
+
   const iconClassName = [
-    'fa',
-    `fa-${name}`,
-    spin ? 'fa-spin' : '',
+    prefix,
+    `${prefix}-${name}`,
+    spin ? `${prefix}-spin` : '',
     className,
   ].join(' ')
 
   return <i className={iconClassName} {...rest} />
-}
+};
+
+Icon.defaultProps = {
+  bootstrap: false,
+};
+
+export default Icon;
