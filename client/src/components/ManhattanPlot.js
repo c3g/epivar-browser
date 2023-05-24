@@ -11,7 +11,7 @@ import {useDevicePixelRatio} from "use-device-pixel-ratio";
 const TAU = 2 * Math.PI;
 const STROKE_WIDTH = 1;
 const POINT_SIZE = 8;
-const SMALL_POINT_SIZE = 3;
+const SMALL_POINT_SIZE = 5;
 const SMALL_NEG_LOG_P_THRESHOLD = 5;
 
 const ManhattanPlot = React.memo(
