@@ -29,7 +29,14 @@ const ManhattanTest = () => {
   const binSizeKb = ((config.binSize ?? 0) / 1000).toFixed(0);
 
   const chroms = useMemo(() => Object.keys(config.chromosomeSizes ?? {}), [config]);
-  const [selectedChrom, setSelectedChrom] = useState("")
+  const [selectedChrom, setSelectedChrom] = useState("");
+  const [selectedAssay, setSelectedAssay] = useState("");
+
+  const {
+    isLoading: assaysIsLoading,
+    isLoaded: assaysIsLoaded,
+    list: assays,
+  } = useSelector(state => state.assays);
 
   useEffect(() => {
     if (!configIsLoading && !configIsLoaded) {
@@ -38,28 +45,22 @@ const ManhattanTest = () => {
     if (chroms.length && selectedChrom === "") {
       setSelectedChrom(chroms[0]);
     }
-  }, [configIsLoading, configIsLoaded, chroms, selectedChrom]);
-
-  const {
-    isLoading: assaysIsLoading,
-    isLoaded: assaysIsLoaded,
-    list: assays,
-  } = useSelector(state => state.assays);
+    if (assays.length && selectedAssay === "") {
+      setSelectedAssay(assays[0]);
+    }
+  }, [configIsLoading, configIsLoaded, chroms, selectedChrom, assays, selectedAssay]);
 
   const binnedDataByChromAndAssay = useSelector(state => state.manhattan.byChromAndAssay);
+  const assayRecord = useMemo(
+    () => binnedDataByChromAndAssay[selectedChrom]?.[selectedAssay],
+    [selectedChrom, selectedAssay]);
 
   useEffect(() => {
-    if (!assaysIsLoaded || !selectedChrom) return;
-
-    (async () => {
-      await Promise.all(assays
-        .filter(assay => !binnedDataByChromAndAssay[selectedChrom]?.[assay]?.isLoaded)
-        .map(assay => {
-          const params = {chrom: selectedChrom, assay};
-          return dispatch(fetchManhattanData(params, params));
-        }));
-    })();
-  }, [assaysIsLoaded, assays, selectedChrom]);
+    if (!assaysIsLoaded || !selectedChrom || !selectedAssay) return;
+    if (assayRecord?.isLoaded) return;
+    const params = {chrom: selectedChrom, assay: selectedAssay};
+    dispatch(fetchManhattanData(params, params)).catch(console.error);
+  }, [assaysIsLoaded, assays, selectedChrom, selectedAssay, assayRecord]);
 
   // noinspection JSValidateTypes
   return <div style={{maxWidth: 1110, margin: "auto", paddingTop: 24}}
@@ -69,7 +70,7 @@ const ManhattanTest = () => {
       gap: 12,
       flexDirection: "row",
       alignItems: "baseline",
-      maxWidth: 560,
+      maxWidth: 800,
       margin: "auto",
     }}>
       <label htmlFor="Manhattan__chrom-selector">Plot chromosome:</label>
@@ -80,18 +81,28 @@ const ManhattanTest = () => {
         value={selectedChrom}
         onChange={e => setSelectedChrom(e.target.value)}
       >
-        <option value=""></option>
+        {selectedChrom === "" && <option value=""></option>}
         {chroms.map(chr => <option key={chr} value={chr}>chr{chr}</option>)}
+      </Input>
+      <div style={{width: 1, backgroundColor: "#DDD"}} /> {/* Additional divider */}
+      <label htmlFor="Manhattan__assay-selector">Assay:</label>
+      <Input
+        type="select"
+        name="Manhattan__assay-selector"
+        id="Manhattan__assay-selector"
+        value={selectedAssay}
+        onChange={e => setSelectedAssay(e.target.value)}
+      >
+        {selectedAssay === "" && <option value=""></option>}
+        {assays.map(assay => <option key={assay} value={assay}>{assay}</option>)}
       </Input>
     </div>
 
-    {(selectedChrom !== "") && assays.map(assay => {
-      const assayRecord = binnedDataByChromAndAssay[selectedChrom]?.[assay];
-      return <ManhattanPlot
-        key={assay}
+    {(selectedChrom !== "" && selectedAssay !== "") &&
+      <ManhattanPlot
         width={1110}
         height={275}
-        title={`chr${selectedChrom} ${assay}: Most significant peaks by SNP position (${binSizeKb}kb bins)`}
+        title={`chr${selectedChrom} ${selectedAssay}: Most significant peaks by SNP position (${binSizeKb}kb bins)`}
         data={assayRecord?.data ?? []}
         group="overview"
         positionProp="pos_bin"
@@ -102,14 +113,14 @@ const ManhattanTest = () => {
         onPointClick={peak => {
           if (!dispatch) return;
           const snp = peak[SNP_PROP];
-          navigate(`/explore/locus/rsID/${snp}/${assay}`);
+          navigate(`/explore/locus/rsID/${snp}/${selectedAssay}`);
           dispatch(setChrom("rsID"));
           dispatch(setPosition(snp));
           dispatch(doSearch());
         }}
         className={assayRecord?.isLoading ? 'loading' : ''}
-      />;
-    })}
+      />
+    }
   </div>;
 };
 
