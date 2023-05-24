@@ -257,29 +257,36 @@ body {
   flex-direction: row;
   justify-content: center;
 }
-.Header__links > button {
+.Header__links button {
+  margin-top: 2px;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.8);
   transition: color 0.15s ease-in-out;
 }
-.Header__links > button:hover,
-.Header__links > button:active,
-.Header__links > button.active {
+.Header__links button:hover,
+.Header__links button:active,
+.Header__links button.active {
   color: rgba(255, 255, 255, 0.97);
 }
-.Header__links > button.active {
+.Header__button_highlight_group {
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+.Header__button_highlight_group button {
+  margin-top: 0;
+}
+.Header__links button.active {
   text-decoration: underline;
 }
-.Header__links > button.highlight {
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  transition: border ease-in-out 0.15s;
-}
-.Header__links > button.highlight:hover {
-  border-color: rgba(255, 255, 255, 0.7);
-}
-.Header__links > button.highlight.active {
-  border-color: rgba(255, 255, 255, 0.0);
-}
+/*.Header__links button.highlight {*/
+/*  border: 2px solid rgba(255, 255, 255, 0.5);*/
+/*  transition: border ease-in-out 0.15s;*/
+/*}*/
+/*.Header__links button.highlight:hover {*/
+/*  border-color: rgba(255, 255, 255, 0.7);*/
+/*}*/
+/*.Header__links button.highlight.active {*/
+/*  border-color: rgba(255, 255, 255, 0.0);*/
+/*}*/
 .Header__links > button i {
   margin-right: 0.4em;
 }
