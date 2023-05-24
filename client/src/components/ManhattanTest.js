@@ -57,7 +57,7 @@ const ManhattanTest = () => {
 
   useEffect(() => {
     if (!assaysIsLoaded || selectedChrom === "" || selectedAssay === "") return;
-    if (assayRecord?.isLoaded) return;
+    if (assayRecord?.isLoading || assayRecord?.isLoaded) return;
     const params = {chrom: selectedChrom, assay: selectedAssay};
     dispatch(fetchManhattanData(params, params)).catch(console.error);
   }, [assaysIsLoaded, assays, selectedChrom, selectedAssay, assayRecord]);
