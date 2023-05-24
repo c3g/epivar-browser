@@ -205,19 +205,13 @@ const ManhattanPlot = React.memo(
           const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, halfPointSize + strokeWidth);
           const hi = res ? res[2] : undefined;
           hoveredItem.current = hi;
-          if (hi) console.debug("hovered item", hi);
           return hi ?? null;
         },
         points: {
-          size: (u, s) => {
-            if (hoveredItem.current) {
-              console.log(u.data[s]);
-              console.log(dataNoNulls[hoveredItem.current]);
-            }
-            return hoveredItem.current !== undefined && s === 1
+          size: (u, s) =>
+            hoveredItem.current !== undefined && s === 1
               ? getPointSizeFromDatum(u.data[s], hoveredItem.current) + STROKE_WIDTH + 1
-              : 0;
-          },
+              : 0,
         },
         bind: {
           mouseup: (u, t, h) => e => {
