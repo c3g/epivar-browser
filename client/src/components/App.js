@@ -15,10 +15,10 @@ import {saveUser} from "../actions";
 import ContactModal from "./ContactModal";
 import AboutPage from "./pages/AboutPage";
 import ProtectedPageContainer from "./pages/ProtectedPageContainer";
+import OverviewPage from "./pages/OverviewPage";
 import ExplorePage from "./pages/ExplorePage";
 import DatasetsPage from "./pages/DatasetsPage";
 import FAQPage from "./pages/FAQPage";
-import ManhattanTest from "./ManhattanTest";
 
 
 const RoutedApp = () => {
@@ -119,7 +119,7 @@ class App extends Component {
             <Route path="about" element={<AboutPage />} />
             <Route path="datasets" element={<DatasetsPage />} />
             <Route path="overview" element={<ProtectedPageContainer>
-              <ManhattanTest />
+              <OverviewPage />
             </ProtectedPageContainer>} />
             <Route path="explore" element={<ProtectedPageContainer>
               <ExplorePage />
@@ -127,7 +127,6 @@ class App extends Component {
               <Route index={true} element={<PeakResults />} />
               <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
               <Route path="locus/:chrom/:position" element={<PeakResults />} />
-              <Route path="manhattan" element={<ManhattanTest />} />
             </Route>
             <Route path="faq" element={<FAQPage />} />
             <Route path="auth-failure" element={<div />} />
