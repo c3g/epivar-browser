@@ -4,18 +4,29 @@ import * as k from './constants/ActionTypes'
 
 const defaultChrom = 'rsID'
 
-const defaultUI =
-  process.env.NODE_ENV === 'production' ?
-    { chrom: defaultChrom, position: '' } :
-    { chrom: defaultChrom, position: '' }
+const defaultUI = {
+  chrom: defaultChrom,
+  position: '',
+
+  overview: {
+    chrom: '',
+    assay: '',
+  },
+};
 
 function uiReducer(state = defaultUI, action) {
   switch (action.type) {
     case k.SET_CHROM: {
-      return { ...state, chrom: action.payload }
+      return { ...state, chrom: action.payload };
     }
     case k.SET_POSITION: {
-      return { ...state, position: action.payload }
+      return { ...state, position: action.payload };
+    }
+    case k.SET_OVERVIEW_CHROM: {
+      return {...state, overview: {...state.overview, chrom: action.payload}};
+    }
+    case k.SET_OVERVIEW_ASSAY: {
+      return {...state, overview: {...state.overview, assay: action.payload}};
     }
     default:
       return state;

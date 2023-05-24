@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from "react";
+import {useCallback, useEffect, useMemo} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
@@ -7,11 +7,12 @@ import {Input} from "reactstrap";
 import ManhattanPlot from "../ManhattanPlot";
 
 import {
-  setChrom,
   doSearch,
   setPosition,
   fetchOverviewConfig,
   fetchManhattanData,
+  setOverviewChrom,
+  setOverviewAssay,
 } from '../../actions.js'
 
 const SNP_PROP = "snp_nat_id";
@@ -35,42 +36,43 @@ const OverviewPage = () => {
     isLoaded: configIsLoaded,
     config,
   } = useSelector(state => state.overview);
-
   const binSizeKb = ((config.binSize ?? 0) / 1000).toFixed(0);
 
   const chroms = useMemo(() => Object.keys(config.chromosomeSizes ?? {}), [config]);
-  const [selectedChrom, setSelectedChrom] = useState("");
-  const [selectedAssay, setSelectedAssay] = useState("");
-
   const {
     isLoading: assaysIsLoading,
     isLoaded: assaysIsLoaded,
     list: assays,
   } = useSelector(state => state.assays);
 
+  const {chrom, assay} = useSelector(state => state.ui.overview);
+
+  const setChrom = useCallback((chrom) => dispatch(setOverviewChrom(chrom)), [dispatch]);
+  const setAssay = useCallback((assay) => dispatch(setOverviewAssay(assay)), [dispatch]);
+
   useEffect(() => {
     if (!configIsLoading && !configIsLoaded) {
       dispatch(fetchOverviewConfig());
     }
-    if (chroms.length && selectedChrom === "") {
-      setSelectedChrom(chroms[0]);
+    if (chroms.length && chrom === "") {
+      setChrom(chroms[0]);
     }
-    if (assays.length && selectedAssay === "") {
-      setSelectedAssay(assays[0]);
+    if (assays.length && assay === "") {
+      setAssay(assays[0]);
     }
-  }, [configIsLoading, configIsLoaded, chroms, selectedChrom, assays, selectedAssay]);
+  }, [configIsLoading, configIsLoaded, chroms, chrom, assays, assay, setChrom, setAssay]);
 
   const binnedDataByChromAndAssay = useSelector(state => state.manhattan.byChromAndAssay);
   const assayRecord = useMemo(
-    () => binnedDataByChromAndAssay[selectedChrom]?.[selectedAssay],
-    [binnedDataByChromAndAssay, selectedChrom, selectedAssay]);
+    () => binnedDataByChromAndAssay[chrom]?.[assay],
+    [binnedDataByChromAndAssay, chrom, assay]);
 
   useEffect(() => {
-    if (!assaysIsLoaded || selectedChrom === "" || selectedAssay === "") return;
+    if (!assaysIsLoaded || chrom === "" || assay === "") return;
     if (assayRecord?.isLoading || assayRecord?.isLoaded) return;
-    const params = {chrom: selectedChrom, assay: selectedAssay};
+    const params = {chrom, assay};
     dispatch(fetchManhattanData(params, params)).catch(console.error);
-  }, [dispatch, assaysIsLoaded, assays, selectedChrom, selectedAssay, assayRecord]);
+  }, [dispatch, assaysIsLoaded, assays, chrom, assay, assayRecord]);
 
   // noinspection JSValidateTypes
   return <div className="Page">
@@ -88,10 +90,10 @@ const OverviewPage = () => {
           type="select"
           name="Manhattan__chrom-selector"
           id="Manhattan__chrom-selector"
-          value={selectedChrom}
-          onChange={e => setSelectedChrom(e.target.value)}
+          value={chrom}
+          onChange={e => setChrom(e.target.value)}
         >
-          {selectedChrom === "" && <option value=""></option>}
+          {chrom === "" && <option value=""></option>}
           {chroms.map(chr => <option key={chr} value={chr}>chr{chr}</option>)}
         </Input>
         <div style={{width: 1, height: 38, backgroundColor: "#DDD"}} /> {/* Additional divider */}
@@ -100,19 +102,19 @@ const OverviewPage = () => {
           type="select"
           name="Manhattan__assay-selector"
           id="Manhattan__assay-selector"
-          value={selectedAssay}
-          onChange={e => setSelectedAssay(e.target.value)}
+          value={assay}
+          onChange={e => setAssay(e.target.value)}
         >
-          {selectedAssay === "" && <option value=""></option>}
-          {assays.map(assay => <option key={assay} value={assay}>{assay}</option>)}
+          {assay === "" && <option value=""></option>}
+          {assays.map(a => <option key={a} value={a}>{a}</option>)}
         </Input>
       </div>
 
-      {(selectedChrom !== "" && selectedAssay !== "") &&
+      {(chrom !== "" && assay !== "") &&
         <ManhattanPlot
           width={Math.min(Math.max(PLOT_MIN_WIDTH, width), PLOT_MAX_WIDTH)}
           height={275}
-          title={`chr${selectedChrom} ${selectedAssay}: Most significant peaks by SNP position (${binSizeKb}kb bins)`}
+          title={`chr${chrom} ${assay}: Most significant peaks by SNP position (${binSizeKb}kb bins)`}
           data={assayRecord?.data ?? []}
           positionProp="pos_bin"
           pValueProp="p_val"
@@ -122,7 +124,7 @@ const OverviewPage = () => {
           onPointClick={peak => {
             if (!dispatch) return;
             const snp = peak[SNP_PROP];
-            navigate(`/explore/locus/rsID/${snp}/${selectedAssay}`);
+            navigate(`/explore/locus/rsID/${snp}/${assay}`);
             dispatch(setChrom("rsID"));
             dispatch(setPosition(snp));
             dispatch(doSearch());
