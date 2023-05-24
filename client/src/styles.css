@@ -393,6 +393,9 @@ details summary {
   pointer-events: auto !important;
   cursor: pointer;
 }
+td.u-value {
+  letter-spacing: -1px; /* make em-dashes show up nicely */
+}
 
 
 .PeakResults {

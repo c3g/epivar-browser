@@ -12,10 +12,6 @@ const TAU = 2 * Math.PI;
 const STROKE_WIDTH = 1;
 const POINT_SIZE = 8;
 
-const Cytoband = React.memo(({start, end, containerWidth}) => {
-  // TODO
-});
-
 const ManhattanPlot = React.memo(
   ({
     width,
