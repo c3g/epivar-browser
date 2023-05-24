@@ -53,7 +53,7 @@ const ManhattanTest = () => {
   const binnedDataByChromAndAssay = useSelector(state => state.manhattan.byChromAndAssay);
   const assayRecord = useMemo(
     () => binnedDataByChromAndAssay[selectedChrom]?.[selectedAssay],
-    [selectedChrom, selectedAssay]);
+    [binnedDataByChromAndAssay, selectedChrom, selectedAssay]);
 
   useEffect(() => {
     if (!assaysIsLoaded || selectedChrom === "" || selectedAssay === "") return;
