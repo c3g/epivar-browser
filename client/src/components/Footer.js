@@ -14,18 +14,20 @@ const Footer = ({/*onContact, */onTerms}) => (
           </a>
           <div>
             <span>Developed by <a href="https://computationalgenomics.ca" target="_blank" rel="nofollow">
-              C3G</a> at McGill University{" "}</span><br />
-            <em>Version {packageJson.version}</em><br />
+              C3G</a> at McGill University &copy; 2017-2023</span><br />
+            <em>
+              Version {packageJson.version} &bull;{" "}
+              <a href="https://github.com/c3g/flu-infection" target="_blank" rel="nofollow">source code</a>
+            </em><br />
           </div>
         </div>
       </div>
       <nav className="Footer__nav">
         <ul>
-          {/*<li><Link to="/">Home</Link></li>*/}
           <li><Link to="/about">About</Link></li>
           <li><Link to="/datasets">Datasets</Link></li>
+          <li><Link to="/overview">Overview</Link></li>
           <li><Link to="/explore">Explore</Link></li>
-          {/*<li><a href="#" onClick={onContact}>Contact</a></li>*/}
           <li><a href="#" onClick={onTerms}>Terms of Use</a></li>
         </ul>
       </nav>
