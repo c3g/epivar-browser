@@ -60,7 +60,7 @@ const ManhattanTest = () => {
     if (assayRecord?.isLoading || assayRecord?.isLoaded) return;
     const params = {chrom: selectedChrom, assay: selectedAssay};
     dispatch(fetchManhattanData(params, params)).catch(console.error);
-  }, [assaysIsLoaded, assays, selectedChrom, selectedAssay, assayRecord]);
+  }, [dispatch, assaysIsLoaded, assays, selectedChrom, selectedAssay, assayRecord]);
 
   // noinspection JSValidateTypes
   return <div style={{maxWidth: 1110, margin: "auto", paddingTop: 24}}
@@ -71,7 +71,7 @@ const ManhattanTest = () => {
       flexDirection: "row",
       alignItems: "baseline",
     }}>
-      <label htmlFor="Manhattan__chrom-selector">Plot chromosome:</label>
+      <label htmlFor="Manhattan__chrom-selector">Chromosome:</label>
       <Input
         type="select"
         name="Manhattan__chrom-selector"
