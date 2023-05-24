@@ -44,7 +44,6 @@ export default function Header({children, onAbout, onDatasets, onOverview, onExp
           <Button color="link"
                   className={location.pathname.startsWith("/faq") ? "active" : ""}
                   onClick={onFAQ}><Icon name="question-circle" bootstrap={true} />FAQ</Button>
-          {/*<Button color="link" onClick={onContact}><Icon name="envelope" />Contact</Button>*/}
         </div>
         { children }
       </Container>
