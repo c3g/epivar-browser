@@ -16,9 +16,19 @@ import {
 
 const SNP_PROP = "snp_nat_id";
 
+const useWindowDimensions = () => {
+  const {innerWidth: width, innerHeight: height} = window;
+  return {width, height};
+};
+
+const PLOT_MIN_WIDTH = 600;
+const PLOT_MAX_WIDTH = 1110;
+
 const ManhattanTest = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const {width} = useWindowDimensions();
 
   const {
     isLoading: configIsLoading,
@@ -63,13 +73,14 @@ const ManhattanTest = () => {
   }, [dispatch, assaysIsLoaded, assays, selectedChrom, selectedAssay, assayRecord]);
 
   // noinspection JSValidateTypes
-  return <div style={{maxWidth: 1110, margin: "auto", paddingTop: 24}}
+  return <div style={{maxWidth: PLOT_MAX_WIDTH, margin: "auto", paddingTop: 24}}
               className={"Overview" + (assaysIsLoading ? " loading" : "")}>
     <div style={{
       display: "flex",
       gap: 12,
       flexDirection: "row",
       alignItems: "baseline",
+      padding: "0 12px",
     }}>
       <label htmlFor="Manhattan__chrom-selector">Chromosome:</label>
       <Input
@@ -82,7 +93,7 @@ const ManhattanTest = () => {
         {selectedChrom === "" && <option value=""></option>}
         {chroms.map(chr => <option key={chr} value={chr}>chr{chr}</option>)}
       </Input>
-      <div style={{width: 1, backgroundColor: "#DDD"}} /> {/* Additional divider */}
+      <div style={{width: 1, height: 38, backgroundColor: "#DDD"}} /> {/* Additional divider */}
       <label htmlFor="Manhattan__assay-selector">Assay:</label>
       <Input
         type="select"
@@ -98,7 +109,7 @@ const ManhattanTest = () => {
 
     {(selectedChrom !== "" && selectedAssay !== "") &&
       <ManhattanPlot
-        width={1110}
+        width={Math.min(Math.max(PLOT_MIN_WIDTH, width), PLOT_MAX_WIDTH)}
         height={275}
         title={`chr${selectedChrom} ${selectedAssay}: Most significant peaks by SNP position (${binSizeKb}kb bins)`}
         data={assayRecord?.data ?? []}
