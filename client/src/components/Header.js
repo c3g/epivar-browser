@@ -7,7 +7,7 @@ import Icon from "./Icon";
 
 import {LOGIN_PATH} from "../constants/app";
 
-export default function Header({children, onAbout, onDatasets, onExplore, onFAQ/*, onContact*/}) {
+export default function Header({children, onAbout, onDatasets, onOverview, onExplore, onFAQ/*, onContact*/}) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -33,6 +33,9 @@ export default function Header({children, onAbout, onDatasets, onExplore, onFAQ/
           <Button color="link"
                   className={location.pathname.startsWith("/datasets") ? "active" : ""}
                   onClick={onDatasets}><Icon name="table" />Datasets</Button>
+          <Button color="link"
+                  className={location.pathname.startsWith("/overview") ? "active" : ""}
+                  onClick={onOverview}><Icon name="chart-scatter" />Overview</Button>
           <Button color="link"
                   className={"highlight" + (location.pathname.startsWith("/explore") ? " active" : "")}
                   onClick={onExplore}><Icon name="search" />Explore</Button>

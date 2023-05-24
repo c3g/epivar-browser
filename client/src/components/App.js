@@ -39,6 +39,7 @@ const RoutedApp = () => {
 
   const navigateAbout = () => navigate("/about");
   const navigateDatasets = () => navigate("/datasets");
+  const navigateOverview = () => navigate("/overview");  // TODO: remember chrom and assay
   const navigateExplore = () => {
     if (location.pathname.startsWith("/explore")) return;
     if (chrom && position) {
@@ -77,11 +78,11 @@ const RoutedApp = () => {
 
       <Header onAbout={navigateAbout}
               onDatasets={navigateDatasets}
+              onOverview={navigateOverview}
               onExplore={navigateExplore}
               onFAQ={navigateFAQ}
               onContact={toggleContact}>
         <HelpModal isOpen={helpModal} toggle={toggleHelp} />
-        {/*<Controls params={params} navigate={navigate} toggleHelp={toggleHelp} />*/}
       </Header>
 
       <Outlet context={{termsModal, setTermsModal, toggleHelp}} />
@@ -115,6 +116,9 @@ class App extends Component {
             <Route index={true} element={<Navigate to="/about" replace={true} />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="datasets" element={<DatasetsPage />} />
+            <Route path="overview" element={<ProtectedPageContainer>
+              <ManhattanTest />
+            </ProtectedPageContainer>} />
             <Route path="explore" element={<ProtectedPageContainer>
               <ExplorePage />
             </ProtectedPageContainer>}>
