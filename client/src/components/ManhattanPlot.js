@@ -223,7 +223,7 @@ const ManhattanPlot = React.memo(
           });
         }],
       },
-    }), [dataNoNulls, maxY, drawPoints, qt, pxr, halfPointSize, strokeWidth]);
+    }), [width, height, title, dataNoNulls, maxY, drawPoints, qt, pxr, halfPointSize, strokeWidth]);
 
     // noinspection JSValidateTypes
     return <div style={{
