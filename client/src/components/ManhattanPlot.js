@@ -11,6 +11,8 @@ import {useDevicePixelRatio} from "use-device-pixel-ratio";
 const TAU = 2 * Math.PI;
 const STROKE_WIDTH = 1;
 const POINT_SIZE = 8;
+const SMALL_POINT_SIZE = 3;
+const SMALL_NEG_LOG_P_THRESHOLD = 5;
 
 const ManhattanPlot = React.memo(
   ({
@@ -42,9 +44,6 @@ const ManhattanPlot = React.memo(
       if (!group) return;
       sync.current = uPlot.sync(group);
     }, [group]);
-
-    /** @type number */
-    const halfPointSize = useMemo(() => POINT_SIZE * pxr * 0.5, [pxr]);
 
     /** @type number */
     const strokeWidth = useMemo(() => STROKE_WIDTH * pxr, [pxr]);
@@ -105,6 +104,8 @@ const ManhattanPlot = React.memo(
         for (let i = 0; i < d[0].length; i++) {
           const x = d[0][i];
           const y = d[1][i];
+
+          const halfPointSize = (y <= SMALL_NEG_LOG_P_THRESHOLD ? SMALL_POINT_SIZE : POINT_SIZE) * pxr * 0.5;
 
           if (x >= scaleX.min && x <= scaleX.max && y >= scaleY.min && y <= scaleY.max) {
             const cx = valToPosX(x, scaleX, xDim, xOff);
@@ -194,6 +195,8 @@ const ManhattanPlot = React.memo(
           const cx = left * pxr;
           const cy = top * pxr;
 
+          const halfPointSize = POINT_SIZE * pxr * 0.5;
+
           const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, halfPointSize + strokeWidth);
           const hi = res ? res[2] : undefined;
           hoveredItem.current = hi;
@@ -219,7 +222,7 @@ const ManhattanPlot = React.memo(
           });
         }],
       },
-    }), [width, height, title, dataNoNulls, maxY, drawPoints, qt, pxr, halfPointSize, strokeWidth]);
+    }), [width, height, title, dataNoNulls, maxY, drawPoints, qt, pxr, strokeWidth]);
 
     // noinspection JSValidateTypes
     return <div style={{
