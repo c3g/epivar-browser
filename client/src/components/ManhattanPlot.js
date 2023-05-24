@@ -14,6 +14,11 @@ const POINT_SIZE = 8;
 const SMALL_POINT_SIZE = 5;
 const SMALL_NEG_LOG_P_THRESHOLD = 5;
 
+const getPointSizeFromDatum = (data, dIdx) => {
+  const y = data[1][dIdx];
+  return y < SMALL_NEG_LOG_P_THRESHOLD ? SMALL_POINT_SIZE : POINT_SIZE;
+};
+
 const ManhattanPlot = React.memo(
   ({
     width,
@@ -105,7 +110,7 @@ const ManhattanPlot = React.memo(
           const x = d[0][i];
           const y = d[1][i];
 
-          const halfPointSize = (y <= SMALL_NEG_LOG_P_THRESHOLD ? SMALL_POINT_SIZE : POINT_SIZE) * pxr * 0.5;
+          const halfPointSize = getPointSizeFromDatum(d, i) * pxr * 0.5;
 
           if (x >= scaleX.min && x <= scaleX.max && y >= scaleY.min && y <= scaleY.max) {
             const cx = valToPosX(x, scaleX, xDim, xOff);
@@ -204,7 +209,11 @@ const ManhattanPlot = React.memo(
           return hi ?? null;
         },
         points: {
-          size: POINT_SIZE + STROKE_WIDTH + 1,
+          size: (u, s) => {
+            return hoveredItem.current !== undefined && s === 1
+              ? getPointSizeFromDatum(dataNoNulls, hoveredItem.current) + STROKE_WIDTH + 1
+              : 0;
+          },
         },
         bind: {
           mouseup: (u, t, h) => e => {
