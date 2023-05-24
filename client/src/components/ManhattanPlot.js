@@ -210,6 +210,7 @@ const ManhattanPlot = React.memo(
         },
         points: {
           size: (u, s) => {
+            if (hoveredItem.current) console.log(dataNoNulls[hoveredItem.current]);
             return hoveredItem.current !== undefined && s === 1
               ? getPointSizeFromDatum(dataNoNulls, hoveredItem.current) + STROKE_WIDTH + 1
               : 0;
