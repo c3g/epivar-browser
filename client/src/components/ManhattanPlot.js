@@ -200,6 +200,7 @@ const ManhattanPlot = React.memo(
           const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, halfPointSize + strokeWidth);
           const hi = res ? res[2] : undefined;
           hoveredItem.current = hi;
+          if (hi) console.debug("hovered item", hi);
           return hi ?? null;
         },
         points: {
