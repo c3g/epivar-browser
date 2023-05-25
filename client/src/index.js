@@ -18,10 +18,17 @@ import {fetchAssays, fetchChroms, fetchMessages, fetchUser} from './actions.js'
 const initialState = {}
 // const initialState = localStorage.state ? JSON.parse(localStorage.state) : {}
 
-const store =
-  (process.env.NODE_ENV === 'production')
-  ? createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware))
-  : createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware, createLogger()))
+const store = createStore(
+  rootReducer,
+  initialState,
+  applyMiddleware(
+    thunkMiddleware,
+    // Inject development-only middleware:
+    ...(process.env.NODE_ENV === 'production' ? [] : [createLogger()]),
+    // Inject Redux dev tools middleware if it's available:
+    ...(window.__REDUX_DEVTOOLS_EXTENSION__ ? [window.__REDUX_DEVTOOLS_EXTENSION__()] : []),
+  ),
+);
 
 render(
   <Provider store={store}>
