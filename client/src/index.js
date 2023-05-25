@@ -47,10 +47,10 @@ store.dispatch(fetchMessages())  // Server-side messages, e.g. auth errors
 store.dispatch(fetchAssays())
 store.dispatch(fetchChroms())
 
-window.addEventListener('unload', () => {
-  // TODO remove or implement this properly
-  localStorage.state = JSON.stringify(store.getState())
-})
+// window.addEventListener('unload', () => {
+//   // TODO remove or implement this properly
+//   localStorage.state = JSON.stringify(store.getState())
+// })
 
 
 // Register service worker
