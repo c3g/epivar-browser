@@ -8,6 +8,7 @@ import ManhattanPlot from "../ManhattanPlot";
 
 import {
   doSearch,
+  setChrom,
   setPosition,
   fetchOverviewConfig,
   fetchManhattanData,
@@ -47,20 +48,20 @@ const OverviewPage = () => {
 
   const {chrom, assay} = useSelector(state => state.ui.overview);
 
-  const setChrom = useCallback((chrom) => dispatch(setOverviewChrom(chrom)), [dispatch]);
-  const setAssay = useCallback((assay) => dispatch(setOverviewAssay(assay)), [dispatch]);
+  const setOvChrom = useCallback((chrom) => dispatch(setOverviewChrom(chrom)), [dispatch]);
+  const setOvAssay = useCallback((assay) => dispatch(setOverviewAssay(assay)), [dispatch]);
 
   useEffect(() => {
     if (!configIsLoading && !configIsLoaded) {
       dispatch(fetchOverviewConfig());
     }
     if (chroms.length && chrom === "") {
-      setChrom(chroms[0]);
+      setOvChrom(chroms[0]);
     }
     if (assays.length && assay === "") {
-      setAssay(assays[0]);
+      setOvAssay(assays[0]);
     }
-  }, [configIsLoading, configIsLoaded, chroms, chrom, assays, assay, setChrom, setAssay]);
+  }, [configIsLoading, configIsLoaded, chroms, chrom, assays, assay, setOvChrom, setOvAssay]);
 
   const binnedDataByChromAndAssay = useSelector(state => state.manhattan.byChromAndAssay);
   const assayRecord = useMemo(
@@ -91,7 +92,7 @@ const OverviewPage = () => {
           name="Manhattan__chrom-selector"
           id="Manhattan__chrom-selector"
           value={chrom}
-          onChange={e => setChrom(e.target.value)}
+          onChange={e => setOvChrom(e.target.value)}
         >
           {chrom === "" && <option value=""></option>}
           {chroms.map(chr => <option key={chr} value={chr}>chr{chr}</option>)}
@@ -103,7 +104,7 @@ const OverviewPage = () => {
           name="Manhattan__assay-selector"
           id="Manhattan__assay-selector"
           value={assay}
-          onChange={e => setAssay(e.target.value)}
+          onChange={e => setOvAssay(e.target.value)}
         >
           {assay === "" && <option value=""></option>}
           {assays.map(a => <option key={a} value={a}>{a}</option>)}
