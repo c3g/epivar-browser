@@ -229,7 +229,7 @@ const Controls = ({toggleHelp}) => {
           {
             open &&
             <div className='autocomplete__dropdown-menu'>
-              {list.length === 0 && <div className={ 'autocomplete__item autocomplete__item--empty' }>
+              {list.length === 0 && <div className="autocomplete__item autocomplete__item--empty">
                 <span>{
                   searchIsLongEnough()
                     ? (isLoading ? "Loading..." : "No results")
