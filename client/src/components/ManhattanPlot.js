@@ -240,7 +240,7 @@ const ManhattanPlot = React.memo(
       minHeight: height + 27 + 16,  // plot height + title height (27 in Firefox) + top padding
     }} {...props}>
       <UplotReact options={uPlotOptions} data={finalData} />
-      <em style={{color: "#999"}}>Double-click to reset zoom.</em>
+      <em style={{color: "#888"}}>Click and drag to zoom in on a region. Double-click to reset.</em>
     </div>;
   });
 
