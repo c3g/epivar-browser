@@ -221,6 +221,9 @@ const ManhattanPlot = React.memo(
             }
             h(e);
           },
+          click: (u, t, h) => e => {
+            console.log(u, t, h, e);
+          },
         },
       },
       hooks: {
