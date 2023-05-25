@@ -196,6 +196,7 @@ const Controls = ({toggleHelp}) => {
   }, [dispatch]);
 
   const onClickSearch = useCallback(() => {
+    if (!chrom || !position) return;
     navigate(`/explore/locus/${chrom}/${position}`, {replace: true});
     dispatch(doSearch());
     setDidFirstSearch(true);
