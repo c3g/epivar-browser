@@ -17,8 +17,7 @@ import App from './components/App';
 import {fetchAssays, fetchChroms, fetchMessages, fetchUser} from './actions.js'
 
 
-const initialState = {}
-// const initialState = localStorage.state ? JSON.parse(localStorage.state) : {}
+const initialState = {};
 
 const store = createStore(
   rootReducer,
@@ -39,7 +38,7 @@ render(
     </Router>
   </Provider>,
   document.querySelector('#root')
-)
+);
 
 store.dispatch(fetchUser())
 store.dispatch(fetchMessages())  // Server-side messages, e.g. auth errors
@@ -47,15 +46,10 @@ store.dispatch(fetchMessages())  // Server-side messages, e.g. auth errors
 store.dispatch(fetchAssays())
 store.dispatch(fetchChroms())
 
-// window.addEventListener('unload', () => {
-//   // TODO remove or implement this properly
-//   localStorage.state = JSON.stringify(store.getState())
-// })
-
 
 // Register service worker
 
-registerServiceWorker()
+// registerServiceWorker()
 
 
 
