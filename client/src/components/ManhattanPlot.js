@@ -215,6 +215,7 @@ const ManhattanPlot = React.memo(
         },
         bind: {
           mouseup: (u, t, h) => e => {
+            console.log(u, t, h, e);
             if (e.button === 0 && hoveredItem.current && Array.from(e.target.classList).includes("u-cursor-pt")) {
               onPointClick(dataNoNulls[hoveredItem.current]);
             }
