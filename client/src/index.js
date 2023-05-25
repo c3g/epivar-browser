@@ -14,7 +14,7 @@ import { composeWithDevToolsLogOnlyInProduction } from '@redux-devtools/extensio
 import './styles.css';
 import { rootReducer } from './reducers';
 import App from './components/App';
-import {fetchAssays, fetchChroms, fetchMessages, fetchUser} from './actions.js'
+import {fetchAssays, /* fetchChroms, */ fetchMessages, fetchUser} from './actions.js'
 
 
 const initialState = {};
@@ -46,7 +46,12 @@ store.dispatch(fetchUser())
 store.dispatch(fetchMessages())  // Server-side messages, e.g. auth errors
 
 store.dispatch(fetchAssays())
+
+/*
+Re-enable to bring back server-fetched genomic chromosomes. For now, this instead just holds rsID + gene.
+  - David L, 2023-05-25
 store.dispatch(fetchChroms())
+ */
 
 
 

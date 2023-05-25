@@ -63,11 +63,14 @@ function samplesReducer(state = defaultSamples, action) {
 
 const defaultChroms = {
   isLoading: false,
-  isLoaded: false,
+  isLoaded: true,  // set to false when bringing back server-fetched genomic chromosomes - David L, 2023-05-25
   list: ['rsID', 'gene'],
 }
 function chromsReducer(state = defaultChroms, action) {
   switch (action.type) {
+    /*
+    Re-enable to bring back server-fetched genomic chromosomes. For now, this instead just holds rsID + gene.
+    - David L, 2023-05-25
     case k.CHROMS.REQUEST: {
       return { ...state, isLoading: true }
     }
@@ -82,6 +85,7 @@ function chromsReducer(state = defaultChroms, action) {
     case k.CHROMS.ERROR: {
       return { ...state, isLoading: false }
     }
+    */
     default:
       return state;
   }
