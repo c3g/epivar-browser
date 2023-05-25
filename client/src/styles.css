@@ -391,6 +391,9 @@ details summary {
   pointer-events: auto !important;
   cursor: pointer;
 }
+tr.u-series .u-marker {
+  border-radius: 100%;  /* Draw legend marker as a circle */
+}
 td.u-value {
   letter-spacing: -1px; /* make em-dashes show up nicely */
 }
