@@ -2,8 +2,6 @@ import React, {Component, useEffect, useState} from 'react';
 import {Navigate, Outlet, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
-import "bootstrap-icons/font/bootstrap-icons.min.css";
-
 import Header from './Header'
 import Footer from './Footer'
 import PeakResults from './PeakResults'

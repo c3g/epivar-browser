@@ -1,5 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
