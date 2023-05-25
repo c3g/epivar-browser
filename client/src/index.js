@@ -9,9 +9,9 @@ import { createLogger } from 'redux-logger';
 import {BrowserRouter as Router} from 'react-router-dom';
 import thunkMiddleware from 'redux-thunk';
 import { legacy_createStore as createStore, applyMiddleware } from 'redux';
+import { composeWithDevToolsLogOnlyInProduction } from '@redux-devtools/extension';
 
 import './styles.css';
-import registerServiceWorker from './registerServiceWorker';
 import { rootReducer } from './reducers';
 import App from './components/App';
 import {fetchAssays, fetchChroms, fetchMessages, fetchUser} from './actions.js'
@@ -22,12 +22,14 @@ const initialState = {};
 const store = createStore(
   rootReducer,
   initialState,
-  applyMiddleware(
-    thunkMiddleware,
-    // Inject development-only middleware:
-    ...(process.env.NODE_ENV === 'production' ? [] : [createLogger()]),
-    // Inject Redux dev tools middleware if it's available:
-    ...(window.__REDUX_DEVTOOLS_EXTENSION__ ? [window.__REDUX_DEVTOOLS_EXTENSION__()] : []),
+
+  // Inject Redux dev tools middleware if it's available:
+  composeWithDevToolsLogOnlyInProduction(
+    applyMiddleware(
+      thunkMiddleware,
+      // Inject development-only middleware:
+      ...(process.env.NODE_ENV === 'production' ? [] : [createLogger()]),
+    )
   ),
 );
 
@@ -45,11 +47,6 @@ store.dispatch(fetchMessages())  // Server-side messages, e.g. auth errors
 
 store.dispatch(fetchAssays())
 store.dispatch(fetchChroms())
-
-
-// Register service worker
-
-// registerServiceWorker()
 
 
 
