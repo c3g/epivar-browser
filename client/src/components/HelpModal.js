@@ -14,8 +14,9 @@ const HelpModal = ({isOpen, toggle}) => (
       </p>
       <p>
         Also available in the peak table are links to the UCSC genome browser with merged bigWig tracks of signal
-        average/standard deviation for a large window around the selected feature, with the feature highlighted in
-        <strong>yellow</strong> and the associated SNP highlighted in <strong>red</strong>.
+        average/standard deviation, grouped by genotype, for a large window around the selected feature.
+        The selected feature is highlighted in <strong>yellow</strong>, and the associated SNP is highlighted in{" "}
+        <strong>red</strong>.
       </p>
     </ModalBody>
   </Modal>
