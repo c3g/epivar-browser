@@ -1,5 +1,5 @@
 -- schema.sql
--- (c) 2020-2022 McGill University
+-- (c) 2020-2023 McGill University
 -- authors: Romaine Gregoire (original SQLite version); David Lougheed
 
 -- CONSENTS -------------------------------------------------------------------
@@ -130,6 +130,18 @@ create table if not exists features_by_gene
 --     unique      (chrom, position),
 --     foreign key (mostSignificantFeatureID) references peaks (id)
 -- );
+-------------------------------------------------------------------------------
+
+-- BINNED MOST SIGNIFICANT PEAKS (for Manhattan plots) ------------------------
+create table if not exists binned_most_significant_peaks
+(
+    "id"         serial      primary key,
+    "chrom"      varchar(22) not null,
+    "pos_bin"    integer     not null,  -- binned by SNP position
+    "peak"       integer,               -- nullable -> if null, no significant peak
+
+    foreign key ("peak") references peaks ("id")
+);
 -------------------------------------------------------------------------------
 
 -- SESSIONS -------------------------------------------------------------------

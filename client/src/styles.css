@@ -257,30 +257,28 @@ body {
   flex-direction: row;
   justify-content: center;
 }
-.Header__links > button {
+.Header__links button {
+  margin-top: 2px;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.8);
   transition: color 0.15s ease-in-out;
 }
-.Header__links > button:hover,
-.Header__links > button:active,
-.Header__links > button.active {
+.Header__links button:hover,
+.Header__links button:active,
+.Header__links button.active {
   color: rgba(255, 255, 255, 0.97);
 }
-.Header__links > button.active {
+.Header__button_highlight_group {
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+}
+.Header__button_highlight_group button {
+  margin-top: 0;
+}
+.Header__links button.active {
   text-decoration: underline;
 }
-.Header__links > button.highlight {
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  transition: border ease-in-out 0.15s;
-}
-.Header__links > button.highlight:hover {
-  border-color: rgba(255, 255, 255, 0.7);
-}
-.Header__links > button.highlight.active {
-  border-color: rgba(255, 255, 255, 0.0);
-}
-.Header__links > button i {
+.Header__links button i {
   margin-right: 0.4em;
 }
 
@@ -385,6 +383,29 @@ details summary {
   font-style: italic;
   font-size: 1.1rem;
   color: #555;
+}
+
+
+/* Manhattan plot styling/assistance */
+.uplot .u-cursor-pt {
+  pointer-events: auto !important;
+  cursor: pointer;
+}
+tr.u-series .u-marker {
+  border-radius: 100%;  /* Draw legend marker as a circle */
+}
+td.u-value {
+  min-width: 110px; /* avoid dynamic width from changing peaks */
+}
+td.u-value:empty::before {
+  /* render a horizontal line to show empty cells */
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 2px;
+  border-radius: 1px;
+  width: 85%;
+  background-color: #BBB;
 }
 
 
@@ -494,6 +515,11 @@ details summary {
   border-radius: 2px;
   opacity: 0.8;
 }
+.PeakBoxplot__disclaimer {
+  color: #888;
+  max-width: 700px;
+  margin: 1em auto 0 auto;
+}
 
 
 .autocomplete {
@@ -581,7 +607,7 @@ details summary {
 }
 .Footer__logo div {
   line-height: 1.2em;
-  max-width: 300px;
+  max-width: 400px;
 }
 .Footer__logo div span {
   font-weight: bold;

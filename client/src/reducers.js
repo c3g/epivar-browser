@@ -4,18 +4,29 @@ import * as k from './constants/ActionTypes'
 
 const defaultChrom = 'rsID'
 
-const defaultUI =
-  process.env.NODE_ENV === 'production' ?
-    { chrom: defaultChrom, position: '' } :
-    { chrom: defaultChrom, position: '' }
+const defaultUI = {
+  chrom: defaultChrom,
+  position: '',
+
+  overview: {
+    chrom: '',
+    assay: '',
+  },
+};
 
 function uiReducer(state = defaultUI, action) {
   switch (action.type) {
     case k.SET_CHROM: {
-      return { ...state, chrom: action.payload }
+      return { ...state, chrom: action.payload };
     }
     case k.SET_POSITION: {
-      return { ...state, position: action.payload }
+      return { ...state, position: action.payload };
+    }
+    case k.SET_OVERVIEW_CHROM: {
+      return {...state, overview: {...state.overview, chrom: action.payload}};
+    }
+    case k.SET_OVERVIEW_ASSAY: {
+      return {...state, overview: {...state.overview, assay: action.payload}};
     }
     default:
       return state;
@@ -52,11 +63,14 @@ function samplesReducer(state = defaultSamples, action) {
 
 const defaultChroms = {
   isLoading: false,
-  isLoaded: false,
+  isLoaded: true,  // set to false when bringing back server-fetched genomic chromosomes - David L, 2023-05-25
   list: ['rsID', 'gene'],
 }
 function chromsReducer(state = defaultChroms, action) {
   switch (action.type) {
+    /*
+    Re-enable to bring back server-fetched genomic chromosomes. For now, this instead just holds rsID + gene.
+    - David L, 2023-05-25
     case k.CHROMS.REQUEST: {
       return { ...state, isLoading: true }
     }
@@ -71,6 +85,7 @@ function chromsReducer(state = defaultChroms, action) {
     case k.CHROMS.ERROR: {
       return { ...state, isLoading: false }
     }
+    */
     default:
       return state;
   }
@@ -151,6 +166,82 @@ function assaysReducer(state = defaultAssays, action) {
   }
 }
 
+const defaultOverview = {
+  isLoading: false,
+  isLoaded: false,
+  config: {},
+};
+const overviewReducer = (state = defaultOverview, action) => {
+  switch (action.type) {
+    case k.OVERVIEW_CONFIG.REQUEST: {
+      return {...state, isLoading: true};
+    }
+    case k.OVERVIEW_CONFIG.RECEIVE: {
+      return {...state, isLoading: false, isLoaded: true, config: action.payload};
+    }
+    case k.OVERVIEW_CONFIG.ERROR: {
+      return {...state, isLoading: false};
+    }
+    default:
+      return state;
+  }
+};
+
+const defaultManhattan = {
+  byChromAndAssay: {},
+};
+const manhattanReducer = (state = defaultManhattan, action) => {
+  switch (action.type) {
+    case k.MANHATTAN_DATA.REQUEST: {
+      const {chrom, assay} = action.meta;
+      const chromData = state.byChromAndAssay[chrom] ?? {};
+      return {
+        ...state,
+        byChromAndAssay: {
+          ...state.byChromAndAssay,
+          [chrom]: {
+            ...chromData,
+            [assay]: {...chromData[assay] ?? {}, isLoading: true, isLoaded: false, data: []},
+          },
+        },
+      };
+    }
+
+    case k.MANHATTAN_DATA.RECEIVE: {
+      const {chrom, assay} = action.meta;
+      const chromData = state.byChromAndAssay[chrom] ?? {};
+      return {
+        ...state,
+        byChromAndAssay: {
+          ...state.byChromAndAssay,
+          [chrom]: {
+            ...chromData,
+            [assay]: {...chromData[assay] ?? {}, isLoading: false, isLoaded: true, data: action.payload},
+          },
+        },
+      };
+    }
+
+    case k.MANHATTAN_DATA.ERROR: {
+      const {chrom, assay} = action.meta;
+      const chromData = state.byChromAndAssay[chrom] ?? {};
+      return {
+        ...state,
+        byChromAndAssay: {
+          ...state.byChromAndAssay,
+          [chrom]: {
+            ...chromData,
+            [assay]: {...chromData[assay] ?? {}, isLoading: false},
+          },
+        },
+      };
+    }
+
+    default:
+      return state;
+  }
+};
+
 const defaultUser = {
   isLoading: false,
   isLoaded: false,
@@ -207,11 +298,16 @@ function messagesReducer(state = defaultMessages, action) {
 
 export const rootReducer = combineReducers({
   ui: uiReducer,
+
   samples: samplesReducer,
   chroms: chromsReducer,
   positions: positionsReducer,
   peaks: peaksReducer,
   assays: assaysReducer,
+
+  overview: overviewReducer,
+  manhattan: manhattanReducer,
+
   user: userReducer,
   messages: messagesReducer,
 });

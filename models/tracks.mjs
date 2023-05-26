@@ -108,6 +108,8 @@ function calculate(tracksByCondition) {
   return tracksByCondition
 }
 
+const MERGE_WINDOW_EXTENT = 100000;  // in bases
+
 function merge(tracks, session) {
 
   const tracksByCondition = group(tracks);
@@ -129,8 +131,8 @@ function merge(tracks, session) {
 
         return mergeFiles(filePaths, {
           chrom,
-          start: Math.max(session.peak.feature.start - 100000, 0),
-          end:   Math.min(session.peak.feature.end + 100000, maxSize),
+          start: Math.max(session.peak.feature.start - MERGE_WINDOW_EXTENT, 0),
+          end:   Math.min(session.peak.feature.end + MERGE_WINDOW_EXTENT, maxSize),
         })
       })
     )

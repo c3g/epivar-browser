@@ -55,7 +55,7 @@ const AboutPage = () => {
           the data.
         </p>
         <p>
-          We have also built a <Link to="/explore" style={{fontWeight: "bold"}}>browser tool</Link> that allows
+          We have also built a <Link to="/overview" style={{fontWeight: "bold"}}>browser tool</Link> that allows
           navigation of these rich datasets by condition, ancestry and, importantly, haplotype. This allows an in-depth
           exploration of the quantitative trait loci and other key results reported in the studies above. Using this
           tool requires a simple registration to ensure data privacy conditions are respected.

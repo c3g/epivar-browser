@@ -1,5 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -7,21 +9,29 @@ import { createLogger } from 'redux-logger';
 import {BrowserRouter as Router} from 'react-router-dom';
 import thunkMiddleware from 'redux-thunk';
 import { legacy_createStore as createStore, applyMiddleware } from 'redux';
+import { composeWithDevToolsLogOnlyInProduction } from '@redux-devtools/extension';
 
 import './styles.css';
-import registerServiceWorker from './registerServiceWorker';
 import { rootReducer } from './reducers';
 import App from './components/App';
-import {fetchAssays, fetchChroms, fetchMessages, fetchUser} from './actions.js'
+import {fetchAssays, /* fetchChroms, */ fetchMessages, fetchUser} from './actions.js'
 
 
-const initialState = {}
-// const initialState = localStorage.state ? JSON.parse(localStorage.state) : {}
+const initialState = {};
 
-const store =
-  (process.env.NODE_ENV === 'production')
-  ? createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware))
-  : createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware, createLogger()))
+const store = createStore(
+  rootReducer,
+  initialState,
+
+  // Inject Redux dev tools middleware if it's available:
+  composeWithDevToolsLogOnlyInProduction(
+    applyMiddleware(
+      thunkMiddleware,
+      // Inject development-only middleware:
+      ...(process.env.NODE_ENV === 'production' ? [] : [createLogger()]),
+    )
+  ),
+);
 
 render(
   <Provider store={store}>
@@ -30,23 +40,18 @@ render(
     </Router>
   </Provider>,
   document.querySelector('#root')
-)
+);
 
 store.dispatch(fetchUser())
 store.dispatch(fetchMessages())  // Server-side messages, e.g. auth errors
 
 store.dispatch(fetchAssays())
+
+/*
+Re-enable to bring back server-fetched genomic chromosomes. For now, this instead just holds rsID + gene.
+  - David L, 2023-05-25
 store.dispatch(fetchChroms())
-
-window.addEventListener('unload', () => {
-  // TODO remove or implement this properly
-  localStorage.state = JSON.stringify(store.getState())
-})
-
-
-// Register service worker
-
-registerServiceWorker()
+ */
 
 
 

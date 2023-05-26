@@ -196,6 +196,7 @@ const Controls = ({toggleHelp}) => {
   }, [dispatch]);
 
   const onClickSearch = useCallback(() => {
+    if (!chrom || !position) return;
     navigate(`/explore/locus/${chrom}/${position}`, {replace: true});
     dispatch(doSearch());
     setDidFirstSearch(true);
@@ -228,7 +229,7 @@ const Controls = ({toggleHelp}) => {
           {
             open &&
             <div className='autocomplete__dropdown-menu'>
-              {list.length === 0 && <div className={ 'autocomplete__item autocomplete__item--empty' }>
+              {list.length === 0 && <div className="autocomplete__item autocomplete__item--empty">
                 <span>{
                   searchIsLongEnough()
                     ? (isLoading ? "Loading..." : "No results")

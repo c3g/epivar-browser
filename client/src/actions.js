@@ -6,27 +6,33 @@ import * as k from './constants/ActionTypes.js'
 import {ASSEMBLY, BASE_URL} from "./constants/app";
 import {constructUCSCUrl} from "./helpers/ucsc";
 
-export const setChrom       = createAction(k.SET_CHROM)
-export const setPosition    = createAction(k.SET_POSITION)
-export const handleError    = createAction(k.HANDLE_ERROR)
+export const setChrom         = createAction(k.SET_CHROM);
+export const setPosition      = createAction(k.SET_POSITION);
+export const setOverviewChrom = createAction(k.SET_OVERVIEW_CHROM);
+export const setOverviewAssay = createAction(k.SET_OVERVIEW_ASSAY);
+export const handleError      = createAction(k.HANDLE_ERROR);
 
-export const assays    = createFetchActions(k.ASSAYS)
-export const samples   = createFetchActions(k.SAMPLES)
-export const chroms    = createFetchActions(k.CHROMS)
-export const positions = createFetchActions(k.POSITIONS)
-export const values    = createFetchActions(k.VALUES)
-export const peaks     = createFetchActions(k.PEAKS)
-export const user      = createFetchActions(k.USER)
-export const messages  = createFetchActions(k.MESSAGES)
+export const assays           = createFetchActions(k.ASSAYS);
+export const samples          = createFetchActions(k.SAMPLES);
+export const chroms           = createFetchActions(k.CHROMS);
+export const positions        = createFetchActions(k.POSITIONS);
+export const values           = createFetchActions(k.VALUES);
+export const peaks            = createFetchActions(k.PEAKS);
+export const overviewConfig   = createFetchActions(k.OVERVIEW_CONFIG);
+export const manhattanData    = createFetchActions(k.MANHATTAN_DATA);
+export const user             = createFetchActions(k.USER);
+export const messages         = createFetchActions(k.MESSAGES);
 
-export const fetchAssays    = createFetchFunction(api.fetchAssays,    assays)
-export const fetchChroms    = createFetchFunction(api.fetchChroms,    chroms)
-export const fetchPositions = createFetchFunction(api.fetchPositions, positions)
-export const cacheValues    = createFetchFunction(api.cacheValues,    values)
-export const fetchPeaks     = createFetchFunction(api.fetchPeaks,     peaks)
-export const fetchUser      = createFetchFunction(api.fetchUser,      user)
-export const saveUser       = createFetchFunction(api.saveUser,       user)
-export const fetchMessages  = createFetchFunction(api.fetchMessages,  messages)
+export const fetchAssays         = createFetchFunction(api.fetchAssays,         assays);
+export const fetchChroms         = createFetchFunction(api.fetchChroms,         chroms);
+export const fetchPositions      = createFetchFunction(api.fetchPositions,      positions);
+export const cacheValues         = createFetchFunction(api.cacheValues,         values);
+export const fetchPeaks          = createFetchFunction(api.fetchPeaks,          peaks);
+export const fetchOverviewConfig = createFetchFunction(api.fetchOverviewConfig, overviewConfig);
+export const fetchManhattanData  = createFetchFunction(api.fetchManhattanData,  manhattanData);
+export const fetchUser           = createFetchFunction(api.fetchUser,           user);
+export const saveUser            = createFetchFunction(api.saveUser,            user);
+export const fetchMessages       = createFetchFunction(api.fetchMessages,       messages);
 
 
 export const doSearch = () => (dispatch, getState) => {

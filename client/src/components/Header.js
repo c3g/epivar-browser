@@ -7,7 +7,7 @@ import Icon from "./Icon";
 
 import {LOGIN_PATH} from "../constants/app";
 
-export default function Header({children, onAbout, onDatasets, onExplore, onFAQ/*, onContact*/}) {
+export default function Header({children, onAbout, onDatasets, onOverview, onExplore, onFAQ/*, onContact*/}) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -29,17 +29,21 @@ export default function Header({children, onAbout, onDatasets, onExplore, onFAQ/
         <div className="Header__links">
           <Button color="link"
                   className={location.pathname.startsWith("/about") ? "active" : ""}
-                  onClick={onAbout}><Icon name="users" />About</Button>
+                  onClick={onAbout}><Icon name="people-fill" bootstrap={true} />About</Button>
           <Button color="link"
                   className={location.pathname.startsWith("/datasets") ? "active" : ""}
-                  onClick={onDatasets}><Icon name="table" />Datasets</Button>
-          <Button color="link"
-                  className={"highlight" + (location.pathname.startsWith("/explore") ? " active" : "")}
-                  onClick={onExplore}><Icon name="search" />Explore</Button>
+                  onClick={onDatasets}><Icon name="table" bootstrap={true} />Datasets</Button>
+          <div className="Header__button_highlight_group">
+            <Button color="link"
+                    className={location.pathname.startsWith("/overview") ? "active" : ""}
+                    onClick={onOverview}><Icon name="graph-up" bootstrap={true} />Overview</Button>
+            <Button color="link"
+                    className={"highlight" + (location.pathname.startsWith("/explore") ? " active" : "")}
+                    onClick={onExplore}><Icon name="search" bootstrap={true} />Explore</Button>
+          </div>
           <Button color="link"
                   className={location.pathname.startsWith("/faq") ? "active" : ""}
-                  onClick={onFAQ}><Icon name="question-circle" />FAQ</Button>
-          {/*<Button color="link" onClick={onContact}><Icon name="envelope" />Contact</Button>*/}
+                  onClick={onFAQ}><Icon name="question-circle" bootstrap={true} />FAQ</Button>
         </div>
         { children }
       </Container>
