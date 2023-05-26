@@ -43,8 +43,14 @@ const DatasetsPage = () => {
         </p>
         <h4>10X linked reads</h4>
         <p>Under submission to EGA.</p>
-        <h4>ChIP-seq on NA12878</h4>
-        <p>Under submission to EGA.</p>
+        <h4>ChIP-seq and ATAC-seq on NA12878</h4>
+        <p>
+          Sequence data for ChIP-seq and ATAC-seq on NA12878 have been deposited at the Gene Expression Omnibus (GEO),
+          under access number{" "}
+          <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE225708"
+             target="_blank"
+             rel="noreferrer">GSE225708</a>.
+        </p>
         <h3>Data visualization</h3>
         <p>
           Genomic tracks by condition and ancestry are available <a href="#" onClick={openTracks}>here</a>.
