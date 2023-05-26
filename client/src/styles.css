@@ -395,8 +395,15 @@ tr.u-series .u-marker {
   border-radius: 100%;  /* Draw legend marker as a circle */
 }
 td.u-value {
-  letter-spacing: -1px; /* make em-dashes show up nicely */
   min-width: 100px; /* avoid dynamic width from changing peaks */
+}
+td.u-value:empty::before {
+  /* render a horizontal line to show empty cells */
+  content: "";
+  display: inline-block;
+  height: 1px;
+  width: 90%;
+  background-color: #888;
 }
 
 
