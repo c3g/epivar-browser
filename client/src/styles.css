@@ -396,6 +396,7 @@ tr.u-series .u-marker {
 }
 td.u-value {
   letter-spacing: -1px; /* make em-dashes show up nicely */
+  min-width: 100px; /* avoid dynamic width from changing peaks */
 }
 
 

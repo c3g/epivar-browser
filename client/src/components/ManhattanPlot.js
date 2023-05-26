@@ -168,9 +168,9 @@ const ManhattanPlot = React.memo(
           values: (u, s, d) => {
             const dd =  [u, s, d].includes(null) ? undefined : dataNoNulls[d];  // still undefined if data is empty
             return dd === undefined ? ({
-              "SNP": "——————",
-              "Feature": "————",
-              "p": "—————",
+              "SNP": "",
+              "Feature": "",
+              "p": "",
             }) : ({
               "SNP": dd[snpProp],
               "Feature": dd[geneProp] ?? dd[featureProp],
