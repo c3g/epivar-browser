@@ -401,8 +401,9 @@ td.u-value:empty::before {
   /* render a horizontal line to show empty cells */
   content: "";
   display: inline-block;
-  height: 1px;
-  width: 90%;
+  vertical-align: middle;
+  height: 2px;
+  width: 85%;
   background-color: #888;
 }
 
