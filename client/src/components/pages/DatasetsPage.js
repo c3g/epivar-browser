@@ -41,8 +41,8 @@ const DatasetsPage = () => {
              target="_blank"
              rel="noreferrer">EGAD00001008359</a>.
         </p>
-        <h4>10X linked reads</h4>
-        <p>Under submission to EGA.</p>
+        {/*<h4>10X linked reads</h4>*/}
+        {/*<p>Under submission to EGA.</p>*/}
         <h4>ChIP-seq and ATAC-seq on NA12878</h4>
         <p>
           Sequence data for ChIP-seq and ATAC-seq on NA12878 have been deposited at the Gene Expression Omnibus (GEO),
