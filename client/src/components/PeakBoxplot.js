@@ -44,6 +44,12 @@ function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
           <span style={{ background: ETHNICITY_COLOR.EU }} /> European-American
         </div>
       </div>
+      <div className="PeakBoxplot__disclaimer">
+        <p>
+          Box plots are generated from raw signals, whereas <em>p</em>-values are calculated from batch-corrected
+          signal values. The <em>p</em>-values thus may not precisely match what is visible in the box plots.
+        </p>
+      </div>
     </div>
   )
 }
