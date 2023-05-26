@@ -505,6 +505,11 @@ td.u-value {
   border-radius: 2px;
   opacity: 0.8;
 }
+.PeakBoxplot__disclaimer {
+  color: #888;
+  max-width: 800px;
+  margin: 1em auto 0 auto;
+}
 
 
 .autocomplete {
