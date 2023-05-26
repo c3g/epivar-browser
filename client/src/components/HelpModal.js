@@ -6,9 +6,17 @@ const HelpModal = ({isOpen, toggle}) => (
   <Modal isOpen={isOpen} toggle={toggle}>
     <ModalHeader toggle={toggle}>Help</ModalHeader>
     <ModalBody>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem cum doloremque illo molestiae provident
-      reprehenderit similique tempora ullam? A aliquam dignissimos, earum maxime minima rem similique ullam unde velit
-      voluptatum.
+      <p>
+        Start typing to see a list of SNPs (if searching by rsID) or a list of genes (if searching by gene).
+        Results are ordered by the most significant <em>p</em>-value across flu-infected/non-infected samples and all
+        six assays, and the top 50 SNPs/genes are shown. Click on a result to see the top peak, along with its
+        corresponding signal box plot and a table of other peaks and assays to explore.
+      </p>
+      <p>
+        Also available in the peak table are links to the UCSC genome browser with merged bigWig tracks of signal
+        average/standard deviation for a large window around the selected feature, with the feature highlighted in
+        <strong>yellow</strong> and the associated SNP highlighted in <strong>red</strong>.
+      </p>
     </ModalBody>
   </Modal>
 );
