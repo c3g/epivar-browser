@@ -403,8 +403,9 @@ td.u-value:empty::before {
   display: inline-block;
   vertical-align: middle;
   height: 2px;
+  border-radius: 1px;
   width: 85%;
-  background-color: #888;
+  background-color: #BBB;
 }
 
 
