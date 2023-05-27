@@ -97,7 +97,7 @@ const OverviewPage = () => {
           {chrom === "" && <option value=""></option>}
           {chroms.map(chr => <option key={chr} value={chr}>chr{chr}</option>)}
         </Input>
-        <div style={{width: 1, height: 38, backgroundColor: "#DDD"}} /> {/* Additional divider */}
+        <div /> {/* Additional divider for spacing */}
         <label htmlFor="Manhattan__assay-selector">Assay:</label>
         <Input
           type="select"
