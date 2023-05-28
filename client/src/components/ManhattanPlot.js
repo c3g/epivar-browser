@@ -6,8 +6,6 @@ import "uplot/dist/uPlot.min.css";
 
 import {quadtree} from "d3-quadtree";
 
-import {useDevicePixelRatio} from "use-device-pixel-ratio";
-
 const TAU = 2 * Math.PI;
 const STROKE_WIDTH = 1;
 const POINT_SIZE = 8;
@@ -41,7 +39,6 @@ const ManhattanPlot = React.memo(
     width = width ?? 1110;
     height = height ?? 275;
 
-    const pxr = useDevicePixelRatio({maxDpr: 50});
     const qt = useRef(null);
 
     const sync = useRef(group ? uPlot.sync(group) : null);
@@ -49,9 +46,6 @@ const ManhattanPlot = React.memo(
       if (!group) return;
       sync.current = uPlot.sync(group);
     }, [group]);
-
-    /** @type number */
-    const strokeWidth = useMemo(() => STROKE_WIDTH * pxr, [pxr]);
 
     const dataNoNulls = useMemo(() => data.filter(d => !!d[pValueProp]), [data]);
 
@@ -93,6 +87,9 @@ const ManhattanPlot = React.memo(
       uPlot.orient(u, seriesIdx, (
         series, dataX, dataY, scaleX, scaleY, valToPosX, valToPosY, xOff, yOff, xDim, yDim, moveTo, lineTo, rect, arc
       ) => {
+        const pixelRatio = window.devicePixelRatio;
+        const strokeWidth = STROKE_WIDTH * pixelRatio;
+
         const d = u.data[seriesIdx];
 
         u.ctx.save();
@@ -110,7 +107,7 @@ const ManhattanPlot = React.memo(
           const x = d[0][i];
           const y = d[1][i];
 
-          const halfPointSize = getPointSizeFromDatum(d, i) * pxr * 0.5;
+          const halfPointSize = getPointSizeFromDatum(d, i) * pixelRatio * 0.5;
 
           if (x >= scaleX.min && x <= scaleX.max && y >= scaleY.min && y <= scaleY.max) {
             const cx = valToPosX(x, scaleX, xDim, xOff);
@@ -136,7 +133,7 @@ const ManhattanPlot = React.memo(
 
       qt.current = newQt;
       return null;
-    }, [pxr]);
+    }, []);
 
     const hoveredItem = useRef(undefined);
 
@@ -197,22 +194,32 @@ const ManhattanPlot = React.memo(
 
           const {left, top} = u.cursor;
 
-          const cx = left * pxr;
-          const cy = top * pxr;
+          // Can't use from hook, since this function is passed in at the start
+          const pixelRatio = window.devicePixelRatio;
 
-          const halfPointSize = POINT_SIZE * pxr * 0.5;
+          const cx = left * pixelRatio;
+          const cy = top * pixelRatio;
 
-          const res = qt.current.find(cx - halfPointSize, cy - halfPointSize, halfPointSize + strokeWidth);
+          const halfPointSize = POINT_SIZE * pixelRatio * 0.5;
+
+          const res = qt.current.find(
+            cx - halfPointSize,
+            cy - halfPointSize,
+            halfPointSize + (STROKE_WIDTH * pixelRatio),
+          );
           const hi = res ? res[2] : undefined;
           hoveredItem.current = hi;
           return hi ?? null;
         },
+
         points: {
+          // Don't use pixel ratio for size(): it's a DOMElement, so it'll get scaled automatically
           size: (u, s) =>
             hoveredItem.current !== undefined && s === 1 && u.data?.[s] !== undefined
               ? getPointSizeFromDatum(u.data[s], hoveredItem.current) + STROKE_WIDTH + 1
               : 0,
         },
+
         bind: {
           mouseup: (u, t, h) => e => {
             if (
@@ -234,7 +241,7 @@ const ManhattanPlot = React.memo(
           });
         }],
       },
-    }), [width, height, title, dataNoNulls, maxY, drawPoints, qt, pxr, strokeWidth]);
+    }), [width, height, title, dataNoNulls, maxY, drawPoints, qt]);
 
     // noinspection JSValidateTypes
     return <div style={{
