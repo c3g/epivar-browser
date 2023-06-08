@@ -46,8 +46,9 @@ function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
       </div>
       <div className="PeakBoxplot__disclaimer">
         <p>
-          Box plots are generated from raw signals, whereas <em>p</em>-values are calculated from batch-corrected
-          signal values. The <em>p</em>-values thus may not precisely match what is visible in the box plots.
+          Box plots are generated from normalised signals (read count per base pair per 10 million reads), without any
+          batch correction, whereas <em>p</em>-values are calculated from age-regressed, batch-corrected
+          signal values. The <em>p</em>-values thus may not precisely match the distributions visible in the box plots.
         </p>
       </div>
     </div>
