@@ -70,7 +70,7 @@ module.exports = {
     manhattan: {
       minPValue: 0.10,
       binSize: 100000,  // 100 kb bins
-      chromosomeSizes: {
+      chromosomeSizes: {  // This is for HG19; if you want HG38, you will have to change these values
         "1": 249250621,
         "2": 243199373,
         "3": 198022430,
