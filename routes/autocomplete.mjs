@@ -13,8 +13,8 @@ const router = express.Router();
 
 router.get('/chroms', (_req, res) => {
   Peaks.chroms()
-  .then(dataHandler(res))
-  .catch(errorHandler(res));
+    .then(dataHandler(res))
+    .catch(errorHandler(res));
 });
 
 router.get('/positions', ensureLogIn, ({query}, res) => {

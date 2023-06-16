@@ -278,7 +278,6 @@ async function boxPlot({title, data, domain, transform}) {
   const yDomain = [yAxis.start, yAxis.end];
 
   const start = plotDimensions.width / (data.length + 2);
-  // const xScale = TODO;
 
   const xScale = (await scaleLinear())
     .range([plotDimensions.x + start, plotDimensions.width])

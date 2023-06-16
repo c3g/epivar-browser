@@ -24,7 +24,7 @@ export const user             = createFetchActions(k.USER);
 export const messages         = createFetchActions(k.MESSAGES);
 
 export const fetchAssays         = createFetchFunction(api.fetchAssays,         assays);
-export const fetchChroms         = createFetchFunction(api.fetchChroms,         chroms);
+// export const fetchChroms         = createFetchFunction(api.fetchChroms,         chroms);
 export const fetchPositions      = createFetchFunction(api.fetchPositions,      positions);
 export const cacheValues         = createFetchFunction(api.cacheValues,         values);
 export const fetchPeaks          = createFetchFunction(api.fetchPeaks,          peaks);
