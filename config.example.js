@@ -44,6 +44,9 @@ module.exports = {
      */
     geminiSampleNameConverter: name => name.split('_')[1],  // name => name
 
+    // minimum p-value for a peak must be at or below this p-value for the peak to get included.
+    pValueMinThreshold: 0.05,
+
     conditions: [
       {id: "NI", name: "Non-infected"},
       {id: "Flu", name: "Flu"},

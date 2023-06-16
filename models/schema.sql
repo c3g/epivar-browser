@@ -76,8 +76,11 @@ create table if not exists peaks
     "id"        serial   primary key,
     "snp"       integer  not null,
     "feature"   integer  not null,
-    "valueNI"   real     not null,  -- 32 bit floats are enough
-    "valueFlu"  real     not null,  -- "
+
+    -- values as array of treatments (in alphabetical order): [<p_Flu>, <p_NI>]
+    "values"    real[]   not null,
+    -- "valueNI"   real     not null,  -- p-value; 32 bit floats are enough
+    -- "valueFlu"  real     not null,  -- "
     -- "valueMin"  real not null,  -- for prioritizing items in search
 
     foreign key ("snp")     references snps     ("id"),

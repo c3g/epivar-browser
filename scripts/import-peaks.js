@@ -7,6 +7,8 @@ const copyFrom = require('pg-copy-streams').from;
 
 require('dotenv').config();
 
+const config = require('../config');
+
 // const chipmentationAssays = [
 //   'H3K4me1',
 //   'H3K4me3',
@@ -90,8 +92,8 @@ console.log("Loading peaks");
           "id"        serial      primary key,
           "snp"       varchar(20) not null,  -- no FK until we insert to handle missing SNPs
           "feature"   integer     not null,  -- if null, gene FK contains feature information
-          "valueNI"   real        not null,
-          "valueFlu"  real        not null
+          "values"    real[]      not null
+          -- "points"    real[][]
       )
     `);
 
@@ -107,8 +109,8 @@ console.log("Loading peaks");
     const copyToPeaksTable = async () => {
       const tn = "peaks_temp";
       await client.query(`
-        INSERT INTO peaks ("snp", "feature", "valueNI", "valueFlu") 
-          SELECT snps."id", pt."feature", pt."valueNI", pt."valueFlu" 
+        INSERT INTO peaks ("snp", "feature", "values")  -- , "points") 
+          SELECT snps."id", pt."feature", pt."values"  -- , pt."points"
           FROM ${tn} AS pt JOIN snps ON pt."snp" = snps."nat_id"
       `);
       await client.query(`TRUNCATE TABLE ${tn}`);
@@ -137,19 +139,25 @@ console.log("Loading peaks");
         COPY peaks_temp (
           "snp",
           "feature",
-          "valueNI",
-          "valueFlu"
+          "values"
+          -- "points"
+          -- "valueFlu"
           -- valueMin,
         ) FROM STDIN NULL AS 'null'
       `));
 
     // const transformNull = v => v === null ? "null" : v;
     const peakStreamPush = p => {
+      const pValues = p.values;
+
+      // TODO: get points
+      // const points = [];
+
       pgPeakCopyStream.write(Buffer.from([
         p.snp,
         p.feature,
-        p.valueNI,
-        p.valueFlu,
+        `"{${pValues.join(",")}}"`,
+        // `"{${points.join(",")}}"`,
       ].join("\t") + "\n"));
       totalInserted++;
     };
@@ -206,6 +214,12 @@ console.log("Loading peaks");
               idx++;
 
               const p = normalizePeak(row);
+
+              if (Math.min(...p.values) >= config.source.pValueMinThreshold) {
+                // Not included due to insignificance; skip this peak
+                parseStream.resume();
+                return;
+              }
 
               // Make sure SNP will exist in snps table
               if (!snpSet.has(p.snpArray[0])) {
@@ -274,9 +288,11 @@ console.log("Loading peaks");
                  (SELECT "id"
                   FROM peaks
                   WHERE "snp" = a."snp" 
-                    AND LEAST("valueNI", "valueFlu") = a."minValueMin" 
+                    AND (SELECT MIN(x) FROM unnest(peaks."values") AS x) = a."minValueMin" 
                   LIMIT 1) AS "mostSignificantFeatureID"
-          FROM (SELECT "snp", MIN(LEAST("valueNI", "valueFlu")) as "minValueMin", COUNT(*) AS "nFeatures"
+          FROM (SELECT "snp", 
+                       MIN((SELECT MIN(x) FROM unnest(peaks."values") AS x)) as "minValueMin", 
+                       COUNT(*) AS "nFeatures"
                 FROM peaks
                 GROUP BY "snp") AS a
       `
@@ -293,9 +309,11 @@ console.log("Loading peaks");
                  (SELECT peaks."id"
                   FROM peaks JOIN features ON peaks.feature = features.id
                   WHERE features."gene" = a."gene" 
-                    AND LEAST("valueNI", "valueFlu") = a."minValueMin"
+                    AND (SELECT MIN(x) FROM unnest(peaks."values") AS x) = a."minValueMin"
                   LIMIT 1) AS "mostSignificantFeatureID"
-          FROM (SELECT f."gene", MIN(LEAST("valueNI", "valueFlu")) as "minValueMin", COUNT(*) AS "nFeatures"
+          FROM (SELECT f."gene", 
+                       MIN((SELECT MIN(x) FROM unnest(peaks."values") AS x)) as "minValueMin", 
+                       COUNT(*) AS "nFeatures"
                 FROM peaks AS p JOIN features AS f ON p.feature = f.id
                 WHERE f."gene" IS NOT NULL
                 GROUP BY f."gene") AS a
@@ -349,11 +367,12 @@ console.log("Loading peaks");
       // peak.position = +position;
       // delete peak.snp;
 
-      peak.valueNI = parseFloat(peak['pvalue.NI']);
-      peak.valueFlu = parseFloat(peak['pvalue.Flu']);
-      // peak.valueMin = Math.min(peak.valueNI, peak.valueFlu);
-      delete peak['pvalue.NI'];
-      delete peak['pvalue.Flu'];
+      peak.values = config.source.conditions.map(c => {
+        const k = `pvalue.${c.id}`;
+        const val = parseFloat(peak[k]);
+        delete peak[k];
+        return val;
+      });
 
       peak.assay = peak.feature_type;
       // Pre-process the assay name: add the 'Chipmentation '
