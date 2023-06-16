@@ -12,9 +12,6 @@ module.exports = {
   getTracks,
 }
 
-const nameToRealName = name =>
-  name.split('_')[1]
-
 /**
  * @param {Object.<string, Object>} samples
  * @param {Object} peak
@@ -27,7 +24,7 @@ function getTracks(samples, peak) {
   const samplesByRealName =
     Object.fromEntries(
       Object.entries(samples)
-        .map(([key, value]) => [nameToRealName(key), value]))
+        .map(([key, value]) => [config.source.metadata.geminiSampleNameConverter(key), value]))
 
   const sampleNames = Object.keys(samplesByRealName)
   const assay = peak.assay.toLowerCase()

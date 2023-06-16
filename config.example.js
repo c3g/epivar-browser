@@ -37,6 +37,13 @@ module.exports = {
       path: path.join(__dirname, 'data/metadata.json'),
     },
 
+    /*
+     * The current gemini database for Aracena et al. contains names as "Epi_realName_flu_xxx".
+     * We need to extract "realName" to make it easier for the rest (where "realName" corresponds to
+     * the metadata.json "donor" property).
+     */
+    geminiSampleNameConverter: name => name.split('_')[1],  // name => name
+
     conditions: [
       {id: "NI", name: "Non-infected"},
       {id: "Flu", name: "Flu"},
