@@ -92,34 +92,30 @@ const RoutedApp = () => {
 };
 
 
-class App extends Component {
-  render() {
-    return (
-      <div className='App'>
-        <Routes>
-          <Route path="/" element={<RoutedApp />}>
-            <Route index={true} element={<Navigate to="/about" replace={true} />} />
-            <Route path="about" element={<AboutPage />} />
-            <Route path="datasets" element={<DatasetsPage />} />
-            <Route path="overview" element={<ProtectedPageContainer>
-              <OverviewPage />
-            </ProtectedPageContainer>} />
-            <Route path="explore" element={<ProtectedPageContainer>
-              <ExplorePage />
-            </ProtectedPageContainer>}>
-              <Route index={true} element={<PeakResults />} />
-              <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
-              <Route path="locus/:chrom/:position" element={<PeakResults />} />
-            </Route>
-            <Route path="faq" element={<FAQPage />} />
-            <Route path="auth-failure" element={<div />} />
-          </Route>
-          <Route path="*" element={<Navigate to="/" />}/>
-        </Routes>
-      </div>
-    )
-  }
-}
+const App = () => (
+  <div className='App'>
+    <Routes>
+      <Route path="/" element={<RoutedApp />}>
+        <Route index={true} element={<Navigate to="/about" replace={true} />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="datasets" element={<DatasetsPage />} />
+        <Route path="overview" element={<ProtectedPageContainer>
+          <OverviewPage />
+        </ProtectedPageContainer>} />
+        <Route path="explore" element={<ProtectedPageContainer>
+          <ExplorePage />
+        </ProtectedPageContainer>}>
+          <Route index={true} element={<PeakResults />} />
+          <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
+          <Route path="locus/:chrom/:position" element={<PeakResults />} />
+        </Route>
+        <Route path="faq" element={<FAQPage />} />
+        <Route path="auth-failure" element={<div />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" />}/>
+    </Routes>
+  </div>
+);
 
 
 export default App;
