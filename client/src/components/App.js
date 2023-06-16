@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Navigate, Outlet, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -8,7 +8,6 @@ import PeakResults from './PeakResults'
 import HelpModal from "./HelpModal";
 import TermsModal from "./TermsModal";
 
-import {saveUser} from "../actions";
 import ContactModal from "./ContactModal";
 import AboutPage from "./pages/AboutPage";
 import ProtectedPageContainer from "./pages/ProtectedPageContainer";
@@ -16,6 +15,8 @@ import OverviewPage from "./pages/OverviewPage";
 import ExplorePage from "./pages/ExplorePage";
 import DatasetsPage from "./pages/DatasetsPage";
 import FAQPage from "./pages/FAQPage";
+
+import {saveUser} from "../actions";
 
 
 const RoutedApp = () => {
@@ -32,21 +33,22 @@ const RoutedApp = () => {
   const chrom = useSelector(state => state.ui.chrom);
   const position = useSelector(state => state.ui.position);
 
-  const toggleHelp = () => setHelpModal(!helpModal);
-  const toggleContact = () => setContactModal(!contactModal);
-  const toggleTerms = () => setTermsModal(!termsModal);
+  const toggleHelp = useCallback(() => setHelpModal(!helpModal), [helpModal]);
+  const toggleContact = useCallback(() => setContactModal(!contactModal), [contactModal]);
+  const toggleTerms = useCallback(() => setTermsModal(!termsModal), [termsModal]);
 
-  const navigateAbout = () => navigate("/about");
-  const navigateDatasets = () => navigate("/datasets");
-  const navigateOverview = () => navigate("/overview");  // TODO: remember chrom and assay
-  const navigateExplore = () => {
+  const navigateAbout = useCallback(() => navigate("/about"), [navigate]);
+  const navigateDatasets = useCallback(() => navigate("/datasets"), [navigate]);
+  // TODO: remember chrom and assay:
+  const navigateOverview = useCallback(() => navigate("/overview"), [navigate]);
+  const navigateExplore = useCallback(() => {
     if (location.pathname.startsWith("/explore")) return;
     if (chrom && position) {
       navigate(`/explore/locus/${chrom}/${position}`);
     } else {
       navigate("/explore");
     }
-  }
+  }, [location.pathname, chrom, position, navigate]);
   const navigateFAQ = () => navigate("/faq");
 
   useEffect(() => {
@@ -60,17 +62,19 @@ const RoutedApp = () => {
     }
   }, [userData]);
 
+  const termsOnAgree = useCallback(institution => {
+    if (userData.isLoaded) {
+      dispatch(saveUser({consentedToTerms: true, institution}));
+    }
+  }, [userData, dispatch]);
+
   return (
     <div className="RoutedApp">
       <TermsModal
         isOpen={termsModal}
         toggle={toggleTerms}
         showAgree={userData.data && !userData.data.consentedToTerms}
-        onAgree={institution => {
-          if (userData.isLoaded) {
-            dispatch(saveUser({consentedToTerms: true, institution}));
-          }
-        }}
+        onAgree={termsOnAgree}
       />
 
       <ContactModal isOpen={contactModal} toggle={toggleContact} />
