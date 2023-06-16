@@ -9,7 +9,7 @@ const config = require("../config");
   await db.run("TRUNCATE TABLE binned_most_significant_peaks RESTART IDENTITY CASCADE");
 
   // Only calculate top binned peaks by assay for chromosomes whose size has been provided in config.js
-  const chromSizes = config.plots?.manhattan?.chromosomeSizes ?? {};
+  const chromSizes = config.assembly?.chromosomeSizes ?? {};
   const minPValue = config.plots?.manhattan?.minPValue ?? 0.10;
   const binSize = config.plots?.manhattan?.binSize ?? 100000;
 

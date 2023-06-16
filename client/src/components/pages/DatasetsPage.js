@@ -1,23 +1,29 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {Col, Container, Row} from "reactstrap";
 import {Link} from "react-router-dom";
-import {ASSEMBLY, BASE_URL} from "../../constants/app";
+import {BASE_URL} from "../../constants/app";
 import {constructUCSCUrl} from "../../helpers/ucsc";
+import {useSelector} from "react-redux";
 
-const openTracks = () => {
-  const permaHubURL = `${BASE_URL}/api/ucsc/perma/hub/other-tracks`;
-  const ucscURL = constructUCSCUrl([
-    ["db", ASSEMBLY],
-    ["hubClear", permaHubURL],
-  ]);
-  console.log("UCSC:", ucscURL);
-  window.open(ucscURL);
-};
+
+const lgColSize = {size: 10, offset: 1};
 
 const DatasetsPage = () => {
+  const {id: assembly} = useSelector(state => state.assembly.data) ?? {};
+
+  const openTracks = useCallback(() => {
+    const permaHubURL = `${BASE_URL}/api/ucsc/perma/hub/other-tracks`;
+    const ucscURL = constructUCSCUrl([
+      ["db", assembly],
+      ["hubClear", permaHubURL],
+    ]);
+    console.log("UCSC:", ucscURL);
+    window.open(ucscURL);
+  }, [assembly]);
+
   return <Container className="Page">
     <Row>
-      <Col md="12" lg={{size: 10, offset: 1}}>
+      <Col md="12" lg={lgColSize}>
         <h2>Datasets</h2>
         <p>
           All the datasets that have been generated as part of this project are made available freely. Access to some

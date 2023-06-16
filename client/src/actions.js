@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import * as api from './api'
 import * as k from './constants/ActionTypes.js'
-import {ASSEMBLY, BASE_URL} from "./constants/app";
+import {BASE_URL} from "./constants/app";
 import {constructUCSCUrl} from "./helpers/ucsc";
 
 export const setChrom         = createAction(k.SET_CHROM);
@@ -18,6 +18,9 @@ export const chroms           = createFetchActions(k.CHROMS);
 export const positions        = createFetchActions(k.POSITIONS);
 export const values           = createFetchActions(k.VALUES);
 export const peaks            = createFetchActions(k.PEAKS);
+export const assembly         = createFetchActions(k.ASSEMBLY);
+export const conditions       = createFetchActions(k.CONDITIONS);
+export const ethnicities      = createFetchActions(k.ETHNICITIES);
 export const overviewConfig   = createFetchActions(k.OVERVIEW_CONFIG);
 export const manhattanData    = createFetchActions(k.MANHATTAN_DATA);
 export const user             = createFetchActions(k.USER);
@@ -28,6 +31,9 @@ export const fetchAssays         = createFetchFunction(api.fetchAssays,         
 export const fetchPositions      = createFetchFunction(api.fetchPositions,      positions);
 export const cacheValues         = createFetchFunction(api.cacheValues,         values);
 export const fetchPeaks          = createFetchFunction(api.fetchPeaks,          peaks);
+export const fetchAssembly       = createFetchFunction(api.fetchAssembly,       assembly);
+export const fetchConditions     = createFetchFunction(api.fetchConditions,     conditions);
+export const fetchEthnicities    = createFetchFunction(api.fetchEthnicities,    ethnicities);
 export const fetchOverviewConfig = createFetchFunction(api.fetchOverviewConfig, overviewConfig);
 export const fetchManhattanData  = createFetchFunction(api.fetchManhattanData,  manhattanData);
 export const fetchUser           = createFetchFunction(api.fetchUser,           user);
@@ -44,32 +50,42 @@ export const doSearch = () => (dispatch, getState) => {
   }
 };
 
-export const mergeTracks = peak => dispatch => {
+const buildUCSCHighlight = (asm, chr, start, end, color) => `${asm}.${chr}:${start}-${end}${color}`;
+
+export const mergeTracks = peak => (dispatch, getState) => {
+  const assembly = getState().assembly.data?.id;
+
+  if (!assembly) {
+    console.error(`Could not retrieve assembly ID - got ${assembly}`);
+    return;
+  }
+
   const session = {...peak};
+  const {feature, snp} = session;
 
   const padding = 500;
 
-  const featureChrom = `chr${session.feature.chrom}`;
-  const snpChrom = `chr${session.snp.chrom}`;
+  const featureChrom = `chr${feature.chrom}`;
+  const snpChrom = `chr${snp.chrom}`;
 
   api.createSession(session)
     .then(sessionID => {
-      const snpPosition = session.snp.position;
+      const snpPosition = snp.position;
       const displayWindow = featureChrom === snpChrom
-        ? [Math.min(session.feature.start, snpPosition), Math.max(session.feature.end, snpPosition)]
-        : [session.feature.start, session.feature.end];
+        ? [Math.min(feature.start, snpPosition), Math.max(feature.end, snpPosition)]
+        : [feature.start, feature.end];
       const position = `${featureChrom}:${displayWindow[0]-padding}-${displayWindow[1]+padding}`;
       const hubURL = `${BASE_URL}/api/ucsc/hub/${sessionID}`;
       const ucscURL = constructUCSCUrl([
-        ["db", ASSEMBLY],
+        ["db", assembly],
         ["hubClear", hubURL],
         // ["hubClear", permaHubURL],
         ["position", position],
 
         // Highlight the SNP in red, and the feature in light yellow
         ["highlight", [
-          `${ASSEMBLY}.${featureChrom}:${session.feature.start}-${session.feature.end}#FFEECC`,
-          `${ASSEMBLY}.${snpChrom}:${session.snp.position}-${session.snp.position+1}#FF9F9F`,
+          buildUCSCHighlight(assembly, featureChrom, feature.start, feature.end, "#FFEECC"),
+          buildUCSCHighlight(assembly, snpChrom, snp.position, snp.position + 1, "#FF9F9F"),
         ].join("|")],
       ]);
 

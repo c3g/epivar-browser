@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import * as k from './constants/ActionTypes'
+import {makeDataReducer, makeDefaultDataState, makeDefaultListState, makeListReducer} from "./helpers/reducers";
 
 
 const defaultChrom = 'rsID'
@@ -119,52 +120,22 @@ function positionsReducer(state = defaultPositions, action) {
   }
 }
 
-const defaultPeaks = {
-  isLoading: false,
-  isLoaded: false,
-  list: [],
-}
-function peaksReducer(state = defaultPeaks, action) {
-  switch (action.type) {
-    case k.PEAKS.REQUEST: {
-      return { ...state, isLoading: true, isLoaded: false, list: [] }
-    }
-    case k.PEAKS.RECEIVE: {
-      return { ...state, isLoading: false, isLoaded: true, list: action.payload }
-    }
-    case k.PEAKS.ERROR: {
-      return { ...state, isLoading: false }
-    }
-    default:
-      return state;
-  }
-}
+const defaultPeaks = makeDefaultListState();
+const peaksReducer = makeListReducer(k.PEAKS, defaultPeaks);
 
-const defaultAssays = {
-  isLoading: false,
-  isLoaded: false,
-  list: ['RNA-seq', 'ATAC-seq', 'H3K4me1', 'H3K4me3', 'H3K27ac', 'H3K27me3'],
-}
-function assaysReducer(state = defaultAssays, action) {
-  switch (action.type) {
-    case k.ASSAYS.REQUEST: {
-      return { ...state, isLoading: true }
-    }
-    case k.ASSAYS.RECEIVE: {
-      return {
-        ...state,
-        isLoading: false,
-        isLoaded: true,
-        list: action.payload
-      }
-    }
-    case k.ASSAYS.ERROR: {
-      return { ...state, isLoading: false }
-    }
-    default:
-      return state;
-  }
-}
+const defaultAssays = makeDefaultListState(
+  ['RNA-seq', 'ATAC-seq', 'H3K4me1', 'H3K4me3', 'H3K27ac', 'H3K27me3']
+);
+const assaysReducer = makeListReducer(k.ASSAYS, defaultAssays);
+
+const defaultConditions = makeDefaultListState();
+const conditionsReducer = makeListReducer(k.CONDITIONS, defaultConditions);
+
+const defaultEthnicities = makeDefaultListState();
+const ethnicitiesReducer = makeListReducer(k.ETHNICITIES, defaultEthnicities);
+
+const defaultAssembly = makeDefaultDataState();
+const assemblyReducer = makeDataReducer(k.ASSEMBLY, defaultAssembly);
 
 const defaultOverview = {
   isLoading: false,
@@ -242,68 +213,25 @@ const manhattanReducer = (state = defaultManhattan, action) => {
   }
 };
 
-const defaultUser = {
-  isLoading: false,
-  isLoaded: false,
-  data: undefined,
-};
-function userReducer(state = defaultUser, action) {
-  switch (action.type) {
-    case k.USER.REQUEST: {
-      return {...state, isLoading: true};
-    }
-    case k.USER.RECEIVE: {
-      return {
-        ...state,
-        isLoading: false,
-        isLoaded: true,
-        data: action.payload,
-      };
-    }
-    case k.USER.ERROR: {
-      return {...state, isLoading: false};
-    }
-    default:
-      return state;
-  }
-}
+const defaultUser = makeDefaultDataState();
+const userReducer = makeDataReducer(k.USER, defaultUser);
 
-const defaultMessages = {
-  isLoading: false,
-  isLoaded: false,
-  total: 0,
-  list: [],
-};
-function messagesReducer(state = defaultMessages, action) {
-  switch (action.type) {
-    case k.MESSAGES.REQUEST: {
-      return {...state, isLoading: true};
-    }
-    case k.MESSAGES.RECEIVE: {
-      return {
-        ...state,
-        isLoading: false,
-        isLoaded: true,
-        list: action.payload,
-      };
-    }
-    case k.MESSAGES.ERROR: {
-      return {...state, isLoading: false};
-    }
-    default:
-      return state;
-  }
-}
+const defaultMessages = makeDefaultListState();
+const messagesReducer = makeListReducer(k.MESSAGES, defaultMessages);
 
 
 export const rootReducer = combineReducers({
   ui: uiReducer,
 
-  samples: samplesReducer,
   chroms: chromsReducer,
   positions: positionsReducer,
-  peaks: peaksReducer,
+
   assays: assaysReducer,
+  assembly: assemblyReducer,
+  conditions: conditionsReducer,
+  ethnicities: ethnicitiesReducer,
+  samples: samplesReducer,
+  peaks: peaksReducer,
 
   overview: overviewReducer,
   manhattan: manhattanReducer,

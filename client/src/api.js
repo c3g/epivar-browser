@@ -31,8 +31,11 @@ export function fetchPositions(params, cancelToken) {
   return get('/autocomplete/positions', params, {cancelToken})
 }
 
-export const fetchOverviewConfig = () => get('/overview/config');
+export const fetchAssembly = () => get('/assembly');
+export const fetchConditions = () => get('/conditions');
+export const fetchEthnicities = () => get('/ethnicities');
 
+export const fetchOverviewConfig = () => get('/overview/config');
 export const fetchManhattanData = ({chrom, assay}) => get(`/overview/assays/${assay}/topBinned/${chrom}`);
 
 
