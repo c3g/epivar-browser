@@ -6,6 +6,7 @@ import Color from "color-js";
 import fs from "fs";
 
 import config from "../config.js";
+import {GENOTYPE_STATE_HET, GENOTYPE_STATE_HOM, GENOTYPE_STATE_REF, GENOTYPE_STATES} from "../helpers/genome.mjs";
 import unindent from "../helpers/unindent.mjs";
 
 const {staticTracks} = config.paths;
@@ -85,7 +86,7 @@ function generateTracks(mergedTracks) {
   })
 
   // Add legend 'tracks' - non-data tracks that show the REF/HET/HOM colours
-  trackBlocks.push(...["REF", "HET", "HOM"].map((t, i) => unindent`
+  trackBlocks.push(...GENOTYPE_STATES.map((t, i) => unindent`
     track ${t}
     shortLabel Legend: ${t}
     longLabel Legend: ${t}
@@ -103,15 +104,15 @@ const TRACK_TYPE_BIGWIG = "bigWig";
 
 // Thanks to Google Charts
 const COLORS = {
-  REF: [
+  [GENOTYPE_STATE_REF]: [
     '#87A8E8',
     '#3559A1'
   ],
-  HET: [
+  [GENOTYPE_STATE_HET]: [
     '#FFAD33',
     '#B77C25'
   ],
-  HOM: [
+  [GENOTYPE_STATE_HOM]: [
     '#E038E0',
     '#910591'
   ],

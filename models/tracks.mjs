@@ -17,7 +17,7 @@ import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";
 import Samples from "./samples.mjs";
 import source from "./source/index.js";
-import {normalizeChrom} from "../helpers/genome.mjs";
+import {normalizeChrom, GENOTYPE_STATES, GENOTYPE_STATE_NAMES} from "../helpers/genome.mjs";
 
 const exists = promisify(fs.exists);
 
@@ -100,12 +100,12 @@ function group(tracks) {
 function calculate(tracksByCondition) {
   Object.keys(tracksByCondition).forEach(condition => {
     const tracksByType = tracksByCondition[condition]
-    tracksByType.HET = derive(tracksByType.HET || [])
-    tracksByType.HOM = derive(tracksByType.HOM || [])
-    tracksByType.REF = derive(tracksByType.REF || [])
-  })
+    GENOTYPE_STATES.forEach(g => {
+      tracksByType[g] = derive(tracksByType[g] ?? []);
+    });
+  });
 
-  return tracksByCondition
+  return tracksByCondition;
 }
 
 const MERGE_WINDOW_EXTENT = 100000;  // in bases
@@ -117,24 +117,22 @@ function merge(tracks, session) {
 
   const mergeTracksByType = tracksByType =>
     Promise.all(
-      [
-        tracksByType.REF || [],
-        tracksByType.HET || [],
-        tracksByType.HOM || []
-      ].map(async tracks => {
-        if (tracks.length === 0) {
-          return undefined;
-        }
+      GENOTYPE_STATES
+        .map(g => tracksByType[g] ?? [])
+        .map(async tracks => {
+          if (tracks.length === 0) {
+            return undefined;
+          }
 
-        const filePaths = tracks.map(prop('path'))
-        const maxSize = await bigWigChromosomeLength(filePaths[0], chrom)
+          const filePaths = tracks.map(prop('path'))
+          const maxSize = await bigWigChromosomeLength(filePaths[0], chrom)
 
-        return mergeFiles(filePaths, {
-          chrom,
-          start: Math.max(session.peak.feature.start - MERGE_WINDOW_EXTENT, 0),
-          end:   Math.min(session.peak.feature.end + MERGE_WINDOW_EXTENT, maxSize),
+          return mergeFiles(filePaths, {
+            chrom,
+            start: Math.max(session.peak.feature.start - MERGE_WINDOW_EXTENT, 0),
+            end:   Math.min(session.peak.feature.end + MERGE_WINDOW_EXTENT, maxSize),
+          })
         })
-      })
     )
 
   const promisedTracks =
@@ -144,11 +142,7 @@ function merge(tracks, session) {
           assay: session.peak.assay,
           condition,
           tracks,
-          output: {
-            REF: output[0],
-            HET: output[1],
-            HOM: output[2],
-          },
+          output: Object.fromEntries(GENOTYPE_STATES.map((g, gi) => [g, output[gi]])),
         })
       )
     )
@@ -174,11 +168,10 @@ function plot(tracksByCondition) {
 // Helpers
 
 function getDataFromValues(values) {
-  return [
-    { name: 'Hom Ref', data: values.REF || [] },
-    { name: 'Het',     data: values.HET || [] },
-    { name: 'Hom Alt', data: values.HOM || [] }
-  ]
+  return GENOTYPE_STATES.map(s => ({
+    name: GENOTYPE_STATE_NAMES[s],
+    data: values[s] ?? [],
+  }));
 }
 
 function mergeFiles(paths, { chrom, start, end }) {

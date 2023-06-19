@@ -9,7 +9,13 @@ import csvParse from "csv-parse/lib/sync.js";
 
 import config from "../config.js";
 import cache from "../helpers/cache.mjs";
-import {normalizeChrom} from "../helpers/genome.mjs";
+import {
+  GENOTYPE_STATE_HET,
+  GENOTYPE_STATE_HOM,
+  GENOTYPE_STATE_REF,
+  GENOTYPE_STATES,
+  normalizeChrom
+} from "../helpers/genome.mjs";
 
 const exec = command =>
   new Promise((resolve, reject) =>
@@ -170,7 +176,9 @@ export function normalizeSamplesMap(samples) {
       const donor = key.slice(4)
       const value = res[key]
       const variant = variants.has(donor)
-      const type = !variant ? 'REF' : value.charAt(0) !== value.charAt(2) ? 'HET' : 'HOM'
+      const type = !variant
+        ? GENOTYPE_STATE_REF
+        : (value.charAt(0) !== value.charAt(2) ? GENOTYPE_STATE_HET : GENOTYPE_STATE_HOM)
       newRes.samples[donor] = { value, variant, type }
     } else {
       newRes[key] = res[key]
@@ -181,21 +189,18 @@ export function normalizeSamplesMap(samples) {
 }
 
 export function getCounts(total, samples) {
-  const counts = {
-    REF: 0,
-    HET: 0,
-    HOM: 0,
-  }
+  const counts = Object.fromEntries(GENOTYPE_STATES.map(g => [g, 0]));
   samples.forEach(sample => {
     const [a, b] = splitSampleValue(sample)
-    if (a === sample.alt && b === sample.alt)
-      counts.HOM += 1
-    else
-      counts.HET += 1
-  })
-  counts.REF = total - counts.HET - counts.HOM
+    if (a === sample.alt && b === sample.alt) {
+      counts[GENOTYPE_STATE_HOM] += 1;
+    } else {
+      counts[GENOTYPE_STATE_HET] += 1;
+    }
+  });
+  counts[GENOTYPE_STATE_REF] = total - counts[GENOTYPE_STATE_HET] - counts[GENOTYPE_STATE_HOM];
 
-  return counts
+  return counts;
 }
 
 export function splitSampleValue(sample) {
