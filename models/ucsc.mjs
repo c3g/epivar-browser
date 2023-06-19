@@ -8,7 +8,9 @@ import fs from "fs";
 import config from "../config.js";
 import unindent from "../helpers/unindent.mjs";
 
-export const otherTracks = fs.readFileSync(config.paths.staticTracks).toString();
+const {staticTracks} = config.paths;
+
+export const otherTracks = fs.existsSync(staticTracks) ? fs.readFileSync(staticTracks).toString() : "";
 
 export default {
   otherTracks,
@@ -48,7 +50,7 @@ function generateTracks(mergedTracks) {
       container multiWig
       shortLabel ${parentName}
       longLabel ${parentName}
-      type bigWig
+      type ${TRACK_TYPE_BIGWIG}
       visibility full
       aggregate transparentOverlay
       showSubtrackColorOnUi on
@@ -59,11 +61,10 @@ function generateTracks(mergedTracks) {
       autoScale on
     `)
 
-    const trackType = 'bigWig'
-
     Object.entries(merged.output).forEach(([type, output]) => {
-      if (output === undefined)
-        return
+      if (output === undefined) {
+        return;
+      }
 
       const trackName = `${parentName}__${type}`
       const shortLabel = trackName
@@ -72,7 +73,7 @@ function generateTracks(mergedTracks) {
 
       trackBlocks.push(indent(4, unindent`
         track ${trackName}
-        type ${trackType}
+        type ${TRACK_TYPE_BIGWIG}
         parent ${parentName}
         shortLabel ${shortLabel}
         bigDataUrl ${output.url}
@@ -95,14 +96,10 @@ function generateTracks(mergedTracks) {
     priority 0.${i+mergedTracks.length+1}
   `))
 
-  return (
-    trackBlocks.join('\n\n')
-    // 2021-10-05: Disable these for now at the request of Alain
-    //              - David L
-    + '\n\n'
-    + otherTracks
-  )
+  return trackBlocks.join('\n\n') + (otherTracks ? `\n\n${otherTracks}` : "");
 }
+
+const TRACK_TYPE_BIGWIG = "bigWig";
 
 // Thanks to Google Charts
 const COLORS = {
