@@ -43,6 +43,8 @@ const mapToData = map(prop("data"));
 const {conditions} = config.source?.conditions ?? DEFAULT_CONDITIONS;
 const CONDITION_IDS = conditions.map(c => c.id);
 
+const TRACK_VALUES_CACHE_EXPIRY = 60 * 60 * 24 * 180;  // 180 days
+
 // Methods
 
 const _makeTrackDonorLookupArray = tracks => {
@@ -110,7 +112,7 @@ async function values(peak, usePrecomputed = false) {
     }))
   ))).filter(v => v !== undefined);
 
-  await cache.setJSON(k, result, 60 * 60 * 24 * 180);
+  await cache.setJSON(k, result, TRACK_VALUES_CACHE_EXPIRY);
 
   return result;
 }
