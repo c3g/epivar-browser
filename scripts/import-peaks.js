@@ -10,7 +10,7 @@ const config = require('../config');
 
 // TODO: configurable
 const ASSAYS = [
-  'RNAseq',
+  'RNA-seq',
   'ATACseq',
   'H3K4me1',
   'H3K4me3',
