@@ -17,6 +17,7 @@ import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";
 import Samples from "./samples.mjs";
 import source from "./source/index.js";
+import {DEFAULT_CONDITIONS} from "../helpers/defaultValues.mjs";
 import {normalizeChrom, GENOTYPE_STATES, GENOTYPE_STATE_NAMES} from "../helpers/genome.mjs";
 
 const exists = promisify(fs.exists);
@@ -39,7 +40,17 @@ const strandToView = {
 const groupByEthnicity = groupBy(prop("ethnicity"));
 const mapToData = map(prop("data"));
 
+const {conditions} = config.source?.conditions ?? DEFAULT_CONDITIONS;
+const CONDITION_IDS = conditions.map(c => c.id);
+
 // Methods
+
+const _makeTrackDonorLookupArray = tracks => {
+  const donorsByCondition = Object.fromEntries(CONDITION_IDS.map(c => [c, []]));
+  tracks.forEach(t => donorsByCondition[t.condition].push(t.donor));
+  Object.values(donorsByCondition).forEach(v => v.sort());  // Sort donor IDs in place
+  return donorsByCondition;
+};
 
 function get(peak) {
   const {snp: {chrom, position}} = peak;
@@ -48,7 +59,7 @@ function get(peak) {
     .then(info => source.getTracks(info.samples, peak));
 }
 
-async function values(peak) {
+async function values(peak, usePrecomputed = false) {
   const k = `values:${peak.id}`;
   const chrom = normalizeChrom(peak.feature.chrom);
 
@@ -60,18 +71,33 @@ async function values(peak) {
 
   const tracks = await get(peak);
 
+  let getValueForTrack = track => valueAt(track.path, {
+    chrom,
+    start: peak.feature.start,
+    end: peak.feature.end,
+    ...config.merge
+  });
+
+  if (usePrecomputed) {
+    const donorsByCondition = _makeTrackDonorLookupArray(tracks);
+
+    // Replace getter function with one which extracts the precomputed point value.
+    getValueForTrack = track => {
+      const condIdx = CONDITION_IDS.indexOf(track.condition);
+      if (condIdx === -1) return Promise.resolve(undefined);
+      const pointIdx = donorsByCondition[condIdx].indexOf(track.donor);
+      if (pointIdx === -1) return Promise.resolve(undefined);
+      return Promise.resolve(peak.points?.[condIdx]?.[pointIdx]);
+    };
+  }
+
   const result = (await Promise.all(tracks.filter(track =>
     // RNA-seq results are either forward or reverse strand; we only want tracks from the direction
     // of the selected peak (otherwise results will appear incorrectly, and we'll have 2x the # of
     // values we should in some cases.)
     track.assay !== "RNA-Seq" || track.view === strandToView[peak.feature.strand]
   ).map(track =>
-    valueAt(track.path, {
-      chrom,
-      start: peak.feature.start,
-      end: peak.feature.end,
-      ...config.merge
-    }).then(value => (value === undefined ? undefined : {
+    getValueForTrack(track).then(value => (value === undefined ? undefined : {
       id: track.id,
       donor: track.donor,
       assay: track.assay,
