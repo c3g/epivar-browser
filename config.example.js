@@ -20,12 +20,20 @@ const dataDirname = path.join(__dirname, './data')
 
 module.exports = {
   paths: {
-    data:         dataDirname,
-    mergedTracks: `${dataDirname}/mergedTracks`,
+    data:          dataDirname,
+
+    // ====== Tracks ======
+    //  - merged tracks file location
+    mergedTracks:  `${dataDirname}/mergedTracks`,
+
+    //  - static (unchanging) part of UCSC track hub to show alongside dynamic merged tracks
+    staticTracks:  `${dataDirname}/ucsc.other-tracks.txt`,
+    // ====================
+
 
     // In production:
-    tracks:       `${dataDirname}/tracks`,
-    gemini:       `${dataDirname}/gemini.db`,
+    tracks:        `${dataDirname}/tracks`,
+    gemini:        `${dataDirname}/gemini.db`,
     // In development:
     //tracks:       belugaDirname,
     //gemini:       path.join(belugaDirname, 'WGS_VCFs/allSamples_WGS.gemini.db'),

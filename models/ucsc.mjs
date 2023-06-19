@@ -4,13 +4,11 @@
 
 import Color from "color-js";
 import fs from "fs";
-import path from "path";
-import {fileURLToPath} from "url";
 
+import config from "../config.js";
 import unindent from "../helpers/unindent.mjs";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-export const otherTracks = fs.readFileSync(path.join(__dirname, './ucsc.other-tracks.txt')).toString();
+export const otherTracks = fs.readFileSync(config.paths.staticTracks).toString();
 
 export default {
   otherTracks,
