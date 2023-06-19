@@ -158,19 +158,12 @@ function merge(tracks, session) {
 }
 
 function plot(tracksByCondition) {
-  const CONDITION_NI = "NI";
-  const CONDITION_FLU = "Flu";
+  const data = conditions.map(c => tracksByCondition[c.id] ? getDataFromValues(tracksByCondition[c.id]) : []);
+  const domains = data.map(d => getDomain(d));
 
-  const niData  = tracksByCondition[CONDITION_NI]  ? getDataFromValues(tracksByCondition[CONDITION_NI])  : [];
-  const fluData = tracksByCondition[CONDITION_FLU] ? getDataFromValues(tracksByCondition[CONDITION_FLU]) : [];
-
-  const niDomain  = getDomain(niData)
-  const fluDomain = getDomain(fluData)
-
-  return Promise.all([
-    boxPlot({title: "Non-infected", data: niData, domain: niDomain}),
-    boxPlot({title: "Flu", data: fluData, domain: fluDomain, transform: "translate(350 0)"}),
-  ]).then(plots =>
+  return Promise.all(
+    conditions.map((c, ci) => boxPlot({title: c.name, data: data[ci], domain: domains[ci]}))
+  ).then(plots =>
     `<svg width="${PLOT_SIZE * 2}" height="${PLOT_SIZE}">
        ${plots.join("")}
      </svg>`
