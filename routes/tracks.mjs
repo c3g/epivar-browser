@@ -13,20 +13,22 @@ router.use((_req, res, next) => {
   return next();
 });
 
+const getUsePrecomputed = ({precomputed}) => precomputed === "1";
+
 router.post(
   '/values',
   ensureLogIn,
   ensureAgreedToTerms,
-  ({body: peak}, res) => {
+  ({query, body: peak}, res) => {
     // We're re-purposing this endpoint as basically a way to pre-cache any desired calculations,
     // without actually returning any values (since those are too close to re-identifiable.)
     //  - David L, 2022-03-02
 
-    Tracks.values(peak)
+    Tracks.values(peak, getUsePrecomputed(query))
       .then(Tracks.group)
       .then(Tracks.calculate)
       .then(() => dataHandler(res)(undefined))  // Return an ok message without any data
-      .catch(errorHandler(res))
+      .catch(errorHandler(res));
   });
 
 const svgToPng = data =>
@@ -38,7 +40,7 @@ router.get(
   '/plot/:peakID',
   ensureLogIn,
   ensureAgreedToTerms,
-  ({params}, res) => {
+  ({params, query}, res) => {
     // We go through a lot of headache to generate plots on the server side
     // (despite it being a nice modern front end) not because we're naive but
     // because we're trying to make the site more secure against
@@ -55,7 +57,7 @@ router.get(
           });
       }
 
-      Tracks.values(peak)
+      Tracks.values(peak, getUsePrecomputed(query))
         .then(Tracks.group)
         .then(Tracks.calculate)
         .then(Tracks.plot)
