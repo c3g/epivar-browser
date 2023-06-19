@@ -6,7 +6,10 @@ const path = require('path')
 
 
 /* This is the application data directory */
-const dataDirname = path.join(__dirname, './data')
+const dataDirname = path.join(__dirname, './data');
+
+/* This is the input data directory */
+const inputFilesDirname = path.join(__dirname, './input-files');
 
 /* For development: the `tracks` data is huge, so it makes
  * more sense to mount the files via `sshfs` instead of
@@ -29,6 +32,9 @@ module.exports = {
     //  - static (unchanging) part of UCSC track hub to show alongside dynamic merged tracks
     staticTracks:  `${dataDirname}/ucsc.other-tracks.txt`,
     // ====================
+
+    // Template for loading QTL files
+    qtlsTemplate:  `${inputFilesDirname}/qtls/QTLs_complete_$ASSAY.csv`,
 
 
     // In production:

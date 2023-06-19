@@ -1,7 +1,6 @@
 // noinspection SqlResolve
 
 const fs = require('fs');
-const path = require('path');
 const parseCSV = require('csv-parse');
 const copyFrom = require('pg-copy-streams').from;
 
@@ -9,21 +8,17 @@ require('dotenv').config();
 
 const config = require('../config');
 
-// const chipmentationAssays = [
-//   'H3K4me1',
-//   'H3K4me3',
-//   'H3K27ac',
-//   'H3K27me3',
-// ];
-
-const datasetPaths = [
-  'RNAseq_symbol',
+// TODO: configurable
+const ASSAYS = [
+  'RNAseq',
   'ATACseq',
   'H3K4me1',
   'H3K4me3',
   'H3K27ac',
   'H3K27me3',
-].map(d => `${path.join(__dirname, '../input-files')}/QTLs_complete_${d}.csv`);
+];
+
+const datasetPaths = ASSAYS.map(assay => config.paths.qtlsTemplate.replace(/\$ASSAY/g, assay));
 
 console.log("Loading peaks");
 
