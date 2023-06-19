@@ -60,7 +60,7 @@ function get(peak) {
 }
 
 async function values(peak, usePrecomputed = false) {
-  const k = `values:${peak.id}`;
+  const k = `values:${peak.id}${usePrecomputed ? ':pre' : ''}`;
   const chrom = normalizeChrom(peak.feature.chrom);
 
   await cache.open();
