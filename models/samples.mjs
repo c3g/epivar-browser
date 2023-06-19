@@ -36,7 +36,7 @@ export default {
 };
 
 export function query(chrom, start, end = start + 1) {
-  const params = `--header --show-samples --format sampledetail`
+  const params = `--header --show-samples --format sampledetail`;
 
   const query = escape`
     SELECT chrom, start, end, ref, alt, (gts).(*)
@@ -45,12 +45,12 @@ export function query(chrom, start, end = start + 1) {
        AND chrom = ${normalizeChrom(chrom)}
        AND start >= ${start}
        AND end   <= ${end}
-  `
+  `;
 
   return gemini(query, params)
-  .then(res => res.stdout)
-  .then(parseCSV)
-  .then(normalizeSamples)
+    .then(res => res.stdout)
+    .then(parseCSV)
+    .then(normalizeSamples);
 }
 
 export function queryMap(chrom, start, end = start + 1) {
@@ -141,7 +141,7 @@ export function normalizeSamples(samples) {
 
   samples.forEach(sample => {
 
-    sample.value = sample['gts.' + sample.name]
+    sample.value = sample[`gts.${sample.name}`]
 
     for (let key in sample) {
       if (key.startsWith('gts.'))
@@ -203,25 +203,27 @@ export function getCounts(total, samples) {
   return counts;
 }
 
-export function splitSampleValue(sample) {
-  let parts = sample.value.split(/\||\//)
+export const splitSampleValue = (sample) => {
+  const parts = sample.value.split(/\||\//)
 
   // Basic validation
-  if (parts.length !== 2)
-    throw new Error(`Invalid sample value: "${sample.value}" (sample ${sample.name})`)
+  if (parts.length !== 2) {
+    throw new Error(`Invalid sample value: "${sample.value}" (sample ${sample.name})`);
+  }
 
-  if (!parts.every(p => /^\w$/.test(p)))
-    console.log('Invalid sample value:', sample.value)
+  if (!parts.every(p => /^\w$/.test(p))) {
+    console.log('Invalid sample value:', sample.value);
+  }
 
-  return parts
+  return parts;
 }
 
 export function parseLines({ stdout }) {
-  return stdout.split('\n').filter(Boolean)
+  return stdout.split('\n').filter(Boolean);
 }
 
 export function parseCSV(string) {
-  return csvParse(string, { delimiter: '\t', columns: true })
+  return csvParse(string, { delimiter: '\t', columns: true });
 }
 
 export function escape(strings, ...args) {
