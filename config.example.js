@@ -36,6 +36,11 @@ module.exports = {
     // Template for loading QTL files
     qtlsTemplate:  `${inputFilesDirname}/qtls/QTLs_complete_$ASSAY.csv`,
 
+    // Template for loading pre-computed points for box plots
+    //   Format: TSV with:
+    //    - column headers of sample IDs ([ETHNICITY][NUMBER]_[CONDITION])
+    //    - row headers of features
+    pointTemplate: `${inputFilesDirname}/matrices/$ASSAY_batch.age.corrected_PCsreg.txt`,
 
     // In production:
     tracks:        `${dataDirname}/tracks`,
