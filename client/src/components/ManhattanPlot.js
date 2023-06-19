@@ -251,7 +251,10 @@ const ManhattanPlot = React.memo(
       minHeight: height + 27 + 16,  // plot height + title height (27 in Firefox) + top padding
     }} {...props}>
       <UplotReact options={uPlotOptions} data={finalData} />
-      <em style={{color: "#888"}}>Click and drag to zoom in on a region. Double-click to reset.</em>
+      <em style={{color: "#888"}}>
+        Click on a point to see more information about a particular peak.
+        Click and drag to zoom in on a region. Double-click to reset.
+      </em>
     </div>;
   });
 
