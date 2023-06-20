@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const config = require('../config');
 
-const stripQuotes = str => str.replace("\"", "").trim();
+const stripQuotes = str => str.replace(/"/g, "").trim();
 
 // TODO: configurable
 const ASSAYS = [
