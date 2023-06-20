@@ -35,7 +35,7 @@ module.exports = {
     staticTracks:  `${dataDirname}/ucsc.other-tracks.txt`,
 
     // Template for loading QTL files
-    qtlsTemplate:  `${inputFilesDirname}/qtls/QTLs_complete_$ASSAY.csv`,
+    qtlsTemplate:  process.env.VARWIG_QTLS_TEMPLATE ?? `${inputFilesDirname}/qtls/QTLs_complete_$ASSAY.csv`,
 
     // Template for loading pre-computed points for box plots
     //   Format: TSV with:
