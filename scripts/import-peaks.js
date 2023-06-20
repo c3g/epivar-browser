@@ -40,7 +40,7 @@ if (loadingPrecomputedPoints) {
       .map((s, si) => [s, si])
       .sort((a, b) => a[0].localeCompare(b[0]));
 
-    precomputedPoints[assay] = Object.fromEntries(fc.slice(1).map(featureRow => [
+    precomputedPoints[assay] = Object.fromEntries(fc.slice(1).filter(x => !!x).map(featureRow => [
       stripQuotes(featureRow[0]),
       sortedSampleNamesAndIndices.map(([_, si]) => parseFloat(featureRow[si + 1])),
     ]));
