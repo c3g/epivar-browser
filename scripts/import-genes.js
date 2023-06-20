@@ -4,10 +4,15 @@ const parseCSVSync = require("csv-parse/lib/sync");
 
 require('dotenv').config();
 
-import config from "../config";
+const config = require("../config");
+const common = require("./_common");
+
+const ASSAY_NAME_RNASEQ = "RNA-seq";
 
 const genesPath = path.join(config.inputFilesDirname, 'flu-infection-genes.txt');
 const genesFeaturesPath = path.join(config.inputFilesDirname, 'flu-infection-gene-peaks.csv');
+
+const rnaSeqPrecomputed = common.precomputedPoints[ASSAY_NAME_RNASEQ];
 
 (async () => {
   const db = await import("../models/db.mjs");
@@ -15,7 +20,7 @@ const genesFeaturesPath = path.join(config.inputFilesDirname, 'flu-infection-gen
 
   const assaysByName = Object.fromEntries((await db.findAll("SELECT * FROM assays")).map(r => [r.name, r.id]));
 
-  const rnaSeq = assaysByName["RNA-seq"];
+  const rnaSeq = assaysByName[ASSAY_NAME_RNASEQ];
 
   const parseGene = line => {
     const fields = line.trim().split('\t');
@@ -45,7 +50,8 @@ const genesFeaturesPath = path.join(config.inputFilesDirname, 'flu-infection-gen
     const start = +fields[2];
     const end = +fields[3];
     const strand = fields[4];
-    const gene = genesByNormName[Gene.normalizeName(fields[0])];
+    const geneNameNorm = Gene.normalizeName(fields[0]);
+    const gene = genesByNormName[geneNameNorm];
     if (!gene) return [];
     return [[
       `${chrom}_${start}_${end}_${strand}:${rnaSeq}`,
@@ -55,13 +61,14 @@ const genesFeaturesPath = path.join(config.inputFilesDirname, 'flu-infection-gen
       strand, // strand
       rnaSeq,
       gene,
+      rnaSeqPrecomputed[fields[0]] ?? rnaSeqPrecomputed[geneNameNorm],  // Pre-computed points
     ]];
   };
 
   await db.insertMany(
     `
-    INSERT INTO features ("nat_id", "chrom", "start", "end", "strand", "assay", "gene")
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    INSERT INTO features ("nat_id", "chrom", "start", "end", "strand", "assay", "gene", "points")
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     ON CONFLICT DO NOTHING
     `,
     geneLines.flatMap(parseGeneFeature),

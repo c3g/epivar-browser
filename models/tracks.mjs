@@ -89,7 +89,7 @@ async function values(peak, usePrecomputed = false) {
       if (condIdx === -1) return Promise.resolve(undefined);
       const pointIdx = donorsByCondition[condIdx].indexOf(track.donor);
       if (pointIdx === -1) return Promise.resolve(undefined);
-      return Promise.resolve(peak.points?.[condIdx]?.[pointIdx]);
+      return Promise.resolve(peak.feature.points?.[condIdx]?.[pointIdx]);
     };
   }
 
