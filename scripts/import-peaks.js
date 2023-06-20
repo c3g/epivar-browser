@@ -183,8 +183,8 @@ console.log("Loading peaks");
       pgPeakCopyStream.write(Buffer.from([
         p.snp,
         p.feature,
-        `"{${p.values.join(",")}}"`,
-        points !== undefined ? `"{${points.join(",")}}"` : "null",
+        `{${p.values.join(",")}}`,
+        points !== undefined ? `{${points.join(",")}}` : "null",
       ].join("\t") + "\n"));
       totalInserted++;
     };
