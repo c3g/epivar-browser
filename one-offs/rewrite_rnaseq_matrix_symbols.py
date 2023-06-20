@@ -15,7 +15,7 @@ with open("/flu-infection-data/qtls/QTLs_complete_RNAseq_non_symbol.csv", "r") a
 
 with open("/opt/varwig2/input-files/matrices/RNA-seq_batch.age.corrected_PCsreg.txt", "r") as rna_f, \
         open("/opt/varwig2/input-files/matrices/RNA-seq_batch.age.corrected_PCsreg_symbol.txt", "w") as rna_w:
-    rna_w.write(next(rna_f) + "\n")  # copy header
+    rna_w.write(next(rna_f))  # copy header
     for row in tqdm(rna_f):
         if not row.strip():
             continue
