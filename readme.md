@@ -98,7 +98,7 @@ npm run install
 npm run build
 ```
 
-#### Development
+#### Development (Aracena *et al.*-specific)
 
 To enable remote `gemini` execution:
 
@@ -169,11 +169,10 @@ In production with CILogon, the auth scopes would be configured as follows:
 VARWIG_AUTH_SCOPE="openid email org.cilogon.userinfo"
 ```
 
+##### Note on current deployment for Aracena *et al.*
+
 We use `pm2` to run multiple processes of the application at a time to handle more simultaneous requests.
 The `PM2_HOME` folder is set to `/home/dlougheed/.pm2` currently (sorry).
-
-**Note that all code should be written with the assumption that multiple processes can run at a time.**
-Thus, Redis/Postgres should generally be used for any cached/persistent data.
 
 ## Architecture
 
@@ -186,3 +185,6 @@ The [models/](./models) folder contains the functions to retrieve the actual dat
 depending on where it is. Some of it is in Postgres databases (genes, peaks, sessions); the tracks
 come from the `tracks/mergedTracks` folders configured previously, the variants (aka samples) data
 comes from `gemini`, and the UCSC track hubs are generated on the fly.
+
+**Note that all code should be written with the assumption that multiple processes can run at a time.**
+Thus, Redis/Postgres should generally be used for any cached/persistent data.
