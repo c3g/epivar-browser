@@ -9,7 +9,7 @@ const stripQuotes = str => str.replace(/"/g, "").trim();
 // TODO: configurable
 const ASSAYS = [
   'RNA-seq',
-  'ATACseq',
+  'ATAC-seq',
   'H3K4me1',
   'H3K4me3',
   'H3K27ac',
