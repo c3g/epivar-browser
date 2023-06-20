@@ -2,7 +2,9 @@
  * config.js
  */
 
-const path = require('path')
+const path = require('path');
+
+require('dotenv').config();
 
 
 /* This is the application data directory */
@@ -11,27 +13,26 @@ const dataDirname = path.join(__dirname, './data');
 /* This is the input data directory */
 const inputFilesDirname = path.join(__dirname, './input-files');
 
+/* This is the storage volume path for Gemini genotypes and tracks (i.e., very large files / raw data) */
+const tracksDirname = process.env.VARWIG_TRACKS_DIR ?? '/flu-infection-data';
+
 /* For development: the `tracks` data is huge, so it makes
  * more sense to mount the files via `sshfs` instead of
  * copying them all.
  * You'd mount them with something like:
  *  sshfs beluga.calculcanada.ca:~/projects/rrg-bourqueg-ad/C3G/projects/DavidB_varwig \
  *      ~/mnt/beluga-varwig-data
- * Then you base directory would be:
+ * Then you base directory would be something like:
+ * VARWIG_TRACKS_DIR='/home/romgrk/mnt/beluga-varwig-data'
+ * VARWIG_GEMINI_DB='/home/romgrk/mnt/beluga-varwig-data/WGS_VCFs/allSamples_WGS.gemini.db'
  */
-// const belugaDirname = '/home/romgrk/mnt/beluga-varwig-data'
 
 module.exports = {
   paths: {
     data:          dataDirname,
 
-    // ====== Tracks ======
-    //  - merged tracks file location
-    mergedTracks:  `${dataDirname}/mergedTracks`,
-
-    //  - static (unchanging) part of UCSC track hub to show alongside dynamic merged tracks
+    // Static (unchanging) part of UCSC track hub to show alongside dynamic merged tracks
     staticTracks:  `${dataDirname}/ucsc.other-tracks.txt`,
-    // ====================
 
     // Template for loading QTL files
     qtlsTemplate:  `${inputFilesDirname}/qtls/QTLs_complete_$ASSAY.csv`,
@@ -42,12 +43,12 @@ module.exports = {
     //    - row headers of features
     pointTemplate: `${inputFilesDirname}/matrices/$ASSAY_batch.age.corrected_PCsreg.txt`,
 
-    // In production:
-    tracks:        `${dataDirname}/tracks`,
-    gemini:        `${dataDirname}/gemini.db`,
-    // In development:
-    //tracks:       belugaDirname,
-    //gemini:       path.join(belugaDirname, 'WGS_VCFs/allSamples_WGS.gemini.db'),
+    // Merged tracks file location
+    mergedTracks:  process.env.VARWIG_MERGED_TRACKS_DIR ?? path.join(dataDirname, 'mergedTracks'),
+
+    // Locations of huge sensitive files
+    tracks:        tracksDirname,
+    gemini:        process.env.VARWIG_GEMINI_DB ?? path.join(tracksDirname, 'allSamples_WGS.gemini.db'),
   },
 
   source: {

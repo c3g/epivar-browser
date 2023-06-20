@@ -141,6 +141,7 @@ into a `.env` file and loaded at service start time).
 Here is an example, with secrets redacted, for a setup via Auth0:
 
 ```bash
+# Auth configuration
 VARWIG_AUTH_SCOPE="openid profile"
 VARWIG_CLIENT_ID=some_client
 VARWIG_CLIENT_SECRET=some_secret
@@ -149,7 +150,14 @@ VARWIG_ISSUER=https://dev-###.us.auth0.com/
 VARWIG_AUTH_URL=https://dev-###.us.auth0.com/authorize
 VARWIG_TOKEN_URL=https://dev-###.us.auth0.com/oauth/token
 VARWIG_USERINFO_URL=https://dev-###.us.auth0.com/userinfo
+# Other Varwig configuration
 VARWIG_BASE_URL=https://flu-infection.vhost38.genap.ca
+# Database configuration
+VARWIG_PG_CONNECTION=postgres://davidlougheed@localhost:5432/flu_infection_db
+# Directories
+VARWIG_MERGED_TRACKS_DIR=/flu-infection-data/mergedTracks
+VARWIG_TRACKS_DIR=/flu-infection-data
+VARWIG_GEMINI_DB=/flu-infection-data/allSamples_WGS.gemini.db
 ```
 
 Note that trailing slashes are very important here; for example, a missing trailing slash for `VARWIG_ISSUER` will
