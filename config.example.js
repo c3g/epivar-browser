@@ -28,6 +28,8 @@ const tracksDirname = process.env.VARWIG_TRACKS_DIR ?? '/flu-infection-data';
  */
 
 module.exports = {
+  inputFilesDirname,
+
   paths: {
     data:          dataDirname,
 

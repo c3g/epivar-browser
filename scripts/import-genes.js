@@ -4,8 +4,10 @@ const parseCSVSync = require("csv-parse/lib/sync");
 
 require('dotenv').config();
 
-const genesPath = path.join(__dirname, '../input-files/flu-infection-genes.txt');
-const genesFeaturesPath = path.join(__dirname, '../input-files/flu-infection-gene-peaks.csv');
+import config from "../config";
+
+const genesPath = path.join(config.inputFilesDirname, 'flu-infection-genes.txt');
+const genesFeaturesPath = path.join(config.inputFilesDirname, 'flu-infection-gene-peaks.csv');
 
 (async () => {
   const db = await import("../models/db.mjs");
