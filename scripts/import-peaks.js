@@ -48,7 +48,7 @@ if (loadingPrecomputedPoints) {
           sortedSampleNamesAndIndices.map(([_, si]) => parseFloat(rd[si + 1])),
         ];
       }));
-  })
+  });
 }
 
 console.log("Loading peaks");
@@ -183,7 +183,7 @@ console.log("Loading peaks");
      * }
      */
     const peakStreamPush = p => {
-      const points = loadingPrecomputedPoints ? precomputedPoints[p.featureStr] : undefined;
+      const points = loadingPrecomputedPoints ? precomputedPoints[p.assay][p.featureStr] : undefined;
       pgPeakCopyStream.write(Buffer.from([
         p.snp,
         p.feature,
