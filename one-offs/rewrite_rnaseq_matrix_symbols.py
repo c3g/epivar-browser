@@ -22,6 +22,6 @@ with open("/opt/varwig2/input-files/matrices/RNA-seq_batch.age.corrected_PCsreg.
         rd = row.strip().split("\t")
         new_symbol = symbol_lookup.get(rd[0].strip("\""))
         if new_symbol is None:
-            print(f"could not find symbol for {rd[0]}")
+            rna_w.write("\t".join(rd) + "\n")
             continue
         rna_w.write("\t".join((f"\"{new_symbol}\"", *rd[1:])) + "\n")
