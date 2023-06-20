@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import csv
+import tqdm
 
 symbol_lookup = {}
 
@@ -9,13 +10,13 @@ with open("/flu-infection-data/qtls/QTLs_complete_RNAseq_non_symbol.csv", "r") a
     nsr = csv.DictReader(nsf)
     sr = csv.DictReader(sf)
 
-    for nrow, srow in zip(nsr, sr):
+    for nrow, srow in tqdm(zip(nsr, sr)):
         symbol_lookup[nrow["feature"]] = srow["feature"]
 
 with open("/opt/varwig2/input-files/matrices/RNA-seq_batch.age.corrected_PCsreg.txt", "r") as rna_f, \
         open("/opt/varwig2/input-files/matrices/RNA-seq_batch.age.corrected_PCsreg_symbol.txt", "w") as rna_w:
-    rna_w.write(rna_f.read() + "\n")  # copy header
-    for row in rna_f:
+    rna_w.write(next(rna_f) + "\n")  # copy header
+    for row in tqdm(rna_f):
         if not row.strip():
             continue
         rd = row.strip().split("\t")
@@ -23,4 +24,4 @@ with open("/opt/varwig2/input-files/matrices/RNA-seq_batch.age.corrected_PCsreg.
         if new_symbol is None:
             print(f"could not find symbol for {rd[0]}")
             continue
-        rna_w.write("\t".join((new_symbol, *rd[1:])) + "\n")
+        rna_w.write("\t".join((f"\"{new_symbol}\"", *rd[1:])) + "\n")
