@@ -161,7 +161,7 @@ console.log("Loading peaks");
         COPY peaks_temp (
           "snp",
           "feature",
-          "values"
+          "values",
           "points"
         ) FROM STDIN NULL AS 'null'
       `));
