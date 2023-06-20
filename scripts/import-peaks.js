@@ -40,10 +40,14 @@ if (loadingPrecomputedPoints) {
       .map((s, si) => [s, si])
       .sort((a, b) => a[0].localeCompare(b[0]));
 
-    precomputedPoints[assay] = Object.fromEntries(fc.slice(1).filter(x => !!x).map(featureRow => [
-      stripQuotes(featureRow[0]),
-      sortedSampleNamesAndIndices.map(([_, si]) => parseFloat(featureRow[si + 1])),
-    ]));
+    precomputedPoints[assay] = Object.fromEntries(fc.slice(1).filter(x => !!x)
+      .map(featureRow => {
+        const rd = featureRow.split("\t");
+        return [
+          stripQuotes(rd[0]),
+          sortedSampleNamesAndIndices.map(([_, si]) => parseFloat(rd[si + 1])),
+        ];
+      }));
   })
 }
 
