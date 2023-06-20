@@ -179,12 +179,12 @@ console.log("Loading peaks");
      * }
      */
     const peakStreamPush = p => {
-      const points = loadingPrecomputedPoints ? precomputedPoints[p.featureStr] : null;
+      const points = loadingPrecomputedPoints ? precomputedPoints[p.featureStr] : undefined;
       pgPeakCopyStream.write(Buffer.from([
         p.snp,
         p.feature,
         `"{${p.values.join(",")}}"`,
-        points !== null ? `"{${points.join(",")}}"` : "null",
+        points !== undefined ? `"{${points.join(",")}}"` : "null",
       ].join("\t") + "\n"));
       totalInserted++;
     };
