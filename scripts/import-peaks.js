@@ -8,6 +8,8 @@ require('dotenv').config();
 
 const config = require('../config');
 
+const stripQuotes = str => str.replace("\"", "").trim();
+
 // TODO: configurable
 const ASSAYS = [
   'RNA-seq',
@@ -19,6 +21,31 @@ const ASSAYS = [
 ];
 
 const datasetPaths = ASSAYS.map(assay => config.paths.qtlsTemplate.replace(/\$ASSAY/g, assay));
+
+const loadingPrecomputedPoints = !!config.paths.pointTemplate;
+const precomputedPoints = {};
+
+if (loadingPrecomputedPoints) {
+  console.log("Pre-loading precomputed point matrices");
+
+  ASSAYS.forEach(assay => {
+    const fc = fs.readFileSync(config.paths.pointTemplate.replace(/\$ASSAY/g, assay))
+      .toString()
+      .split("\n");
+
+    const sortedSampleNamesAndIndices = fc[0]
+      .split("\t")
+      .map(s => stripQuotes(s))
+      .filter(s => s !== "")
+      .map((s, si) => [s, si])
+      .sort((a, b) => a[0].localeCompare(b[0]));
+
+    precomputedPoints[assay] = Object.fromEntries(fc.slice(1).map(featureRow => [
+      stripQuotes(featureRow[0]),
+      sortedSampleNamesAndIndices.map(([_, si]) => parseFloat(featureRow[si + 1])),
+    ]));
+  })
+}
 
 console.log("Loading peaks");
 
@@ -87,8 +114,8 @@ console.log("Loading peaks");
           "id"        serial      primary key,
           "snp"       varchar(20) not null,  -- no FK until we insert to handle missing SNPs
           "feature"   integer     not null,  -- if null, gene FK contains feature information
-          "values"    real[]      not null
-          -- "points"    real[][]
+          "values"    real[]      not null,
+          "points"    real[][]
       )
     `);
 
@@ -104,8 +131,8 @@ console.log("Loading peaks");
     const copyToPeaksTable = async () => {
       const tn = "peaks_temp";
       await client.query(`
-        INSERT INTO peaks ("snp", "feature", "values")  -- , "points") 
-          SELECT snps."id", pt."feature", pt."values"  -- , pt."points"
+        INSERT INTO peaks ("snp", "feature", "values", "points") 
+          SELECT snps."id", pt."feature", pt."values", pt."points"
           FROM ${tn} AS pt JOIN snps ON pt."snp" = snps."nat_id"
       `);
       await client.query(`TRUNCATE TABLE ${tn}`);
@@ -135,24 +162,29 @@ console.log("Loading peaks");
           "snp",
           "feature",
           "values"
-          -- "points"
-          -- "valueFlu"
-          -- valueMin,
+          "points"
         ) FROM STDIN NULL AS 'null'
       `));
 
     // const transformNull = v => v === null ? "null" : v;
+
+    /*
+     * p: {
+     *   assay,
+     *   feature,
+     *   featureStr,
+     *   snp,
+     *   snpArray,
+     *   values,
+     * }
+     */
     const peakStreamPush = p => {
-      const pValues = p.values;
-
-      // TODO: get points
-      // const points = [];
-
+      const points = loadingPrecomputedPoints ? precomputedPoints[p.featureStr] : null;
       pgPeakCopyStream.write(Buffer.from([
         p.snp,
         p.feature,
-        `"{${pValues.join(",")}}"`,
-        // `"{${points.join(",")}}"`,
+        `"{${p.values.join(",")}}"`,
+        points !== null ? `"{${points.join(",")}}"` : "null",
       ].join("\t") + "\n"));
       totalInserted++;
     };
@@ -356,6 +388,9 @@ console.log("Loading peaks");
         position,
       ]
       peak.snp = snpNaturalID;
+
+      // Save the string representation of the feature for later - we need it to look up precomputed points
+      peak.featureStr = peak.feature;
 
       // const [chrom, position] = peak.snp.split('_');
       // peak.chrom = chrom;
