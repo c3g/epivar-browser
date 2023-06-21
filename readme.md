@@ -52,7 +52,36 @@ The different data sources to generate/prepare are:
       peak position is. Eg, the peak can be at `chr1:1000`, but the feature is
       at the range `chr1:3500-3600`
  
- - **Metadata:** This is the track's metadata
+ - **Metadata:** This is the track's metadata. This can either be provided as an 
+   XLSX file with the headers:
+     - `file.path`
+     - `ethnicity`
+     - `condition`
+     - `institution.short_name`
+     - `sample_name`
+     - `donor`
+     - `track.view`
+     - `track.track_type`
+     - `assembly.name`
+     - `assay.name`
+     - `assay_category.name`
+   
+   or a JSON file containing a list of objects with (similar) keys:
+     - `path`
+     - `ethnicity`
+     - `condition`
+     - `short_name`
+     - `sample_name`
+     - `donor`
+     - `view`
+     - `type`
+     - `assembly`
+     - `assay`
+     - `assay_id`
+     - `assay_category`
+     - `assay_category_id`
+   
+   Information on track metadata file:
      - **Generate with:** `node ./scripts/metadata-to-json.js`
      - **Input:** `./input-files/flu-infection.xlsx`
      - **Data:** `./data/metadata.json`
@@ -63,19 +92,20 @@ The different data sources to generate/prepare are:
    chromosome/assay pairs, binned by SNP position.
      - **Generate with:** `node ./scripts/calculate-top-peaks.js`
  
- - **Tracks:** There are the bigWig files that contain the signal data.
-     - **Generate with:** You will need to either copy the files, or
-       in development mount them with `sshfs` to have access to them.
-       See comment inside `config.example.js` for more details.
-     - Config: `config.paths.tracks` (directory)
-     - Notes: A metadata item (from step Metadata above) `.path` field
+ - **Tracks:** There are pre-generated bigWig files that contain the signal data 
+   to use for merging and displaying in the browser. The paths should correspond to 
+     - **Config:** `VARWIG_TRACKS_DIR` environment variable, specifying the directory
+     - **Notes:** A metadata item (from step Metadata above) `.path` field
        points to a path inside the `config.paths.tracks` directory, eg:
        `metadata.path = 'RNAseq/AF02_Flu.forward.bw'`
        `filepath = path.join(config.paths.tracks, metadata.path)`
+     - **EpiVar-specific notes:** You will need to either copy the files, or
+       in development mount them with `sshfs` to have access to them.
  
  - **Merged tracks:** The directory to store the merged tracks.
      - **Generate with:** `mkdir -p ./data/mergedTracks`
-     - **Config:** `config.paths.mergedTracks` (directory)
+         - This location can be changed with the environment variable `VARWIG_MERGED_TRACKS_DIR`
+     - **Config:** `VARWIG_MERGED_TRACKS_DIR` environment variable or `config.paths.mergedTracks` (directory)
      - **Notes:** Make sure there is enough space for those tracks.
  
  - **Gemini database:** This contains variants' data.
@@ -90,7 +120,7 @@ The different data sources to generate/prepare are:
 
 ### Application
 
-Once the data is read, you can install & build the application as follows:
+Once the data is ready, you can install & build the application as follows:
 
 ```sh
 npm run install
