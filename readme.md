@@ -46,7 +46,7 @@ The different data sources to generate/prepare are:
        unique `name_norm` column used for genes.
  
  - **Peaks:** list of peaks names mapped to their characteristics. These files 
-   have the following headers:
+   are CSVs which have the following headers:
      - `rsID`: The rsID of the SNP
      - `snp`: The SNP in the SNP-peak association; formatted like `chr#_######`
        (UCSC-formatted chromosome name, underscore, position)
