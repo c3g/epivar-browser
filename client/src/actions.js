@@ -6,25 +6,26 @@ import * as k from './constants/ActionTypes.js'
 import {BASE_URL} from "./constants/app";
 import {constructUCSCUrl} from "./helpers/ucsc";
 
-export const setChrom         = createAction(k.SET_CHROM);
-export const setPosition      = createAction(k.SET_POSITION);
-export const setOverviewChrom = createAction(k.SET_OVERVIEW_CHROM);
-export const setOverviewAssay = createAction(k.SET_OVERVIEW_ASSAY);
-export const handleError      = createAction(k.HANDLE_ERROR);
+export const setChrom          = createAction(k.SET_CHROM);
+export const setPosition       = createAction(k.SET_POSITION);
+export const setOverviewChrom  = createAction(k.SET_OVERVIEW_CHROM);
+export const setOverviewAssay  = createAction(k.SET_OVERVIEW_ASSAY);
+export const setUsePrecomputed = createAction(k.SET_USE_PRECOMPUTED);
+export const handleError       = createAction(k.HANDLE_ERROR);
 
-export const assays           = createFetchActions(k.ASSAYS);
-export const samples          = createFetchActions(k.SAMPLES);
-export const chroms           = createFetchActions(k.CHROMS);
-export const positions        = createFetchActions(k.POSITIONS);
-export const values           = createFetchActions(k.VALUES);
-export const peaks            = createFetchActions(k.PEAKS);
-export const assembly         = createFetchActions(k.ASSEMBLY);
-export const conditions       = createFetchActions(k.CONDITIONS);
-export const ethnicities      = createFetchActions(k.ETHNICITIES);
-export const overviewConfig   = createFetchActions(k.OVERVIEW_CONFIG);
-export const manhattanData    = createFetchActions(k.MANHATTAN_DATA);
-export const user             = createFetchActions(k.USER);
-export const messages         = createFetchActions(k.MESSAGES);
+export const assays            = createFetchActions(k.ASSAYS);
+export const samples           = createFetchActions(k.SAMPLES);
+export const chroms            = createFetchActions(k.CHROMS);
+export const positions         = createFetchActions(k.POSITIONS);
+export const values            = createFetchActions(k.VALUES);
+export const peaks             = createFetchActions(k.PEAKS);
+export const assembly          = createFetchActions(k.ASSEMBLY);
+export const conditions        = createFetchActions(k.CONDITIONS);
+export const ethnicities       = createFetchActions(k.ETHNICITIES);
+export const overviewConfig    = createFetchActions(k.OVERVIEW_CONFIG);
+export const manhattanData     = createFetchActions(k.MANHATTAN_DATA);
+export const user              = createFetchActions(k.USER);
+export const messages          = createFetchActions(k.MESSAGES);
 
 export const fetchAssays         = createFetchFunction(api.fetchAssays,         assays);
 // export const fetchChroms         = createFetchFunction(api.fetchChroms,         chroms);

@@ -1,19 +1,23 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {useSelector} from "react-redux";
 
 function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
+  const usePrecomputed = useSelector(state => state.ui.usePrecomputed);
+
   const ethnicities = useState(state => state.ethnicities.list);
 
   const [loaded, setLoaded] = useState(false);
-  const prevPeakRef = useRef();
+  const prevPeakImgRef = useRef("");
+
+  const peakImg = `${process.env.PUBLIC_URL}/api/tracks/plot/${peak?.id}?precomputed=${Number(usePrecomputed)}`;
 
   useEffect(() => {
-    if (prevPeakRef.current !== peak?.id) {
+    if (prevPeakImgRef.current !== peakImg) {
       setLoaded(false);
-      prevPeakRef.current = peak?.id;
+      prevPeakImgRef.current = peakImg;
     }
-  }, [peak]);
+  }, [peakImg]);
 
-  const peakImg = `${process.env.PUBLIC_URL}/api/tracks/plot/${peak?.id}`;
   const peakImgStyle = useMemo(() => ({
     width: "100%",
     height: "auto",
@@ -50,11 +54,12 @@ function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
         ))}
       </div>
       <div className="PeakBoxplot__disclaimer">
-        <p>
-          Box plots are generated from normalised signals (read count per base pair per 10 million reads), without any
-          batch correction, whereas <em>p</em>-values are calculated from age-regressed, batch-corrected
-          signal values. The <em>p</em>-values thus may not precisely match the distributions visible in the box plots.
-        </p>
+        {!usePrecomputed && <p>
+          When not using precomputed values, box plots are generated from normalised signals (read count per base pair
+          per 10 million reads), without any batch correction, whereas <em>p</em>-values are calculated from the
+          age-regressed, batch-corrected signal values. The <em>p</em>-values thus may not precisely match the
+          distributions visible in the box plots.
+        </p>}
       </div>
     </div>
   )

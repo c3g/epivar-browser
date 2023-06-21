@@ -1,20 +1,21 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   Button,
+  ButtonGroup,
   Container,
   Col,
+  Input,
+  Label,
   Row,
   Table,
-  ButtonGroup,
-  Input,
   Tooltip,
 } from 'reactstrap'
 import {useTable, usePagination, useSortBy} from "react-table";
 
 import Icon from "./Icon";
 import PeakBoxplot from "./PeakBoxplot";
-import {cacheValues, mergeTracks} from "../actions";
+import {cacheValues, mergeTracks, setUsePrecomputed} from "../actions";
 
 
 const PAGE_SIZES = [10, 20, 30, 40, 50];
@@ -22,6 +23,11 @@ const PAGE_SIZES = [10, 20, 30, 40, 50];
 
 const PeakAssay = ({peaks}) => {
   const dispatch = useDispatch();
+
+  const usePrecomputed = useSelector(state => state.ui.usePrecomputed);
+  const setPrecomputed = useCallback(
+    event => dispatch(setUsePrecomputed(event.currentTarget.checked)),
+    [dispatch]);
 
   const [selectedPeak, setSelectedPeak] = useState(undefined);
 
@@ -32,8 +38,8 @@ const PeakAssay = ({peaks}) => {
     setSelectedPeak(p ? p.id : undefined);
   }, [peaks])
 
-  const onChangeFeature = p => setSelectedPeak(p.id);
-  const onOpenTracks = p => dispatch(mergeTracks(p));
+  const onChangeFeature = useCallback(p => setSelectedPeak(p.id), []);
+  const onOpenTracks = useCallback(p => dispatch(mergeTracks(p)), [dispatch]);
 
   const selectedPeakData = peaks.find(p => p.id === selectedPeak);
 
@@ -60,7 +66,7 @@ const PeakAssay = ({peaks}) => {
   return (
     <Container className='PeakAssay' fluid={true}>
       <Row>
-        <Col xs='12'>
+        <Col xs={12}>
           <PeaksTable
             peaks={peaks}
             selectedPeak={selectedPeak}
@@ -68,7 +74,13 @@ const PeakAssay = ({peaks}) => {
             onOpenTracks={onOpenTracks}
           />
         </Col>
-        <Col xs='12'>
+        <Col xs={12}>
+          <Label check={true}>
+            <Input type="checkbox" checked={usePrecomputed} onChange={setPrecomputed} />{" "}
+            Use precomputed, batch-corrected points?
+          </Label>
+        </Col>
+        <Col xs={12}>
           <PeakBoxplot
             title={selectedPeakData ? `${selectedPeakData.snp.id} — ${formatFeature(selectedPeakData)}` : ""}
             peak={selectedPeakData}
@@ -197,6 +209,13 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
     state: { pageIndex, pageSize },
   } = tableInstance;
 
+  const onGotoPage = useCallback(e => {
+    const page = e.target.value ? Number(e.target.value) - 1 : 0
+    gotoPage(page)
+  }, [gotoPage]);
+
+  const onSelectPage = useCallback(e => setPageSize(Number(e.target.value)), []);
+
   return <>
     <div className="PeaksTableContainer">
       <Table
@@ -262,17 +281,14 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
           type="number"
           disabled={pageOptions.length === 1}
           defaultValue={pageIndex + 1}
-          onChange={e => {
-            const page = e.target.value ? Number(e.target.value) - 1 : 0
-            gotoPage(page)
-          }}
+          onChange={onGotoPage}
           style={{ width: "100px", display: "inline-block" }}
         />
       </div>
       <Input
         type="select"
         value={pageSize}
-        onChange={e => setPageSize(Number(e.target.value))}
+        onChange={onSelectPage}
         style={{width: "120px", marginLeft: "1em"}}
       >
         {PAGE_SIZES.map(pageSize => (

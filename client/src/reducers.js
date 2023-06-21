@@ -13,6 +13,8 @@ const defaultUI = {
     chrom: '',
     assay: '',
   },
+
+  usePrecomputed: true,
 };
 
 function uiReducer(state = defaultUI, action) {
@@ -28,6 +30,9 @@ function uiReducer(state = defaultUI, action) {
     }
     case k.SET_OVERVIEW_ASSAY: {
       return {...state, overview: {...state.overview, assay: action.payload}};
+    }
+    case k.SET_USE_PRECOMPUTED: {
+      return {...state, usePrecomputed: action.payload};
     }
     default:
       return state;
