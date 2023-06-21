@@ -45,9 +45,22 @@ The different data sources to generate/prepare are:
        normalized by replacing all non-digits/non-letters with `-`, and that is the
        unique `name_norm` column used for genes.
  
- - **Peaks:** list of peaks names mapped to their characteristics.
+ - **Peaks:** list of peaks names mapped to their characteristics. These files 
+   have the following headers:
+     - `rsID`: The rsID of the SNP
+     - `snp`: The SNP in the SNP-peak association; formatted like `chr#_######`
+       (UCSC-formatted chromosome name, underscore, position)
+     - `feature`: The feature name - either `chr#_startpos_endpos` or `GENE_NAME`
+     - `pvalue.*` where `*` is the ID of the condition (by default, `*` = `NI` then `Flu`) 
+         - These are floating point numbers
+     - `feature_type`: The assay the peak is from - e.g., `RNA-seq`
+   
+   Information on the QTL/peak list files:
      - **Import with:** `node ./scripts/import-peaks.js`
-     - **Input:** `./input-files/QTLS_complete_*.csv`
+     - **Input:** `./input-files/qtls/QTLS_complete_*.csv`
+     - **Config:** Use the `VARWIG_QTLS_TEMPLATE` environment variable to configure
+       where QTL lists are loaded from. The `$ASSAY` string is replaced with each 
+       assay in turn. *Defaults to:* `./input-files/qtls/QTLs_complete_$ASSAY.csv`
      - **Notes:** The peak's associated feature is usually different from where the
       peak position is. Eg, the peak can be at `chr1:1000`, but the feature is
       at the range `chr1:3500-3600`
@@ -81,16 +94,17 @@ The different data sources to generate/prepare are:
      - `assay_category`
      - `assay_category_id`
    
-   Information on track metadata file:
+   Information on the track metadata file:
      - **Generate with:** `node ./scripts/metadata-to-json.js`
      - **Input:** `./input-files/flu-infection.xlsx`
-     - **Data:** `./data/metadata.json`
+     - **Output:** `./data/metadata.json`
      - **Config:** `config.source.metadata.path` (filepath)
      - **Notes:** This is really just an XLSX to JSON transformation.
  
  - **Binned top peaks for assays:** Used to generate Manhattan plots for
    chromosome/assay pairs, binned by SNP position.
      - **Generate with:** `node ./scripts/calculate-top-peaks.js`
+     - **Notes:** This will populate a table in the Postgres database.
  
  - **Tracks:** There are pre-generated bigWig files that contain the signal data 
    to use for merging and displaying in the browser. The paths should correspond to 
