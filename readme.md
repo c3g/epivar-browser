@@ -36,6 +36,27 @@ exists with `mkdir -p ./data`.
 
 The different data sources to generate/prepare are:
 
+ - **Condition and ethnicity configuration:** Set up conditions/treatments and
+   sample ethnicities for the portal in `config.js` in the 
+   `config.source.conditions` and `config.source.ethnicities` arrays:
+   - **Format:** *(example)*
+     ```javascript
+     module.exports = {
+       // ...
+       source: {
+         // ...
+         conditions: [
+           {id: "NI", name: "Non-infected"},
+           {id: "Flu", name: "Flu"},
+         ],
+         ethnicities: [
+           {id: "AF", name: "African-American", plotColor: "#5100FF", plotBoxColor: "rgba(81, 0, 255, 0.6)"},
+           {id: "EU", name: "European-American", plotColor: "#FF8A00", plotBoxColor: "rgba(255, 138, 0, 0.6)"},
+         ],
+       },
+       // ...
+     };
+     ```
  - **Genes:** list of gene names mapped to their characteristics.
      - **Import with:** `node ./scripts/import-genes.js`
      - **Input:** `./input-files/flu-infection-genes.txt`
