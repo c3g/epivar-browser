@@ -22,7 +22,7 @@ const POINT_RADIUS = 4;
 
 const TEXT_STYLES = `font-size: ${FONT_SIZE}; font-family: sans-serif; text-anchor: middle`;
 
-const PLOT_SIZE = 350;
+export const PLOT_SIZE = 350;
 const PLOT_PADDING = 40;
 const PLOT_HORIZ_PADDING = 25;
 
@@ -253,7 +253,7 @@ async function boxPlotBar({data, x, y, height, domain}) {
   </g>`;
 }
 
-async function boxPlot({title, data, domain, transform}) {
+export async function boxPlot({title, data, domain, transform}) {
   if (!data) {
     return "<svg />";
   }
@@ -298,7 +298,7 @@ async function boxPlot({title, data, domain, transform}) {
 
 // Helpers
 
-function getDomain(categories) {
+export function getDomain(categories) {
   if (!categories?.length) {
     return undefined;
   }
@@ -382,11 +382,3 @@ function shuffle(array) {
 
   return array;
 }
-
-// ---
-
-module.exports = {
-  PLOT_SIZE,
-  getDomain,
-  boxPlot,
-};

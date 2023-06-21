@@ -11,7 +11,7 @@ import {groupBy, map, path as prop} from "rambda";
 
 import bigWigMerge from "../helpers/bigwig-merge.js";
 import bigWigChromosomeLength from "../helpers/bigwig-chromosome-length.js";
-import {boxPlot, getDomain, PLOT_SIZE} from "../helpers/boxplot.js";
+import {boxPlot, getDomain, PLOT_SIZE} from "../helpers/boxplot.mjs";
 import cache from "../helpers/cache.mjs";
 import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";

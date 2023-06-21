@@ -5,7 +5,7 @@ import {ensureAgreedToTerms, ensureLogIn} from "../helpers/auth.mjs";
 import {dataHandler, errorHandler, pngHandler} from "../helpers/handlers.mjs";
 import Tracks from "../models/tracks.mjs";
 import Peaks from "../models/peaks.mjs";
-import PLOT_SIZE from "../helpers/boxplot.js";
+import {PLOT_SIZE} from "../helpers/boxplot.mjs";
 
 const SCALE_FACTOR = 2;
 const PNG_DPI = 300;
