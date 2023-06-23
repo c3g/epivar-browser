@@ -77,14 +77,15 @@ The different data sources to generate/prepare are:
      - `feature_type`: The assay the peak is from - e.g., `RNA-seq`
    
    Information on the QTL/peak list files:
-     - **Import with:** `node ./scripts/import-peaks.js`
+     - **Import with:** `node ./scripts/import-peaks.js` followed by `node ./scripts/calculate-peak-groups.js`
      - **Input:** `./input-files/qtls/QTLS_complete_*.csv`
      - **Config:** Use the `VARWIG_QTLS_TEMPLATE` environment variable to configure
        where QTL lists are loaded from. The `$ASSAY` string is replaced with each 
        assay in turn. *Defaults to:* `./input-files/qtls/QTLs_complete_$ASSAY.csv`
      - **Notes:** The peak's associated feature is usually different from where the
-      peak position is. Eg, the peak can be at `chr1:1000`, but the feature is
-      at the range `chr1:3500-3600`
+      peak position is; e.g., the peak SNP can be at `chr1:1000`, but the feature is
+      at the range `chr1:3500-3600`. The second script calculates peak groups by SNP
+      and gene for auto-complete.
  
  - **Metadata:** This is the track's metadata. This can either be provided as an 
    XLSX file with the headers:
