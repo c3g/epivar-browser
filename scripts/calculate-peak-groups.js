@@ -5,7 +5,7 @@ require('dotenv').config();
 
   console.log('Pre-processing peak groups by SNP')
   // If there is more than one most significant peak, just choose the first one
-  await db.run(
+  await db.runWithTransaction(
     `
           INSERT INTO features_by_snp ("snp", "minValueMin", "nFeatures", "mostSignificantFeatureID")
           SELECT "snp",
@@ -17,16 +17,16 @@ require('dotenv').config();
                     AND (SELECT MIN(x) FROM unnest(peaks."values") AS x) = a."minValueMin" 
                   LIMIT 1) AS "mostSignificantFeatureID"
           FROM (SELECT "snp", 
-                       MIN((SELECT MIN(x) FROM unnest(peaks."values") AS x)) as "minValueMin", 
+                       MIN((SELECT MIN(x) FROM unnest(p."values") AS x)) as "minValueMin", 
                        COUNT(*) AS "nFeatures"
-                FROM peaks
+                FROM peaks AS p
                 GROUP BY "snp") AS a
       `
   );
 
   console.log('Pre-processing peak groups by gene');
   // If there is more than one most significant peak, just choose the first one
-  await db.run(
+  await db.runWithTransaction(
     `
           INSERT INTO features_by_gene ("gene", "minValueMin", "nFeatures", "mostSignificantFeatureID")
           SELECT a."gene",
@@ -38,7 +38,7 @@ require('dotenv').config();
                     AND (SELECT MIN(x) FROM unnest(peaks."values") AS x) = a."minValueMin"
                   LIMIT 1) AS "mostSignificantFeatureID"
           FROM (SELECT f."gene", 
-                       MIN((SELECT MIN(x) FROM unnest(peaks."values") AS x)) as "minValueMin", 
+                       MIN((SELECT MIN(x) FROM unnest(p."values") AS x)) as "minValueMin", 
                        COUNT(*) AS "nFeatures"
                 FROM peaks AS p JOIN features AS f ON p.feature = f.id
                 WHERE f."gene" IS NOT NULL
