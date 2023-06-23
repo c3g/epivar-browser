@@ -38,7 +38,7 @@ if (loadingPrecomputedPoints) {
       .map(featureRow => {
         const rd = featureRow.split("\t");
         return [
-          stripQuotes(rd[0]),
+          stripQuotes(rd[0]).replace(/^chr/, ""),
           sortedSampleNamesAndIndices.map(([_, si]) => parseFloat(rd[si + 1])),
         ];
       }));
