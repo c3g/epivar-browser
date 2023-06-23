@@ -32,6 +32,8 @@ const OverviewPage = () => {
 
   const {width} = useWindowDimensions();
 
+  const {chromosomeSizes} = useSelector(state => state.assembly.data);
+
   const {
     isLoading: configIsLoading,
     isLoaded: configIsLoaded,
@@ -39,7 +41,7 @@ const OverviewPage = () => {
   } = useSelector(state => state.overview);
   const binSizeKb = ((config.binSize ?? 0) / 1000).toFixed(0);
 
-  const chroms = useMemo(() => Object.keys(config.chromosomeSizes ?? {}), [config]);
+  const chroms = useMemo(() => Object.keys(chromosomeSizes ?? {}), [chromosomeSizes]);
   const {
     isLoading: assaysIsLoading,
     isLoaded: assaysIsLoaded,
