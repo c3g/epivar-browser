@@ -159,15 +159,14 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       },
       disableSortBy: true,
     },
-    ...conditions.map(({id, name}) => {
-      const k = `value${id}`;
+    ...conditions.map(({id, name}, idx) => {
       // noinspection JSUnusedGlobalSymbols
       return {
-        id: k,
+        id: `value${id}`,
         Header: <span><span style={{fontFamily: "serif"}}>p</span> Value ({name})</span>,
         accessor: row => {
-          const fixed = row[k].toPrecision(5);
-          const floatStr = row[k].toString();
+          const fixed = row.values[idx].toPrecision(5);
+          const floatStr = row.values[idx].toString();
           return floatStr.length < fixed.length ? floatStr : fixed;
         },
         sortType: (r1, r2, col) => r1.original[col] < r2.original[col] ? -1 : 1,
