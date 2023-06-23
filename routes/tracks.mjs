@@ -5,7 +5,7 @@ import {ensureAgreedToTerms, ensureLogIn} from "../helpers/auth.mjs";
 import {dataHandler, errorHandler, pngHandler} from "../helpers/handlers.mjs";
 import Tracks from "../models/tracks.mjs";
 import Peaks from "../models/peaks.mjs";
-import {PLOT_SIZE} from "../helpers/boxplot.mjs";
+import {PLOT_HEIGHT, PLOT_WIDTH} from "../helpers/boxplot.mjs";
 
 const SCALE_FACTOR = 2;
 const PNG_DPI = 300;
@@ -37,7 +37,7 @@ router.post(
 
 const svgToPng = data =>
   sharp(Buffer.from(data), {density: PNG_DPI})
-    .resize(PLOT_SIZE * 2 * SCALE_FACTOR, PLOT_SIZE * SCALE_FACTOR)
+    .resize(PLOT_WIDTH * SCALE_FACTOR, PLOT_HEIGHT * SCALE_FACTOR)
     .toBuffer();
 
 router.get(
@@ -72,7 +72,7 @@ router.get(
 
           // Display error in PNG form
           svgToPng(
-            `<svg width="${PLOT_SIZE * 2}" height="${PLOT_SIZE}">
+            `<svg width="${PLOT_WIDTH}" height="${PLOT_HEIGHT}">
               <text x="20" y="30" fill="#C33" style="font-size: 16px; font-family: sans-serif; font-weight: bold;">
                 Error while plotting:
               </text>

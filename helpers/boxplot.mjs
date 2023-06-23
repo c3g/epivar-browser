@@ -1,6 +1,7 @@
 import config from "../config.js";
 
-const {ethnicities} = config.source;
+const {conditions, ethnicities} = config.source;
+const nConditions = conditions.length;
 const nEthnicities = ethnicities.length;
 
 const scaleLinear = (...args) => import("d3-scale").then(
@@ -22,15 +23,16 @@ const POINT_RADIUS = 4;
 
 const TEXT_STYLES = `font-size: ${FONT_SIZE}; font-family: sans-serif; text-anchor: middle`;
 
-export const PLOT_SIZE = 350;
+export const PLOT_WIDTH = 700;
+export const PLOT_HEIGHT = 350;
 const PLOT_PADDING = 40;
 const PLOT_HORIZ_PADDING = 25;
 
 const plotDimensions = {
   x: PLOT_PADDING + PLOT_HORIZ_PADDING,
   y: PLOT_PADDING,
-  width: PLOT_SIZE - PLOT_PADDING,
-  height: PLOT_SIZE - PLOT_PADDING,
+  width: (PLOT_WIDTH / nConditions) - PLOT_PADDING,
+  height: PLOT_HEIGHT - PLOT_PADDING,
 };
 
 // Drawing

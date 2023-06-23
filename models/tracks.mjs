@@ -11,7 +11,7 @@ import {groupBy, map, path as prop} from "rambda";
 
 import bigWigMerge from "../helpers/bigwig-merge.js";
 import bigWigChromosomeLength from "../helpers/bigwig-chromosome-length.js";
-import {boxPlot, getDomain, PLOT_SIZE} from "../helpers/boxplot.mjs";
+import {boxPlot, getDomain, PLOT_HEIGHT, PLOT_WIDTH} from "../helpers/boxplot.mjs";
 import cache from "../helpers/cache.mjs";
 import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";
@@ -82,6 +82,8 @@ async function values(peak, usePrecomputed = false) {
 
   if (usePrecomputed) {
     const donorsByCondition = _makeTrackDonorLookupArray(tracks);
+
+    console.log(peak.feature);
 
     // Replace getter function with one which extracts the precomputed point value.
     getValueForTrack = track => {
@@ -184,9 +186,14 @@ function plot(tracksByCondition) {
   const domains = data.map(d => getDomain(d));
 
   return Promise.all(
-    conditions.map((c, ci) => boxPlot({title: c.name, data: data[ci], domain: domains[ci]}))
+    conditions.map((c, ci) => boxPlot({
+      title: c.name,
+      data: data[ci],
+      domain: domains[ci],
+      transform: `translate(${((PLOT_WIDTH / conditions.length) * ci).toFixed(0)} 0)`
+    }))
   ).then(plots =>
-    `<svg width="${PLOT_SIZE * 2}" height="${PLOT_SIZE}">
+    `<svg width="${PLOT_WIDTH}" height="${PLOT_HEIGHT}">
        ${plots.join("")}
      </svg>`
   );
