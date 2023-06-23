@@ -51,7 +51,7 @@ tracks.forEach(t => {
   donorLookupSet.add(`${t.donor}_${t.condition}`);
 });
 
-const donorLookup = [...donorLookupSet].sort();
+const donorLookup = [...donorLookupSet].sort((a, b) => a.localeCompare(b));
 
 // Methods
 
