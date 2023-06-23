@@ -2,11 +2,12 @@
  * metadata.js
  */
 
+const fs = require('fs')
 const path = require('path')
 const clone  = require('lodash.clonedeep')
 const config = require('../../config')
 
-const metadata = require(config.source.metadata.path)
+const metadata = JSON.parse(fs.readFileSync(config.source.metadata.path).toString());
 
 module.exports = {
   getTracks,
