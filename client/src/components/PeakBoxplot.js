@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
   const usePrecomputed = useSelector(state => state.ui.usePrecomputed);
 
-  const ethnicities = useState(state => state.ethnicities.list);
+  const ethnicities = useSelector(state => state.ethnicities.list);
 
   const [loaded, setLoaded] = useState(false);
   const prevPeakImgRef = useRef("");
