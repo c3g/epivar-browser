@@ -32,7 +32,7 @@ const OverviewPage = () => {
 
   const {width} = useWindowDimensions();
 
-  const {chromosomeSizes} = useSelector(state => state.assembly.data);
+  const {chromosomeSizes} = useSelector(state => state.assembly.data) ?? {};
 
   const {
     isLoading: configIsLoading,
