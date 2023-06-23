@@ -28,15 +28,16 @@ const config = require("../config");
             JOIN features f ON p."feature" = f."id"
             JOIN snps s ON p."snp" = s."id"
             JOIN (
-                SELECT f2."assay" AS a_id, (SELECT MIN(x) FROM unnest(p2."values") AS x) AS p_min
-                FROM peaks p2
-                    JOIN snps s2 on p2."snp" = s2."id"
-                    JOIN features f2 on f2."id" = p2."feature"
-                WHERE s2."chrom" = $1
-                  AND s2."position" >= $2
-                  AND s2."position" <= $3
+                SELECT p3."assay" AS a_id, p3."p_min" as p_min
+                FROM (SELECT f2."assay" AS assay, (SELECT MIN(x) FROM unnest(p2."values") AS x) AS p_min
+                      FROM peaks p2
+                          JOIN snps s2 on p2."snp" = s2."id"
+                          JOIN features f2 on f2."id" = p2."feature"
+                      WHERE s2."chrom" = $1
+                        AND s2."position" >= $2
+                        AND s2."position" <= $3) p3
                 GROUP BY a_id
-                HAVING MIN((SELECT MIN(x) FROM unnest(p2."values") AS x)) <= $4
+                HAVING MIN(p3."p_min") <= $4
             ) j ON f.assay = j.a_id AND (SELECT MIN(x) FROM unnest(p2."values") AS x) = j.p_min
         WHERE s."chrom" = $1
           AND s."position" >= $2
