@@ -61,7 +61,7 @@ create table if not exists features
     --  the box plot, instead of pulling live from the bigWigs. treatments and samples MUST be in alphabetical order of
     --  their IDs, eg [Flu: [<value for AF01>, ..., <value for EU01>], NI: [...]]
     -- if the array is NULL, points SHOULD be pulled from bigWigs instead
-    "points" real[][]    default null,
+    "points" real[]      default null,
 
     foreign key ("assay") references assays ("id"),
     foreign key ("gene")  references genes  ("id")

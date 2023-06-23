@@ -41,18 +41,19 @@ const groupByEthnicity = groupBy(prop("ethnicity"));
 const mapToData = map(prop("data"));
 
 const conditions = config.source?.conditions ?? DEFAULT_CONDITIONS;
-const CONDITION_IDS = conditions.map(c => c.id);
 
 const TRACK_VALUES_CACHE_EXPIRY = 60 * 60 * 24 * 180;  // 180 days
 
-// Methods
+const tracks = JSON.parse(fs.readFileSync(config.source.metadata.path).toString());
 
-const _makeTrackDonorLookupArray = tracks => {
-  const donorsByCondition = Object.fromEntries(CONDITION_IDS.map(c => [c, []]));
-  tracks.forEach(t => donorsByCondition[t.condition].push(t.donor));
-  Object.values(donorsByCondition).forEach(v => v.sort());  // Sort donor IDs in place
-  return donorsByCondition;
-};
+const donorLookupSet = new Set();
+tracks.forEach(t => {
+  donorLookupSet.add(`${t.donor}_${t.condition}`);
+});
+
+const donorLookup = [...donorLookupSet].sort();
+
+// Methods
 
 function get(peak) {
   const {snp: {chrom, position}} = peak;
@@ -81,16 +82,12 @@ async function values(peak, usePrecomputed = false) {
   });
 
   if (usePrecomputed) {
-    const donorsByCondition = _makeTrackDonorLookupArray(tracks);
-
     // Replace getter function with one which extracts the precomputed point value.
     getValueForTrack = track => {
       console.log("points", peak.feature.points);
-      const condIdx = CONDITION_IDS.indexOf(track.condition);
-      if (condIdx === -1) return Promise.resolve(undefined);
-      const pointIdx = donorsByCondition[track.condition].indexOf(track.donor);
+      const pointIdx = donorLookup.indexOf(`${track.donor}_${track.condition}`);
       if (pointIdx === -1) return Promise.resolve(undefined);
-      return Promise.resolve(peak.feature.points?.[condIdx]?.[pointIdx]);
+      return Promise.resolve(peak.feature.points?.[pointIdx]);
     };
   }
 

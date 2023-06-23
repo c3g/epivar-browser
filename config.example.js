@@ -41,7 +41,7 @@ module.exports = {
 
     // Template for loading pre-computed points for box plots
     //   Format: TSV with:
-    //    - column headers of sample IDs ([ETHNICITY][NUMBER]_[CONDITION])
+    //    - column headers of sample IDs ([DONOR]_[CONDITION])
     //    - row headers of features
     pointTemplate: `${inputFilesDirname}/matrices/$ASSAY_batch.age.corrected_PCsreg.txt`,
 
