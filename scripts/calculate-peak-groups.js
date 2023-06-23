@@ -3,6 +3,10 @@ require('dotenv').config();
 (async () => {
   const db = await import("../models/db.mjs");
 
+  // Clear relevant tables of existing data
+  await db.run("TRUNCATE TABLE features_by_snp RESTART IDENTITY CASCADE");
+  await db.run("TRUNCATE TABLE features_by_gene RESTART IDENTITY CASCADE");
+
   console.log('Pre-processing peak groups by SNP')
   // If there is more than one most significant peak, just choose the first one
   await db.runWithTransaction(
