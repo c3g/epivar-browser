@@ -83,10 +83,9 @@ async function values(peak, usePrecomputed = false) {
   if (usePrecomputed) {
     const donorsByCondition = _makeTrackDonorLookupArray(tracks);
 
-
     // Replace getter function with one which extracts the precomputed point value.
     getValueForTrack = track => {
-      console.log(peak.feature.points);
+      console.log("points", peak.feature.points);
       const condIdx = CONDITION_IDS.indexOf(track.condition);
       if (condIdx === -1) return Promise.resolve(undefined);
       const pointIdx = donorsByCondition[track.condition].indexOf(track.donor);
