@@ -26,7 +26,7 @@ const PeakResults = () => {
   const isEmpty = useSelector(state => state.peaks.isLoaded && state.peaks.list.length === 0);
   const peaks = useSelector(state => state.peaks.list || []);
 
-  const {ui: {chrom: uiChrom, position: uiPosition}} = useSelector(state => state.ui);
+  const {chrom: uiChrom, position: uiPosition} = useSelector(state => state.ui);
 
   const peaksByAssay = groupAndSortPeaks(peaks);
   const assaysWithFeatures = Object.keys(peaksByAssay);
