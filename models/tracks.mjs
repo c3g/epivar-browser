@@ -69,7 +69,7 @@ async function values(peak, usePrecomputed = false) {
 
   // noinspection JSCheckFunctionSignatures
   const cv = await cache.getJSON(k);
-  if (cv) return cv;
+  // if (cv) return cv;
 
   const tracks = await get(peak);
 
@@ -113,7 +113,7 @@ async function values(peak, usePrecomputed = false) {
     }))
   ))).filter(v => v !== undefined);
 
-  await cache.setJSON(k, result, TRACK_VALUES_CACHE_EXPIRY);
+  // await cache.setJSON(k, result, TRACK_VALUES_CACHE_EXPIRY);
 
   return result;
 }
