@@ -38,7 +38,7 @@ const config = require("../config");
                         AND s2."position" <= $3) p3
                 GROUP BY a_id
                 HAVING MIN(p3."peak_p_min") <= $4
-            ) j ON f.assay = j.a_id AND (SELECT MIN(x) FROM unnest(p2."values") AS x) = j.p_min
+            ) j ON f.assay = j.a_id AND (SELECT MIN(x) FROM unnest(p."values") AS x) = j.p_min
         WHERE s."chrom" = $1
           AND s."position" >= $2
           AND s."position" <= $3
