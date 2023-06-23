@@ -87,7 +87,7 @@ async function values(peak, usePrecomputed = false) {
     getValueForTrack = track => {
       const condIdx = CONDITION_IDS.indexOf(track.condition);
       if (condIdx === -1) return Promise.resolve(undefined);
-      const pointIdx = donorsByCondition[condIdx].indexOf(track.donor);
+      const pointIdx = donorsByCondition[track.condition].indexOf(track.donor);
       if (pointIdx === -1) return Promise.resolve(undefined);
       return Promise.resolve(peak.feature.points?.[condIdx]?.[pointIdx]);
     };
