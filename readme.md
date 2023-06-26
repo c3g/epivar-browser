@@ -59,7 +59,16 @@ The different data sources to generate/prepare are:
      ```
  - **Genes:** list of gene names mapped to their characteristics.
      - **Import with:** `node ./scripts/import-genes.js`
-     - **Input:** `./input-files/flu-infection-genes.txt`
+     - **Input:** `./input-files/flu-infection-genes.txt` and 
+       `./input-files/flu-infection-gene-peaks.csv`
+     - **Format:**
+       - `flu-infection-genes.txt`: TSV file with *no header row*. Columns are: 
+         gene name, chromosome with `chr` prefix, start coordinate, end coordinate,
+         strand (`+` or `-`).
+       - `flu-infection-gene-peaks.csv`: CSV *with header row*:
+         `"symbol","peak_ids","feature_type"` where `symbol` is gene name, `peak_ids`
+         is a feature string (e.g., `chr1_9998_11177`), and `feature_type` is the name
+         of the assay.
      - **Notes:** The `name` column contains their name as provided in the input file,
        however there are inconsistencies in the notation of names, where sometimes
        the `.` and `-` will diverge from one source to another. Therefore, names are
@@ -77,7 +86,8 @@ The different data sources to generate/prepare are:
      - `feature_type`: The assay the peak is from - e.g., `RNA-seq`
    
    Information on the QTL/peak list files:
-     - **Import with:** `node ./scripts/import-peaks.js` followed by `node ./scripts/calculate-peak-groups.js`
+     - **Import with:** `node ./scripts/import-peaks.js` followed by 
+       `node ./scripts/calculate-peak-groups.js`
      - **Input:** `./input-files/qtls/QTLS_complete_*.csv`
      - **Config:** Use the `VARWIG_QTLS_TEMPLATE` environment variable to configure
        where QTL lists are loaded from. The `$ASSAY` string is replaced with each 
