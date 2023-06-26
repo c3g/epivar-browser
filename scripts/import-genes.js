@@ -87,9 +87,12 @@ const rnaSeqPrecomputed = common.precomputedPoints[ASSAY_NAME_RNASEQ];
   const assayFeatures = geneAssayFeatures.flatMap(row => {
     const featureStr = row.peak_ids.slice(3);
     const feature = row.peak_ids.slice(3).split("_");
-    const assayID = assaysByName[row.feature_type];
 
-    const gene = genesByNormName[Gene.normalizeName(row.symbol)];
+    const assayID = assaysByName[row.feature_type];
+    const assayPoints = common.precomputedPoints[row.feature_type];
+
+    const geneNameNorm = Gene.normalizeName(row.symbol);
+    const gene = genesByNormName[geneNameNorm];
     if (!gene) return [];
     return [[
       `${featureStr}:${assayID}`,
@@ -98,13 +101,14 @@ const rnaSeqPrecomputed = common.precomputedPoints[ASSAY_NAME_RNASEQ];
       +feature.at(-1),
       assayID,
       gene,
+      assayPoints[row.symbol] ?? assayPoints[geneNameNorm],  // Pre-computed points
     ]];
   });
 
   await db.insertMany(
     `
-    INSERT INTO features ("nat_id", "chrom", "start", "end", "assay", "gene")
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO features ("nat_id", "chrom", "start", "end", "assay", "gene", "points")
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
     `,
     assayFeatures,
   );
