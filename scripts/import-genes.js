@@ -86,13 +86,12 @@ const rnaSeqPrecomputed = common.precomputedPoints[ASSAY_NAME_RNASEQ];
 
   const assayFeatures = geneAssayFeatures.flatMap(row => {
     const featureStr = row.peak_ids.slice(3);
-    const feature = row.peak_ids.slice(3).split("_");
+    const feature = featureStr.split("_");
 
     const assayID = assaysByName[row.feature_type];
     const assayPoints = common.precomputedPoints[row.feature_type];
 
-    const geneNameNorm = Gene.normalizeName(row.symbol);
-    const gene = genesByNormName[geneNameNorm];
+    const gene = genesByNormName[Gene.normalizeName(row.symbol)];
     if (!gene) return [];
     return [[
       `${featureStr}:${assayID}`,
@@ -101,7 +100,7 @@ const rnaSeqPrecomputed = common.precomputedPoints[ASSAY_NAME_RNASEQ];
       +feature.at(-1),
       assayID,
       gene,
-      assayPoints[row.symbol] ?? assayPoints[geneNameNorm],  // Pre-computed points
+      assayPoints[featureStr],  // Pre-computed points
     ]];
   });
 
