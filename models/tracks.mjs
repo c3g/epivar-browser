@@ -79,7 +79,8 @@ async function values(peak, usePrecomputed = false) {
       console.log("points", peak.feature.points);
       const pointIdx = donorLookup.indexOf(`${track.donor}_${track.condition}`);
       if (pointIdx === -1) return Promise.resolve(undefined);
-      return Promise.resolve(peak.feature.points?.[pointIdx]);
+      // Return the point value, turning SQL NULLs into undefined if the value isn't present for this sample
+      return Promise.resolve(peak.feature.points?.[pointIdx] ?? undefined);
     };
   }
 
