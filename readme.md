@@ -57,6 +57,42 @@ The different data sources to generate/prepare are:
        // ...
      };
      ```
+ - **Metadata:** This is the track's metadata. This can either be provided as an
+   XLSX file with the headers:
+     - `file.path`
+     - `ethnicity`
+     - `condition`
+     - `institution.short_name`
+     - `sample_name`
+     - `donor`
+     - `track.view`
+     - `track.track_type`
+     - `assembly.name`
+     - `assay.name`
+     - `assay_category.name`
+ 
+   or a JSON file containing a list of objects with (similar) keys:
+     - `path`
+     - `ethnicity`
+     - `condition`
+     - `short_name`
+     - `sample_name`
+     - `donor`
+     - `view`
+     - `type`
+     - `assembly`
+     - `assay`
+     - `assay_id`
+     - `assay_category`
+     - `assay_category_id`
+ 
+   Information on the track metadata file:
+     - **Generate with:** `node ./scripts/metadata-to-json.js`
+     - **Input:** `./input-files/flu-infection.xlsx`
+     - **Output:** `./data/metadata.json`
+     - **Config:** `config.source.metadata.path` (filepath)
+     - **Notes:** This is really just an XLSX to JSON transformation.     
+
  - **Genes:** list of gene names mapped to their characteristics.
      - **Import with:** `node ./scripts/import-genes.js`
      - **Input:** `./input-files/flu-infection-genes.txt` and 
@@ -96,42 +132,6 @@ The different data sources to generate/prepare are:
       peak position is; e.g., the peak SNP can be at `chr1:1000`, but the feature is
       at the range `chr1:3500-3600`. The second script calculates peak groups by SNP
       and gene for auto-complete.
- 
- - **Metadata:** This is the track's metadata. This can either be provided as an 
-   XLSX file with the headers:
-     - `file.path`
-     - `ethnicity`
-     - `condition`
-     - `institution.short_name`
-     - `sample_name`
-     - `donor`
-     - `track.view`
-     - `track.track_type`
-     - `assembly.name`
-     - `assay.name`
-     - `assay_category.name`
-   
-   or a JSON file containing a list of objects with (similar) keys:
-     - `path`
-     - `ethnicity`
-     - `condition`
-     - `short_name`
-     - `sample_name`
-     - `donor`
-     - `view`
-     - `type`
-     - `assembly`
-     - `assay`
-     - `assay_id`
-     - `assay_category`
-     - `assay_category_id`
-   
-   Information on the track metadata file:
-     - **Generate with:** `node ./scripts/metadata-to-json.js`
-     - **Input:** `./input-files/flu-infection.xlsx`
-     - **Output:** `./data/metadata.json`
-     - **Config:** `config.source.metadata.path` (filepath)
-     - **Notes:** This is really just an XLSX to JSON transformation.
  
  - **Binned top peaks for assays:** Used to generate Manhattan plots for
    chromosome/assay pairs, binned by SNP position.
