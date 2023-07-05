@@ -7,9 +7,9 @@ const copyFrom = require('pg-copy-streams').from;
 require('dotenv').config();
 
 const config = require('../config');
-const common = require('./_common');
+const {ASSAYS, loadingPrecomputedPoints, precomputedPoints} = require('./_common.mjs');
 
-const datasetPaths = common.ASSAYS.map(assay => config.paths.qtlsTemplate.replace(/\$ASSAY/g, assay));
+const datasetPaths = ASSAYS.map(assay => config.paths.qtlsTemplate.replace(/\$ASSAY/g, assay));
 
 console.log("Loading peaks");
 
@@ -50,8 +50,8 @@ console.log("Loading peaks");
         return featureCache[naturalKey];
       }
 
-      const points = common.loadingPrecomputedPoints
-        ? (common.precomputedPoints[assayStr][feature] ?? null)
+      const points = loadingPrecomputedPoints
+        ? (precomputedPoints[assayStr][feature] ?? null)
         : null;
 
       const fs = feature.split("_");

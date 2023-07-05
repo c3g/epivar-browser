@@ -18,6 +18,7 @@ import config from "../config.js";
 import Samples from "./samples.mjs";
 import source from "./source/index.js";
 import {DEFAULT_CONDITIONS} from "../helpers/defaultValues.mjs";
+import {donorLookup} from "../helpers/donors.mjs";
 import {normalizeChrom, GENOTYPE_STATES, GENOTYPE_STATE_NAMES} from "../helpers/genome.mjs";
 
 const exists = promisify(fs.exists);
@@ -43,15 +44,6 @@ const mapToData = map(prop("data"));
 const conditions = config.source?.conditions ?? DEFAULT_CONDITIONS;
 
 const TRACK_VALUES_CACHE_EXPIRY = 60 * 60 * 24 * 180;  // 180 days
-
-const tracks = JSON.parse(fs.readFileSync(config.source.metadata.path).toString());
-
-const donorLookupSet = new Set();
-tracks.forEach(t => {
-  donorLookupSet.add(`${t.donor}_${t.condition}`);
-});
-
-const donorLookup = [...donorLookupSet].sort((a, b) => a.localeCompare(b));
 
 // Methods
 
