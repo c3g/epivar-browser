@@ -7,17 +7,18 @@ const copyFrom = require('pg-copy-streams').from;
 require('dotenv').config();
 
 const config = require('../config');
-const {ASSAYS, loadingPrecomputedPoints, precomputedPoints} = require('./_common.mjs');
-
-const datasetPaths = ASSAYS.map(assay => config.paths.qtlsTemplate.replace(/\$ASSAY/g, assay));
 
 console.log("Loading peaks");
 
 // --------------------------------------------------------------------------
 
 (async () => {
+  const {ASSAYS, loadingPrecomputedPoints, precomputedPoints} = await import('./_common.mjs');
+
   const db = await import("../models/db.mjs");
   const Gene = await import('../models/genes.mjs');
+
+  const datasetPaths = ASSAYS.map(assay => config.paths.qtlsTemplate.replace(/\$ASSAY/g, assay));
 
   // Clear relevant tables of existing data
   await db.run("TRUNCATE TABLE snps RESTART IDENTITY CASCADE");

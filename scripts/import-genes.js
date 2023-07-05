@@ -5,18 +5,20 @@ const parseCSVSync = require("csv-parse/lib/sync");
 require('dotenv').config();
 
 const config = require("../config");
-const {precomputedPoints} = require("./_common.mjs");
 
 const ASSAY_NAME_RNASEQ = "RNA-seq";
 
 const genesPath = path.join(config.inputFilesDirname, 'flu-infection-genes.txt');
 const genesFeaturesPath = path.join(config.inputFilesDirname, 'flu-infection-gene-peaks.csv');
 
-const rnaSeqPrecomputed = precomputedPoints[ASSAY_NAME_RNASEQ];
 
 (async () => {
+  const {precomputedPoints} = await import("./_common.mjs");
+
   const db = await import("../models/db.mjs");
   const Gene = await import('../models/genes.mjs');
+
+  const rnaSeqPrecomputed = precomputedPoints[ASSAY_NAME_RNASEQ];
 
   const assaysByName = Object.fromEntries((await db.findAll("SELECT * FROM assays")).map(r => [r.name, r.id]));
 
