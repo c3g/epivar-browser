@@ -10,6 +10,13 @@ is available at
 
 ## Installation
 
+### Note on hosting your own instance
+
+With some effort, the EpiVar browser can be deployed with other data than just
+the Aracena *et al.* dataset. The instructions below must be followed,
+paying especially close attention to the formats described in the 
+[Application data](#application-data) section.
+
 ### Dependencies
 
 Install these dependencies according to their own instructions:
@@ -91,9 +98,9 @@ The different data sources to generate/prepare are:
    Information on the track metadata file:
      - **Generate with:** `node ./scripts/metadata-to-json.js`
      - **Input:** `./input-files/flu-infection.xlsx`
-     - **Output:** `./data/metadata.json`
+     - **Output:** `./data/metadata.json` (*or, just generate this file directly*)
      - **Config:** `config.source.metadata.path` (filepath)
-     - **Notes:** This is really just an XLSX to JSON transformation.     
+     - **Notes:** This is really just an XLSX to JSON transformation.  
 
  - **Genes:** list of gene names mapped to their characteristics.
      - **Import with:** `node ./scripts/import-genes.js`
@@ -204,7 +211,8 @@ In development, you'd run:
 #### Production
 
 In production, you may need to set up these to handle persistence & HTTPS:
- - Set up nginx or apache proxy (see `./nginx.conf`) with LetsEncrypt certificate
+ - Set up an NGINX or Apache proxy with a LetsEncrypt certificate
+   (see [./nginx.conf](./nginx.conf) for an example.)
  - Set up Redis to handle caching
  - Set up Postgres to handle persistent data
     - In production, make sure to configure Postgres with **lots of RAM** and 4+ workers for gathers! 
