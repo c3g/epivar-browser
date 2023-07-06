@@ -74,12 +74,12 @@ const PeakAssay = ({peaks}) => {
             onOpenTracks={onOpenTracks}
           />
         </Col>
-        {/*<Col xs={12}>*/}
-        {/*  <Label check={true}>*/}
-        {/*    <Input type="checkbox" checked={usePrecomputed} onChange={setPrecomputed} disabled={true} />{" "}*/}
-        {/*    Use precomputed, batch-corrected points?*/}
-        {/*  </Label>*/}
-        {/*</Col>*/}
+        <Col xs={12}>
+          <Label check={true}>
+            <Input type="checkbox" checked={usePrecomputed} onChange={setPrecomputed} disabled={true} />{" "}
+            Use precomputed, batch-corrected points?
+          </Label>
+        </Col>
         <Col xs={12}>
           <PeakBoxplot
             title={selectedPeakData ? `${selectedPeakData.snp.id} — ${formatFeature(selectedPeakData)}` : ""}
