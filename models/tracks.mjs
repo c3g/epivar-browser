@@ -103,6 +103,8 @@ async function values(peak, usePrecomputed = false) {
     }))
   ))).filter(v => v !== undefined);
 
+  console.log("result", usePrecomputed, result)
+
   await cache.setJSON(k, result, TRACK_VALUES_CACHE_EXPIRY);
 
   return result;
