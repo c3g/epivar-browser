@@ -1,10 +1,11 @@
 # The EpiVar Browser
 
-A web application to search for variants and merge bigWig tracks; available at 
-[https://flu-infection.vhost38.genap.ca/](https://flu-infection.vhost38.genap.ca/). 
+A web application to search for variants and merge bigWig tracks. A production
+instance with data from Aracena *et al.* 
+([2022 preprint](https://www.biorxiv.org/content/10.1101/2022.05.10.491413v1)) 
+is available at 
+[https://computationalgenomics.ca/tools/epivar](https://computationalgenomics.ca/tools/epivar). 
 
-If linking publicly, **use the permalink**: 
-[https://computationalgenomics.ca/tools/epivar](https://computationalgenomics.ca/tools/epivar).
 
 ## Installation
 
