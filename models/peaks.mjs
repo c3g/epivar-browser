@@ -8,7 +8,6 @@ import db from "./db.mjs";
 import cache from "../helpers/cache.mjs";
 import config from "../config.js";
 import Gene from "./genes.mjs";
-import {P_VALUE_MAXIMUM} from "../helpers/associations.mjs";
 import {CHROM_ORDER} from "../helpers/genome.mjs";
 
 export default {
@@ -25,13 +24,13 @@ export default {
 
 const peakSelect = `
 p."id" AS "id",
-p."valueNI" AS "valueNI",
-p."valueFlu" AS "valueFlu",
+p."values" AS "values",
 f."nat_id" AS "feature_str",
 f."chrom" AS "feature_chrom",
 f."start" AS "feature_start",
 f."end" AS "feature_end",
 f."strand" AS "feature_strand",
+f."points" AS "feature_points",
 s."nat_id" AS "snp_id",
 s."chrom" AS "snp_chrom",
 s."position" AS "snp_position",
@@ -42,8 +41,7 @@ g."name_norm" AS "gene"
 // noinspection JSUnresolvedVariable
 const normalizePeak = peak => peak && ({
   id: peak.id,
-  valueNI: peak.valueNI,
-  valueFlu: peak.valueFlu,
+  values: peak.values,
   assay: peak.assay,
   gene: peak.gene,
   feature: {
@@ -52,6 +50,7 @@ const normalizePeak = peak => peak && ({
     start: peak.feature_start,
     end: peak.feature_end,
     strand: peak.feature_strand,
+    points: peak.feature_points,
   },
   snp: {
     id: peak.snp_id,
@@ -87,7 +86,6 @@ function query(chrom, position) {
           LEFT JOIN genes g ON f."gene" = g."id" -- having an associated gene is optional
       WHERE s."chrom" = $1
         AND s."position" = $2
-        AND LEAST(p."valueNI", p."valueFlu") <= ${P_VALUE_MAXIMUM}
       ORDER BY LEAST(p."valueNI", p."valueFlu")
     `,
     [chrom, position]
@@ -104,8 +102,7 @@ function queryBySNP(rsID) {
           JOIN snps s ON p."snp" = s."id"
           LEFT JOIN genes g ON f."gene" = g."id"
       WHERE s."nat_id" = $1 
-        AND LEAST(p."valueNI", p."valueFlu") <= ${P_VALUE_MAXIMUM}
-      ORDER BY LEAST(p."valueNI", p."valueFlu")
+      ORDER BY (SELECT MIN(x) FROM unnest(p."values") AS x)
     `,
     [rsID]
   ).then(normalizePeaks);
@@ -121,8 +118,7 @@ function queryByGene(gene) {
           JOIN snps s ON p."snp" = s."id"
           JOIN genes g ON f."gene" = g."id"  -- no left join here; it's no longer optional to have a gene associated
       WHERE g."name_norm" = $1
-        AND LEAST(p."valueNI", p."valueFlu") <= ${P_VALUE_MAXIMUM}
-      ORDER BY LEAST(p."valueNI", p."valueFlu")
+      ORDER BY (SELECT MIN(x) FROM unnest(p."values") AS x)
     `,
     [Gene.normalizeName(gene)]
   ).then(normalizePeaks);
@@ -243,7 +239,7 @@ async function autocompleteWithDetail(query) {
         JOIN assays a ON f."assay" = a."id"
         JOIN genes g ON f."gene" = g."id"
         JOIN features_by_${by} fb ON fb."mostSignificantFeatureID" = p."id"
-    WHERE ${where} AND fb."minValueMin" <= ${P_VALUE_MAXIMUM}
+    WHERE ${where}
     ORDER BY fb."minValueMin"
     LIMIT 50
     `,
@@ -259,8 +255,8 @@ function topBinnedForAssayAndChrom(assay, chrom) {
   return db.findAll(
     `
     SELECT 
-        msp."pos_bin", 
-        LEAST(p."valueNI", p."valueFlu") AS p_val, 
+        msp."pos_bin",
+        (SELECT MIN(x) FROM unnest(p."values") AS x) AS p_val, 
         s."nat_id" AS snp_nat_id, 
         f."nat_id" AS feature_nat_id,
         g."name" AS gene_name

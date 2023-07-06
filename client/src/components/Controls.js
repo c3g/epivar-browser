@@ -48,9 +48,8 @@ const Controls = ({toggleHelp}) => {
   const navigate = useNavigate();
 
   const chroms = useSelector(state => state.chroms);
-  const chrom = useSelector(state => state.ui.chrom);
+  const {chrom, position} = useSelector(state => state.ui);
   const positions = useSelector(state => state.positions);
-  const position = useSelector(state => state.ui.position);
   const userData = useSelector(state => state.user);
 
   const dispatch = useDispatch();
@@ -82,8 +81,7 @@ const Controls = ({toggleHelp}) => {
     }
   }, 200, {leading: false, trailing: true}), [dispatch, searchIsLongEnough, chrom]);
 
-  const changePosition = useCallback(pos => dispatch(setPosition(pos)),
-    [dispatch]);
+  const changePosition = useCallback(pos => dispatch(setPosition(pos)), [dispatch]);
 
   // --- Effects --------------------------------------------------------------
 
@@ -107,16 +105,13 @@ const Controls = ({toggleHelp}) => {
   }, [dispatch, paramsChrom, chrom]);
 
   // If the chromosome/search domain is changed in Redux, reset the position list
-  useEffect(() => {dispatch(fetchPositions({chrom, position: ""}));},
-    [dispatch, chrom]);
+  useEffect(() => {dispatch(fetchPositions({chrom, position: ""}));}, [dispatch, chrom]);
 
   // If the position/search term is changed in Redux, fetch the latest autocomplete results
   useEffect(() => {debouncedFetch(position);}, [position]);
 
   // If the position data changes, reset the selected index
-  useEffect(() => {
-    setIndex(0);
-  }, [positions]);
+  useEffect(() => {setIndex(0);}, [positions]);
 
   // --------------------------------------------------------------------------
 

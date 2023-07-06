@@ -1,3 +1,9 @@
+import config from "../config.js";
+
+const {conditions, ethnicities} = config.source;
+const nConditions = conditions.length;
+const nEthnicities = ethnicities.length;
+
 const scaleLinear = (...args) => import("d3-scale").then(
   ({scaleLinear}) => scaleLinear(...args));
 
@@ -11,28 +17,22 @@ const SCALE_FONT_SIZE = 12;
 
 const BAR_WIDTH = 40;
 const BAR_HALF_WIDTH = BAR_WIDTH / 2;
+const BAR_INTERVAL_WIDTH = BAR_WIDTH / nEthnicities;  // Small chunk of the bar, in x-space, for each ethnicity
 
 const POINT_RADIUS = 4;
 
-const ETHNICITY_COLOR = {
-  AF: '#5100FF',
-  EU: '#FF8A00',
-};
+const TEXT_STYLES = `font-size: ${FONT_SIZE}; font-family: sans-serif; text-anchor: middle`;
 
-const textStyles = `font-size: ${FONT_SIZE}; font-family: sans-serif; text-anchor: middle`;  /*{
-  fontSize: FONT_SIZE,
-  textAnchor: 'middle',
-};*/
-
-const PLOT_SIZE = 350;
+export const PLOT_WIDTH = 700;
+export const PLOT_HEIGHT = 350;
 const PLOT_PADDING = 40;
 const PLOT_HORIZ_PADDING = 25;
 
 const plotDimensions = {
   x: PLOT_PADDING + PLOT_HORIZ_PADDING,
   y: PLOT_PADDING,
-  width: PLOT_SIZE - PLOT_PADDING,
-  height: PLOT_SIZE - PLOT_PADDING,
+  width: (PLOT_WIDTH / nConditions) - PLOT_PADDING,
+  height: PLOT_HEIGHT - PLOT_PADDING,
 };
 
 // Drawing
@@ -124,10 +124,10 @@ function boxPlotXAxis({data, scale, x, height, width}) {
   const inner = data.map((d, i) => {
     return `<g>
         ${boxPlotLine({position: [[scale(i), height], [scale(i), height + 5]]})}
-        <text y="${height + 5}" x="${scale(i)}" dy="${FONT_SIZE}" style="${textStyles}">
+        <text y="${height + 5}" x="${scale(i)}" dy="${FONT_SIZE}" style="${TEXT_STYLES}">
           ${d.name}
         </text>
-        <text y="${height + 5}" x="${scale(i)}" dy="${FONT_SIZE * 2}" style="${textStyles}">
+        <text y="${height + 5}" x="${scale(i)}" dy="${FONT_SIZE * 2}" style="${TEXT_STYLES}">
           (n = ${d.data.n})
         </text>
       </g>`;
@@ -180,22 +180,22 @@ async function boxPlotBar({data, x, y, height, domain}) {
    */
   const stats = data.stats;
 
-  const afPoints = data.points.AF || [];
-  const euPoints = data.points.EU || [];
-
-  shuffle(afPoints);
-  shuffle(euPoints);
+  const points = ethnicities.map(e => {
+    const points = data.points[e.id] || [];
+    shuffle(points);
+    return points;
+  });
 
   const padding = 5;
 
   const xMin = x - BAR_HALF_WIDTH;
   const xMax = x + BAR_HALF_WIDTH;
 
-  const afXRange = [xMin + padding, x - padding];
-  const euXRange = [x + padding, xMax - padding];
+  const ranges = ethnicities.map((e, i) =>
+    [xMin + (i * BAR_INTERVAL_WIDTH) + padding, xMin + ((i + 1) * BAR_INTERVAL_WIDTH) - padding]);
 
-  const afScale = (await scaleLinear()).range(afXRange).domain([0, afPoints.length || 1]);
-  const euScale = (await scaleLinear()).range(euXRange).domain([0, euPoints.length || 1]);
+  const xScales = await Promise.all(ranges.map((r, i) =>
+    scaleLinear().then(sl => sl.range(r).domain([0, points[i].length || 1]))));
 
   const yScale = (await scaleLinear()).range([height, y]).domain(domain);
 
@@ -237,37 +237,25 @@ async function boxPlotBar({data, x, y, height, domain}) {
     xStop: xMax,
     stats,
     yScale,
-    // fill: "url(#diagonal)",
   });
 
-  const afDots = afPoints.map((value, i) =>
+  const dots = ethnicities.flatMap(({plotColor}, i) => points[i].map((value, j) =>
     `<circle
-      cx="${afScale(i)}"
+      cx="${xScales[i](j)}"
       cy="${yScale(value)}"
       r="${POINT_RADIUS}"
-      fill="${ETHNICITY_COLOR.AF}"
+      fill="${plotColor}"
       opacity="0.4"
     />`
-  );
-
-  const euDots = euPoints.map((value, i) =>
-    `<circle
-      cx="${euScale(i)}"
-      cy="${yScale(value)}"
-      r="${POINT_RADIUS}"
-      fill="${ETHNICITY_COLOR.EU}"
-      opacity="0.6"
-    />`
-  );
+  ));
 
   return `<g>
     ${barPart}
-    ${afDots.join("")}
-    ${euDots.join("")}
+    ${dots.join("")}
   </g>`;
 }
 
-async function boxPlot({title, data, domain, transform}) {
+export async function boxPlot({title, data, domain, transform}) {
   if (!data) {
     return "<svg />";
   }
@@ -278,7 +266,6 @@ async function boxPlot({title, data, domain, transform}) {
   const yDomain = [yAxis.start, yAxis.end];
 
   const start = plotDimensions.width / (data.length + 2);
-  // const xScale = TODO;
 
   const xScale = (await scaleLinear())
     .range([plotDimensions.x + start, plotDimensions.width])
@@ -313,7 +300,7 @@ async function boxPlot({title, data, domain, transform}) {
 
 // Helpers
 
-function getDomain(categories) {
+export function getDomain(categories) {
   if (!categories?.length) {
     return undefined;
   }
@@ -397,11 +384,3 @@ function shuffle(array) {
 
   return array;
 }
-
-// ---
-
-module.exports = {
-  PLOT_SIZE,
-  getDomain,
-  boxPlot,
-};

@@ -11,12 +11,11 @@ import Peaks from "../models/peaks.mjs";
 const router = express.Router();
 
 router.get("/config", (_req, res) => {
-  const {chromosomeSizes, minPValue, binSize} = config?.plots?.manhattan ?? {};
+  const {minPValue, binSize} = config?.plots?.manhattan ?? {};
 
   dataHandler(res)({
     binSize,
     minPValue,
-    chromosomeSizes,
   });
 });
 

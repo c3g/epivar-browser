@@ -9,7 +9,7 @@ const config = require("../config");
   await db.run("TRUNCATE TABLE binned_most_significant_peaks RESTART IDENTITY CASCADE");
 
   // Only calculate top binned peaks by assay for chromosomes whose size has been provided in config.js
-  const chromSizes = config.plots?.manhattan?.chromosomeSizes ?? {};
+  const chromSizes = config.assembly?.chromosomeSizes ?? {};
   const minPValue = config.plots?.manhattan?.minPValue ?? 0.10;
   const binSize = config.plots?.manhattan?.binSize ?? 100000;
 
@@ -28,16 +28,17 @@ const config = require("../config");
             JOIN features f ON p."feature" = f."id"
             JOIN snps s ON p."snp" = s."id"
             JOIN (
-                SELECT f2."assay" AS a_id, MIN(LEAST(p2."valueFlu", p2."valueNI")) AS p_min
-                FROM peaks p2
-                    JOIN snps s2 on p2."snp" = s2."id"
-                    JOIN features f2 on f2."id" = p2."feature"
-                WHERE s2."chrom" = $1
-                  AND s2."position" >= $2
-                  AND s2."position" <= $3
+                SELECT p3."assay" AS a_id, MIN(p3."peak_p_min") as p_min
+                FROM (SELECT f2."assay" AS assay, (SELECT MIN(x) FROM unnest(p2."values") AS x) AS peak_p_min
+                      FROM peaks p2
+                          JOIN snps s2 on p2."snp" = s2."id"
+                          JOIN features f2 on f2."id" = p2."feature"
+                      WHERE s2."chrom" = $1
+                        AND s2."position" >= $2
+                        AND s2."position" <= $3) p3
                 GROUP BY a_id
-                HAVING MIN(LEAST(p2."valueFlu", p2."valueNI")) <= $4
-            ) j ON f.assay = j.a_id AND LEAST(p."valueFlu", p."valueNI") = j.p_min
+                HAVING MIN(p3."peak_p_min") <= $4
+            ) j ON f.assay = j.a_id AND (SELECT MIN(x) FROM unnest(p."values") AS x) = j.p_min
         WHERE s."chrom" = $1
           AND s."position" >= $2
           AND s."position" <= $3

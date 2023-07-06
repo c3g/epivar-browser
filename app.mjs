@@ -56,7 +56,10 @@ if (!process.env.VARWIG_DISABLE_AUTH) {
 app.use('/api/assays',       (await import('./routes/assays.mjs')).default);
 app.use('/api/autocomplete', (await import('./routes/autocomplete.mjs')).default);
 app.use('/api/messages',     (await import('./routes/messages.mjs')).default);
+app.use('/api/assembly',     (await import('./routes/assembly.mjs')).default);
 app.use('/api/overview',     (await import('./routes/overview.mjs')).default);
+app.use('/api/conditions',   (await import('./routes/conditions.mjs')).default);
+app.use('/api/ethnicities',  (await import('./routes/ethnicities.mjs')).default);
 app.use('/api/peaks',        (await import('./routes/peaks.mjs')).default);
 app.use('/api/sessions',     (await import('./routes/sessions.mjs')).default);
 app.use('/api/samples',      (await import('./routes/samples.mjs')).default);

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from "react-router-dom";
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import { groupBy, prop } from 'rambda'
@@ -8,12 +8,15 @@ import cx from 'clsx'
 
 import Icon from './Icon'
 import PeakAssay from './PeakAssay'
+import {doSearch, setChrom, setPosition} from "../actions";
 
 const groupAndSortPeaks = memoizeOne(groupBy(prop('assay')));
 
 const PeakResults = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
+
   const {chrom, position, assay: activeAssay} = params;
 
   const assays = useSelector(state => state.assays.list || []);
@@ -22,6 +25,8 @@ const PeakResults = () => {
   const peaksLoaded = useSelector(state => state.peaks.isLoaded);
   const isEmpty = useSelector(state => state.peaks.isLoaded && state.peaks.list.length === 0);
   const peaks = useSelector(state => state.peaks.list || []);
+
+  const {chrom: uiChrom, position: uiPosition} = useSelector(state => state.ui);
 
   const peaksByAssay = groupAndSortPeaks(peaks);
   const assaysWithFeatures = Object.keys(peaksByAssay);
@@ -38,6 +43,23 @@ const PeakResults = () => {
       navigate(`/explore/locus/${chrom}/${position}/${assaysWithFeatures[0]}`, {replace: true});
     }
   }, [activeAssay, chrom, position, peaksLoaded]);
+
+  useEffect(() => {
+    // Some weird back/forward behaviour can occur if we don't update the UI state and re-fetch peaks
+    // when the URL changes (which we ensure via effect dependencies).
+
+    if (!chrom || !position) return;  // If chromosome or position are undefined, don't do any UI updates
+
+    if (uiChrom !== chrom || uiPosition !== position) {
+      // URL has changed, but UI wasn't updated - dependencies ensure this case but not the opposite.
+      dispatch(setChrom(chrom));
+      dispatch(setPosition(position));
+      dispatch(doSearch());  // Re-fetch the peaks if the URL changes
+    }
+
+    // Explicitly don't depend on uiChrom or uiPosition
+    // - only check if our URL doesn't match the UI if the URL changes, not if the UI changes.
+  }, [chrom, position]);
 
   return <div className={'PeakResults ' + (peaksLoading ? 'loading' : '')}>
     {

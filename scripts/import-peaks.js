@@ -1,35 +1,24 @@
 // noinspection SqlResolve
 
 const fs = require('fs');
-const path = require('path');
 const parseCSV = require('csv-parse');
 const copyFrom = require('pg-copy-streams').from;
 
 require('dotenv').config();
 
-// const chipmentationAssays = [
-//   'H3K4me1',
-//   'H3K4me3',
-//   'H3K27ac',
-//   'H3K27me3',
-// ];
-
-const datasetPaths = [
-  'RNAseq_symbol',
-  'ATACseq',
-  'H3K4me1',
-  'H3K4me3',
-  'H3K27ac',
-  'H3K27me3',
-].map(d => `${path.join(__dirname, '../input-files')}/QTLs_complete_${d}.csv`);
+const config = require('../config');
 
 console.log("Loading peaks");
 
 // --------------------------------------------------------------------------
 
 (async () => {
+  const {ASSAYS, loadingPrecomputedPoints, precomputedPoints} = await import('./_common.mjs');
+
   const db = await import("../models/db.mjs");
   const Gene = await import('../models/genes.mjs');
+
+  const datasetPaths = ASSAYS.map(assay => config.paths.qtlsTemplate.replace(/\$ASSAY/g, assay));
 
   // Clear relevant tables of existing data
   await db.run("TRUNCATE TABLE snps RESTART IDENTITY CASCADE");
@@ -55,21 +44,34 @@ console.log("Loading peaks");
     );
     process.stdout.write(" done.\n");
 
-    const getFeatureIDOrCreate = async (feature, assay) => {
-      const naturalKey = `${feature}:${assay}`;
+    const getFeatureIDOrCreate = async (feature, assayStr, assayId) => {
+      const naturalKey = `${feature}:${assayId}`;
 
       if (featureCache.hasOwnProperty(naturalKey)) {
         return featureCache[naturalKey];
       }
 
+      const points = loadingPrecomputedPoints
+        ? (precomputedPoints[assayStr][feature] ?? null)
+        : null;
+
       const fs = feature.split("_");
       // TODO: this will break with chrUn
       const res = await db.insert(
         `
-          INSERT INTO features ("nat_id", "assay", "chrom", "start", "end" ${fs.length > 3 ? ', "strand"' : ''} ) 
-          VALUES ($1, $2, $3, $4, $5 ${fs.length > 3 ? ', $6' : ''} )
+          INSERT INTO features 
+              ("nat_id", "assay", "chrom", "start", "end", "points" ${fs.length > 3 ? ', "strand"' : ''} ) 
+          VALUES ($1, $2, $3, $4, $5, $6 ${fs.length > 3 ? ', $7' : ''} )
           RETURNING id
-        `, [naturalKey, assay, fs[0], parseInt(fs[1]), parseInt(fs[2]), ...(fs.length > 3 ? [fs[3]] : [])]);
+        `, [
+          naturalKey,
+          assayId,
+          fs[0],
+          parseInt(fs[1]),
+          parseInt(fs[2]),
+          points,
+          ...(fs.length > 3 ? [fs[3]] : []),
+        ]);
       featureCache[naturalKey] = res.rows[0].id;
       return featureCache[naturalKey];
     };
@@ -90,8 +92,7 @@ console.log("Loading peaks");
           "id"        serial      primary key,
           "snp"       varchar(20) not null,  -- no FK until we insert to handle missing SNPs
           "feature"   integer     not null,  -- if null, gene FK contains feature information
-          "valueNI"   real        not null,
-          "valueFlu"  real        not null
+          "values"    real[]      not null
       )
     `);
 
@@ -107,8 +108,8 @@ console.log("Loading peaks");
     const copyToPeaksTable = async () => {
       const tn = "peaks_temp";
       await client.query(`
-        INSERT INTO peaks ("snp", "feature", "valueNI", "valueFlu") 
-          SELECT snps."id", pt."feature", pt."valueNI", pt."valueFlu" 
+        INSERT INTO peaks ("snp", "feature", "values") 
+          SELECT snps."id", pt."feature", pt."values"
           FROM ${tn} AS pt JOIN snps ON pt."snp" = snps."nat_id"
       `);
       await client.query(`TRUNCATE TABLE ${tn}`);
@@ -137,19 +138,26 @@ console.log("Loading peaks");
         COPY peaks_temp (
           "snp",
           "feature",
-          "valueNI",
-          "valueFlu"
-          -- valueMin,
+          "values"
         ) FROM STDIN NULL AS 'null'
       `));
 
     // const transformNull = v => v === null ? "null" : v;
+
+    /*
+     * p: {
+     *   assay,
+     *   feature,
+     *   snp,
+     *   snpArray,
+     *   values,
+     * }
+     */
     const peakStreamPush = p => {
       pgPeakCopyStream.write(Buffer.from([
         p.snp,
         p.feature,
-        p.valueNI,
-        p.valueFlu,
+        `{${p.values.join(",")}}`,
       ].join("\t") + "\n"));
       totalInserted++;
     };
@@ -207,6 +215,12 @@ console.log("Loading peaks");
 
               const p = normalizePeak(row);
 
+              if (Math.min(...p.values) >= config.source.pValueMinThreshold) {
+                // Not included due to insignificance; skip this peak
+                parseStream.resume();
+                return;
+              }
+
               // Make sure SNP will exist in snps table
               if (!snpSet.has(p.snpArray[0])) {
                 snpStreamPush(p.snpArray);
@@ -218,7 +232,7 @@ console.log("Loading peaks");
                 // Get the already-created (by import-genes.js) feature if it exists,
                 // or make a new one. Pre-created features are associated with genes if
                 // specified in the flu-infection-gene-peaks.csv file.
-                getFeatureIDOrCreate(p.feature.slice(3), assays[p.assay].id).then(fID => {
+                getFeatureIDOrCreate(p.feature.slice(3), p.assay, assays[p.assay].id).then(fID => {
                   p.feature = fID;
                   peakStreamPush(p);
                   parseStream.resume();
@@ -263,65 +277,6 @@ console.log("Loading peaks");
 
     // ------------------------------------------------------------------------
 
-    console.log('Pre-processing peak groups by SNP')
-    // If there is more than one most significant peak, just choose the first one
-    await db.run(
-      `
-          INSERT INTO features_by_snp ("snp", "minValueMin", "nFeatures", "mostSignificantFeatureID")
-          SELECT "snp",
-                 "minValueMin",
-                 "nFeatures",
-                 (SELECT "id"
-                  FROM peaks
-                  WHERE "snp" = a."snp" 
-                    AND LEAST("valueNI", "valueFlu") = a."minValueMin" 
-                  LIMIT 1) AS "mostSignificantFeatureID"
-          FROM (SELECT "snp", MIN(LEAST("valueNI", "valueFlu")) as "minValueMin", COUNT(*) AS "nFeatures"
-                FROM peaks
-                GROUP BY "snp") AS a
-      `
-    );
-
-    console.log('Pre-processing peak groups by gene');
-    // If there is more than one most significant peak, just choose the first one
-    await db.run(
-      `
-          INSERT INTO features_by_gene ("gene", "minValueMin", "nFeatures", "mostSignificantFeatureID")
-          SELECT a."gene",
-                 a."minValueMin",
-                 a."nFeatures",
-                 (SELECT peaks."id"
-                  FROM peaks JOIN features ON peaks.feature = features.id
-                  WHERE features."gene" = a."gene" 
-                    AND LEAST("valueNI", "valueFlu") = a."minValueMin"
-                  LIMIT 1) AS "mostSignificantFeatureID"
-          FROM (SELECT f."gene", MIN(LEAST("valueNI", "valueFlu")) as "minValueMin", COUNT(*) AS "nFeatures"
-                FROM peaks AS p JOIN features AS f ON p.feature = f.id
-                WHERE f."gene" IS NOT NULL
-                GROUP BY f."gene") AS a
-      `
-    );
-
-    // console.log('Pre-processing feature groups by position');
-    // await db.run(
-    //   `
-    //       INSERT INTO features_by_position (chrom, position, minValueMin, nFeatures, mostSignificantFeatureID)
-    //       SELECT chrom,
-    //              position,
-    //              minValueMin,
-    //              nFeatures,
-    //              (SELECT id
-    //               FROM peaks
-    //               WHERE chrom = a.chrom
-    //                 AND position = a.position
-    //                 AND valueMin = a.minValueMin) AS mostSignificantFeatureID
-    //       FROM (SELECT chrom, position, MIN(valueMin) as minValueMin, COUNT(*) AS nFeatures
-    //             FROM peaks
-    //             GROUP BY chrom, position) AS a
-    //   `
-    // );
-
-
     // "rsID",       "snp",           "feature",                "pvalue.NI",  "pvalue.Flu", "feature_type"
     // "rs13266435", "chr8_21739832", "chr8_21739251_21740780", 1.164469e-11, 6.856576e-13, "ATAC-seq"
 
@@ -349,11 +304,12 @@ console.log("Loading peaks");
       // peak.position = +position;
       // delete peak.snp;
 
-      peak.valueNI = parseFloat(peak['pvalue.NI']);
-      peak.valueFlu = parseFloat(peak['pvalue.Flu']);
-      // peak.valueMin = Math.min(peak.valueNI, peak.valueFlu);
-      delete peak['pvalue.NI'];
-      delete peak['pvalue.Flu'];
+      peak.values = config.source.conditions.map(c => {
+        const k = `pvalue.${c.id}`;
+        const val = parseFloat(peak[k]);
+        delete peak[k];
+        return val;
+      });
 
       peak.assay = peak.feature_type;
       // Pre-process the assay name: add the 'Chipmentation '

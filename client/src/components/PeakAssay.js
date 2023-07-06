@@ -1,26 +1,33 @@
-import {useEffect, useMemo, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   Button,
+  ButtonGroup,
   Container,
   Col,
+  Input,
+  Label,
   Row,
   Table,
-  ButtonGroup,
-  Input,
   Tooltip,
 } from 'reactstrap'
 import {useTable, usePagination, useSortBy} from "react-table";
 
 import Icon from "./Icon";
 import PeakBoxplot from "./PeakBoxplot";
-import {cacheValues, mergeTracks} from "../actions";
-import {ASSEMBLY} from "../constants/app";
-import {CONDITION_FLU, CONDITION_NI, conditionName} from "../helpers/conditions";
+import {mergeTracks, setUsePrecomputed} from "../actions";
+
+
+const PAGE_SIZES = [10, 20, 30, 40, 50];
 
 
 const PeakAssay = ({peaks}) => {
   const dispatch = useDispatch();
+
+  const usePrecomputed = useSelector(state => state.ui.usePrecomputed);
+  const setPrecomputed = useCallback(
+    event => dispatch(setUsePrecomputed(event.currentTarget.checked)),
+    [dispatch]);
 
   const [selectedPeak, setSelectedPeak] = useState(undefined);
 
@@ -31,31 +38,15 @@ const PeakAssay = ({peaks}) => {
     setSelectedPeak(p ? p.id : undefined);
   }, [peaks])
 
-  const onChangeFeature = p => setSelectedPeak(p.id);
-  const onOpenTracks = p => dispatch(mergeTracks(p));
+  const onChangeFeature = useCallback(p => setSelectedPeak(p.id), []);
+  const onOpenTracks = useCallback(p => dispatch(mergeTracks(p)), [dispatch]);
 
   const selectedPeakData = peaks.find(p => p.id === selectedPeak);
-
-  const fetchSome = (exclude = []) =>
-    peaks.filter(p => !exclude.includes(p.id)).slice(0, 10).forEach(p => {
-      dispatch(cacheValues(p, {id: p.id}));
-    });
-
-  // Fetch some peaks at the start for performance
-  useEffect(() => {
-    if (selectedPeakData) {
-      dispatch(cacheValues(selectedPeakData, {id: selectedPeak}));
-      // Give some time for the first one to get priority
-      setTimeout(() => fetchSome([selectedPeak]), 100);
-    } else {
-      fetchSome();
-    }
-  }, [selectedPeakData]);
 
   return (
     <Container className='PeakAssay' fluid={true}>
       <Row>
-        <Col xs='12'>
+        <Col xs={12}>
           <PeaksTable
             peaks={peaks}
             selectedPeak={selectedPeak}
@@ -63,7 +54,13 @@ const PeakAssay = ({peaks}) => {
             onOpenTracks={onOpenTracks}
           />
         </Col>
-        <Col xs='12'>
+        <Col xs={12}>
+          <Label check={true}>
+            <Input type="checkbox" checked={usePrecomputed} onChange={setPrecomputed} />{" "}
+            Use precomputed, batch-corrected points?
+          </Label>
+        </Col>
+        <Col xs={12}>
           <PeakBoxplot
             title={selectedPeakData ? `${selectedPeakData.snp.id} — ${formatFeature(selectedPeakData)}` : ""}
             peak={selectedPeakData}
@@ -75,6 +72,9 @@ const PeakAssay = ({peaks}) => {
 };
 
 const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
+  const {id: assembly} = useSelector(state => state.assembly.data) ?? {};
+  const conditions = useSelector(state => state.conditions.list);
+
   const [tooltipsShown, setTooltipsShown] = useState({});
 
   const toggleTooltip = tooltipID => () => setTooltipsShown({
@@ -86,12 +86,12 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
     {
       id: "snp",
       Header: "SNP",
-      accessor: row => {
-        const k = `row${row.id}-snp`;
+      accessor: ({id, snp}) => {
+        const k = `row${id}-snp`;
         return <div>
-          <a id={k} style={{textDecoration: "underline"}}>{row.snp.id}</a>
+          <a id={k} style={{textDecoration: "underline"}}>{snp.id}</a>
           <Tooltip target={k} placement="top" isOpen={tooltipsShown[k]} toggle={toggleTooltip(k)} autohide={false}>
-            [{ASSEMBLY}] chr{row.snp.chrom}:{row.snp.position}
+            [{assembly}] chr{snp.chrom}:{snp.position}
           </Tooltip>
         </div>;
       },
@@ -102,16 +102,17 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       Header: "Feature",
       className: "PeaksTable__feature",
       accessor: row => {
-        const k = `row${row.id}-feature`;
+        const {id, feature} = row;
+        const k = `row${id}-feature`;
         const featureText = formatFeature(row);
         const showTooltip = !featureText.startsWith("chr");
         return <div>
           <a id={k} style={{textDecoration: showTooltip ? "underline" : "none"}}>{featureText}</a>
           {showTooltip ? (
             <Tooltip target={k} placement="top" isOpen={tooltipsShown[k]} toggle={toggleTooltip(k)} autohide={false}>
-              [{ASSEMBLY}] chr{row.feature.chrom}:{row.feature.start}-{row.feature.end}
+              [{assembly}] chr{feature.chrom}:{feature.start}-{feature.end}
               {" "}
-              {row.feature.strand ? `(strand: ${row.feature.strand})` : null}
+              {feature.strand ? `(strand: ${feature.strand})` : null}
             </Tooltip>
           ) : null}
         </div>;
@@ -122,10 +123,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       id: "distance",
       Header: "SNP-Feature Distance",
       className: "PeaksTable__distance",
-      accessor: row => {
-        const snpPos = row.snp.position;
-        const {start, end} = row.feature;
-
+      accessor: ({snp: {position: snpPos}, feature: {start, end}}) => {
         if (start <= snpPos && snpPos <= end) {
           return "contained";
         }
@@ -141,26 +139,19 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       },
       disableSortBy: true,
     },
-    {
-      id: "valueNI",
-      Header: <span><span style={{fontFamily: "serif"}}>p</span> Value ({conditionName(CONDITION_NI)})</span>,
-      accessor: row => {
-        const fixed = row.valueNI.toPrecision(5);
-        const floatStr = row.valueNI.toString();
-        return floatStr.length < fixed.length ? floatStr : fixed;
-      },
-      sortType: (r1, r2, col) => r1.original[col] < r2.original[col] ? -1 : 1,
-    },
-    {
-      id: "valueFlu",
-      Header: <span><span style={{fontFamily: "serif"}}>p</span> Value ({conditionName(CONDITION_FLU)})</span>,
-      accessor: row => {
-        const fixed = row.valueFlu.toPrecision(5);
-        const floatStr = row.valueFlu.toString();
-        return floatStr.length < fixed.length ? floatStr : fixed;
-      },
-      sortType: (r1, r2, col) => r1.original[col] < r2.original[col] ? -1 : 1,
-    },
+    ...conditions.map(({id, name}, idx) => {
+      // noinspection JSUnusedGlobalSymbols
+      return {
+        id: `value${id}`,
+        Header: <span><span style={{fontFamily: "serif"}}>p</span> Value ({name})</span>,
+        accessor: row => {
+          const fixed = row.values[idx].toPrecision(5);
+          const floatStr = row.values[idx].toString();
+          return floatStr.length < fixed.length ? floatStr : fixed;
+        },
+        sortType: (r1, r2, col) => r1.original[col] < r2.original[col] ? -1 : 1,
+      };
+    }),
     {
       id: "ucsc",
       Header: "View in UCSC",
@@ -170,8 +161,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       </Button>,
       disableSortBy: true,
     },
-  ], [onOpenTracks, tooltipsShown]);
-  // const data = useMemo(() => peaks, []);
+  ], [assembly, conditions, onOpenTracks, tooltipsShown]);
 
   // noinspection JSCheckFunctionSignatures
   const tableInstance = useTable(
@@ -197,6 +187,13 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
     setPageSize,
     state: { pageIndex, pageSize },
   } = tableInstance;
+
+  const onGotoPage = useCallback(e => {
+    const page = e.target.value ? Number(e.target.value) - 1 : 0
+    gotoPage(page)
+  }, [gotoPage]);
+
+  const onSelectPage = useCallback(e => setPageSize(Number(e.target.value)), []);
 
   return <>
     <div className="PeaksTableContainer">
@@ -263,20 +260,17 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
           type="number"
           disabled={pageOptions.length === 1}
           defaultValue={pageIndex + 1}
-          onChange={e => {
-            const page = e.target.value ? Number(e.target.value) - 1 : 0
-            gotoPage(page)
-          }}
+          onChange={onGotoPage}
           style={{ width: "100px", display: "inline-block" }}
         />
       </div>
       <Input
         type="select"
         value={pageSize}
-        onChange={e => setPageSize(Number(e.target.value))}
+        onChange={onSelectPage}
         style={{width: "120px", marginLeft: "1em"}}
       >
-        {[10, 20, 30, 40, 50].map(pageSize => (
+        {PAGE_SIZES.map(pageSize => (
           <option key={pageSize} value={pageSize}>
             Show {pageSize}
           </option>

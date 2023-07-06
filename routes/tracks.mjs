@@ -5,6 +5,10 @@ import {ensureAgreedToTerms, ensureLogIn} from "../helpers/auth.mjs";
 import {dataHandler, errorHandler, pngHandler} from "../helpers/handlers.mjs";
 import Tracks from "../models/tracks.mjs";
 import Peaks from "../models/peaks.mjs";
+import {PLOT_HEIGHT, PLOT_WIDTH} from "../helpers/boxplot.mjs";
+
+const SCALE_FACTOR = 2;
+const PNG_DPI = 300;
 
 const router = express.Router();
 
@@ -13,32 +17,34 @@ router.use((_req, res, next) => {
   return next();
 });
 
+const getUsePrecomputed = ({precomputed}) => precomputed === "1";
+
 router.post(
   '/values',
   ensureLogIn,
   ensureAgreedToTerms,
-  ({body: peak}, res) => {
+  ({query, body: peak}, res) => {
     // We're re-purposing this endpoint as basically a way to pre-cache any desired calculations,
     // without actually returning any values (since those are too close to re-identifiable.)
     //  - David L, 2022-03-02
 
-    Tracks.values(peak)
+    Tracks.values(peak, getUsePrecomputed(query))
       .then(Tracks.group)
       .then(Tracks.calculate)
       .then(() => dataHandler(res)(undefined))  // Return an ok message without any data
-      .catch(errorHandler(res))
+      .catch(errorHandler(res));
   });
 
 const svgToPng = data =>
-  sharp(Buffer.from(data), {density: 300})
-    .resize(700 * 2, 350 * 2)
+  sharp(Buffer.from(data), {density: PNG_DPI})
+    .resize(PLOT_WIDTH * SCALE_FACTOR, PLOT_HEIGHT * SCALE_FACTOR)
     .toBuffer();
 
 router.get(
   '/plot/:peakID',
   ensureLogIn,
   ensureAgreedToTerms,
-  ({params}, res) => {
+  ({params, query}, res) => {
     // We go through a lot of headache to generate plots on the server side
     // (despite it being a nice modern front end) not because we're naive but
     // because we're trying to make the site more secure against
@@ -55,7 +61,7 @@ router.get(
           });
       }
 
-      Tracks.values(peak)
+      Tracks.values(peak, getUsePrecomputed(query))
         .then(Tracks.group)
         .then(Tracks.calculate)
         .then(Tracks.plot)
@@ -66,7 +72,7 @@ router.get(
 
           // Display error in PNG form
           svgToPng(
-            `<svg width="700" height="350">
+            `<svg width="${PLOT_WIDTH}" height="${PLOT_HEIGHT}">
               <text x="20" y="30" fill="#C33" style="font-size: 16px; font-family: sans-serif; font-weight: bold;">
                 Error while plotting:
               </text>

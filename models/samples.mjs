@@ -9,7 +9,13 @@ import csvParse from "csv-parse/lib/sync.js";
 
 import config from "../config.js";
 import cache from "../helpers/cache.mjs";
-import {normalizeChrom} from "../helpers/genome.mjs";
+import {
+  GENOTYPE_STATE_HET,
+  GENOTYPE_STATE_HOM,
+  GENOTYPE_STATE_REF,
+  GENOTYPE_STATES,
+  normalizeChrom
+} from "../helpers/genome.mjs";
 
 const exec = command =>
   new Promise((resolve, reject) =>
@@ -30,7 +36,7 @@ export default {
 };
 
 export function query(chrom, start, end = start + 1) {
-  const params = `--header --show-samples --format sampledetail`
+  const params = `--header --show-samples --format sampledetail`;
 
   const query = escape`
     SELECT chrom, start, end, ref, alt, (gts).(*)
@@ -39,12 +45,12 @@ export function query(chrom, start, end = start + 1) {
        AND chrom = ${normalizeChrom(chrom)}
        AND start >= ${start}
        AND end   <= ${end}
-  `
+  `;
 
   return gemini(query, params)
-  .then(res => res.stdout)
-  .then(parseCSV)
-  .then(normalizeSamples)
+    .then(res => res.stdout)
+    .then(parseCSV)
+    .then(normalizeSamples);
 }
 
 export function queryMap(chrom, start, end = start + 1) {
@@ -135,7 +141,7 @@ export function normalizeSamples(samples) {
 
   samples.forEach(sample => {
 
-    sample.value = sample['gts.' + sample.name]
+    sample.value = sample[`gts.${sample.name}`]
 
     for (let key in sample) {
       if (key.startsWith('gts.'))
@@ -170,7 +176,9 @@ export function normalizeSamplesMap(samples) {
       const donor = key.slice(4)
       const value = res[key]
       const variant = variants.has(donor)
-      const type = !variant ? 'REF' : value.charAt(0) !== value.charAt(2) ? 'HET' : 'HOM'
+      const type = !variant
+        ? GENOTYPE_STATE_REF
+        : (value.charAt(0) !== value.charAt(2) ? GENOTYPE_STATE_HET : GENOTYPE_STATE_HOM)
       newRes.samples[donor] = { value, variant, type }
     } else {
       newRes[key] = res[key]
@@ -181,42 +189,41 @@ export function normalizeSamplesMap(samples) {
 }
 
 export function getCounts(total, samples) {
-  const counts = {
-    REF: 0,
-    HET: 0,
-    HOM: 0,
-  }
+  const counts = Object.fromEntries(GENOTYPE_STATES.map(g => [g, 0]));
   samples.forEach(sample => {
     const [a, b] = splitSampleValue(sample)
-    if (a === sample.alt && b === sample.alt)
-      counts.HOM += 1
-    else
-      counts.HET += 1
-  })
-  counts.REF = total - counts.HET - counts.HOM
+    if (a === sample.alt && b === sample.alt) {
+      counts[GENOTYPE_STATE_HOM] += 1;
+    } else {
+      counts[GENOTYPE_STATE_HET] += 1;
+    }
+  });
+  counts[GENOTYPE_STATE_REF] = total - counts[GENOTYPE_STATE_HET] - counts[GENOTYPE_STATE_HOM];
 
-  return counts
+  return counts;
 }
 
-export function splitSampleValue(sample) {
-  let parts = sample.value.split(/\||\//)
+export const splitSampleValue = (sample) => {
+  const parts = sample.value.split(/\||\//)
 
   // Basic validation
-  if (parts.length !== 2)
-    throw new Error(`Invalid sample value: "${sample.value}" (sample ${sample.name})`)
+  if (parts.length !== 2) {
+    throw new Error(`Invalid sample value: "${sample.value}" (sample ${sample.name})`);
+  }
 
-  if (!parts.every(p => /^\w$/.test(p)))
-    console.log('Invalid sample value:', sample.value)
+  if (!parts.every(p => /^\w$/.test(p))) {
+    console.log('Invalid sample value:', sample.value);
+  }
 
-  return parts
+  return parts;
 }
 
 export function parseLines({ stdout }) {
-  return stdout.split('\n').filter(Boolean)
+  return stdout.split('\n').filter(Boolean);
 }
 
 export function parseCSV(string) {
-  return csvParse(string, { delimiter: '\t', columns: true })
+  return csvParse(string, { delimiter: '\t', columns: true });
 }
 
 export function escape(strings, ...args) {

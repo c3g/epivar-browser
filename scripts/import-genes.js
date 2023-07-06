@@ -4,16 +4,25 @@ const parseCSVSync = require("csv-parse/lib/sync");
 
 require('dotenv').config();
 
-const genesPath = path.join(__dirname, '../input-files/flu-infection-genes.txt');
-const genesFeaturesPath = path.join(__dirname, '../input-files/flu-infection-gene-peaks.csv');
+const config = require("../config");
+
+const ASSAY_NAME_RNASEQ = "RNA-seq";
+
+const genesPath = path.join(config.inputFilesDirname, 'flu-infection-genes.txt');
+const genesFeaturesPath = path.join(config.inputFilesDirname, 'flu-infection-gene-peaks.csv');
+
 
 (async () => {
+  const {precomputedPoints} = await import("./_common.mjs");
+
   const db = await import("../models/db.mjs");
   const Gene = await import('../models/genes.mjs');
 
+  const rnaSeqPrecomputed = precomputedPoints[ASSAY_NAME_RNASEQ];
+
   const assaysByName = Object.fromEntries((await db.findAll("SELECT * FROM assays")).map(r => [r.name, r.id]));
 
-  const rnaSeq = assaysByName["RNA-seq"];
+  const rnaSeq = assaysByName[ASSAY_NAME_RNASEQ];
 
   const parseGene = line => {
     const fields = line.trim().split('\t');
@@ -43,7 +52,8 @@ const genesFeaturesPath = path.join(__dirname, '../input-files/flu-infection-gen
     const start = +fields[2];
     const end = +fields[3];
     const strand = fields[4];
-    const gene = genesByNormName[Gene.normalizeName(fields[0])];
+    const geneNameNorm = Gene.normalizeName(fields[0]);
+    const gene = genesByNormName[geneNameNorm];
     if (!gene) return [];
     return [[
       `${chrom}_${start}_${end}_${strand}:${rnaSeq}`,
@@ -53,13 +63,14 @@ const genesFeaturesPath = path.join(__dirname, '../input-files/flu-infection-gen
       strand, // strand
       rnaSeq,
       gene,
+      rnaSeqPrecomputed[fields[0]] ?? rnaSeqPrecomputed[geneNameNorm],  // Pre-computed points
     ]];
   };
 
   await db.insertMany(
     `
-    INSERT INTO features ("nat_id", "chrom", "start", "end", "strand", "assay", "gene")
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    INSERT INTO features ("nat_id", "chrom", "start", "end", "strand", "assay", "gene", "points")
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     ON CONFLICT DO NOTHING
     `,
     geneLines.flatMap(parseGeneFeature),
@@ -77,8 +88,10 @@ const genesFeaturesPath = path.join(__dirname, '../input-files/flu-infection-gen
 
   const assayFeatures = geneAssayFeatures.flatMap(row => {
     const featureStr = row.peak_ids.slice(3);
-    const feature = row.peak_ids.slice(3).split("_");
+    const feature = featureStr.split("_");
+
     const assayID = assaysByName[row.feature_type];
+    const assayPoints = precomputedPoints[row.feature_type];
 
     const gene = genesByNormName[Gene.normalizeName(row.symbol)];
     if (!gene) return [];
@@ -89,13 +102,14 @@ const genesFeaturesPath = path.join(__dirname, '../input-files/flu-infection-gen
       +feature.at(-1),
       assayID,
       gene,
+      assayPoints[featureStr],  // Pre-computed points
     ]];
   });
 
   await db.insertMany(
     `
-    INSERT INTO features ("nat_id", "chrom", "start", "end", "assay", "gene")
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO features ("nat_id", "chrom", "start", "end", "assay", "gene", "points")
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
     `,
     assayFeatures,
   );

@@ -56,6 +56,13 @@ create table if not exists features
     "assay"  smallint    not null,  -- put assay next to strand to keep tuple smaller
     "gene"   integer,
 
+    -- optional:
+    --  pre-computed, (presumably batch-corrected etc.) array of treatment-arrays of points for the peak to render in
+    --  the box plot, instead of pulling live from the bigWigs. treatments and samples MUST be in alphabetical order of
+    --  their IDs, eg [Flu: [<value for AF01>, ..., <value for EU01>], NI: [...]]
+    -- if the array is NULL, points SHOULD be pulled from bigWigs instead
+    "points" real[]      default null,
+
     foreign key ("assay") references assays ("id"),
     foreign key ("gene")  references genes  ("id")
 );
@@ -76,8 +83,11 @@ create table if not exists peaks
     "id"        serial   primary key,
     "snp"       integer  not null,
     "feature"   integer  not null,
-    "valueNI"   real     not null,  -- 32 bit floats are enough
-    "valueFlu"  real     not null,  -- "
+
+    -- values as array of treatments (in alphabetical order): [<p_Flu>, <p_NI>]
+    "values"    real[]   not null,
+    -- "valueNI"   real     not null,  -- p-value; 32 bit floats are enough
+    -- "valueFlu"  real     not null,  -- "
     -- "valueMin"  real not null,  -- for prioritizing items in search
 
     foreign key ("snp")     references snps     ("id"),

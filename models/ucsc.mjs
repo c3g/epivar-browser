@@ -4,13 +4,14 @@
 
 import Color from "color-js";
 import fs from "fs";
-import path from "path";
-import {fileURLToPath} from "url";
 
+import config from "../config.js";
+import {GENOTYPE_STATE_HET, GENOTYPE_STATE_HOM, GENOTYPE_STATE_REF, GENOTYPE_STATES} from "../helpers/genome.mjs";
 import unindent from "../helpers/unindent.mjs";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-export const otherTracks = fs.readFileSync(path.join(__dirname, './ucsc.other-tracks.txt')).toString();
+const {staticTracks} = config.paths;
+
+export const otherTracks = fs.existsSync(staticTracks) ? fs.readFileSync(staticTracks).toString() : "";
 
 export default {
   otherTracks,
@@ -50,7 +51,7 @@ function generateTracks(mergedTracks) {
       container multiWig
       shortLabel ${parentName}
       longLabel ${parentName}
-      type bigWig
+      type ${TRACK_TYPE_BIGWIG}
       visibility full
       aggregate transparentOverlay
       showSubtrackColorOnUi on
@@ -61,11 +62,10 @@ function generateTracks(mergedTracks) {
       autoScale on
     `)
 
-    const trackType = 'bigWig'
-
     Object.entries(merged.output).forEach(([type, output]) => {
-      if (output === undefined)
-        return
+      if (output === undefined) {
+        return;
+      }
 
       const trackName = `${parentName}__${type}`
       const shortLabel = trackName
@@ -74,7 +74,7 @@ function generateTracks(mergedTracks) {
 
       trackBlocks.push(indent(4, unindent`
         track ${trackName}
-        type ${trackType}
+        type ${TRACK_TYPE_BIGWIG}
         parent ${parentName}
         shortLabel ${shortLabel}
         bigDataUrl ${output.url}
@@ -86,7 +86,7 @@ function generateTracks(mergedTracks) {
   })
 
   // Add legend 'tracks' - non-data tracks that show the REF/HET/HOM colours
-  trackBlocks.push(...["REF", "HET", "HOM"].map((t, i) => unindent`
+  trackBlocks.push(...GENOTYPE_STATES.map((t, i) => unindent`
     track ${t}
     shortLabel Legend: ${t}
     longLabel Legend: ${t}
@@ -97,26 +97,22 @@ function generateTracks(mergedTracks) {
     priority 0.${i+mergedTracks.length+1}
   `))
 
-  return (
-    trackBlocks.join('\n\n')
-    // 2021-10-05: Disable these for now at the request of Alain
-    //              - David L
-    + '\n\n'
-    + otherTracks
-  )
+  return trackBlocks.join('\n\n') + (otherTracks ? `\n\n${otherTracks}` : "");
 }
+
+const TRACK_TYPE_BIGWIG = "bigWig";
 
 // Thanks to Google Charts
 const COLORS = {
-  REF: [
+  [GENOTYPE_STATE_REF]: [
     '#87A8E8',
     '#3559A1'
   ],
-  HET: [
+  [GENOTYPE_STATE_HET]: [
     '#FFAD33',
     '#B77C25'
   ],
-  HOM: [
+  [GENOTYPE_STATE_HOM]: [
     '#E038E0',
     '#910591'
   ],

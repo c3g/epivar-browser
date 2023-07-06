@@ -11,13 +11,15 @@ import {groupBy, map, path as prop} from "rambda";
 
 import bigWigMerge from "../helpers/bigwig-merge.js";
 import bigWigChromosomeLength from "../helpers/bigwig-chromosome-length.js";
-import {boxPlot, getDomain, PLOT_SIZE} from "../helpers/boxplot.js";
+import {boxPlot, getDomain, PLOT_HEIGHT, PLOT_WIDTH} from "../helpers/boxplot.mjs";
 import cache from "../helpers/cache.mjs";
 import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";
 import Samples from "./samples.mjs";
 import source from "./source/index.js";
-import {normalizeChrom} from "../helpers/genome.mjs";
+import {DEFAULT_CONDITIONS} from "../helpers/defaultValues.mjs";
+import {donorLookup} from "../helpers/donors.mjs";
+import {normalizeChrom, GENOTYPE_STATES, GENOTYPE_STATE_NAMES} from "../helpers/genome.mjs";
 
 const exists = promisify(fs.exists);
 
@@ -39,6 +41,10 @@ const strandToView = {
 const groupByEthnicity = groupBy(prop("ethnicity"));
 const mapToData = map(prop("data"));
 
+const conditions = config.source?.conditions ?? DEFAULT_CONDITIONS;
+
+const TRACK_VALUES_CACHE_EXPIRY = 60 * 60 * 24 * 180;  // 180 days
+
 // Methods
 
 function get(peak) {
@@ -48,8 +54,8 @@ function get(peak) {
     .then(info => source.getTracks(info.samples, peak));
 }
 
-async function values(peak) {
-  const k = `values:${peak.id}`;
+async function values(peak, usePrecomputed = false) {
+  const k = `values:${peak.id}${usePrecomputed ? ':pre' : ''}`;
   const chrom = normalizeChrom(peak.feature.chrom);
 
   await cache.open();
@@ -60,18 +66,30 @@ async function values(peak) {
 
   const tracks = await get(peak);
 
+  let getValueForTrack = track => valueAt(track.path, {
+    chrom,
+    start: peak.feature.start,
+    end: peak.feature.end,
+    ...config.merge
+  });
+
+  if (usePrecomputed) {
+    // Replace getter function with one which extracts the precomputed point value.
+    getValueForTrack = track => {
+      const pointIdx = donorLookup.indexOf(`${track.donor}_${track.condition}`);
+      if (pointIdx === -1) return Promise.resolve(undefined);
+      // Return the point value, turning SQL NULLs into undefined if the value isn't present for this sample
+      return Promise.resolve(peak.feature.points?.[pointIdx] ?? undefined);
+    };
+  }
+
   const result = (await Promise.all(tracks.filter(track =>
     // RNA-seq results are either forward or reverse strand; we only want tracks from the direction
     // of the selected peak (otherwise results will appear incorrectly, and we'll have 2x the # of
     // values we should in some cases.)
     track.assay !== "RNA-Seq" || track.view === strandToView[peak.feature.strand]
   ).map(track =>
-    valueAt(track.path, {
-      chrom,
-      start: peak.feature.start,
-      end: peak.feature.end,
-      ...config.merge
-    }).then(value => (value === undefined ? undefined : {
+    getValueForTrack(track).then(value => (value === undefined ? undefined : {
       id: track.id,
       donor: track.donor,
       assay: track.assay,
@@ -84,7 +102,7 @@ async function values(peak) {
     }))
   ))).filter(v => v !== undefined);
 
-  await cache.setJSON(k, result, 60 * 60 * 24 * 180);
+  await cache.setJSON(k, result, TRACK_VALUES_CACHE_EXPIRY);
 
   return result;
 }
@@ -100,12 +118,12 @@ function group(tracks) {
 function calculate(tracksByCondition) {
   Object.keys(tracksByCondition).forEach(condition => {
     const tracksByType = tracksByCondition[condition]
-    tracksByType.HET = derive(tracksByType.HET || [])
-    tracksByType.HOM = derive(tracksByType.HOM || [])
-    tracksByType.REF = derive(tracksByType.REF || [])
-  })
+    GENOTYPE_STATES.forEach(g => {
+      tracksByType[g] = derive(tracksByType[g] ?? []);
+    });
+  });
 
-  return tracksByCondition
+  return tracksByCondition;
 }
 
 const MERGE_WINDOW_EXTENT = 100000;  // in bases
@@ -117,24 +135,22 @@ function merge(tracks, session) {
 
   const mergeTracksByType = tracksByType =>
     Promise.all(
-      [
-        tracksByType.REF || [],
-        tracksByType.HET || [],
-        tracksByType.HOM || []
-      ].map(async tracks => {
-        if (tracks.length === 0) {
-          return undefined;
-        }
+      GENOTYPE_STATES
+        .map(g => tracksByType[g] ?? [])
+        .map(async tracks => {
+          if (tracks.length === 0) {
+            return undefined;
+          }
 
-        const filePaths = tracks.map(prop('path'))
-        const maxSize = await bigWigChromosomeLength(filePaths[0], chrom)
+          const filePaths = tracks.map(prop('path'))
+          const maxSize = await bigWigChromosomeLength(filePaths[0], chrom)
 
-        return mergeFiles(filePaths, {
-          chrom,
-          start: Math.max(session.peak.feature.start - MERGE_WINDOW_EXTENT, 0),
-          end:   Math.min(session.peak.feature.end + MERGE_WINDOW_EXTENT, maxSize),
+          return mergeFiles(filePaths, {
+            chrom,
+            start: Math.max(session.peak.feature.start - MERGE_WINDOW_EXTENT, 0),
+            end:   Math.min(session.peak.feature.end + MERGE_WINDOW_EXTENT, maxSize),
+          })
         })
-      })
     )
 
   const promisedTracks =
@@ -144,11 +160,7 @@ function merge(tracks, session) {
           assay: session.peak.assay,
           condition,
           tracks,
-          output: {
-            REF: output[0],
-            HET: output[1],
-            HOM: output[2],
-          },
+          output: Object.fromEntries(GENOTYPE_STATES.map((g, gi) => [g, output[gi]])),
         })
       )
     )
@@ -158,20 +170,18 @@ function merge(tracks, session) {
 }
 
 function plot(tracksByCondition) {
-  const CONDITION_NI = "NI";
-  const CONDITION_FLU = "Flu";
+  const data = conditions.map(c => tracksByCondition[c.id] ? getDataFromValues(tracksByCondition[c.id]) : []);
+  const domains = data.map(d => getDomain(d));
 
-  const niData  = tracksByCondition[CONDITION_NI]  ? getDataFromValues(tracksByCondition[CONDITION_NI])  : [];
-  const fluData = tracksByCondition[CONDITION_FLU] ? getDataFromValues(tracksByCondition[CONDITION_FLU]) : [];
-
-  const niDomain  = getDomain(niData)
-  const fluDomain = getDomain(fluData)
-
-  return Promise.all([
-    boxPlot({title: "Non-infected", data: niData, domain: niDomain}),
-    boxPlot({title: "Flu", data: fluData, domain: fluDomain, transform: "translate(350 0)"}),
-  ]).then(plots =>
-    `<svg width="${PLOT_SIZE * 2}" height="${PLOT_SIZE}">
+  return Promise.all(
+    conditions.map((c, ci) => boxPlot({
+      title: c.name,
+      data: data[ci],
+      domain: domains[ci],
+      transform: `translate(${((PLOT_WIDTH / conditions.length) * ci).toFixed(0)} 0)`
+    }))
+  ).then(plots =>
+    `<svg width="${PLOT_WIDTH}" height="${PLOT_HEIGHT}">
        ${plots.join("")}
      </svg>`
   );
@@ -181,11 +191,10 @@ function plot(tracksByCondition) {
 // Helpers
 
 function getDataFromValues(values) {
-  return [
-    { name: 'Hom Ref', data: values.REF || [] },
-    { name: 'Het',     data: values.HET || [] },
-    { name: 'Hom Alt', data: values.HOM || [] }
-  ]
+  return GENOTYPE_STATES.map(s => ({
+    name: GENOTYPE_STATE_NAMES[s],
+    data: values[s] ?? [],
+  }));
 }
 
 function mergeFiles(paths, { chrom, start, end }) {

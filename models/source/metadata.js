@@ -2,18 +2,16 @@
  * metadata.js
  */
 
+const fs = require('fs')
 const path = require('path')
 const clone  = require('lodash.clonedeep')
 const config = require('../../config')
 
-const metadata = require(config.source.metadata.path)
+const metadata = JSON.parse(fs.readFileSync(config.source.metadata.path).toString());
 
 module.exports = {
   getTracks,
 }
-
-const nameToRealName = name =>
-  name.split('_')[1]
 
 /**
  * @param {Object.<string, Object>} samples
@@ -27,7 +25,7 @@ function getTracks(samples, peak) {
   const samplesByRealName =
     Object.fromEntries(
       Object.entries(samples)
-        .map(([key, value]) => [nameToRealName(key), value]))
+        .map(([key, value]) => [config.source.geminiSampleNameConverter(key), value]))
 
   const sampleNames = Object.keys(samplesByRealName)
   const assay = peak.assay.toLowerCase()

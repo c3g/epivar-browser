@@ -2,6 +2,7 @@
 /data/*
 !/data/.gitkeep
 !/data/otherData
+!/data/ucsc.other-tracks.txt
 /input-files/*.csv
 !/input-files/flu-infection-gene-peaks.csv
 /config.js

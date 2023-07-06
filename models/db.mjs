@@ -35,7 +35,7 @@ export const findOne = async (query, params) => {
 
 export const findAll = async (query, params) => (await pool.query(query, params)).rows;
 
-export const insert = async (query, row) => {
+export const runWithTransaction = async (...args) => {
   // Use same client for whole transaction
   const client = await pool.connect()
 
@@ -43,7 +43,7 @@ export const insert = async (query, row) => {
 
   try {
     await client.query("BEGIN");
-    res = await client.query(query, row);
+    res = await client.query(...args);
     await client.query("COMMIT");
   } catch (e) {
     await client.query("ROLLBACK");
@@ -53,7 +53,9 @@ export const insert = async (query, row) => {
   }
 
   return res;
-};
+}
+
+export const insert = (query, row) => runWithTransaction(query, row);  // for argument typing
 
 export const insertMany = async (query, rows) => {
   // Use same client for whole transaction
