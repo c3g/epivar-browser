@@ -18,14 +18,14 @@ export function fetchPeaks(params) {
   return get('/peaks/query', params)
 }
 
-export function fetchChroms() {
-  return get('/autocomplete/chroms')
-  .then(chroms => {
-    const parse = string => +string.slice(3)
-    chroms.sort((a, b) => parse(a) - parse(b))
-    return chroms
-  })
-}
+// export function fetchChroms() {
+//   return get('/autocomplete/chroms')
+//   .then(chroms => {
+//     const parse = string => +string.slice(3)
+//     chroms.sort((a, b) => parse(a) - parse(b))
+//     return chroms
+//   })
+// }
 
 export function fetchPositions(params, cancelToken) {
   return get('/autocomplete/positions', params, {cancelToken})
@@ -55,9 +55,9 @@ export const fetchManhattanData = ({chrom, assay}) => get(`/overview/assays/${as
 /**
  * @param {ValuesOptions} params
  */
-export function cacheValues(params) {
-  return post(`/tracks/values?precomputed=${params.usePrecomputed ? '1' : '0'}`, params)
-}
+// export function cacheValues(params) {
+//   return post(`/tracks/values?precomputed=${params.usePrecomputed ? '1' : '0'}`, params)
+// }
 
 export function createSession(params) {
   return post('/sessions/create', params)

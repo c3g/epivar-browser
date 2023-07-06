@@ -15,7 +15,7 @@ import {useTable, usePagination, useSortBy} from "react-table";
 
 import Icon from "./Icon";
 import PeakBoxplot from "./PeakBoxplot";
-import {cacheValues, mergeTracks, setUsePrecomputed} from "../actions";
+import {mergeTracks, setUsePrecomputed} from "../actions";
 
 
 const PAGE_SIZES = [10, 20, 30, 40, 50];
@@ -42,26 +42,6 @@ const PeakAssay = ({peaks}) => {
   const onOpenTracks = useCallback(p => dispatch(mergeTracks(p)), [dispatch]);
 
   const selectedPeakData = peaks.find(p => p.id === selectedPeak);
-
-  // const fetchSome = useCallback((exclude = []) =>
-  //   peaks
-  //     .filter(p => !exclude.includes(p.id))
-  //     .slice(0, 10)
-  //     .forEach(p => {
-  //       dispatch(cacheValues({...p, usePrecomputed}, {id: p.id}));
-  //     }),
-  //   [peaks, dispatch]);
-
-  // Fetch some peaks at the start for performance
-  // useEffect(() => {
-  //   if (selectedPeakData) {
-  //     dispatch(cacheValues({...selectedPeakData, usePrecomputed}, {id: selectedPeak}));
-  //     // Give some time for the first one to get priority
-  //     setTimeout(() => fetchSome([selectedPeak]), 100);
-  //   } else {
-  //     fetchSome();
-  //   }
-  // }, [selectedPeakData, fetchSome]);
 
   return (
     <Container className='PeakAssay' fluid={true}>
