@@ -14,7 +14,7 @@ const defaultUI = {
     assay: '',
   },
 
-  usePrecomputed: false,
+  usePrecomputed: true,
 };
 
 function uiReducer(state = defaultUI, action) {
