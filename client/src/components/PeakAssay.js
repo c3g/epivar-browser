@@ -43,25 +43,25 @@ const PeakAssay = ({peaks}) => {
 
   const selectedPeakData = peaks.find(p => p.id === selectedPeak);
 
-  const fetchSome = useCallback((exclude = []) =>
-    peaks
-      .filter(p => !exclude.includes(p.id))
-      .slice(0, 10)
-      .forEach(p => {
-        dispatch(cacheValues({...p, usePrecomputed}, {id: p.id}));
-      }),
-    [peaks, dispatch]);
+  // const fetchSome = useCallback((exclude = []) =>
+  //   peaks
+  //     .filter(p => !exclude.includes(p.id))
+  //     .slice(0, 10)
+  //     .forEach(p => {
+  //       dispatch(cacheValues({...p, usePrecomputed}, {id: p.id}));
+  //     }),
+  //   [peaks, dispatch]);
 
   // Fetch some peaks at the start for performance
-  useEffect(() => {
-    if (selectedPeakData) {
-      dispatch(cacheValues({...selectedPeakData, usePrecomputed}, {id: selectedPeak}));
-      // Give some time for the first one to get priority
-      setTimeout(() => fetchSome([selectedPeak]), 100);
-    } else {
-      fetchSome();
-    }
-  }, [selectedPeakData, fetchSome]);
+  // useEffect(() => {
+  //   if (selectedPeakData) {
+  //     dispatch(cacheValues({...selectedPeakData, usePrecomputed}, {id: selectedPeak}));
+  //     // Give some time for the first one to get priority
+  //     setTimeout(() => fetchSome([selectedPeak]), 100);
+  //   } else {
+  //     fetchSome();
+  //   }
+  // }, [selectedPeakData, fetchSome]);
 
   return (
     <Container className='PeakAssay' fluid={true}>
