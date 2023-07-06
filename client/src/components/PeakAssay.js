@@ -76,7 +76,7 @@ const PeakAssay = ({peaks}) => {
         </Col>
         <Col xs={12}>
           <Label check={true}>
-            <Input type="checkbox" checked={usePrecomputed} onChange={setPrecomputed} disabled={true} />{" "}
+            <Input type="checkbox" checked={usePrecomputed} onChange={setPrecomputed} />{" "}
             Use precomputed, batch-corrected points?
           </Label>
         </Col>
