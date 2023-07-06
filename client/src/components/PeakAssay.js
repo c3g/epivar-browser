@@ -55,7 +55,7 @@ const PeakAssay = ({peaks}) => {
   // Fetch some peaks at the start for performance
   useEffect(() => {
     if (selectedPeakData) {
-      dispatch(cacheValues(selectedPeakData, {id: selectedPeak}));
+      dispatch(cacheValues({...selectedPeakData, usePrecomputed}, {id: selectedPeak}));
       // Give some time for the first one to get priority
       setTimeout(() => fetchSome([selectedPeak]), 100);
     } else {
