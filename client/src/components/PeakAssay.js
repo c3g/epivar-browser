@@ -48,7 +48,7 @@ const PeakAssay = ({peaks}) => {
       .filter(p => !exclude.includes(p.id))
       .slice(0, 10)
       .forEach(p => {
-        dispatch(cacheValues(p, {id: p.id}));
+        dispatch(cacheValues({...p, usePrecomputed}, {id: p.id}));
       }),
     [peaks, dispatch]);
 

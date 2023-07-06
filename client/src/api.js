@@ -49,13 +49,14 @@ export const fetchManhattanData = ({chrom, assay}) => get(`/overview/assays/${as
  * @property {string} feature.chrom
  * @property {number} feature.start
  * @property {number} feature.end
+ * @property {boolean} usePrecomputed
  */
 
 /**
  * @param {ValuesOptions} params
  */
 export function cacheValues(params) {
-  return post('/tracks/values', params)
+  return post(`/tracks/values?precomputed=${params.usePrecomputed ? '1' : '0'}`, params)
 }
 
 export function createSession(params) {
