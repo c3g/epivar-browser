@@ -76,7 +76,6 @@ async function values(peak, usePrecomputed = false) {
   if (usePrecomputed) {
     // Replace getter function with one which extracts the precomputed point value.
     getValueForTrack = track => {
-      console.log("points", peak.feature.points);
       const pointIdx = donorLookup.indexOf(`${track.donor}_${track.condition}`);
       if (pointIdx === -1) return Promise.resolve(undefined);
       // Return the point value, turning SQL NULLs into undefined if the value isn't present for this sample
@@ -102,8 +101,6 @@ async function values(peak, usePrecomputed = false) {
       data: value,
     }))
   ))).filter(v => v !== undefined);
-
-  console.log("result", usePrecomputed, result)
 
   await cache.setJSON(k, result, TRACK_VALUES_CACHE_EXPIRY);
 
