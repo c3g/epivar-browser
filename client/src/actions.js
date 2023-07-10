@@ -69,7 +69,7 @@ export const mergeTracks = peak => (dispatch, getState) => {
   const featureChrom = `chr${feature.chrom}`;
   const snpChrom = `chr${snp.chrom}`;
 
-  api.createSession(session)
+  return api.createSession(session)
     .then(sessionID => {
       const snpPosition = snp.position;
       const displayWindow = featureChrom === snpChrom
