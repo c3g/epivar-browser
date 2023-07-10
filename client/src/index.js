@@ -23,6 +23,7 @@ import {
   fetchMessages,
   fetchUser
 } from './actions.js'
+import {popPostAuthPath} from "./helpers/localStorage";
 
 
 const initialState = {};
@@ -50,7 +51,13 @@ render(
   document.querySelector('#root')
 );
 
-store.dispatch(fetchUser());
+store.dispatch(fetchUser()).then(() => {
+  const postAuthPath = popPostAuthPath();
+  if (postAuthPath) {
+    window.location.replace(postAuthPath);
+  }
+});
+
 store.dispatch(fetchMessages());  // Server-side messages, e.g. auth errors
 
 store.dispatch(fetchAssays());
