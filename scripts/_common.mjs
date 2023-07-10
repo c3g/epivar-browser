@@ -37,6 +37,9 @@ if (loadingPrecomputedPoints) {
         .map((s, si) => [s, si])
     );
 
+    // For the EpiVar data, this should be 1.
+    const idxOffset = fc[1].split("\t").length - fc[0].split("\t").length;
+
     precomputedPoints[assay] = Object.fromEntries(fc.slice(1).filter(x => !!x)
       .map(featureRow => {
         const rd = featureRow.split("\t");
@@ -46,7 +49,7 @@ if (loadingPrecomputedPoints) {
             const idx = sampleNamesAndIndices[sn];
             return idx === undefined
               ? null
-              : parseFloat(rd[idx + 1]);  // Add one due to funny off-by-one in sample name header
+              : parseFloat(rd[idx + idxOffset]);  // Add one due to funny off-by-one in sample name header (EpiVar)
           }),
         ];
       }));
