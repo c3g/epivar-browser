@@ -4,7 +4,6 @@ import {useOutletContext} from "react-router-dom";
 import {LOGIN_PATH} from "../../constants/app";
 import Intro from "../Intro";
 import {Container, Spinner} from "reactstrap";
-import {setPostAuthPath} from "../../helpers/localStorage";
 
 const LoadingContainer = React.memo(() => (
   <Container>
@@ -21,8 +20,7 @@ const ProtectedPageContainer = React.memo(({children}) => {
   const onTerms = useCallback(() => setTermsModal(true), []);
   const onAccess = useCallback(() => {
     if (!userData) {
-      // Set our post-auth redirect and redirect to sign in, so we can capture some information about their identity.
-      setPostAuthPath(window.location.pathname);
+      // Redirect to sign in, so we can capture some information about their identity.
       window.location.href = `${LOGIN_PATH}?redirect=${window.location.pathname}`;
     } else {
       // Signed in but terms not accepted yet; show the modal.
