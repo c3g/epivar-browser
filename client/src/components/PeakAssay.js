@@ -39,7 +39,11 @@ const PeakAssay = ({peaks}) => {
   }, [peaks])
 
   const onChangeFeature = useCallback(p => setSelectedPeak(p.id), []);
-  const onOpenTracks = useCallback(p => dispatch(mergeTracks(p)), [dispatch]);
+  const onOpenTracks = useCallback((p, cb) => {
+    dispatch(mergeTracks(p)).then(() => {
+      if (cb) cb();
+    });
+  }, [dispatch]);
 
   const selectedPeakData = peaks.find(p => p.id === selectedPeak);
 
@@ -76,6 +80,14 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
   const conditions = useSelector(state => state.conditions.list);
 
   const [tooltipsShown, setTooltipsShown] = useState({});
+  const [tracksLoading, setTracksLoading] = useState({});
+
+  const setTrackLoading = useCallback((id) => {
+    setTracksLoading({...tracksLoading, [id]: true});
+  }, [tracksLoading]);
+  const setTrackNotLoading = useCallback((id) => {
+    setTracksLoading(Object.fromEntries(Object.entries(tracksLoading).filter(e => e[0] !== id)));
+  }, [tracksLoading]);
 
   const toggleTooltip = tooltipID => () => setTooltipsShown({
     ...tooltipsShown,
@@ -156,12 +168,15 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       id: "ucsc",
       Header: "View in UCSC",
       className: "PeaksTable__tracks",
-      accessor: row => <Button size='sm' color='link' onClick={() => onOpenTracks(row)}>
-        Tracks <Icon name='external-link' />
+      accessor: row => <Button size='sm' color='link' disabled={tracksLoading[row.id]} onClick={() => {
+        setTrackLoading(row.id);
+        onOpenTracks(row, () => setTrackNotLoading(row.id));
+      }}>
+        {tracksLoading[row.id] ? <>Loading...</> : <>Tracks <Icon name='external-link' /></>}
       </Button>,
       disableSortBy: true,
     },
-  ], [assembly, conditions, onOpenTracks, tooltipsShown]);
+  ], [assembly, conditions, setTrackLoading, setTrackNotLoading, onOpenTracks, tooltipsShown]);
 
   // noinspection JSCheckFunctionSignatures
   const tableInstance = useTable(
