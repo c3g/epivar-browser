@@ -102,7 +102,26 @@ The different data sources to generate/prepare are:
      - **Config:** `config.source.metadata.path` (filepath)
      - **Notes:** This is really just an XLSX to JSON transformation.  
 
- - **Genes:** list of gene names mapped to their characteristics.
+ - **Pre-computed feature signals:** Optionally, preset matrices can be provided
+   with point values for box plots that have been batch-corrected and, e.g., 
+   age-regressed.
+     - **Import with:** N/A *(Automatically read with the below Genes and 
+       Peaks import steps!)*
+     - **Input:** A set of matrix files. These are TSV-formatted, with a header 
+       row for sample names (`{ethnicity}##_{condition}`, e.g., `EU99_Flu`) and 
+       a header column at the start for feature names (`chr#_startpos_endpos` 
+       or `GENESYMBOL`).
+     - **Config:** Use the `VARWIG_POINTS_TEMPLATE` environment variable to 
+       configure where point matrices are loaded from. The `$ASSAY` string is 
+       replaced with each assay in turn. 
+       *Defaults to:* `./input-files/matrices/$ASSAY_batch.age.corrected_PCsreg.txt`
+     - **Notes:** In our EpiVar instance, the corrections applied are:
+        - Batch correction
+        - Age regressed out as a cofactor
+        - Principal components regression
+
+ - **Genes:** lists of gene names mapped to their characteristics, and features 
+   associated with specific genes.
      - **Import with:** `node ./scripts/import-genes.js`
      - **Input:** `./input-files/flu-infection-genes.txt` and 
        `./input-files/flu-infection-gene-peaks.csv`
