@@ -43,7 +43,8 @@ module.exports = {
     //   Format: TSV with:
     //    - column headers of sample IDs ([DONOR]_[CONDITION])
     //    - row headers of features
-    pointTemplate: `${inputFilesDirname}/matrices/$ASSAY_batch.age.corrected_PCsreg.txt`,
+    pointTemplate: process.env.VARWIG_POINTS_TEMPLATE
+      ?? `${inputFilesDirname}/matrices/$ASSAY_batch.age.corrected_PCsreg.txt`,
 
     // Merged tracks file location
     mergedTracks:  process.env.VARWIG_MERGED_TRACKS_DIR ?? path.join(dataDirname, 'mergedTracks'),
