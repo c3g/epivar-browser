@@ -17,7 +17,7 @@ const Footer = ({/*onContact, */onTerms}) => (
               C3G</a> at McGill University &copy; 2017-2023</span><br />
             <em>
               Version {packageJson.version} &bull;{" "}
-              <a href="https://github.com/c3g/flu-infection" target="_blank" rel="nofollow">source code</a>
+              <a href="https://github.com/c3g/epivar-browser" target="_blank" rel="nofollow">source code</a>
             </em><br />
           </div>
         </div>
