@@ -22,9 +22,9 @@ process.on("exit", _cleanup);
 const NAMESPACE = "varwig";
 const ns = k => `${NAMESPACE}:${k}`;
 
-const clear = async () => {
+const clear = async (pattern = "*") => {
   // noinspection JSCheckFunctionSignatures
-  const keys = await redisClient.keys(ns("*"));
+  const keys = await redisClient.keys(ns(pattern));
   console.log(`    found ${keys.length} cache entries`);
   if (keys.length) {
     // noinspection JSCheckFunctionSignatures
