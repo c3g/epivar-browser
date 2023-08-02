@@ -131,6 +131,7 @@ The different data sources to generate/prepare are:
      - `assembly.name`: assembly name (e.g., `hg19`).
      - `assay.name`: one of `RNA-Seq`, `ATAC-Seq`, `H3K27ac`, `H3K4me1`, `H3K27me3`, `H3K4me3`
      - `assay_category.name`: `Transcriptome`/`Regulome`/`Histone Modifications`/`Methylome` (*unused*)
+   
    and the sheets (which match `assay.name`):
      - RNA-Seq
      - ATAC-Seq
