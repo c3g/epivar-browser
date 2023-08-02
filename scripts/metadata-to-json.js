@@ -48,12 +48,14 @@ sheetNames.forEach(name => {
     xlsx.utils.sheet_to_json(sheet)
       .filter(item => item[headers["ethnicity"]] !== "Exclude sample")
       .map(item => Object.fromEntries(
-        Object.entries(headers).map(([key, oldKey]) => (
-          // Preprocess and remove 'Chipmentation' from assay names if necessary
-          oldKey === "assay.name"
-            ? [key, item[oldKey].replace("Chipmentation ", "")]
-            : [key, item[oldKey]]
-        ))
+        Object.entries(headers)
+          .filter(([_, oldKey]) => item[oldKey] !== undefined)
+          .map(([key, oldKey]) => (
+            // Preprocess and remove 'Chipmentation' from assay names if necessary
+            oldKey === "assay.name"
+              ? [key, item[oldKey].replace("Chipmentation ", "")]
+              : [key, item[oldKey]]
+          ))
       ));
 
   items = items.concat(newItems)
