@@ -33,8 +33,8 @@ Executables must be on the `PATH` of the application to be called directly.
 
 ### Setting up the database
 
-After Postgres is installed, you should create a user (with a password) and 
-database for the application.
+After Postgres is installed, you should create a user (with a password) 
+and database for the application.
 
 For example, starting with a `bash`/similar command-line shell and the 
 default `postgres` user, you can access a Postgres shell:
@@ -151,7 +151,9 @@ The different data sources to generate/prepare are:
    associated with specific genes.
      - **Import with:** `node ./scripts/import-genes.js`
      - **Input:** `./input-files/flu-infection-genes.txt` and 
-       `./input-files/flu-infection-gene-peaks.csv`
+       `./input-files/flu-infection-gene-peaks.csv` 
+       - Examples for these files / the versions used for the Aracena *et al.* instance 
+         of the portal are already [in the repository](./input-files).
      - **Format:**
        - `flu-infection-genes.txt`: TSV file with *no header row*. Columns are: 
          gene name, chromosome with `chr` prefix, start coordinate, end coordinate,
