@@ -1,0 +1,5 @@
+rsID,snp,feature,pvalue.NI,pvalue.Flu,feature_type
+rs55998931,chr1_10492,chr1_9998_11177,0.28,0.21,ATAC-seq
+rs55998931,chr1_10492,chr1_12828_16957,0.28,0.31,ATAC-seq
+rs55998931,chr1_10492,chr1_96102_96954,0.36,0.2,ATAC-seq
+rs55998931,chr1_10492,chr1_28738_30053,0.41,0.3,ATAC-seq

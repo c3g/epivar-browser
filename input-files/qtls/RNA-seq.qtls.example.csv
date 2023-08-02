@@ -1,0 +1,5 @@
+rsID,snp,feature,pvalue.NI,pvalue.Flu,feature_type
+rs12480466,chr20_49496121,DPM1,0.2,0.41,RNA-seq
+rs75081175,chr20_49468504,DPM1,  1,0.51,RNA-seq
+rs11905654,chr20_49665475,DPM1,0.3,0.45,RNA-seq
+rs8125895,chr20_49593126,DPM1,0.32,0.45,RNA-seq
