@@ -30,6 +30,31 @@ Install these dependencies according to their own instructions:
 
 Executables must be on the `PATH` of the application to be called directly.
 
+
+### Setting up the database
+
+After Postgres is installed, you should create a user (with a password) and 
+database for the application.
+
+For example, starting with a `bash`/similar command-line shell and the 
+default `postgres` user, you can access a Postgres shell:
+
+```bash
+sudo su - postgres
+psql
+```
+
+You should now be connected to Postgres:
+
+```postgresql
+CREATE USER epivar WITH PASSWORD 'my-password';
+CREATE DATABASE epivar_db WITH OWNER epivar;
+```
+
+To exit out of the Postgres session / `postgres` user `bash` session, 
+hit `Control-d` twice.
+
+
 ### Application data
 
 The application requires data from multiple different sources. The data
@@ -263,7 +288,7 @@ VARWIG_USERINFO_URL=https://dev-###.us.auth0.com/userinfo
 # Other Varwig configuration
 VARWIG_BASE_URL=https://flu-infection.vhost38.genap.ca
 # Database configuration
-VARWIG_PG_CONNECTION=postgres://davidlougheed@localhost:5432/flu_infection_db
+VARWIG_PG_CONNECTION=postgres://epivar@localhost:5432/epivar_db
 # Directories
 VARWIG_MERGED_TRACKS_DIR=/flu-infection-data/mergedTracks
 VARWIG_TRACKS_DIR=/flu-infection-data
