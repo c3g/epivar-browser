@@ -267,7 +267,7 @@ The different data sources to generate/prepare are:
 
 ### Application
 
-Once the data is ready, you can install & build the application as follows:
+Once the data are ready, you can install & build the application as follows:
 
 ```sh
 npm run install
