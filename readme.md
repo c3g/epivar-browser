@@ -9,6 +9,25 @@ is available at
 
 
 
+## Table of Contents
+
+<!-- TOC -->
+* [The EpiVar Browser](#the-epivar-browser)
+  * [Table of Contents](#table-of-contents)
+  * [Installation](#installation)
+    * [Note on hosting your own instance](#note-on-hosting-your-own-instance)
+    * [Dependencies](#dependencies)
+    * [Setting up the database](#setting-up-the-database)
+    * [Application data](#application-data)
+    * [Application](#application)
+      * [Development (Aracena *et al.*-specific)](#development-aracena-et-al-specific)
+      * [Production](#production)
+        * [Note on current deployment for Aracena *et al.*](#note-on-current-deployment-for-aracena-et-al)
+  * [Architecture](#architecture)
+<!-- TOC -->
+
+
+
 ## Installation
 
 ### Note on hosting your own instance
