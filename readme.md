@@ -56,7 +56,7 @@ Install these dependencies according to their own instructions:
 Executables must be on the `PATH` of the application to be called directly.
 
 
-### Setting up the database
+### Setting up the Postgres database
 
 After Postgres is installed, you should create a user (with a password) 
 and database for the application.
@@ -260,8 +260,11 @@ The different data sources to generate/prepare are:
      - **Config:** `VARWIG_MERGED_TRACKS_DIR` environment variable or `config.paths.mergedTracks` (directory)
      - **Notes:** Make sure there is enough space for those tracks.
  
- - **Gemini database:** This contains variants' data.
-     - **Generate with:** Copy it or mount over `sshfs`.
+ - **GEMINI database:** This contains variants' data.
+     - **Generate with:** Follow instructions on the 
+       [GEMINI](https://gemini.readthedocs.io/en/latest/)  website for information 
+       on creating a GEMINI database from a VCF. 
+       For Aracena *et al.* data, copy it or mount over `sshfs`.
      - **Notes:** Accessing it over `sshfs` in development is slow because the
        `gemini` command needs to read it a lot. It might be easier to call
        `gemini` directly on `beluga`. See the comment in `./models/samples.mjs`
