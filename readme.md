@@ -38,6 +38,11 @@ the Aracena *et al.* dataset. The instructions below must be followed,
 paying especially close attention to the formats described in the 
 [Application data](#application-data) section.
 
+This application is **NOT** meant as a purely plug-and-play solution. Instead, 
+it serves as a starting point, both in approach and with our free and 
+open-source codebase,  for those who wish to present a similar dataset and 
+interface.
+
 
 ### Dependencies
 
