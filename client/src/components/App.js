@@ -17,6 +17,7 @@ import DatasetsPage from "./pages/DatasetsPage";
 import FAQPage from "./pages/FAQPage";
 
 import {saveUser} from "../actions";
+import {SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
 
 
 const RoutedApp = () => {
@@ -50,6 +51,10 @@ const RoutedApp = () => {
     }
   }, [location.pathname, chrom, position, navigate]);
   const navigateFAQ = () => navigate("/faq");
+
+  useEffect(() => {
+    document.title = `${SITE_TITLE} | ${SITE_SUBTITLE}`;
+  }, []);
 
   useEffect(() => {
     if (userData.isLoaded && userData.data && !userData.data.consentedToTerms) {
