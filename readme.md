@@ -49,6 +49,7 @@ interface.
 Install these dependencies according to their own instructions:
  - `nodejs` version 16+
  - `postgres` (tested with versions 13 through 15) 
+ - `redis` (used for caching values; tested with version 6+)
  - `bigWigMergePlus`: https://github.com/c3g/kent/releases/download/bigWigMergePlus_v2.3.2/bigWigMergePlus-mp2b
  - `bigWigInfo` and `bigWigSummary`: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/
  - `gemini`: https://gemini.readthedocs.io/en/latest/ (non-trivial, takes some effort, there is a lot of data to download)
