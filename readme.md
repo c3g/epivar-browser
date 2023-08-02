@@ -168,7 +168,9 @@ The different data sources to generate/prepare are:
      - **Input:** `./input-files/flu-infection.xlsx` 
        - Or, whichever metadata file you specify in `config.js`
      - **Output:** `./data/metadata.json` (*or, just generate this file directly*)
-     - **Notes:** This is really just an XLSX to JSON transformation.  
+     - **Notes:** This is really just an XLSX to JSON transformation. 
+       The version of the XLSX used for the Aracena *et al.* portal 
+       instance is available in this repository as a reference.
 
  - **Pre-computed feature signals:** Optionally, preset matrices can be provided
    with point values for box plots that have been batch-corrected and, e.g., 
