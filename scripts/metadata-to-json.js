@@ -2,9 +2,12 @@
  * xlsx-to-json.js
  */
 
-const fs = require('fs')
-const path = require('path')
-const xlsx = require('xlsx')
+const fs = require('fs');
+const path = require('path');
+const process = require('node:process');
+const xlsx = require('xlsx');
+
+const config = require('../config');
 
 const sheetNames = [
   'RNA-Seq',
@@ -33,9 +36,9 @@ const headers = {
   'assay_category_id': 'assay_category.name',
 }
 
-const metadataPath = path.join(__dirname, '../input-files/flu-infection.xlsx')
-const output = path.join(__dirname, '../data/metadata.json')
-const workbook = xlsx.readFileSync(metadataPath)
+const metadataPath = process.argv[2] || path.join(__dirname, '../input-files/flu-infection.xlsx');
+const output = config.source.metadata.path;
+const workbook = xlsx.readFileSync(metadataPath);
 
 let items = []
 

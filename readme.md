@@ -155,10 +155,13 @@ The different data sources to generate/prepare are:
      - `assay_category_id`
  
    Information on the track metadata file:
-     - **Generate with:** `node ./scripts/metadata-to-json.js`
-     - **Input:** `./input-files/flu-infection.xlsx`
-     - **Output:** `./data/metadata.json` (*or, just generate this file directly*)
+     - **Generate with:** `node ./scripts/metadata-to-json.js ./input-files/flu-infection.xlsx` 
+       - Replace `./input-files/flu-infection.xlsx` with the path to your metadata file
+       - Optionally, the resulting JSON can just be generated directly (see above for keys)
      - **Config:** `config.source.metadata.path` (filepath)
+     - **Input:** `./input-files/flu-infection.xlsx` 
+       - Or, whichever metadata file you specify in `config.js`
+     - **Output:** `./data/metadata.json` (*or, just generate this file directly*)
      - **Notes:** This is really just an XLSX to JSON transformation.  
 
  - **Pre-computed feature signals:** Optionally, preset matrices can be provided
