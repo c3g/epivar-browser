@@ -5,7 +5,7 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 
 import Icon from "./Icon";
 
-import {LOGIN_PATH} from "../constants/app";
+import {LOGIN_PATH, SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
 
 export default function Header({children, onAbout, onDatasets, onOverview, onExplore, onFAQ/*, onContact*/}) {
   const location = useLocation();
@@ -24,8 +24,8 @@ export default function Header({children, onAbout, onDatasets, onOverview, onExp
         }
       </div>
       <Container>
-        <h1 className='Header__title'><Link to="/about" className='Link'>EpiVar Browser</Link></h1>
-        <h4 className='Header__subtitle'>Epigenetic & Expression QTLs</h4>
+        <h1 className='Header__title'><Link to="/about" className='Link'>{SITE_TITLE}</Link></h1>
+        <h4 className='Header__subtitle'>{SITE_SUBTITLE}</h4>
         <div className="Header__links">
           <Button color="link"
                   className={location.pathname.startsWith("/about") ? "active" : ""}
