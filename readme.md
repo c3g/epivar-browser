@@ -19,6 +19,7 @@ is available at
     * [Dependencies](#dependencies)
     * [Setting up the database](#setting-up-the-database)
     * [Application data](#application-data)
+    * [Authorization (Identity provider)](#authorization-identity-provider)
     * [Application](#application)
       * [Development (Aracena *et al.*-specific)](#development-aracena-et-al-specific)
       * [Production](#production)
@@ -263,6 +264,20 @@ The different data sources to generate/prepare are:
        Fetching the chromosomes list can also be expensive, so for development
        you might want to hardcode the list in the config at
        `config.development.chroms` once you know what that list is.
+
+
+### Authorization (Identity provider)
+
+The EpiVar browser uses OpenID Connect (OIDC) for authentication/authorization (auth).
+It does not include its own username/password/identity layer.
+
+A popular (free for small projects) provider for OIDC is [Auth0](https://auth0.com/).
+
+For academic projects, [CILogon](https://www.cilogon.org/) is an excellent choice
+which can federate to different academic institutions' own auth systems.
+
+When configuring EpiVar, one must set various parameters for the OIDC identity provider
+in the `.env` file (see the [Production](#production) section below.)
 
 
 ### Application
