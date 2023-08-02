@@ -17,7 +17,7 @@ is available at
   * [Installation](#installation)
     * [Note on hosting your own instance](#note-on-hosting-your-own-instance)
     * [Dependencies](#dependencies)
-    * [Setting up the database](#setting-up-the-database)
+    * [Setting up the Postgres database](#setting-up-the-postgres-database)
     * [Application data](#application-data)
     * [Authorization (Identity provider)](#authorization-identity-provider)
     * [Application](#application)
@@ -265,7 +265,8 @@ The different data sources to generate/prepare are:
        [GEMINI](https://gemini.readthedocs.io/en/latest/)  website for information 
        on creating a GEMINI database from a VCF. 
        For Aracena *et al.* data, copy it or mount over `sshfs`.
-     - **Notes:** Accessing it over `sshfs` in development is slow because the
+     - **Notes for Aracena *et al.* implementation:** 
+       Accessing it over `sshfs` in development is slow because the
        `gemini` command needs to read it a lot. It might be easier to call
        `gemini` directly on `beluga`. See the comment in `./models/samples.mjs`
        about the `gemini()` function for more details.
