@@ -8,6 +8,7 @@ is available at
 [https://computationalgenomics.ca/tools/epivar](https://computationalgenomics.ca/tools/epivar). 
 
 
+
 ## Installation
 
 ### Note on hosting your own instance
@@ -16,6 +17,7 @@ With some effort, the EpiVar browser can be deployed with other data than just
 the Aracena *et al.* dataset. The instructions below must be followed,
 paying especially close attention to the formats described in the 
 [Application data](#application-data) section.
+
 
 ### Dependencies
 
@@ -192,6 +194,7 @@ The different data sources to generate/prepare are:
        you might want to hardcode the list in the config at
        `config.development.chroms` once you know what that list is.
 
+
 ### Application
 
 Once the data is ready, you can install & build the application as follows:
@@ -201,6 +204,7 @@ npm run install
 # Builds the frontend and copies it under ./public
 npm run build
 ```
+
 
 #### Development (Aracena *et al.*-specific)
 
@@ -226,6 +230,7 @@ sshfs -o defer_permissions \
 In development, you'd run:
  - `npm run watch`: for the backend
  - `cd client && npm start`: for the frontend
+
 
 #### Production
 
@@ -278,6 +283,8 @@ VARWIG_AUTH_SCOPE="openid email org.cilogon.userinfo"
 
 We use `pm2` to run multiple processes of the application at a time to handle more simultaneous requests.
 The `PM2_HOME` folder is set to `/home/dlougheed/.pm2` currently (sorry).
+
+
 
 ## Architecture
 
