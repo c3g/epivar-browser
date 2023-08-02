@@ -350,7 +350,8 @@ You will also need to set up authentication via an OIDC layer. This is configure
 environment variables (which can either be typed into the service run command, or placed
 into a `.env` file and loaded at service start time).
 
-Here is an example, with secrets redacted, for a setup via Auth0:
+Here is an example, with secrets redacted, for a setup via Auth0, 
+complete with directory and Postgres configuration as well:
 
 ```bash
 # Auth configuration
