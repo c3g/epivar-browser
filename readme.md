@@ -58,9 +58,14 @@ hit `Control-d` twice.
 ### Application data
 
 The application requires data from multiple different sources. The data
-is also transformed to be consumable by the application. The first step
-is therefore to prepare the data. `./input-files` contain the source data
-at time of writing as provided by Alain Pacis, but may need to be updated.
+must also be transformed to be consumable by the application. The first step
+is therefore to prepare the data. 
+
+> `./input-files` contains portions of the source data for the 
+> Aracena *et al.* instance of the portal, as provided by Alain Pacis.
+> These files can serve as a starting point or examples of formatting 
+> for customizing the portal.
+
 The data directory is configurable but the application and this document
 will use `./data` by default for generated file data. Data inserted into the
 Postgres database ends up wherever Postgres is configured to persist data to.
