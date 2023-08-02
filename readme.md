@@ -118,19 +118,28 @@ The different data sources to generate/prepare are:
      ```
  - **Metadata:** This is the track's metadata. This can either be provided as an
    XLSX file with the headers:
-     - `file.path`
-     - `ethnicity`
-     - `condition`
-     - `institution.short_name`
-     - `sample_name`
-     - `donor`
-     - `track.view`
-     - `track.track_type`
-     - `assembly.name`
-     - `assay.name`
-     - `assay_category.name`
+     - `file.path`: relative path to `bigWig`, without `config.paths.tracks` directory prefix
+     - `ethnicity`: ethnicity / population group **ID** (*not* name!) 
+       - if set to `Exclude sample`, sample will be skipped
+     - `condition`: condition / experimental group **ID** (*not* name!)
+     - `institution.short_name`: institution which generated the sample (*unused*)
+     - `sample_name`: Full sample name, uniquely indentifying the sample within 
+       `assay`, `condition`, `donor`, and `track.view` variables
+     - `donor`: donor ID (i.e., individual ID)
+     - `track.view`: literal value, one of `signal_forward` or `signal_reverse`
+     - `track.track_type`: literal value `bigWig`
+     - `assembly.name`: assembly name (e.g., `hg19`).
+     - `assay.name`: one of `RNA-Seq`, `ATAC-Seq`, `H3K27ac`, `H3K4me1`, `H3K27me3`, `H3K4me3`
+     - `assay_category.name`: `Transcriptome`/`Regulome`/`Histone Modifications`/`Methylome` (*unused*)
+   and the sheets (which match `assay.name`):
+     - RNA-Seq
+     - ATAC-Seq
+     - H3K27ac
+     - H3K4me1
+     - H3K27me3
+     - H3K4me3
  
-   or a JSON file containing a list of objects with (similar) keys:
+   or a JSON file containing a list of objects with (similar) keys, mapping to the above headers in order:
      - `path`
      - `ethnicity`
      - `condition`
