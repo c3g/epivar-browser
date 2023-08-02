@@ -91,8 +91,7 @@ Postgres database ends up wherever Postgres is configured to persist data to.
 
 **Start with** `cp config.example.js config.js` to create the required config.
 The default config should not need updating if you follow the instructions below,
-but you can follow along to make sure everything matches. Make sure `./data`
-exists with `mkdir -p ./data`.
+but you can follow along to make sure everything matches. 
 
 The different data sources to generate/prepare are:
 
