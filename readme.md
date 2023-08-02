@@ -24,6 +24,7 @@ is available at
       * [Development (Aracena *et al.*-specific)](#development-aracena-et-al-specific)
       * [Production](#production)
         * [Note on current deployment for Aracena *et al.*](#note-on-current-deployment-for-aracena-et-al)
+    * [Editing site content](#editing-site-content)
   * [Architecture](#architecture)
 <!-- TOC -->
 
@@ -387,6 +388,15 @@ VARWIG_AUTH_SCOPE="openid email org.cilogon.userinfo"
 
 We use `pm2` to run multiple processes of the application at a time to handle more simultaneous requests.
 The `PM2_HOME` folder is set to `/home/dlougheed/.pm2` currently (sorry).
+
+
+### Editing site content
+
+The instance title and subtitle can be configured at
+[`./client/src/constants/app.js`](./client/src/constants/app.js).
+
+Page content is stored as JSX components in [`./client/src/components/pages`](./client/src/components/pages).
+When deploying a new instance, make sure to change these pages from the default!
 
 
 
