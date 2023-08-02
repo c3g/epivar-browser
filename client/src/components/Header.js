@@ -53,8 +53,8 @@ export default function Header({children, onAbout, onDatasets, onOverview, onExp
       <Container>
         <Alert color="danger" style={{marginTop: 16}} toggle={() => navigate("/")}>
           <p>
-            An error was encountered during log in. Please try again
-            or <a href="#" onClick={onContact}>contact us</a> for assistance.
+            An error was encountered during log in. Please try again.
+            {/*or <a href="#" onClick={onContact}>contact us</a> for assistance.*/}
           </p>
           {messages.list.length && (
             <p style={{marginBottom: 0}}>
