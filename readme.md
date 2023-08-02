@@ -47,9 +47,16 @@ interface.
 ### Dependencies
 
 Install these dependencies according to their own instructions:
- - `nodejs` version 16+
- - `postgres` (tested with versions 13 through 15) 
- - `redis` (used for caching values; tested with version 6+)
+ - NodeJS version 16+
+ - Postgres 
+   - Used for storing SNPs, features, associations (p-values), and other metadata.
+   - Tested with versions 13 through 15.
+   - See [Setting up the Postgres database](#setting-up-the-postgres-database) for how to prepare this.
+ - Redis
+   - Used for caching values
+   - Tested with version 6+
+   - note that a Redis instance should never be exposed to the internet! 
+     EpiVar expects it to be available locally at `localhost:6379`; the default Redis port.
  - `bigWigMergePlus`: https://github.com/c3g/kent/releases/download/bigWigMergePlus_v2.3.2/bigWigMergePlus-mp2b
  - `bigWigInfo` and `bigWigSummary`: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/
  - `gemini`: https://gemini.readthedocs.io/en/latest/ (non-trivial, takes some effort, there is a lot of data to download)
