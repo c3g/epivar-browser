@@ -19,7 +19,7 @@ export default function Header({children, onAbout, onDatasets, onOverview, onExp
       <div className="Header__auth">
         {userData.data
           ? (
-            <span>Authenticated as {userData.ip}</span>
+            <span>Authenticated as {userData.data.ip}</span>
           ) : null
           // <a href="/api/auth/logout">{userData.data?.displayName ?? userData.data?.id} (Log Out)</a>
           // <a href={`${LOGIN_PATH}?redirect=${encodeURIComponent(window.location.pathname)}`}>Log In / Sign Up</a>
