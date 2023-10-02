@@ -17,7 +17,7 @@ export const getTermsConsent = async (ipAddress, version) => {
       `
       INSERT INTO term_consents_ip ("ip_addr", "version", "consent")
       VALUES ($1, $2, false)
-      ON CONFLICT ON CONSTRAINT term_consents_ip_addr_key DO
+      ON CONFLICT ON CONSTRAINT term_consents_ip_ip_addr_key DO
         UPDATE SET version = $2, consent = false, ts = (now() at time zone 'utc')
       `,
       params);
@@ -33,7 +33,7 @@ export const setTermsConsent = (ipAddress, version, consent) => {
     `
     INSERT INTO term_consents ("ip_addr", "version", "consent")
     VALUES ($1, $2, $3)
-    ON CONFLICT ON CONSTRAINT term_consents_ip_addr_key DO
+    ON CONFLICT ON CONSTRAINT term_consents_ip_ip_addr_key DO
         UPDATE SET "version" = $2, "consent" = $3
     `,
     params);
