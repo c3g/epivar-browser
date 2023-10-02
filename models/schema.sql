@@ -22,6 +22,16 @@ create table if not exists term_consents
 
     UNIQUE (issuer, sub)
 );
+
+create table if not exists term_consents_ip
+(
+    id       serial    primary key,
+    ip_addr  text      not null,
+    version  integer   not null check (version > 0),
+    consent  bool      not null,  -- has the user consented to this version of the terms
+    ts       timestamp not null default (now() at time zone 'utc'),
+    UNIQUE (ip_addr)
+);
 -------------------------------------------------------------------------------
 
 -- ASSAYS ----------- ---------------------------------------------------------

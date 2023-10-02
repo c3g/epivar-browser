@@ -1,9 +1,12 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {useSelector} from "react-redux";
 import {useOutletContext} from "react-router-dom";
-import {LOGIN_PATH} from "../../constants/app";
-import Intro from "../Intro";
 import {Container, Spinner} from "reactstrap";
+
+import {LOGIN_PATH} from "../../constants/app";
+import {getHasLoggedIn, setHasLoggedIn} from "../../helpers/localStorage";
+
+import Intro from "../Intro";
 
 const LoadingContainer = React.memo(() => (
   <Container>
@@ -13,15 +16,28 @@ const LoadingContainer = React.memo(() => (
   </Container>
 ));
 
+const triggerLogIn = () => {
+  window.location.href = `${LOGIN_PATH}?redirect=${window.location.pathname}`;
+};
+
 const ProtectedPageContainer = React.memo(({children}) => {
   const {setTermsModal} = useOutletContext();
   const {data: userData, isLoaded} = useSelector(state => state.user);
 
-  const onTerms = useCallback(() => setTermsModal(true), []);
+  useEffect(() => {
+    if (isLoaded && userData) {
+      setHasLoggedIn();
+    } else if (isLoaded && !userData) {
+      if (getHasLoggedIn()) {
+        triggerLogIn();
+      }
+    }
+  }, [userData, isLoaded]);
+
   const onAccess = useCallback(() => {
     if (!userData) {
-      // Redirect to sign in, so we can capture some information about their identity.
-      window.location.href = `${LOGIN_PATH}?redirect=${window.location.pathname}`;
+      // Redirect to sign in, so we can capture some information about their identity (IP address).
+      triggerLogIn();
     } else {
       // Signed in but terms not accepted yet; show the modal.
       setTermsModal(true);
@@ -31,7 +47,7 @@ const ProtectedPageContainer = React.memo(({children}) => {
   if (!isLoaded) return <LoadingContainer />;
 
   return (!userData?.consentedToTerms) ? (
-    <Intro onTerms={onTerms} onAccess={onAccess} signedIn={!!userData} />
+    <Intro onAccess={onAccess} />
   ) : <>
     {children}
   </>;

@@ -24,12 +24,8 @@ router.put(
     console.log(req.body);
 
     const consent = Boolean(req.body.consentedToTerms);
-    
-    const extra = {
-      institution: req.body?.institution ?? undefined,
-    };
 
-    setTermsConsent(req.user.issuer, req.user.id, CURRENT_TERMS_VERSION, consent, extra)
+    setTermsConsent(req.user.ip, CURRENT_TERMS_VERSION, consent)
       .then(() => {
         req.user.consentedToTerms = consent;
         return respondWithUser(req, res);
@@ -38,24 +34,31 @@ router.put(
 
 router.get("/login",
   // Add some middleware to handle specified redirects
+  // (req, res, next) => {
+  //   // We are fine not to sanitize this, since the IdP will not redirect if it's an invalid destination
+  //   const returnTo = req.query.redirect;
+  //   if (returnTo) {
+  //     req.session.returnTo = `${process.env.VARWIG_BASE_URL}${returnTo}`;
+  //     req.session.save(err => {if (err) console.error(err); next();});
+  //   } else {
+  //     next();
+  //   }
+  // },
+  passport.authenticate("custom"),
   (req, res, next) => {
-    // We are fine not to sanitize this, since the IdP will not redirect if it's an invalid destination
     const returnTo = req.query.redirect;
     if (returnTo) {
-      req.session.returnTo = `${process.env.VARWIG_BASE_URL}${returnTo}`;
-      req.session.save(err => {if (err) console.error(err); next();});
-    } else {
-      next();
+      res.redirect(returnTo);
     }
-  },
-  passport.authenticate("openidconnect"));
+    next();
+  });
 
-router.get("/callback", passport.authenticate("openidconnect", {
-  successReturnToOrRedirect: `${process.env.VARWIG_BASE_URL ?? ""}/`,
-  failureRedirect: `${process.env.VARWIG_BASE_URL ?? ""}/auth-failure`,
-  failureMessage: true,
-  keepSessionInfo: true,
-}));
+// router.get("/callback", passport.authenticate("openidconnect", {
+//   successReturnToOrRedirect: `${process.env.VARWIG_BASE_URL ?? ""}/`,
+//   failureRedirect: `${process.env.VARWIG_BASE_URL ?? ""}/auth-failure`,
+//   failureMessage: true,
+//   keepSessionInfo: true,
+// }));
 
 router.get('/logout', (req, res, next) => {
   req.logout(err => {
