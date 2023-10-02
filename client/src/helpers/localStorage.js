@@ -1,11 +1,9 @@
-const LS_POST_AUTH_PATH = 'EPIVAR_POST_AUTH_PATH';
+const LS_HAS_LOGGED_IN_BEFORE = 'EPIVAR_HAS_LOGGED_IN_BEFORE';
 
-export const setPostAuthPath = (path) => {
-  localStorage.setItem(LS_POST_AUTH_PATH, path);
-};
+export const setHasLoggedIn = () => {
+  localStorage.setItem(LS_HAS_LOGGED_IN_BEFORE, "1");
+}
 
-export const popPostAuthPath = () => {
-  const res = localStorage.getItem(LS_POST_AUTH_PATH);
-  localStorage.removeItem(LS_POST_AUTH_PATH);
-  return res;
-};
+export const getHasLoggedIn = () => {
+  return localStorage.getItem(LS_HAS_LOGGED_IN_BEFORE) === "1";
+}

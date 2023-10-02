@@ -4,9 +4,9 @@ import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, Mo
 
 const TermsModal = ({isOpen, toggle, showAgree, onAgree}) => {
   const [agreeChecked, setAgreeChecked] = useState(false);
-  const [institution, setInstitution] = useState("");
+  // const [institution, setInstitution] = useState("");
   
-  const canSubmit = agreeChecked && institution.trim() !== "";
+  // const canSubmit = agreeChecked && institution.trim() !== "";
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} style={{maxWidth: 720}}>
@@ -79,17 +79,15 @@ const TermsModal = ({isOpen, toggle, showAgree, onAgree}) => {
               Provide you with a service (e.g., help data access),
             </li>
             <li>
-              Communicate and troubleshoot with you regarding any The EpiVar Browser website functionalities and or 
+              Communicate and troubleshoot with you regarding any EpiVar Browser website functionalities and or
               services.
             </li>
           </ul>
           <p>
-            The EpiVar Browser website and its associated servers also collect the following analytics for the purposes 
-            of web presentation, troubleshooting, and web functionality. This information will not be associated with 
-            individual user identities, and will not be used to re-identify any users as subject to this privacy policy:
+            The following personal information may be collected:
           </p>
           <ul>
-            <li>Internet Protocol (IP) address of the computer being used,</li>
+            <li>Internet Protocol (IP) address of the computer being used, in conjunction with:</li>
             <li>Web pages requested,</li>
             <li>Referring web page,</li>
             <li>Browser used,</li>
@@ -106,18 +104,17 @@ const TermsModal = ({isOpen, toggle, showAgree, onAgree}) => {
           </p>
           <h4>Cookies</h4>
           <p>
-            This website uses ‘Cookies’. Cookies may collect information such as your email address, username, or keep 
-            track of pages visited and documents downloaded. The EpiVar Browser may use ‘cookies’ to deliver web content 
-            specific to a user’s interests or to keep users logged in when such a feature is enabled. You may choose to 
-            enable or disable cookies on this website, and such information will not be collected. Disabling cookies 
-            will not restrict your access to the EpiVar Browser website but may affect the normal functioning of various 
-            features.
+            This website uses ‘Cookies’. Cookies may collect information such as your consent to our terms of use. The
+            EpiVar Browser may use ‘cookies’ to deliver web content specific to a user’s interests or to keep users
+            logged in when such a feature is enabled. You may choose to enable or disable cookies on this website, and
+            such information will not be collected. Disabling cookies will not restrict your access to the
+            EpiVar Browser website but may affect the normal functioning of various features.
           </p>
           <h4>Hyperlinks and other privacy policies</h4>
           <p>
             If you follow a hyperlink from the EpiVar Browser website onto the website(s) of another entity, that entity 
-            may have/uphold a different privacy policy. EpiVar Browser bears no responsibility for the privacy of the 
-            user in such a scenario, and we advise you to appropriately consult the privacy policies of these other 
+            may have/uphold a different privacy policy. The EpiVar Browser bears no responsibility for the privacy of
+            the user in such a scenario, and we advise you to appropriately consult the privacy policies of these other
             entities.
           </p>
           <h4>Right to be “forgotten”</h4>
@@ -130,7 +127,7 @@ const TermsModal = ({isOpen, toggle, showAgree, onAgree}) => {
           </p>
           <h4>Privacy policy revisions</h4>
           <p>
-            This privacy policy was last revised on May 9th, 2022, These policies are subject to change, and we 
+            This privacy policy was last revised on September 19th, 2023. These policies are subject to change, and we
             encourage you to review this Privacy Policy each time you visit the website. If any significant changes are 
             made to this policy, a notice will be posted on the homepage for a reasonable period of time after the 
             change is implemented, so that the user may be fully aware of any changes before using the EpiVar Browser 
@@ -148,23 +145,23 @@ const TermsModal = ({isOpen, toggle, showAgree, onAgree}) => {
                 I agree to these terms
               </Label>
             </FormGroup>
-            <FormGroup>
-              <Label for="terms-institution" style={{marginRight: "0.5em"}}>
-                Institution:
-              </Label>
-              <Input id="terms-institution" 
-                     placeholder="Enter your institution" 
-                     value={institution} 
-                     onChange={e => setInstitution(e.target.value)} />
-            </FormGroup>
+            {/*<FormGroup>*/}
+            {/*  <Label for="terms-institution" style={{marginRight: "0.5em"}}>*/}
+            {/*    Institution:*/}
+            {/*  </Label>*/}
+            {/*  <Input id="terms-institution" */}
+            {/*         placeholder="Enter your institution" */}
+            {/*         value={institution} */}
+            {/*         onChange={e => setInstitution(e.target.value)} />*/}
+            {/*</FormGroup>*/}
           </Form>
           <div style={{flex: 1}} />
           <Button 
             color="primary" 
-            disabled={!canSubmit} 
-            style={{cursor: canSubmit ? "pointer" : "not-allowed"}}
+            disabled={!agreeChecked}
+            style={{cursor: agreeChecked ? "pointer" : "not-allowed"}}
             onClick={() => {
-              if (canSubmit) onAgree(institution);
+              if (agreeChecked) onAgree();
             }}>Agree</Button>
           {" "}
           <Button onClick={toggle}>Cancel</Button>

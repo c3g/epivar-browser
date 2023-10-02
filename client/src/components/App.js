@@ -67,9 +67,9 @@ const RoutedApp = () => {
     }
   }, [userData]);
 
-  const termsOnAgree = useCallback(institution => {
+  const termsOnAgree = useCallback(() => {
     if (userData.isLoaded) {
-      dispatch(saveUser({consentedToTerms: true, institution}));
+      dispatch(saveUser({consentedToTerms: true}));
     }
   }, [userData, dispatch]);
 
