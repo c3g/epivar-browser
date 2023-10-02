@@ -31,7 +31,7 @@ export const setTermsConsent = (ipAddress, version, consent) => {
   const params = [ipAddress, parseInt(version), Boolean(consent)];
   return db.insert(
     `
-    INSERT INTO term_consents ("ip_addr", "version", "consent")
+    INSERT INTO term_consents_ip ("ip_addr", "version", "consent")
     VALUES ($1, $2, $3)
     ON CONFLICT ON CONSTRAINT term_consents_ip_ip_addr_key DO
         UPDATE SET "version" = $2, "consent" = $3
