@@ -332,43 +332,47 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
   const browserDiv = useRef();
   const browserRef = useRef(null);
 
+  const [loadingBrowser, setLoadingBrowser] = useState(false);
+  const [sessionTracks, setSessionTracks] = useState(null);
+
   const { assemblyID, sessionID, session: { assay, feature, snp } } = data ?? { session: {} };
   const { chrom: fChrom, start: fStart, end: fEnd } = feature ?? {};
 
   useEffect(() => {
-    console.debug("browserDiv.current:", browserDiv.current, " data:", data);
-    if (browserDiv.current && data) {
+    // Fetch tracks when data is set
+    if (data) {
+      setLoadingBrowser(true);
       fetch(`${BASE_URL}/api/igvjs/track-db/${sessionID}`)
         .then((res) => res.json())
-        .then(({ data }) => {
-          const options = {
-            genome: assemblyID,
-            locus: buildBrowserPosition(feature, snp),
-            tracks: data,
-            roi: [
-              buildIGVjsROI(`chr${fChrom}`, fStart, fEnd, FEATURE_HIGHLIGHT_COLOR, "Feature"),
-              buildIGVjsROI(`chr${snp.chrom}`, snp.position, snp.position + 1, SNP_HIGHLIGHT_COLOR, "SNP"),
-            ],
-          };
-
-          console.debug("igv.js div ref:", browserDiv.current);
-
-          return igv.createBrowser(browserDiv.current, options).then((browser) => {
-            console.debug("set up igv.js browser:", browser);
-            browserRef.current = browser;
-          });
-        }).catch((err) => console.error(err));
-
-      // Return cleanup function for browser instance
-      return () => {
-        if (browserRef.current) {
-          igv.removeBrowser(browserRef.current);
-        }
-      };
-    } else if (browserRef.current && !data) {
+        .then(({data: tracks}) => {
+          setSessionTracks(tracks);
+        })
+        .catch((err) => console.error(err));
+    } else if (browserRef.current) {
       igv.removeBrowser(browserRef.current);
     }
-  }, [browserDiv.current, data]);
+  }, [data]);
+
+  useEffect(() => {
+    console.debug("browserDiv.current:", browserDiv.current);
+    console.debug("tracks:", sessionTracks);
+    
+    if (!browserDiv.current || !sessionTracks) return;
+    
+    igv.createBrowser(browserDiv.current, {
+      genome: assemblyID,
+      locus: buildBrowserPosition(feature, snp),
+      tracks: data,
+      roi: [
+        buildIGVjsROI(`chr${fChrom}`, fStart, fEnd, FEATURE_HIGHLIGHT_COLOR, "Feature"),
+        buildIGVjsROI(`chr${snp.chrom}`, snp.position, snp.position + 1, SNP_HIGHLIGHT_COLOR, "SNP"),
+      ],
+    }).then((browser) => {
+      console.debug("set up igv.js browser:", browser);
+      browserRef.current = browser;
+      setLoadingBrowser(false);
+    }).catch((err) => console.error(err));
+  }, [sessionTracks]);
 
   const title = data ? `IGV.js browser – ${assay}; SNP: ${snp.id}, feature: chr${fChrom}:${fStart}-${fEnd}` : "";
 
@@ -376,6 +380,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
     <Modal isOpen={isOpen} toggle={toggle} style={{ maxWidth: "80vw" }}>
       <ModalHeader toggle={toggle}>{title}</ModalHeader>
       <ModalBody>
+        {loadingBrowser && <span>Loading...</span>}
         <div ref={browserDiv} />
       </ModalBody>
     </Modal>
