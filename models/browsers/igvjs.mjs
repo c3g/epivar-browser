@@ -25,7 +25,7 @@ const generateTracks = (mergedTracks) => {
         name: `${parentName}__${type}`,
         type: "wig",
         format: "bigWig",
-        url: output.url,  // TODO: abs url
+        url: output.url,
         color: getColor(type)[0],
         graphType: "points",
         height: 90,
@@ -42,7 +42,7 @@ const generateTracks = (mergedTracks) => {
     name: `Legend: ${t}`,
     type: "annotation",
     format: "bigBed",
-    url: "/otherData/legendItem.bb",  // TODO: abs url
+    url: "/otherData/legendItem.bb",
     color: getColor(t)[0],
     displayMode: "COLLAPSED",
     height: 40,
