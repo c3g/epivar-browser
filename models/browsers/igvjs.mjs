@@ -1,10 +1,6 @@
 import {getColor} from "./utils.mjs";
 import {GENOTYPE_STATES} from "../../helpers/genome.mjs";
 
-export default {
-  generateTracks,
-};
-
 const generateTracks = (mergedTracks) => {
   const tracks = [];
 
@@ -12,27 +8,32 @@ const generateTracks = (mergedTracks) => {
     const baseName = `${merged.assay}__${merged.condition}`;
     const parentName = `${baseName}__averages`;
 
+    const parentSubtracks = [];
+    const parentTrack = {
+      name: parentName,
+      type: "merged",
+      tracks: parentSubtracks,
+      displayMode: "EXPANDED",
+      // equivalent to UCSC's maxHeightPixels 25:25:8
+      height: 25,
+      minHeight: 8,
+      maxHeight: 25,
+    };
+
     Object.entries(merged.output).forEach(([type, output]) => {
       if (output === undefined) {
         return;
       }
 
-      const trackName = `${parentName}__${type}`;
-
-      const colors = getColor(type);
-
-      tracks.push({
-        name: trackName,
+      parentSubtracks.push({
+        name: `${parentName}__${type}`,
         type: "wig",
         url: output.url,  // TODO: abs url
-        color: colors[0],
-        displayMode: "EXPANDED",
-        // equivalent to UCSC's maxHeightPixels 25:25:8
-        height: 25,
-        minHeight: 8,
-        maxHeight: 25,
+        color: getColor(type)[0],
       });
     });
+
+    tracks.push(parentTrack);
   });
 
   // Add legend 'tracks' - non-data tracks that show the REF/HET/HOM colours
@@ -45,4 +46,8 @@ const generateTracks = (mergedTracks) => {
   })));
 
   return tracks;
+};
+
+export default {
+  generateTracks,
 };
