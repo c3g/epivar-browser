@@ -240,7 +240,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
 
   return <>
     <div className="PeaksTableContainer">
-      <PeakIGVModal data={igvData} />
+      <PeakIGVModal data={igvData} isOpen={igvData !== null} />
 
       <Table
         className="PeaksTable"
