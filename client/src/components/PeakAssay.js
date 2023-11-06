@@ -336,7 +336,8 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
   const [loadingBrowser, setLoadingBrowser] = useState(false);
   const [sessionTracks, setSessionTracks] = useState(null);
 
-  const { assemblyID, sessionID, session: { assay, feature, snp } } = data ?? { session: {} };
+  const { assemblyID, sessionID, session } = data ?? {};  // session <=> peak here
+  const { assay, feature, snp } = session ?? {};
   const { chrom: fChrom, start: fStart, end: fEnd } = feature ?? {};
 
   useEffect(() => {
@@ -381,7 +382,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
   }, [sessionTracks]);
 
   /** @type React.ReactNode */
-  const title = data ? <><strong>{assay}</strong> – SNP: {snp.id}, feature: {formatFeature(feature)}</> : "";
+  const title = data ? <><strong>{assay}</strong> – SNP: {snp.id}, feature: {formatFeature(session)}</> : "";
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} style={{ maxWidth: "80vw" }}>
