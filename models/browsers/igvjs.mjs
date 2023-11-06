@@ -39,7 +39,7 @@ const generateTracks = (mergedTracks) => {
 
   // Add legend 'tracks' - non-data tracks that show the REF/HET/HOM colours
   tracks.push(...GENOTYPE_STATES.map((t, i) => ({
-    name: t,
+    name: `Legend: ${t}`,
     type: "annotation",
     format: "bigBed",
     url: "/otherData/legendItem.bb",  // TODO: abs url
