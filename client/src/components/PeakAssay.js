@@ -192,7 +192,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
             }}>
               <span style={{ fontFamily: "monospace" }}>igv.js</span>
             </Button>
-            <span style={{ margin: "0 0.5em" }}>·</span>
+            <span style={{ margin: "0 0.4em" }}>·</span>
           </>}
           <Button size='sm' color='link' disabled={loading} onClick={() => {
             setTrackLoading(row.id);
