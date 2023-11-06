@@ -3,7 +3,7 @@ import * as k from './constants/ActionTypes'
 import {makeDataReducer, makeDefaultDataState, makeDefaultListState, makeListReducer} from "./helpers/reducers";
 
 
-const defaultChrom = 'rsID'
+const defaultChrom = 'rsID';
 
 const defaultUI = {
   chrom: defaultChrom,
@@ -15,6 +15,8 @@ const defaultUI = {
   },
 
   usePrecomputed: true,
+
+  devMode: false,
 };
 
 function uiReducer(state = defaultUI, action) {
@@ -33,6 +35,9 @@ function uiReducer(state = defaultUI, action) {
     }
     case k.SET_USE_PRECOMPUTED: {
       return {...state, usePrecomputed: action.payload};
+    }
+    case k.SET_DEV_MODE: {
+      return {...state, devMode: action.payload};
     }
     default:
       return state;

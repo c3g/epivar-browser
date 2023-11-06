@@ -11,6 +11,7 @@ export const setPosition       = createAction(k.SET_POSITION);
 export const setOverviewChrom  = createAction(k.SET_OVERVIEW_CHROM);
 export const setOverviewAssay  = createAction(k.SET_OVERVIEW_ASSAY);
 export const setUsePrecomputed = createAction(k.SET_USE_PRECOMPUTED);
+export const setDevMode        = createAction(k.SET_DEV_MODE);
 export const handleError       = createAction(k.HANDLE_ERROR);
 
 export const assays            = createFetchActions(k.ASSAYS);

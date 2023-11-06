@@ -3,6 +3,7 @@ export const SET_POSITION        = 'SET_POSITION';
 export const SET_OVERVIEW_CHROM  = 'SET_OVERVIEW_CHROM';
 export const SET_OVERVIEW_ASSAY  = 'SET_OVERVIEW_ASSAY';
 export const SET_USE_PRECOMPUTED = 'SET_USE_PRECOMPUTED';
+export const SET_DEV_MODE        = 'SET_DEV_MODE';
 export const HANDLE_ERROR        = 'HANDLE_ERROR';
 
 export const ASSAYS              = createFetchConstants('ASSAYS');
