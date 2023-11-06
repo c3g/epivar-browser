@@ -334,12 +334,12 @@ const PeakIGVModal = ({ data, isOpen }) => {
       const { assemblyID, sessionID, session: { feature, snp } } = data;
 
       fetch(`${BASE_URL}/api/igvjs/track-db/${sessionID}`)
-        .then((data) => data.json())
-        .then((tracks) => {
+        .then((res) => res.json())
+        .then(({ data }) => {
           const options = {
             genome: assemblyID,
             locus: buildBrowserPosition(feature, snp),
-            tracks,
+            tracks: data,
             roi: [
               buildIGVjsROI(`chr${feature.chrom}`, feature.start, feature.end, FEATURE_HIGHLIGHT_COLOR, "Feature"),
               buildIGVjsROI(`chr${snp.chrom}`, snp.position, snp.position + 1, SNP_HIGHLIGHT_COLOR, "SNP"),
