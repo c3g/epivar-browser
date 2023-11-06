@@ -332,6 +332,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
   const browserDiv = useRef();
   const browserRef = useRef(null);
 
+  const [loadingTracks, setLoadingTracks] = useState(false);
   const [loadingBrowser, setLoadingBrowser] = useState(false);
   const [sessionTracks, setSessionTracks] = useState(null);
 
@@ -341,11 +342,12 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
   useEffect(() => {
     // Fetch tracks when data is set
     if (data) {
-      setLoadingBrowser(true);
+      setLoadingTracks(true);
       fetch(`${BASE_URL}/api/igvjs/track-db/${sessionID}`)
         .then((res) => res.json())
         .then(({data: tracks}) => {
           setSessionTracks(tracks);
+          setLoadingTracks(false);
         })
         .catch((err) => console.error(err));
     } else if (browserRef.current) {
@@ -358,6 +360,8 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
     console.debug("tracks:", sessionTracks);
     
     if (!browserDiv.current || !sessionTracks) return;
+
+    setLoadingBrowser(true);
     
     igv.createBrowser(browserDiv.current, {
       genome: assemblyID,
@@ -380,8 +384,8 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
     <Modal isOpen={isOpen} toggle={toggle} style={{ maxWidth: "80vw" }}>
       <ModalHeader toggle={toggle}>{title}</ModalHeader>
       <ModalBody>
-        {loadingBrowser && <span>Loading...</span>}
-        <div ref={browserDiv} style={{ minHeight: 700 }} />
+        {loadingTracks && <div style={{ paddingBottom: 12, textAlign: "center" }}>Loading...</div>}
+        <div ref={browserDiv} style={{ minHeight: 700 }} className={loadingBrowser ? "loading" : ""} />
       </ModalBody>
     </Modal>
   );
