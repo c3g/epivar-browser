@@ -427,9 +427,6 @@ const buildBrowserPosition = (feature, snp, padding=500) => {
   return `${featureChrom}:${displayWindow[0]-padding}-${displayWindow[1]+padding}`;
 };
 
-const FEATURE_HIGHLIGHT_COLOR = "#FFEECC";
-const SNP_HIGHLIGHT_COLOR = "#FF9F9F";
-
 const buildIGVjsROI = (chr, start, end, color, name) => ({
   name,
   color,

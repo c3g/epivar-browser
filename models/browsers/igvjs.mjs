@@ -14,10 +14,6 @@ const generateTracks = (mergedTracks) => {
       type: "merged",
       tracks: parentSubtracks,
       displayMode: "EXPANDED",
-      // equivalent to UCSC's maxHeightPixels 25:25:8
-      height: 25,
-      minHeight: 8,
-      maxHeight: 25,
     };
 
     Object.entries(merged.output).forEach(([type, output]) => {
@@ -31,6 +27,10 @@ const generateTracks = (mergedTracks) => {
         format: "bigWig",
         url: output.url,  // TODO: abs url
         color: getColor(type)[0],
+        graphType: "points",
+        height: 60,
+        minHeight: 25,
+        maxHeight: 60,
       });
     });
 
@@ -45,6 +45,7 @@ const generateTracks = (mergedTracks) => {
     url: "/otherData/legendItem.bb",  // TODO: abs url
     color: getColor(t)[0],
     displayMode: "COLLAPSED",
+    height: 40,
   })));
 
   return tracks;
