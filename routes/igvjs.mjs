@@ -1,6 +1,6 @@
 import express from "express";
 
-import {errorHandler, textHandler} from "../helpers/handlers.mjs";
+import {dataHandler, errorHandler, textHandler} from "../helpers/handlers.mjs";
 import IGVjs from "../models/browsers/igvjs.mjs";
 import Sessions from "../models/sessions.mjs";
 import Tracks from "../models/tracks.mjs";
@@ -22,7 +22,7 @@ router.get("/track-db/:session", ({params}, res) => {
         .then(tracks => Tracks.merge(tracks, session))
     )
     .then(IGVjs.generateTracks)
-    .then(textHandler(res))
+    .then(dataHandler(res))
     .catch(errorHandler(res));
 });
 
