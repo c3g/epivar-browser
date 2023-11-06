@@ -1,14 +1,13 @@
 import express from "express";
 
+import config from "../config.js";
 import {errorHandler, textHandler} from "../helpers/handlers.mjs";
 import unindent from "../helpers/unindent.mjs";
-import Ucsc from "../models/ucsc.mjs";
+import Ucsc from "../models/browsers/ucsc.mjs";
 import Sessions from "../models/sessions.mjs";
 import Tracks from "../models/tracks.mjs";
 
 const router = express.Router();
-
-const assemblyName = "hg19";
 
 router.get('/hub/:session', ({params}, res) => {
   Promise.resolve(Ucsc.generateHub(params.session))
@@ -28,7 +27,7 @@ router.get("/perma/hub/other-tracks", (_req, res) => {
     .catch(errorHandler(res));
 });
 router.get("/perma/genome/other-tracks", (_req, res) => {
-  Promise.resolve(Ucsc.generateGenome("other-tracks", assemblyName))
+  Promise.resolve(Ucsc.generateGenome("other-tracks", config.assembly.id))
     .then(textHandler(res))
     .catch(errorHandler(res))
 })
@@ -43,7 +42,7 @@ router.get("/perma/track-db/*.html", (_req, res) => {
 // ----------------------------------------------------------------------------
 
 router.get('/genome/:session', ({params}, res) => {
-  Promise.resolve(Ucsc.generateGenome(params.session, assemblyName))
+  Promise.resolve(Ucsc.generateGenome(params.session, config.assembly.id))
     .then(textHandler(res))
     .catch(errorHandler(res));
 });

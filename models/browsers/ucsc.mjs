@@ -1,13 +1,13 @@
 /*
- * ucsc.js
+ * models/browsers/ucsc.js
  */
 
-import Color from "color-js";
 import fs from "fs";
 
-import config from "../config.js";
-import {GENOTYPE_STATE_HET, GENOTYPE_STATE_HOM, GENOTYPE_STATE_REF, GENOTYPE_STATES} from "../helpers/genome.mjs";
-import unindent from "../helpers/unindent.mjs";
+import config from "../../config.js";
+import {GENOTYPE_STATES} from "../../helpers/genome.mjs";
+import unindent from "../../helpers/unindent.mjs";
+import {getColor, indent} from "./utils.mjs";
 
 const {staticTracks} = config.paths;
 
@@ -27,24 +27,22 @@ function generateHub(session) {
     longLabel EpiVar Browser Dynamic Track Hub (Session ID: ${session})
     genomesFile ../genome/${session}
     email epivar@computationalgenomics.ca
-  `
+  `;
 }
 
 function generateGenome(session, assembly) {
   return unindent`
     genome ${assembly}
     trackDb ../track-db/${session}
-  `
+  `;
 }
 
 function generateTracks(mergedTracks) {
-
-  const trackBlocks = []
+  const trackBlocks = [];
 
   mergedTracks.forEach((merged, idx) => {
-    const baseName = `${merged.assay}__${merged.condition}`
-
-    const parentName = `${baseName}__averages`
+    const baseName = `${merged.assay}__${merged.condition}`;
+    const parentName = `${baseName}__averages`;
 
     trackBlocks.push(unindent`
       track ${parentName}
@@ -60,17 +58,17 @@ function generateTracks(mergedTracks) {
       configurable on
       dragAndDrop subTracks
       autoScale on
-    `)
+    `);
 
     Object.entries(merged.output).forEach(([type, output]) => {
       if (output === undefined) {
         return;
       }
 
-      const trackName = `${parentName}__${type}`
-      const shortLabel = trackName
+      const trackName = `${parentName}__${type}`;
+      const shortLabel = trackName;
 
-      const colors = getColor(type)
+      const colors = getColor(type);
 
       trackBlocks.push(indent(4, unindent`
         track ${trackName}
@@ -81,9 +79,9 @@ function generateTracks(mergedTracks) {
         maxHeightPixels 25:25:8
         color ${colors[0]}
         graphTypeDefault points
-      `))
-    })
-  })
+      `));
+    });
+  });
 
   // Add legend 'tracks' - non-data tracks that show the REF/HET/HOM colours
   trackBlocks.push(...GENOTYPE_STATES.map((t, i) => unindent`
@@ -95,70 +93,9 @@ function generateTracks(mergedTracks) {
     color ${getColor(t)[0]}
     visibility dense
     priority 0.${i+mergedTracks.length+1}
-  `))
+  `));
 
   return trackBlocks.join('\n\n') + (otherTracks ? `\n\n${otherTracks}` : "");
 }
 
 const TRACK_TYPE_BIGWIG = "bigWig";
-
-// Thanks to Google Charts
-const COLORS = {
-  [GENOTYPE_STATE_REF]: [
-    '#87A8E8',
-    '#3559A1'
-  ],
-  [GENOTYPE_STATE_HET]: [
-    '#FFAD33',
-    '#B77C25'
-  ],
-  [GENOTYPE_STATE_HOM]: [
-    '#E038E0',
-    '#910591'
-  ],
-}
-/* const COLORS = {
- *   REF: [ '#5C85D6', '#EE5430' ],
- *   HET: [ '#FFAD33', '#13B41D' ],
- *   HOM: [ '#B800B8', '#29CCB8' ],
- * } */
-
-/* Original colors:
- * [
- *   '#3366CC',
- *   '#DC3912',
- *   '#FF9900',
- *   '#109618',
- *   '#990099',
- *   '#3B3EAC',
- *   '#0099C6',
- *   '#DD4477',
- *   '#66AA00',
- *   '#B82E2E',
- *   '#316395',
- *   '#994499',
- *   '#22AA99',
- *   '#AAAA11',
- *   '#6633CC',
- *   '#E67300',
- *   '#8B0707',
- *   '#329262',
- *   '#5574A6',
- *   '#3B3EAC'
- * ] */
-
-function getColor(type) {
-  return COLORS[type].map(colorToRGB)
-}
-
-function colorToRGB(c) {
-  const color = Color(c)
-  const r = Math.floor(color.getRed() * 255)
-  const g = Math.floor(color.getGreen() * 255)
-  const b = Math.floor(color.getBlue() * 255)
-  return [r, g, b].join(',')
-}
-
-function indent(n, string) {
-  return string.replace(/^/mg, ' '.repeat(n))
-}
