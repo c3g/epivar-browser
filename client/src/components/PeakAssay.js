@@ -329,10 +329,10 @@ const PeakIGVModal = ({ data, isOpen }) => {
   const browserDiv = useRef();
   const browserRef = useRef(null);
 
-  useEffect(() => {
-    if (browserDiv && data) {
-      const { assemblyID, sessionID, session: { feature, snp } } = data;
+  const { assemblyID, sessionID, session: { assay, feature, snp } } = data ?? { session: {} };
 
+  useEffect(() => {
+    if (browserDiv.current && data) {
       fetch(`${BASE_URL}/api/igvjs/track-db/${sessionID}`)
         .then((res) => res.json())
         .then(({ data }) => {
@@ -346,9 +346,9 @@ const PeakIGVModal = ({ data, isOpen }) => {
             ],
           };
 
-          return igv.createBrowser(browserDiv, options).then((browser) => {
+          return igv.createBrowser(browserDiv.current, options).then((browser) => {
             browserRef.current = browser;
-          })
+          });
         }).catch((err) => console.error(err));
 
       // Return cleanup function for browser instance
