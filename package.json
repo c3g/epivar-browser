@@ -32,13 +32,13 @@
     "passport": "^0.6.0",
     "passport-custom": "^1.1.1",
     "passport-openidconnect": "^0.1.1",
-    "pg": "^8.11.1",
-    "pg-copy-streams": "^6.0.5",
+    "pg": "^8.11.3",
+    "pg-copy-streams": "^6.0.6",
     "pug": "~3.0.2",
-    "rambda": "^8.1.0",
-    "redis": "~4.6.7",
+    "rambda": "^8.5.0",
+    "redis": "~4.6.10",
     "serve-favicon": "~2.5.0",
-    "sharp": "^0.32.1"
+    "sharp": "^0.32.6"
   },
   "devDependencies": {
     "nodemon": "^3.0.1",
