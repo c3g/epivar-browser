@@ -89,6 +89,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
   const [tracksLoading, setTracksLoading] = useState({});
 
   const [igvData, setIgvData] = useState(null);  // shape: { assemblyID, sessionID, session }
+  const [igvModalOpen, setIgvModalOpen] = useState(false);
 
   const setTrackLoading = useCallback((id) => {
     setTracksLoading({...tracksLoading, [id]: true});
@@ -186,6 +187,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
                 console.debug("opening igv.js with", res);
                 setIgvData(res);
                 setTrackNotLoading(row.id);
+                setIgvModalOpen(true);
               });
             }}>
               <span style={{ fontFamily: "monospace" }}>igv.js</span>
@@ -241,7 +243,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
 
   return <>
     <div className="PeaksTableContainer">
-      <PeakIGVModal data={igvData} isOpen={igvData !== null} />
+      <PeakIGVModal data={igvData} isOpen={igvModalOpen} toggle={() => setIgvModalOpen(!igvModalOpen)} />
 
       <Table
         className="PeaksTable"
@@ -326,11 +328,12 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
   </>;
 }
 
-const PeakIGVModal = ({ data, isOpen }) => {
+const PeakIGVModal = ({ data, isOpen, toggle }) => {
   const browserDiv = useRef();
   const browserRef = useRef(null);
 
   const { assemblyID, sessionID, session: { assay, feature, snp } } = data ?? { session: {} };
+  const { chrom: fChrom, start: fStart, end: fEnd } = feature ?? {};
 
   useEffect(() => {
     if (browserDiv.current && data) {
@@ -342,7 +345,7 @@ const PeakIGVModal = ({ data, isOpen }) => {
             locus: buildBrowserPosition(feature, snp),
             tracks: data,
             roi: [
-              buildIGVjsROI(`chr${feature.chrom}`, feature.start, feature.end, FEATURE_HIGHLIGHT_COLOR, "Feature"),
+              buildIGVjsROI(`chr${fChrom}`, fStart, fEnd, FEATURE_HIGHLIGHT_COLOR, "Feature"),
               buildIGVjsROI(`chr${snp.chrom}`, snp.position, snp.position + 1, SNP_HIGHLIGHT_COLOR, "SNP"),
             ],
           };
@@ -368,11 +371,11 @@ const PeakIGVModal = ({ data, isOpen }) => {
 
   if (!data) return <div />;
 
-  const title = `IGV.js browser – ${assay}; SNP: ${snp.id}, feature: ${feature.chrom}:${feature.start}-${feature.end}`;
+  const title = `IGV.js browser – ${assay}; SNP: ${snp.id}, feature: chr${fChrom}:${fStart}-${fEnd}`;
 
   return (
-    <Modal isOpen={isOpen}>
-      <ModalHeader>{title}</ModalHeader>
+    <Modal isOpen={isOpen} toggle={toggle} style={{ maxWidth: "80vw" }}>
+      <ModalHeader toggle={toggle}>{title}</ModalHeader>
       <ModalBody>
         <div ref={browserDiv} />
       </ModalBody>
