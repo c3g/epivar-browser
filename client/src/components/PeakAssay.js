@@ -183,6 +183,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
             <Button size="sm" color="link" disabled={loading} onClick={() => {
               setTrackLoading(row.id);
               onOpenTracks(row).then((res) => {
+                console.debug("opening igv.js with", res);
                 setIgvData(res);
                 setTrackNotLoading(row.id);
               });
@@ -364,9 +365,11 @@ const PeakIGVModal = ({ data, isOpen }) => {
 
   if (!data) return <div />;
 
+  const title = `IGV.js browser – ${assay}; SNP: ${snp.id}, feature: ${feature.chrom}:${feature.start}-${feature.end}`;
+
   return (
     <Modal isOpen={isOpen}>
-      <ModalHeader></ModalHeader>
+      <ModalHeader>{title}</ModalHeader>
       <ModalBody>
         <div ref={browserDiv} />
       </ModalBody>
