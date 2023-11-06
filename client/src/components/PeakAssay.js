@@ -366,7 +366,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
     igv.createBrowser(browserDiv.current, {
       genome: assemblyID,
       locus: buildBrowserPosition(feature, snp),
-      tracks: data,
+      tracks: sessionTracks,
       roi: [
         // rgb(255, 235, 0) at 0.2 opacity is equivalent to #FFFBCC to match UCSC
         buildIGVjsROI(`chr${fChrom}`, fStart, fEnd, "rgba(255, 235, 0, 0.2)", "Feature"),
