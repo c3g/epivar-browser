@@ -336,6 +336,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
   const { chrom: fChrom, start: fStart, end: fEnd } = feature ?? {};
 
   useEffect(() => {
+    console.debug("browserDiv.current:", browserDiv.current, " data:", data);
     if (browserDiv.current && data) {
       fetch(`${BASE_URL}/api/igvjs/track-db/${sessionID}`)
         .then((res) => res.json())
@@ -350,7 +351,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
             ],
           };
 
-          console.debug("igv.js div ref:", browserRef.current);
+          console.debug("igv.js div ref:", browserDiv.current);
 
           return igv.createBrowser(browserDiv.current, options).then((browser) => {
             console.debug("set up igv.js browser:", browser);
@@ -369,9 +370,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
     }
   }, [browserDiv.current, data]);
 
-  if (!data) return <div />;
-
-  const title = `IGV.js browser – ${assay}; SNP: ${snp.id}, feature: chr${fChrom}:${fStart}-${fEnd}`;
+  const title = data ? `IGV.js browser – ${assay}; SNP: ${snp.id}, feature: chr${fChrom}:${fStart}-${fEnd}` : "";
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} style={{ maxWidth: "80vw" }}>
