@@ -28,9 +28,9 @@ const generateTracks = (mergedTracks) => {
         url: output.url,  // TODO: abs url
         color: getColor(type)[0],
         graphType: "points",
-        height: 60,
-        minHeight: 25,
-        maxHeight: 60,
+        height: 90,
+        minHeight: 40,
+        maxHeight: 140,
       });
     });
 
