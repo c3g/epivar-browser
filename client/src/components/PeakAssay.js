@@ -367,7 +367,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
     } else if (browserRef.current && !data) {
       igv.removeBrowser(browserRef.current);
     }
-  }, [browserDiv, data]);
+  }, [browserDiv.current, data]);
 
   if (!data) return <div />;
 
