@@ -28,6 +28,7 @@ const generateTracks = (mergedTracks) => {
       parentSubtracks.push({
         name: `${parentName}__${type}`,
         type: "wig",
+        format: "bigWig",
         url: output.url,  // TODO: abs url
         color: getColor(type)[0],
       });
@@ -40,6 +41,7 @@ const generateTracks = (mergedTracks) => {
   tracks.push(...GENOTYPE_STATES.map((t, i) => ({
     name: t,
     type: "annotation",
+    format: "bigBed",
     url: "/otherData/legendItem.bb",  // TODO: abs url
     color: getColor(t)[0],
     displayMode: "COLLAPSED",
