@@ -368,8 +368,10 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
       locus: buildBrowserPosition(feature, snp),
       tracks: data,
       roi: [
-        buildIGVjsROI(`chr${fChrom}`, fStart, fEnd, FEATURE_HIGHLIGHT_COLOR, "Feature"),
-        buildIGVjsROI(`chr${snp.chrom}`, snp.position, snp.position + 1, SNP_HIGHLIGHT_COLOR, "SNP"),
+        // rgb(255, 235, 0) at 0.2 opacity is equivalent to #FFFBCC to match UCSC
+        buildIGVjsROI(`chr${fChrom}`, fStart, fEnd, "rgba(255, 235, 0, 0.2)", "Feature"),
+        // rgb(255, 0, 0) at 0.38 opacity is equivalent to #FF9F9F to match UCSC
+        buildIGVjsROI(`chr${snp.chrom}`, snp.position, snp.position + 1, "rgba(255, 0, 0, 0.38)", "SNP"),
       ],
     }).then((browser) => {
       console.debug("set up igv.js browser:", browser);
@@ -402,8 +404,8 @@ const launchInUCSC = ({ assemblyID, sessionID, session: { feature, snp } }) => {
 
     // Highlight the SNP in red, and the feature in light yellow
     ["highlight", [
-      buildUCSCHighlight(assemblyID, `chr${feature.chrom}`, feature.start, feature.end, FEATURE_HIGHLIGHT_COLOR),
-      buildUCSCHighlight(assemblyID, `chr${snp.chrom}`, snp.position, snp.position + 1, SNP_HIGHLIGHT_COLOR),
+      buildUCSCHighlight(assemblyID, `chr${feature.chrom}`, feature.start, feature.end, "#FFFBCC"),
+      buildUCSCHighlight(assemblyID, `chr${snp.chrom}`, snp.position, snp.position + 1, "#FF9F9F"),
     ].join("|")],
   ]);
 
