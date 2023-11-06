@@ -52,50 +52,18 @@ export const doSearch = () => (dispatch, getState) => {
   }
 };
 
-const buildUCSCHighlight = (asm, chr, start, end, color) => `${asm}.${chr}:${start}-${end}${color}`;
+export const mergeTracks = (peak) => (dispatch, getState) => {
+  const assemblyID = getState().assembly.data?.id;
 
-export const mergeTracks = peak => (dispatch, getState) => {
-  const assembly = getState().assembly.data?.id;
-
-  if (!assembly) {
-    console.error(`Could not retrieve assembly ID - got ${assembly}`);
+  if (!assemblyID) {
+    console.error(`Could not retrieve assembly ID - got ${assemblyID}`);
     return;
   }
 
   const session = {...peak};
-  const {feature, snp} = session;
-
-  const padding = 500;
-
-  const featureChrom = `chr${feature.chrom}`;
-  const snpChrom = `chr${snp.chrom}`;
 
   return api.createSession(session)
-    .then(sessionID => {
-      const snpPosition = snp.position;
-      const displayWindow = featureChrom === snpChrom
-        ? [Math.min(feature.start, snpPosition), Math.max(feature.end, snpPosition)]
-        : [feature.start, feature.end];
-      const position = `${featureChrom}:${displayWindow[0]-padding}-${displayWindow[1]+padding}`;
-      const hubURL = `${BASE_URL}/api/ucsc/hub/${sessionID}`;
-      const ucscURL = constructUCSCUrl([
-        ["db", assembly],
-        ["hubClear", hubURL],
-        // ["hubClear", permaHubURL],
-        ["position", position],
-
-        // Highlight the SNP in red, and the feature in light yellow
-        ["highlight", [
-          buildUCSCHighlight(assembly, featureChrom, feature.start, feature.end, "#FFEECC"),
-          buildUCSCHighlight(assembly, snpChrom, snp.position, snp.position + 1, "#FF9F9F"),
-        ].join("|")],
-      ]);
-
-      console.log('Hub:',  hubURL);
-      console.log('UCSC:', ucscURL);
-
-      window.open(ucscURL);
-    })
+    .then(sessionID => ({ assemblyID, sessionID, session }))
     .catch(err => dispatch(handleError(err)));
 };
 

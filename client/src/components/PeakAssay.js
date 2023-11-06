@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   Button,
@@ -7,15 +7,22 @@ import {
   Col,
   Input,
   Label,
+  Modal,
+  ModalHeader,
+  ModalBody,
   Row,
   Table,
   Tooltip,
 } from 'reactstrap'
 import {useTable, usePagination, useSortBy} from "react-table";
+import igv from "igv/dist/igv.esm";
 
 import Icon from "./Icon";
 import PeakBoxplot from "./PeakBoxplot";
+
 import {mergeTracks, setUsePrecomputed} from "../actions";
+import {BASE_URL} from "../constants/app";
+import {constructUCSCUrl} from "../helpers/ucsc";
 
 
 const PAGE_SIZES = [10, 20, 30, 40, 50];
@@ -39,10 +46,8 @@ const PeakAssay = ({peaks}) => {
   }, [peaks])
 
   const onChangeFeature = useCallback(p => setSelectedPeak(p.id), []);
-  const onOpenTracks = useCallback((p, cb) => {
-    dispatch(mergeTracks(p)).then(() => {
-      if (cb) cb();
-    });
+  const onOpenTracks = useCallback((p) => {
+    return dispatch(mergeTracks(p));  // res shape: { assemblyID, sessionID, session }
   }, [dispatch]);
 
   const selectedPeakData = peaks.find(p => p.id === selectedPeak);
@@ -82,6 +87,8 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
 
   const [tooltipsShown, setTooltipsShown] = useState({});
   const [tracksLoading, setTracksLoading] = useState({});
+
+  const [igvData, setIgvData] = useState(null);  // shape: { assemblyID, sessionID, session }
 
   const setTrackLoading = useCallback((id) => {
     setTracksLoading({...tracksLoading, [id]: true});
@@ -166,21 +173,30 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       };
     }),
     {
-      id: "genome_browser",
-      Header: "View in Genome Browser",
+      id: "tracks",
+      Header: "View Tracks",
       className: "PeaksTable__tracks",
       accessor: row => {
         const loading = tracksLoading[row.id];
         return <div style={{ whiteSpace: "nowrap" }}>
           {devMode && <>
-            <Button size="sm" color="link" disabled={loading}>
+            <Button size="sm" color="link" disabled={loading} onClick={() => {
+              setTrackLoading(row.id);
+              onOpenTracks(row).then((res) => {
+                setIgvData(res);
+                setTrackNotLoading(row.id);
+              });
+            }}>
               <span style={{ fontFamily: "monospace" }}>igv.js</span>
             </Button>
             <span style={{ margin: "0 0.5em" }}>·</span>
           </>}
           <Button size='sm' color='link' disabled={loading} onClick={() => {
             setTrackLoading(row.id);
-            onOpenTracks(row, () => setTrackNotLoading(row.id));
+            onOpenTracks(row).then((res) => {
+              launchInUCSC(res);
+              setTrackNotLoading(row.id);
+            });
           }}>
             UCSC <Icon name='external-link' />
           </Button>
@@ -224,6 +240,8 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
 
   return <>
     <div className="PeaksTableContainer">
+      <PeakIGVModal data={igvData} />
+
       <Table
         className="PeaksTable"
         size="sm"
@@ -307,10 +325,102 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
   </>;
 }
 
-function formatFeature({assay, gene, feature}) {
+const PeakIGVModal = ({ data, isOpen }) => {
+  const browserDiv = useRef();
+  const browserRef = useRef(null);
+
+  useEffect(() => {
+    if (browserDiv && data) {
+      const { assemblyID, sessionID, session: { feature, snp } } = data;
+
+      fetch(`${BASE_URL}/api/igvjs/track-db/${sessionID}`)
+        .then((data) => data.json())
+        .then((tracks) => {
+          const options = {
+            genome: assemblyID,
+            locus: buildBrowserPosition(feature, snp),
+            tracks,
+            roi: [
+              buildIGVjsROI(`chr${feature.chrom}`, feature.start, feature.end, FEATURE_HIGHLIGHT_COLOR, "Feature"),
+              buildIGVjsROI(`chr${snp.chrom}`, snp.position, snp.position + 1, SNP_HIGHLIGHT_COLOR, "SNP"),
+            ],
+          };
+
+          return igv.createBrowser(browserDiv, options).then((browser) => {
+            browserRef.current = browser;
+          })
+        }).catch((err) => console.error(err));
+
+      // Return cleanup function for browser instance
+      return () => {
+        if (browserRef.current) {
+          igv.removeBrowser(browserRef.current);
+        }
+      };
+    }
+  }, [browserDiv, data]);
+
+  if (!data) return <div />;
+
+  return (
+    <Modal isOpen={isOpen}>
+      <ModalHeader></ModalHeader>
+      <ModalBody>
+        <div ref={browserDiv} />
+      </ModalBody>
+    </Modal>
+  );
+};
+
+const launchInUCSC = ({ assemblyID, sessionID, session: { feature, snp } }) => {
+  const position = buildBrowserPosition(feature, snp);
+  const hubURL = `${BASE_URL}/api/ucsc/hub/${sessionID}`;
+  const ucscURL = constructUCSCUrl([
+    ["db", assemblyID],
+    ["hubClear", hubURL],
+    // ["hubClear", permaHubURL],
+    ["position", position],
+
+    // Highlight the SNP in red, and the feature in light yellow
+    ["highlight", [
+      buildUCSCHighlight(assemblyID, `chr${feature.chrom}`, feature.start, feature.end, FEATURE_HIGHLIGHT_COLOR),
+      buildUCSCHighlight(assemblyID, `chr${snp.chrom}`, snp.position, snp.position + 1, SNP_HIGHLIGHT_COLOR),
+    ].join("|")],
+  ]);
+
+  console.log('Hub:',  hubURL);
+  console.log('UCSC:', ucscURL);
+
+  window.open(ucscURL);
+};
+
+const buildBrowserPosition = (feature, snp, padding=500) => {
+  const featureChrom = `chr${feature.chrom}`;
+  const snpChrom = `chr${snp.chrom}`;
+
+  const snpPosition = snp.position;
+  const displayWindow = featureChrom === snpChrom
+    ? [Math.min(feature.start, snpPosition), Math.max(feature.end, snpPosition)]
+    : [feature.start, feature.end];
+
+  return `${featureChrom}:${displayWindow[0]-padding}-${displayWindow[1]+padding}`;
+};
+
+const FEATURE_HIGHLIGHT_COLOR = "#FFEECC";
+const SNP_HIGHLIGHT_COLOR = "#FF9F9F";
+
+const buildIGVjsROI = (chr, start, end, color, name) => ({
+  name,
+  color,
+  features: [{ chr, start, end }],
+});
+
+const buildUCSCHighlight = (asm, chr, start, end, color) => `${asm}.${chr}:${start}-${end}${color}`;
+
+const formatFeature = ({assay, gene, feature}) => {
   const {chrom, start, end, strand} = feature;
   const featureText = `chr${chrom}:${start}-${end}` + (strand ? ` (${strand})` : '')
   return assay === "RNA-seq" ? (gene || featureText) : featureText
-}
+};
 
 export default PeakAssay;
