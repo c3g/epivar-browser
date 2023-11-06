@@ -347,7 +347,10 @@ const PeakIGVModal = ({ data, isOpen }) => {
             ],
           };
 
+          console.debug("igv.js div ref:", browserRef.current);
+
           return igv.createBrowser(browserDiv.current, options).then((browser) => {
+            console.debug("set up igv.js browser:", browser);
             browserRef.current = browser;
           });
         }).catch((err) => console.error(err));
@@ -393,8 +396,8 @@ const launchInUCSC = ({ assemblyID, sessionID, session: { feature, snp } }) => {
     ].join("|")],
   ]);
 
-  console.log('Hub:',  hubURL);
-  console.log('UCSC:', ucscURL);
+  console.debug('Hub:',  hubURL);
+  console.debug('UCSC:', ucscURL);
 
   window.open(ucscURL);
 };
