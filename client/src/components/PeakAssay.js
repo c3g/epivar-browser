@@ -171,12 +171,12 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       className: "PeaksTable__tracks",
       accessor: row => {
         const loading = tracksLoading[row.id];
-        return <>
+        return <div style={{ whiteSpace: "nowrap" }}>
           {devMode && <>
             <Button size="sm" color="link" disabled={loading}>
-              <span style={{ fontStyle: "monospace" }}>igv.js</span>
+              <span style={{ fontFamily: "monospace" }}>igv.js</span>
             </Button>
-            <span style={{ margin: "0 1em" }}>·</span>
+            <span style={{ margin: "0 0.5em" }}>·</span>
           </>}
           <Button size='sm' color='link' disabled={loading} onClick={() => {
             setTrackLoading(row.id);
@@ -184,7 +184,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
           }}>
             UCSC <Icon name='external-link' />
           </Button>
-        </>;
+        </div>;
       },
       disableSortBy: true,
     },
