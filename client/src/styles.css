@@ -463,7 +463,7 @@ td.u-value:empty::before {
 .PeaksTable__tracks {
   width: 120px;
 }
-.PeaksTable__tracks > button {
+.PeaksTable__tracks button {
   padding: 0;
 }
 
