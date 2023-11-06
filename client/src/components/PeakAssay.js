@@ -76,6 +76,7 @@ const PeakAssay = ({peaks}) => {
 };
 
 const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
+  const devMode = useSelector(state => state.ui.devMode);
   const {id: assembly} = useSelector(state => state.assembly.data) ?? {};
   const conditions = useSelector(state => state.conditions.list);
 
@@ -165,18 +166,29 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       };
     }),
     {
-      id: "ucsc",
-      Header: "View in UCSC",
+      id: "genome_browser",
+      Header: "View in Genome Browser",
       className: "PeaksTable__tracks",
-      accessor: row => <Button size='sm' color='link' disabled={tracksLoading[row.id]} onClick={() => {
-        setTrackLoading(row.id);
-        onOpenTracks(row, () => setTrackNotLoading(row.id));
-      }}>
-        {tracksLoading[row.id] ? <>Loading...</> : <>Tracks <Icon name='external-link' /></>}
-      </Button>,
+      accessor: row => {
+        const loading = tracksLoading[row.id];
+        return <>
+          {devMode && <>
+            <Button size="sm" color="link" disabled={loading}>
+              <span style={{ fontStyle: "monospace" }}>igv.js</span>
+            </Button>
+            <span style={{ margin: "0 1em" }}>·</span>
+          </>}
+          <Button size='sm' color='link' disabled={loading} onClick={() => {
+            setTrackLoading(row.id);
+            onOpenTracks(row, () => setTrackNotLoading(row.id));
+          }}>
+            UCSC <Icon name='external-link' />
+          </Button>
+        </>;
+      },
       disableSortBy: true,
     },
-  ], [assembly, conditions, setTrackLoading, setTrackNotLoading, onOpenTracks, tooltipsShown]);
+  ], [assembly, conditions, setTrackLoading, setTrackNotLoading, onOpenTracks, tooltipsShown, devMode]);
 
   // noinspection JSCheckFunctionSignatures
   const tableInstance = useTable(

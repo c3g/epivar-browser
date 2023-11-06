@@ -12,6 +12,7 @@
     "d3-quadtree": "^3.0.1",
     "d3-scale": "^4.0.2",
     "font-awesome": "^4.7.0",
+    "igv": "^2.15.11",
     "memoize-one": "^6.0.0",
     "rambda": "^8.1.0",
     "react": "^17.0.2",

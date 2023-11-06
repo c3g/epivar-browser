@@ -16,7 +16,7 @@ import ExplorePage from "./pages/ExplorePage";
 import DatasetsPage from "./pages/DatasetsPage";
 import FAQPage from "./pages/FAQPage";
 
-import {saveUser} from "../actions";
+import {setDevMode, saveUser} from "../actions";
 import {SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
 
 
@@ -54,6 +54,12 @@ const RoutedApp = () => {
 
   useEffect(() => {
     document.title = `${SITE_TITLE} | ${SITE_SUBTITLE}`;
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "~") {
+        dispatch(setDevMode(true));
+      }
+    });
   }, []);
 
   useEffect(() => {
