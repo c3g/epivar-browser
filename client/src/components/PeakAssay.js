@@ -380,7 +380,8 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
     }).catch((err) => console.error(err));
   }, [sessionTracks]);
 
-  const title = data ? `IGV.js browser – ${assay}; SNP: ${snp.id}, feature: chr${fChrom}:${fStart}-${fEnd}` : "";
+  /** @type React.ReactNode */
+  const title = data ? <><strong>{assay}</strong> – SNP: {snp.id}, feature: {formatFeature(feature)}</> : "";
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} style={{ maxWidth: "80vw" }}>
