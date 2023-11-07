@@ -120,7 +120,7 @@ async function boxPlotYAxis({domain, step, x, y, height}) {
   </g>`;
 }
 
-function boxPlotXAxis({data, scale, x, height, width}) {
+function boxPlotXAxis({data, scale, x, height, width, lowCountThreshold}) {
   const inner = data.map((d, i) => {
     return `<g>
         ${boxPlotLine({position: [[scale(i), height], [scale(i), height + 5]]})}
@@ -128,7 +128,7 @@ function boxPlotXAxis({data, scale, x, height, width}) {
           ${d.name}
         </text>
         <text y="${height + 5}" x="${scale(i)}" dy="${FONT_SIZE * 2}" style="${TEXT_STYLES}">
-          (n = ${d.data.n})
+          (n ${(d.data.n ?? 0) <= lowCountThreshold ? "≈ 0" : ("= " + d.data.n.toFixed(0))})
         </text>
       </g>`;
   }).join("");
@@ -275,7 +275,7 @@ export async function boxPlot({title, data, domain, transform, lowCountThreshold
 
   const axes = await Promise.all([
     boxPlotYAxis({domain: yDomain, step: yAxis.step, ...plotDimensions}),
-    boxPlotXAxis({data, scale: xScale, ...plotDimensions}),
+    boxPlotXAxis({data, scale: xScale, lowCountThreshold, ...plotDimensions}),
   ]);
 
   const bars = await Promise.all(
