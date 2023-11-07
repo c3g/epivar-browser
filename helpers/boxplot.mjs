@@ -181,7 +181,7 @@ async function boxPlotBar({data, x, y, height, domain}) {
   const stats = data.stats;
 
   const points = ethnicities.map(e => {
-    const points = data.points[e.id] || [];
+    const points = [...data.points[e.id] || []];
     shuffle(points);
     return points;
   });
