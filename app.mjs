@@ -62,7 +62,6 @@ app.use('/api/conditions',   (await import('./routes/conditions.mjs')).default);
 app.use('/api/ethnicities',  (await import('./routes/ethnicities.mjs')).default);
 app.use('/api/peaks',        (await import('./routes/peaks.mjs')).default);
 app.use('/api/sessions',     (await import('./routes/sessions.mjs')).default);
-app.use('/api/samples',      (await import('./routes/samples.mjs')).default);
 app.use('/api/tracks',       (await import('./routes/tracks.mjs')).default);
 //  - routers for genome browsers
 app.use('/api/igvjs',        (await import('./routes/igvjs.mjs')).default);
