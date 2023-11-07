@@ -70,6 +70,9 @@ module.exports = {
     // minimum p-value for a peak must be at or below this p-value for the peak to get included.
     pValueMinThreshold: 0.05,
 
+    // minimum genotype group count to apply censoring at
+    lowCountThreshold: 5,
+
     conditions: [
       {id: "NI", name: "Non-infected"},
       {id: "Flu", name: "Flu"},

@@ -17,7 +17,7 @@ import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";
 import Samples from "./samples.mjs";
 import source from "./source/index.js";
-import {DEFAULT_CONDITIONS} from "../helpers/defaultValues.mjs";
+import {DEFAULT_CONDITIONS, DEFAULT_LOW_COUNT_THRESHOLD} from "../helpers/defaultValues.mjs";
 import {donorLookup} from "../helpers/donors.mjs";
 import {normalizeChrom, GENOTYPE_STATES, GENOTYPE_STATE_NAMES} from "../helpers/genome.mjs";
 
@@ -44,6 +44,8 @@ const mapToData = map(prop("data"));
 const conditions = config.source?.conditions ?? DEFAULT_CONDITIONS;
 
 const TRACK_VALUES_CACHE_EXPIRY = 60 * 60 * 24 * 180;  // 180 days
+
+const lowCountThreshold = config.source?.lowCountThreshold ?? DEFAULT_LOW_COUNT_THRESHOLD;
 
 // Methods
 
@@ -138,18 +140,18 @@ function merge(tracks, session) {
       GENOTYPE_STATES
         .map(g => tracksByType[g] ?? [])
         .map(async tracks => {
-          if (tracks.length === 0) {
+          if (tracks.length < lowCountThreshold) {
             return undefined;
           }
 
-          const filePaths = tracks.map(prop('path'))
-          const maxSize = await bigWigChromosomeLength(filePaths[0], chrom)
+          const filePaths = tracks.map(prop('path'));
+          const maxSize = await bigWigChromosomeLength(filePaths[0], chrom);
 
           return mergeFiles(filePaths, {
             chrom,
             start: Math.max(session.peak.feature.start - MERGE_WINDOW_EXTENT, 0),
             end:   Math.min(session.peak.feature.end + MERGE_WINDOW_EXTENT, maxSize),
-          })
+          });
         })
     )
 
@@ -163,10 +165,10 @@ function merge(tracks, session) {
           output: Object.fromEntries(GENOTYPE_STATES.map((g, gi) => [g, output[gi]])),
         })
       )
-    )
+    );
 
   return Promise.all(promisedTracks)
-    .then(results => results.filter(Boolean))
+    .then(results => results.filter(Boolean));
 }
 
 function plot(tracksByCondition) {
@@ -178,7 +180,8 @@ function plot(tracksByCondition) {
       title: c.name,
       data: data[ci],
       domain: domains[ci],
-      transform: `translate(${((PLOT_WIDTH / conditions.length) * ci).toFixed(0)} 0)`
+      transform: `translate(${((PLOT_WIDTH / conditions.length) * ci).toFixed(0)} 0)`,
+      lowCountThreshold,
     }))
   ).then(plots =>
     `<svg width="${PLOT_WIDTH}" height="${PLOT_HEIGHT}">

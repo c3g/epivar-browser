@@ -165,7 +165,7 @@ function boxPlotInnerBar({xStart, xStop, yScale, stats, fill}) {
   </g>`;
 }
 
-async function boxPlotBar({data, x, y, height, domain}) {
+async function boxPlotBar({data, x, y, height, domain, lowCountThreshold}) {
   // const min = data.min
   // const max = data.max
 
@@ -199,7 +199,9 @@ async function boxPlotBar({data, x, y, height, domain}) {
 
   const yScale = (await scaleLinear()).range([height, y]).domain(domain);
 
-  if (data.n === 0) {
+  if (data.n <= lowCountThreshold) {
+    // Censor small genotype group counts to be 'empty'
+
     const delta = domain[1] - domain[0]
     const text = 'Empty'
     const fill = 'rgba(0, 0, 0, 0.01)'
@@ -255,7 +257,7 @@ async function boxPlotBar({data, x, y, height, domain}) {
   </g>`;
 }
 
-export async function boxPlot({title, data, domain, transform}) {
+export async function boxPlot({title, data, domain, transform, lowCountThreshold}) {
   if (!data) {
     return "<svg />";
   }
@@ -282,6 +284,7 @@ export async function boxPlot({title, data, domain, transform}) {
       ...plotDimensions,
       x: xScale(i),
       domain: yDomain,
+      lowCountThreshold,
     }))
   );
 
