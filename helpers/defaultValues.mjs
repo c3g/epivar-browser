@@ -5,3 +5,5 @@ export const DEFAULT_CONDITIONS = [
 export const DEFAULT_ETHNICITIES = [
   {id: "NA", name: "Not available", plotColor: "#5100FF", plotBoxColor: "rgba(81, 0, 255, 0.6)"},
 ];
+
+export const DEFAULT_LOW_COUNT_THRESHOLD = 5;
