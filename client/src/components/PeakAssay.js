@@ -169,10 +169,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
           const floatStr = row.values[idx].toString();
           return floatStr.length < fixed.length ? floatStr : fixed;
         },
-        sortType: (r1, r2, col) => {
-          console.log(r1, r2, col, idx);
-          return r1.original.values[idx] < r2.original.values[idx] ? -1 : 1;
-        },
+        sortType: (r1, r2) => r1.original.values[idx] < r2.original.values[idx] ? -1 : 1,
       };
     }),
     {
