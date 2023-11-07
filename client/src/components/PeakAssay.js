@@ -81,7 +81,6 @@ const PeakAssay = ({peaks}) => {
 };
 
 const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
-  const devMode = useSelector(state => state.ui.devMode);
   const {id: assembly} = useSelector(state => state.assembly.data) ?? {};
   const conditions = useSelector(state => state.conditions.list);
 
@@ -180,20 +179,18 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       accessor: row => {
         const loading = tracksLoading[row.id];
         return <div style={{ whiteSpace: "nowrap" }}>
-          {devMode && <>
-            <Button size="sm" color="link" disabled={loading} onClick={() => {
-              setTrackLoading(row.id);
-              onOpenTracks(row).then((res) => {
-                console.debug("opening igv.js with", res);
-                setIgvData(res);
-                setTrackNotLoading(row.id);
-                setIgvModalOpen(true);
-              });
-            }}>
-              <span style={{ fontFamily: "monospace" }}>igv.js</span>
-            </Button>
-            <span style={{ margin: "0 0.4em" }}>·</span>
-          </>}
+          <Button size="sm" color="link" disabled={loading} onClick={() => {
+            setTrackLoading(row.id);
+            onOpenTracks(row).then((res) => {
+              console.debug("opening igv.js with", res);
+              setIgvData(res);
+              setTrackNotLoading(row.id);
+              setIgvModalOpen(true);
+            });
+          }}>
+            <span style={{ fontFamily: "monospace" }}>igv.js</span>
+          </Button>
+          <span style={{ margin: "0 0.4em" }}>·</span>
           <Button size='sm' color='link' disabled={loading} onClick={() => {
             setTrackLoading(row.id);
             onOpenTracks(row).then((res) => {
@@ -207,7 +204,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       },
       disableSortBy: true,
     },
-  ], [assembly, conditions, setTrackLoading, setTrackNotLoading, onOpenTracks, tooltipsShown, devMode]);
+  ], [assembly, conditions, setTrackLoading, setTrackNotLoading, onOpenTracks, tooltipsShown]);
 
   // noinspection JSCheckFunctionSignatures
   const tableInstance = useTable(
