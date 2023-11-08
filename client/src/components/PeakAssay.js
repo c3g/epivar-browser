@@ -386,7 +386,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
       <ModalHeader toggle={toggle}>{title}</ModalHeader>
       <ModalBody>
         {loadingTracks && <div style={{ paddingBottom: 12, textAlign: "center" }}>Loading...</div>}
-        <div ref={browserDiv} style={{ minHeight: 700 }} className={loadingBrowser ? "loading" : ""} />
+        <div ref={browserDiv} style={{ minHeight: 550 }} className={loadingBrowser ? "loading" : ""} />
       </ModalBody>
     </Modal>
   );
