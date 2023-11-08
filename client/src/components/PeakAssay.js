@@ -90,8 +90,8 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
   const [igvData, setIgvData] = useState(null);  // shape: { assemblyID, sessionID, session }
   const [igvModalOpen, setIgvModalOpen] = useState(false);
 
-  const setTrackLoading = useCallback((id) => {
-    setTracksLoading({...tracksLoading, [id]: true});
+  const setTrackLoading = useCallback((id, val) => {
+    setTracksLoading({...tracksLoading, [id]: val});
   }, [tracksLoading]);
   const setTrackNotLoading = useCallback((id) => {
     setTracksLoading(Object.fromEntries(Object.entries(tracksLoading).filter(e => e[0] !== id)));
@@ -180,7 +180,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
         const loading = tracksLoading[row.id];
         return <div style={{ whiteSpace: "nowrap" }}>
           <Button size="sm" color="link" disabled={loading} onClick={() => {
-            setTrackLoading(row.id);
+            setTrackLoading(row.id, "igv");
             onOpenTracks(row).then((res) => {
               console.debug("opening igv.js with", res);
               setIgvData(res);
@@ -188,17 +188,17 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
               setIgvModalOpen(true);
             });
           }}>
-            <span style={{ fontFamily: "monospace" }}>igv.js</span>
+            <span style={{ fontFamily: "monospace" }}>{loading === "igv" ? "Loading" : "igv.js"}</span>
           </Button>
           <span style={{ margin: "0 0.4em" }}>·</span>
           <Button size='sm' color='link' disabled={loading} onClick={() => {
-            setTrackLoading(row.id);
+            setTrackLoading(row.id, "ucsc");
             onOpenTracks(row).then((res) => {
               launchInUCSC(res);
               setTrackNotLoading(row.id);
             });
           }}>
-            UCSC <Icon name='external-link' />
+            {loading === "ucsc" ? "Loading" : (<>UCSC <Icon name='external-link' /></>)}
           </Button>
         </div>;
       },
