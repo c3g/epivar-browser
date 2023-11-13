@@ -1,6 +1,6 @@
 {
   "name": "flu-infection-client",
-  "version": "0.17.0-dev",
+  "version": "0.17.0",
   "private": true,
   "dependencies": {
     "@redux-devtools/extension": "^3.2.6",
