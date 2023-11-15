@@ -1,0 +1,32 @@
+services:
+  epivar-gateway:
+    image: ghcr.io/c3g/epivar-browser-gateway:latest
+    networks:
+      - epivar-server-net
+    # volumes: mergedTracks read only
+  epivar-server:
+    user: $USER:$USER
+    image: ghcr.io/c3g/epivar-browser-server:latest
+    networks:
+      - epivar-server-net
+      - epivar-redis-net
+      - epivar-db-net
+  epivar-redis:
+    image: redis:7.2
+    networks:
+      - epivar-redis-net
+  epivar-db:
+    image: postgres:16
+    networks:
+      - epivar-db-net
+
+networks:
+  epivar-server-net:
+    driver: bridge
+    internal: true
+  epivar-redis-net:
+    driver: bridge
+    internal: true
+  epivar-db-net:
+    driver: bridge
+    internal: true
