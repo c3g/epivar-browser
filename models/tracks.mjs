@@ -92,14 +92,11 @@ async function values(peak, usePrecomputed = false) {
     track.assay !== "RNA-Seq" || track.view === strandToView[peak.feature.strand]
   ).map(track =>
     getValueForTrack(track).then(value => (value === undefined ? undefined : {
-      id: track.id,
       donor: track.donor,
       assay: track.assay,
       condition: track.condition,
       ethnicity: track.ethnicity,
-      variant: track.variant,
-      type: track.type,
-      value: track.value,
+      type: track.type,  // Genotype: REF/HET/HOM
       data: value,
     }))
   ))).filter(v => v !== undefined);
