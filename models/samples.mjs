@@ -13,7 +13,6 @@ import {
   GENOTYPE_STATE_HET,
   GENOTYPE_STATE_HOM,
   GENOTYPE_STATE_REF,
-  GENOTYPE_STATES,
   normalizeChrom
 } from "../helpers/genome.mjs";
 
@@ -23,35 +22,9 @@ const exec = command =>
       err ? reject(err) : resolve({ stdout, stderr })))
 
 export default {
-  query,
   queryMap,
   getChroms,
-  getPositions,
-
-  normalizeSamples,
-  normalizeSamplesMap,
-  getCounts,
-  parseLines,
-  parseCSV,
 };
-
-export function query(chrom, start, end = start + 1) {
-  const params = `--header --show-samples --format sampledetail`;
-
-  const query = escape`
-    SELECT chrom, start, end, ref, alt, (gts).(*)
-      FROM variants
-     WHERE ${[config.samples.filter]}
-       AND chrom = ${normalizeChrom(chrom)}
-       AND start >= ${start}
-       AND end   <= ${end}
-  `;
-
-  return gemini(query, params)
-    .then(res => res.stdout)
-    .then(parseCSV)
-    .then(normalizeSamples);
-}
 
 export function queryMap(chrom, start, end = start + 1) {
   const params = `--header --show-samples`
@@ -91,18 +64,6 @@ export async function getChroms() {
   return cs;
 }
 
-export function getPositions(chrom, start) {
-  return gemini(escape`
-    SELECT DISTINCT(start)
-      FROM variants
-     WHERE ${[config.samples.filter]}
-       AND chrom = ${normalizeChrom(chrom)}
-       AND start LIKE ${(start || '') + '%'}
-     LIMIT 15
-  `)
-  .then(parseLines)
-}
-
 
 // NOTE: For development, calling gemini on beluga directly
 // is much faster. Set EXECUTE_GEMINI_REMOTELY to a non-blank
@@ -137,32 +98,6 @@ export function gemini(query, params = '') {
 }
 
 
-export function normalizeSamples(samples) {
-
-  samples.forEach(sample => {
-
-    sample.value = sample[`gts.${sample.name}`]
-
-    for (let key in sample) {
-      if (key.startsWith('gts.'))
-        delete sample[key]
-    }
-  })
-
-  const first = samples[0] || {}
-
-  const total = samples.length
-
-  return {
-    total:  total,
-    counts: getCounts(total, samples),
-    chrom:  first.chrom,
-    start:  first.start,
-    end:    first.end,
-    ref:    first.ref,
-  }
-}
-
 export function normalizeSamplesMap(samples) {
   const res = samples[0];  // TODO: handle no samples better
 
@@ -188,45 +123,15 @@ export function normalizeSamplesMap(samples) {
   return newRes
 }
 
-export function getCounts(total, samples) {
-  const counts = Object.fromEntries(GENOTYPE_STATES.map(g => [g, 0]));
-  samples.forEach(sample => {
-    const [a, b] = splitSampleValue(sample)
-    if (a === sample.alt && b === sample.alt) {
-      counts[GENOTYPE_STATE_HOM] += 1;
-    } else {
-      counts[GENOTYPE_STATE_HET] += 1;
-    }
-  });
-  counts[GENOTYPE_STATE_REF] = total - counts[GENOTYPE_STATE_HET] - counts[GENOTYPE_STATE_HOM];
-
-  return counts;
-}
-
-export const splitSampleValue = (sample) => {
-  const parts = sample.value.split(/\||\//)
-
-  // Basic validation
-  if (parts.length !== 2) {
-    throw new Error(`Invalid sample value: "${sample.value}" (sample ${sample.name})`);
-  }
-
-  if (!parts.every(p => /^\w$/.test(p))) {
-    console.log('Invalid sample value:', sample.value);
-  }
-
-  return parts;
-}
-
-export function parseLines({ stdout }) {
+function parseLines({ stdout }) {
   return stdout.split('\n').filter(Boolean);
 }
 
-export function parseCSV(string) {
+function parseCSV(string) {
   return csvParse(string, { delimiter: '\t', columns: true });
 }
 
-export function escape(strings, ...args) {
+function escape(strings, ...args) {
   let result = ''
   for (let i = 0; i < strings.length; i++) {
     result += strings[i]
@@ -236,7 +141,7 @@ export function escape(strings, ...args) {
   return result
 }
 
-export function escapeValue(value) {
+function escapeValue(value) {
   if (Array.isArray(value))
     return value[0]
   switch (typeof value) {
