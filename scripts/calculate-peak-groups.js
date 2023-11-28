@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 (async () => {
   const db = await import("../models/db.mjs");
 

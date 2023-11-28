@@ -17,8 +17,6 @@ COPY package-lock.json .
 
 # Download binary dependencies
 RUN mkdir -p /app/bin
-RUN wget https://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/bigWigInfo -O /app/bin/bigWigInfo && \
-    chmod +x /app/bin/bigWigInfo
 RUN wget https://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/bigWigSummary -O /app/bin/bigWigSummary && \
     chmod +x /app/bin/bigWigSummary
 RUN wget https://github.com/c3g/kent/releases/download/bigWigMergePlus_v2.3.2/bigWigMergePlus \

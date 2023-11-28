@@ -59,7 +59,7 @@ Install these dependencies according to their own instructions:
    - note that a Redis instance should never be exposed to the internet! 
      EpiVar expects it to be available locally at `localhost:6379`; the default Redis port.
  - `bigWigMergePlus`: https://github.com/c3g/kent/releases/download/bigWigMergePlus_v2.3.2/bigWigMergePlus-mp2b
- - `bigWigInfo` and `bigWigSummary`: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/
+ - `bigWigSummary`: http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/
  - `gemini`: https://gemini.readthedocs.io/en/latest/ (non-trivial, takes some effort, there is a lot of data to download)
 
 Executables must be on the `PATH` of the application to be called directly.
