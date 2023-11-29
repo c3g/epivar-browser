@@ -27,7 +27,7 @@ const genesFeaturesPath = path.join(config.inputFilesDirname, 'flu-infection-gen
   const parseGene = line => {
     const fields = line.trim().split('\t');
     return [
-      Gene.normalizeName(fields[0]),  // id
+      Gene.normalizeGeneName(fields[0]),  // id
       fields[0],  // name
     ];
   };
@@ -52,7 +52,7 @@ const genesFeaturesPath = path.join(config.inputFilesDirname, 'flu-infection-gen
     const start = +fields[2];
     const end = +fields[3];
     const strand = fields[4];
-    const geneNameNorm = Gene.normalizeName(fields[0]);
+    const geneNameNorm = Gene.normalizeGeneName(fields[0]);
     const gene = genesByNormName[geneNameNorm];
     if (!gene) return [];
     return [[
@@ -93,7 +93,7 @@ const genesFeaturesPath = path.join(config.inputFilesDirname, 'flu-infection-gen
     const assayID = assaysByName[row.feature_type];
     const assayPoints = precomputedPoints[row.feature_type];
 
-    const gene = genesByNormName[Gene.normalizeName(row.symbol)];
+    const gene = genesByNormName[Gene.normalizeGeneName(row.symbol)];
     if (!gene) return [];
     return [[
       `${featureStr}:${assayID}`,
