@@ -7,6 +7,7 @@ const path = require('path');
 const process = require('node:process');
 const xlsx = require('xlsx');
 
+const envConfig = require("../envConfig");
 const config = require('../config');
 
 const sheetNames = [
@@ -36,8 +37,8 @@ const headers = {
   'assay_category_id': 'assay_category.name',
 }
 
-const metadataPath = process.argv[2] || path.join(__dirname, '../input-files/flu-infection.xlsx');
-const output = config.source.metadata.path;
+const metadataPath = process.argv[2] || path.join(envConfig.INPUT_FILES_DIR, 'flu-infection.xlsx');
+const output = config.source.metadata.path;  // TODO: for specific dataset
 const workbook = xlsx.readFileSync(metadataPath);
 
 let items = []

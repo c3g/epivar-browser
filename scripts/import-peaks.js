@@ -4,8 +4,7 @@ const fs = require('fs');
 const parseCSV = require('csv-parse');
 const copyFrom = require('pg-copy-streams').from;
 
-require('dotenv').config();
-
+const envConfig = require("../envConfig");
 const config = require('../config');
 
 console.log("Loading peaks");
@@ -18,7 +17,7 @@ console.log("Loading peaks");
   const db = await import("../models/db.mjs");
   const Gene = await import('../models/genes.mjs');
 
-  const datasetPaths = ASSAYS.map(assay => config.paths.qtlsTemplate.replace(/\$ASSAY/g, assay));
+  const datasetPaths = ASSAYS.map(assay => envConfig.QTLS_TEMPLATE.replace(/\$ASSAY/g, assay));
 
   // Clear relevant tables of existing data
   await db.run("TRUNCATE TABLE snps RESTART IDENTITY CASCADE");
@@ -215,7 +214,7 @@ console.log("Loading peaks");
 
               const p = normalizePeak(row);
 
-              if (Math.min(...p.values) >= config.source.pValueMinThreshold) {
+              if (Math.min(...p.values) >= envConfig.IMPORT_MAX_P_VAL) {
                 // Not included due to insignificance; skip this peak
                 parseStream.resume();
                 return;

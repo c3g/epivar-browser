@@ -8,9 +8,9 @@ const child_process = require('child_process')
 const { promisify } = require('util')
 const exec = promisify(child_process.exec)
 const { Semaphore } = require('await-semaphore')
-const config = require('../config')
+const envConfig = require('../envConfig')
 
-const semaphore = new Semaphore(config.merge.semaphoreLimit)
+const semaphore = new Semaphore(envConfig.MERGE_SEMAPHORE_LIMIT)
 
 module.exports = bigWigMerge
 

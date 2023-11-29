@@ -120,7 +120,7 @@ function queryByGene(gene) {
       WHERE g."name_norm" = $1
       ORDER BY (SELECT MIN(x) FROM unnest(p."values") AS x)
     `,
-    [Gene.normalizeName(gene)]
+    [Gene.normalizeGeneName(gene)]
   ).then(normalizePeaks);
 }
 

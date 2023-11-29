@@ -2,14 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const parseCSVSync = require("csv-parse/lib/sync");
 
-require('dotenv').config();
-
-const config = require("../config");
+const envConfig = require("../envConfig");
 
 const ASSAY_NAME_RNASEQ = "RNA-seq";
 
-const genesPath = path.join(config.inputFilesDirname, 'flu-infection-genes.txt');
-const genesFeaturesPath = path.join(config.inputFilesDirname, 'flu-infection-gene-peaks.csv');
+// TODO: should be dependent on assembly + a pre-computed list
+const genesPath = path.join(envConfig.INPUT_FILES_DIR, 'flu-infection-genes.txt');
+
+const genesFeaturesPath = path.join(envConfig.INPUT_FILES_DIR, 'flu-infection-gene-peaks.csv');
 
 
 (async () => {

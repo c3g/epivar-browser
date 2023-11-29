@@ -11,6 +11,10 @@ services:
       - epivar-server-net
       - epivar-redis-net
       - epivar-db-net
+    environment:
+      - NODE_ENV=production
+      - IMPORT_MAX_P_VAL=0.05
+      - LOW_COUNT_THRESHOLD=5
   epivar-redis:
     image: redis:7.2
     networks:

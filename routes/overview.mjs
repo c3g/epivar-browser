@@ -5,17 +5,15 @@
 
 import express from "express";
 import {dataHandler, errorHandler} from "../helpers/handlers.mjs";
-import config from "../config.js";
+import envConfig from "../envConfig.js";
 import Peaks from "../models/peaks.mjs";
 
 const router = express.Router();
 
 router.get("/config", (_req, res) => {
-  const {minPValue, binSize} = config?.plots?.manhattan ?? {};
-
   dataHandler(res)({
-    binSize,
-    minPValue,
+    binSize: envConfig.PLOT_MANHATTAN_BIN_SIZE,
+    minPValue: envConfig.PLOT_MANHATTAN_MIN_P_VAL,
   });
 });
 
