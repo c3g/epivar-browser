@@ -15,9 +15,10 @@ import {boxPlot, getDomain, PLOT_HEIGHT, PLOT_WIDTH} from "../helpers/boxplot.mj
 import cache from "../helpers/cache.mjs";
 import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";
+import envConfig from "../envConfig.js";
 import Samples from "./samples.mjs";
 import source from "./source/index.js";
-import {DEFAULT_CONDITIONS, DEFAULT_LOW_COUNT_THRESHOLD} from "../helpers/defaultValues.mjs";
+import {DEFAULT_CONDITIONS} from "../helpers/defaultValues.mjs";
 import {donorLookup} from "../helpers/donors.mjs";
 import {normalizeChrom, GENOTYPE_STATES, GENOTYPE_STATE_NAMES} from "../helpers/genome.mjs";
 
@@ -43,9 +44,9 @@ const mapToData = map(prop("data"));
 
 const conditions = config.source?.conditions ?? DEFAULT_CONDITIONS;
 
-const TRACK_VALUES_CACHE_EXPIRY = 60 * 60 * 24 * 180;  // 180 days
+const TRACK_VALUES_CACHE_EXPIRY = 60 * 60 * 24 * 180;  // 180 days  TODO: config variable
 
-const lowCountThreshold = config.source?.lowCountThreshold ?? DEFAULT_LOW_COUNT_THRESHOLD;
+const lowCountThreshold = envConfig.LOW_COUNT_THRESHOLD;
 
 // Methods
 
@@ -199,10 +200,11 @@ function getDataFromValues(values) {
 
 function mergeFiles(paths, { chrom, start, end }) {
   paths.sort(Intl.Collator().compare)
+  // TODO: add dataset ID to hash
   const mergeHash = md5(JSON.stringify({ paths, chrom, start, end }))
   const mergeName = mergeHash + '.bw'
   const url = `/merged/${mergeName}`
-  const mergePath = path.join(config.paths.mergedTracks, mergeName)
+  const mergePath = path.join(envConfig.MERGED_TRACKS_DIR, mergeName)
 
   return exists(mergePath)
     .then(yes => yes ?

@@ -1,6 +1,5 @@
-require('dotenv').config();
-
 const config = require("../config");
+const envConfig = require("../envConfig");
 
 (async () => {
   const db = await import("../models/db.mjs");
@@ -8,10 +7,12 @@ const config = require("../config");
   // Clear relevant table of existing data
   await db.run("TRUNCATE TABLE binned_most_significant_peaks RESTART IDENTITY CASCADE");
 
+  // TODO: get assembly for dataset
+
   // Only calculate top binned peaks by assay for chromosomes whose size has been provided in config.js
   const chromSizes = config.assembly?.chromosomeSizes ?? {};
-  const minPValue = config.plots?.manhattan?.minPValue ?? 0.10;
-  const binSize = config.plots?.manhattan?.binSize ?? 100000;
+  const minPValue = envConfig.PLOT_MANHATTAN_MIN_P_VAL;
+  const binSize = envConfig.PLOT_MANHATTAN_BIN_SIZE;
 
   for (const chrom in chromSizes) {
     const size = chromSizes[chrom];

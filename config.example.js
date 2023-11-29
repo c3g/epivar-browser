@@ -7,15 +7,6 @@ const path = require('path');
 require('dotenv').config();
 
 
-/* This is the application data directory */
-const dataDirname = path.join(__dirname, './data');
-
-/* This is the input data directory */
-const inputFilesDirname = path.join(__dirname, './input-files');
-
-/* This is the storage volume path for Gemini genotypes and tracks (i.e., very large files / raw data) */
-const tracksDirname = process.env.VARWIG_TRACKS_DIR ?? '/flu-infection-data';
-
 /* For development: the `tracks` data is huge, so it makes
  * more sense to mount the files via `sshfs` instead of
  * copying them all.
@@ -28,32 +19,6 @@ const tracksDirname = process.env.VARWIG_TRACKS_DIR ?? '/flu-infection-data';
  */
 
 module.exports = {
-  inputFilesDirname,
-
-  paths: {
-    data:          dataDirname,
-
-    // Static (unchanging) part of UCSC track hub to show alongside dynamic merged tracks
-    staticTracks:  `${dataDirname}/ucsc.other-tracks.txt`,
-
-    // Template for loading QTL files
-    qtlsTemplate:  process.env.VARWIG_QTLS_TEMPLATE ?? `${inputFilesDirname}/qtls/QTLs_complete_$ASSAY.csv`,
-
-    // Template for loading pre-computed points for box plots
-    //   Format: TSV with:
-    //    - column headers of sample IDs ([DONOR]_[CONDITION])
-    //    - row headers of features
-    pointTemplate: process.env.VARWIG_POINTS_TEMPLATE
-      ?? `${inputFilesDirname}/matrices/$ASSAY_batch.age.corrected_PCsreg.txt`,
-
-    // Merged tracks file location
-    mergedTracks:  process.env.VARWIG_MERGED_TRACKS_DIR ?? path.join(dataDirname, 'mergedTracks'),
-
-    // Locations of huge sensitive files
-    tracks:        tracksDirname,
-    gemini:        process.env.VARWIG_GEMINI_DB ?? path.join(tracksDirname, 'allSamples_WGS.gemini.db'),
-  },
-
   source: {
     type: 'metadata',
     metadata: {
@@ -67,12 +32,6 @@ module.exports = {
      */
     geminiSampleNameConverter: name => name.split('_')[1],  // name => name
 
-    // minimum p-value for a peak must be at or below this p-value for the peak to get included.
-    pValueMinThreshold: 0.05,
-
-    // minimum genotype group count to apply censoring at
-    lowCountThreshold: 5,
-
     conditions: [
       {id: "NI", name: "Non-infected"},
       {id: "Flu", name: "Flu"},
@@ -82,20 +41,6 @@ module.exports = {
       {id: "EU", name: "European-American", plotColor: "#FF8A00", plotBoxColor: "rgba(255, 138, 0, 0.6)"},
     ],
   },
-
-  // The application was conceived to accept multiple data sources,
-  // but for now only `metadata` (above) is tested.
-  /* source: {
-   *   type: 'ihec',
-   *   ihec: {
-   *     mysql: {
-   *       host:     'localhost',
-   *       user:     'root',
-   *       password: 'secret',
-   *       database: 'edcc',
-   *     },
-   *   },
-   * }, */
 
   samples: {
     /* Additional filter for samples. The gemini database might contain
@@ -138,13 +83,6 @@ module.exports = {
       "22": 51304566,
       // "X": 155270560,
       // "Y": 59373566,
-    },
-  },
-
-  plots: {
-    manhattan: {
-      minPValue: 0.10,
-      binSize: 100000,  // 100 kb bins
     },
   },
 

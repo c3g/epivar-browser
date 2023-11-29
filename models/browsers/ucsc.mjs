@@ -4,14 +4,15 @@
 
 import fs from "fs";
 
-import config from "../../config.js";
+import envConfig from "../../envConfig.js";
 import {GENOTYPE_STATES} from "../../helpers/genome.mjs";
 import unindent from "../../helpers/unindent.mjs";
 import {getColor, indent} from "./utils.mjs";
 
-const {staticTracks} = config.paths;
+const {STATIC_TRACKS_PATH} = envConfig;
 
-export const otherTracks = fs.existsSync(staticTracks) ? fs.readFileSync(staticTracks).toString() : "";
+// TODO: specific to dataset
+export const otherTracks = fs.existsSync(STATIC_TRACKS_PATH) ? fs.readFileSync(STATIC_TRACKS_PATH).toString() : "";
 
 export default {
   otherTracks,

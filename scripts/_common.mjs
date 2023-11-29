@@ -1,9 +1,7 @@
 import fs from "fs";
 
-import dotenv from "dotenv";
-dotenv.config();
+import envConfig from "../envConfig.js";
 
-import config from "../config.js";
 import {donorLookup} from "../helpers/donors.mjs";
 
 export const stripQuotes = str => str.replace(/"/g, "").trim();
@@ -18,14 +16,14 @@ export const ASSAYS = [
   'H3K27me3',
 ];
 
-export const loadingPrecomputedPoints = !!config.paths.pointTemplate;
+export const loadingPrecomputedPoints = !!envConfig.POINTS_TEMPLATE;
 export const precomputedPoints = {};
 
 if (loadingPrecomputedPoints) {
   console.log("Pre-loading precomputed point matrices");
 
   ASSAYS.forEach(assay => {
-    const fc = fs.readFileSync(config.paths.pointTemplate.replace(/\$ASSAY/g, assay))
+    const fc = fs.readFileSync(envConfig.POINTS_TEMPLATE.replace(/\$ASSAY/g, assay))
       .toString()
       .split("\n");
 
