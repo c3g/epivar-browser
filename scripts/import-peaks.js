@@ -241,7 +241,7 @@ console.log("Loading peaks");
                   reject(err);
                 });
               } else {
-                const gn = Gene.normalizeName(p.feature);
+                const gn = Gene.normalizeGeneName(p.feature);
                 const pgID = geneCache[gn];
 
                 // getGeneFeatureID(p.feature, assays[p.assay].id).then(pgID => {
@@ -252,7 +252,7 @@ console.log("Loading peaks");
                   }
                   p.feature = null;
                   // console.error(p);
-                  // reject(`Gene feature not found: ${Gene.normalizeName(p.feature)}`);
+                  // reject(`Gene feature not found: ${Gene.normalizeGeneName(p.feature)}`);
                 } else {
                   p.feature = pgID;
                   peakStreamPush(p);
