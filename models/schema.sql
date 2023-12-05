@@ -34,7 +34,7 @@ create table if not exists term_consents_ip
 );
 -------------------------------------------------------------------------------
 
--- ASSAYS ----------- ---------------------------------------------------------
+-- ASSAYS ---------------------------------------------------------------------
 create table if not exists assays
 (
     "id"    smallserial primary key,
@@ -96,9 +96,6 @@ create table if not exists peaks
 
     -- values as array of treatments (in alphabetical order): [<p_Flu>, <p_NI>]
     "values"    real[]   not null,
-    -- "valueNI"   real     not null,  -- p-value; 32 bit floats are enough
-    -- "valueFlu"  real     not null,  -- "
-    -- "valueMin"  real not null,  -- for prioritizing items in search
 
     foreign key ("snp")     references snps     ("id"),
     foreign key ("feature") references features ("id")
@@ -109,9 +106,6 @@ create index if not exists peaks_snp_idx
 
 create index if not exists peaks_feature_idx
     on peaks("feature");
-
--- create index if not exists peaks_valueMin_idx
---     on peaks(valueMin);
 
 
 create table if not exists features_by_snp

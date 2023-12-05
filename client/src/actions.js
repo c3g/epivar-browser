@@ -3,8 +3,6 @@ import axios from 'axios'
 
 import * as api from './api'
 import * as k from './constants/ActionTypes.js'
-import {BASE_URL} from "./constants/app";
-import {constructUCSCUrl} from "./helpers/ucsc";
 
 export const setChrom          = createAction(k.SET_CHROM);
 export const setPosition       = createAction(k.SET_POSITION);
