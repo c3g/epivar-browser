@@ -1,11 +1,11 @@
 import React from 'react'
 import {useSelector} from "react-redux";
-import {Alert, Button, Container} from 'reactstrap'
+import {Alert, Button, Container, Input} from 'reactstrap'
 import {Link, useLocation, useNavigate} from "react-router-dom";
 
 import Icon from "./Icon";
 
-import {LOGIN_PATH, SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
+import {SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
 
 export default function Header({children, onAbout, onDatasets, onOverview, onExplore, onFAQ/*, onContact*/}) {
   const location = useLocation();
@@ -35,7 +35,10 @@ export default function Header({children, onAbout, onDatasets, onOverview, onExp
           <Button color="link"
                   className={location.pathname.startsWith("/datasets") ? "active" : ""}
                   onClick={onDatasets}><Icon name="table" bootstrap={true} />Datasets</Button>
-          <div className="Header__button_highlight_group">
+          <div className="Header__highlight_group">
+            <Input type="select">
+              <option>Aracena 𝘦𝘵 𝘢𝘭. (hg19)</option>
+            </Input>
             <Button color="link"
                     className={location.pathname.startsWith("/overview") ? "active" : ""}
                     onClick={onOverview}><Icon name="graph-up" bootstrap={true} />Overview</Button>
