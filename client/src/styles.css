@@ -268,12 +268,21 @@ body {
 .Header__links button.active {
   color: rgba(255, 255, 255, 0.97);
 }
-.Header__button_highlight_group {
+.Header__highlight_group {
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 4px;
 }
-.Header__button_highlight_group button {
+.Header__highlight_group button {
   margin-top: 0;
+}
+.Header__highlight_group select {
+  display: inline-block;
+  vertical-align: top;
+  width: auto;
+  height: 2rem;
+  margin-top: 0.2rem;
+  margin-left: 0.75rem;
+  font-size: 0.8rem;
 }
 .Header__links button.active {
   text-decoration: underline;
