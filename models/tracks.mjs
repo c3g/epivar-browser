@@ -2,9 +2,8 @@
  * tracks.js
  */
 
-import path from "path";
-import fs from "fs";
-import {promisify} from "util";
+import path from "node:path";
+import fs from "node:fs";
 
 import md5 from "md5";
 import {groupBy, map, path as prop} from "rambda";
@@ -21,8 +20,6 @@ import source from "./source/index.js";
 import {DEFAULT_CONDITIONS} from "../helpers/defaultValues.mjs";
 import {donorLookup} from "../helpers/donors.mjs";
 import {normalizeChrom, GENOTYPE_STATES, GENOTYPE_STATE_NAMES} from "../helpers/genome.mjs";
-
-const exists = promisify(fs.exists);
 
 
 export default {
@@ -199,25 +196,18 @@ function getDataFromValues(values) {
 }
 
 function mergeFiles(paths, { chrom, start, end }) {
-  paths.sort(Intl.Collator().compare)
+  paths.sort(Intl.Collator().compare);
   // TODO: add dataset ID to hash
-  const mergeHash = md5(JSON.stringify({ paths, chrom, start, end }))
-  const mergeName = mergeHash + '.bw'
-  const url = `/merged/${mergeName}`
-  const mergePath = path.join(envConfig.MERGED_TRACKS_DIR, mergeName)
+  const mergeHash = md5(JSON.stringify({ paths, chrom, start, end }));
+  const mergeName = `${mergeHash}.bw`;
+  const url = `/merged/${mergeName}`;
+  const mergePath = path.join(envConfig.MERGED_TRACKS_DIR, mergeName);
 
-  return exists(mergePath)
-    .then(yes => yes ?
-      true :
-      bigWigMerge(paths, {
-        output: mergePath,
-        chrom,
-        start,
-        end,
-        ...config.merge
-      })
-    )
-    .then(() => ({ path: mergePath, url }))
+  return new Promise((resolve) => {
+    fs.access(mergePath, fs.constants.F_OK, (err) => {
+      resolve(err ? true : bigWigMerge(paths, mergePath, chrom, start, end));
+    });
+  }).then(() => ({ path: mergePath, url }));
 }
 
 function derive(list) {

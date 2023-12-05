@@ -49,13 +49,6 @@ module.exports = {
     filter: 'type = "snp"',
   },
 
-  merge: {
-    bin: '',
-    /* Maximum number of concurrent bigWigMergePlus processes, to
-     * avoid CPU/memory shortage. */
-    semaphoreLimit: 2,
-  },
-
   assembly: {
     id: 'hg19',
     chromosomeSizes: {  // This is for HG19; if you want HG38, you will have to change these values
