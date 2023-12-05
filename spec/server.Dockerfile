@@ -24,7 +24,7 @@ RUN wget https://github.com/c3g/kent/releases/download/bigWigMergePlus_v2.3.2/bi
     chmod +x /app/bin/bigWigMergePlus
 
 # Install PM2 to manage multiple processes
-RUN npm install -g npm
+RUN npm install -g pm2
 
 # Install Node dependencies
 RUN npm ci
