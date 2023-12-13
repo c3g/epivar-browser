@@ -149,7 +149,6 @@ The different data sources to generate/prepare are:
      - `track.track_type`: literal value `bigWig`
      - `assembly.name`: assembly name (e.g., `hg19`).
      - `assay.name`: one of `RNA-Seq`, `ATAC-Seq`, `H3K27ac`, `H3K4me1`, `H3K27me3`, `H3K4me3`
-     - `assay_category.name`: `Transcriptome`/`Regulome`/`Histone Modifications`/`Methylome` (*unused*)
    
    and the sheets (which match `assay.name`):
      - RNA-Seq
@@ -172,8 +171,6 @@ The different data sources to generate/prepare are:
      - `assembly`
      - `assay`
      - `assay_id`
-     - `assay_category`
-     - `assay_category_id`
  
    Information on the track metadata file:
      - **Generate with:** `node ./scripts/metadata-to-json.js ./input-files/flu-infection.xlsx` 
