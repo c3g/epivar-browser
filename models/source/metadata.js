@@ -6,6 +6,7 @@ const fs = require('fs')
 const path = require('path')
 const clone  = require('lodash.clonedeep')
 const config = require('../../config')
+const envConfig = require('../../envConfig')
 
 const metadata = JSON.parse(fs.readFileSync(config.source.metadata.path).toString());
 
@@ -55,5 +56,5 @@ function getTracks(samples, peak) {
 }
 
 function getLocalPath(track) {
-  return path.join(config.paths.tracks, track.path)
+  return path.join(envConfig.TRACKS_DIR, track.path);
 }
