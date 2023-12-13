@@ -141,7 +141,6 @@ The different data sources to generate/prepare are:
      - `ethnicity`: ethnicity / population group **ID** (*not* name!) 
        - if set to `Exclude sample`, sample will be skipped
      - `condition`: condition / experimental group **ID** (*not* name!)
-     - `institution.short_name`: institution which generated the sample (*unused*)
      - `sample_name`: Full sample name, uniquely indentifying the sample within 
        `assay`, `condition`, `donor`, and `track.view` variables
      - `donor`: donor ID (i.e., individual ID)
@@ -163,14 +162,12 @@ The different data sources to generate/prepare are:
      - `path`
      - `ethnicity`
      - `condition`
-     - `short_name`
      - `sample_name`
      - `donor`
      - `view`
      - `type`
      - `assembly`
      - `assay`
-     - `assay_id`
  
    Information on the track metadata file:
      - **Generate with:** `node ./scripts/metadata-to-json.js ./input-files/flu-infection.xlsx` 

@@ -19,23 +19,19 @@ const sheetNames = [
   'H3K4me3',
   'WGB-Seq',
   // 'WGS_variants'
-]
+];
 
 const headers = {
   'path':              'file.path',
   'ethnicity':         'ethnicity',
   'condition':         'condition',
-  'short_name':        'institution.short_name',
   'sample_name':       'sample_name',
   'donor':             'donor',
   'view':              'track.view',
   'type':              'track.track_type',
   'assembly':          'assembly.name',
   'assay':             'assay.name',
-  'assay_id':          'assay.name',
-  'assay_category':    'assay_category.name',
-  'assay_category_id': 'assay_category.name',
-}
+};
 
 const metadataPath = process.argv[2] || path.join(envConfig.INPUT_FILES_DIR, 'flu-infection.xlsx');
 const output = config.source.metadata.path;  // TODO: for specific dataset
