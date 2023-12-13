@@ -245,7 +245,7 @@ The different data sources to generate/prepare are:
  
  - **Binned top peaks for assays:** Used to generate Manhattan plots for
    chromosome/assay pairs, binned by SNP position.
-     - **Generate with:** `node ./scripts/calculate-top-peaks.js`
+     - **Generate with:** `node ./scripts/calculate-top-peaks.mjs`
      - **Notes:** This will populate a table in the Postgres database.
  
  - **Tracks:** There are pre-generated bigWig files that contain the signal data 
