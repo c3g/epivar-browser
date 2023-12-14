@@ -14,12 +14,12 @@ module.exports = bigWigMerge;
 
 async function bigWigMerge(files, output, chrom, start, end) {
   const command = [
-    'bigWigMergePlus',
-    '-compress',
-    '-range=0-1000',
-    `-position=${chrom}:${start}-${end}`,
+    'bw-merge-window',
+    '--treat-missing-as-zero',
+    '--range', '0-1000',
+    '--output', output,
+    `${chrom}:${start}-${end}`,
     ...files,
-    output
   ].join(' ');
 
   let result;
