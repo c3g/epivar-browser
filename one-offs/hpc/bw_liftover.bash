@@ -2,7 +2,7 @@
 #SBATCH --mem=8G
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --time=0:10:00
+#SBATCH --time=1:00:00
 #SBATCH --account=rrg-bourqueg-ad
 
 # CHAINFILE, CHROM_SIZES, BIGWIG_IN and BIGWIG_OUT environment variable pre-set
