@@ -8,7 +8,7 @@ import {makeDataReducer, makeDefaultDataState, makeDefaultListState, makeListRed
 const defaultChrom = 'rsID';
 
 const defaultUI = {
-  node: `${EPIVAR_BASE_URL}/api`,  // TODO: first in list
+  node: `${EPIVAR_BASE_URL}`,  // TODO: first in list
 
   chrom: defaultChrom,
   position: '',
