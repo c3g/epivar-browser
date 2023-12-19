@@ -1,31 +1,13 @@
 /*
  * config.js
- */
-
-const path = require('path');
-
-require('dotenv').config();
-
-
-/* For development: the `tracks` data is huge, so it makes
- * more sense to mount the files via `sshfs` instead of
- * copying them all.
- * You'd mount them with something like:
- *  sshfs beluga.calculcanada.ca:~/projects/rrg-bourqueg-ad/C3G/projects/DavidB_varwig \
- *      ~/mnt/beluga-varwig-data
- * Then you base directory would be something like:
- * VARWIG_TRACKS_DIR='/home/romgrk/mnt/beluga-varwig-data'
- * VARWIG_GEMINI_DB='/home/romgrk/mnt/beluga-varwig-data/WGS_VCFs/allSamples_WGS.gemini.db'
+ *
+ * This file configures the dataset that this EpiVar node is responsible for hosting.
  */
 
 module.exports = {
   source: {
     title: "Aracena 𝘦𝘵 𝘢𝘭.",
     assembly: "hg19",
-
-    metadata: {
-      path: path.join(__dirname, 'data/metadata.json'),
-    },
 
     /*
      * The current gemini database for Aracena et al. contains names as "Epi_realName_flu_xxx".

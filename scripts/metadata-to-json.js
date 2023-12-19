@@ -8,7 +8,6 @@ const process = require('node:process');
 const xlsx = require('xlsx');
 
 const envConfig = require("../envConfig");
-const config = require('../config');
 
 const sheetNames = [
   'RNA-Seq',
@@ -34,7 +33,7 @@ const headers = {
 };
 
 const metadataPath = process.argv[2] || path.join(envConfig.INPUT_FILES_DIR, 'flu-infection.xlsx');
-const output = config.source.metadata.path;  // TODO: for specific dataset
+const output = envConfig.TRACK_METADATA_PATH;
 const workbook = xlsx.readFileSync(metadataPath);
 
 let items = []

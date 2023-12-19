@@ -8,7 +8,7 @@ const clone  = require('lodash.clonedeep')
 const config = require('../config')
 const envConfig = require('../envConfig')
 
-const metadata = JSON.parse(fs.readFileSync(config.source.metadata.path).toString());
+const metadata = JSON.parse(fs.readFileSync(envConfig.TRACK_METADATA_PATH).toString());
 
 module.exports = {
   getTracks,

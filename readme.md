@@ -173,13 +173,13 @@ The different data sources to generate/prepare are:
      - **Generate with:** `node ./scripts/metadata-to-json.js ./input-files/flu-infection.xlsx` 
        - Replace `./input-files/flu-infection.xlsx` with the path to your metadata file
        - Optionally, the resulting JSON can just be generated directly (see above for keys)
-     - **Config:** `config.source.metadata.path` (filepath)
-     - **Input:** `./input-files/flu-infection.xlsx` 
-       - Or, whichever metadata file you specify in `config.js`
-     - **Output:** `./data/metadata.json` (*or, just generate this file directly*)
+     - **Config:** `EPIVAR_TRACK_METADATA_PATH` (environment variable to specify file path)
+     - **Input:** One command-line argument specifying a path, e.g., `./input-files/flu-infection.xlsx`.
+     - **Output:** The path specified in `EPIVAR_TRACK_METADATA_PATH`; by default, `./data/metadata.json` 
+       (*or, just generate this file directly*)
      - **Notes:** This is really just an XLSX to JSON transformation. 
        The version of the XLSX used for the Aracena *et al.* portal 
-       instance is available in this repository as a reference.
+       instance is [available in this repository](./input-files/flu-infection.xlsx) as a reference.
 
  - **Pre-computed feature signals:** Optionally, preset matrices can be provided
    with point values for box plots that have been batch-corrected and, e.g., 
@@ -190,7 +190,7 @@ The different data sources to generate/prepare are:
        row for sample names (`{ethnicity}##_{condition}`, e.g., `EU99_Flu`) and 
        a header column at the start for feature names (`chr#_startpos_endpos` 
        or `GENESYMBOL`).
-     - **Config:** Use the `VARWIG_POINTS_TEMPLATE` environment variable to 
+     - **Config:** Use the `EPIVAR_POINTS_TEMPLATE` environment variable to 
        configure where point matrices are loaded from. The `$ASSAY` string is 
        replaced with each assay in turn. 
        *Defaults to:* `./input-files/matrices/$ASSAY_batch.age.corrected_PCsreg.txt`
@@ -235,7 +235,7 @@ The different data sources to generate/prepare are:
        `node ./scripts/calculate-peak-groups.js`
      - **Input:** `./input-files/qtls/QTLS_complete_*.csv` (there are a couple 
        truncated example files in [`./input-files/qtls`](./input-files/qtls))
-     - **Config:** Use the `VARWIG_QTLS_TEMPLATE` environment variable to configure
+     - **Config:** Use the `EPIVAR_QTLS_TEMPLATE` environment variable to configure
        where QTL lists are loaded from. The `$ASSAY` string is replaced with each 
        assay in turn. *Defaults to:* `./input-files/qtls/QTLs_complete_$ASSAY.csv`
      - **Notes:** The peak's associated feature is usually different from where the
@@ -250,7 +250,7 @@ The different data sources to generate/prepare are:
  
  - **Tracks:** There are pre-generated bigWig files that contain the signal data 
    to use for merging and displaying in the browser. The paths should correspond to 
-     - **Config:** `VARWIG_TRACKS_DIR` environment variable, specifying the directory
+     - **Config:** `EPIVAR_TRACKS_DIR` environment variable, specifying the directory
      - **Notes:** A metadata item (from step Metadata above) `.path` field
        points to a path inside the `config.paths.tracks` directory, eg:
        `metadata.path = 'RNAseq/AF02_Flu.forward.bw'`

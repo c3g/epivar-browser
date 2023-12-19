@@ -18,6 +18,9 @@ const DATA_DIR = path.join(__dirname, "./data");
 //  - Static tracks to put in UCSC track hub. TODO: make this dataset-specific
 const STATIC_TRACKS_PATH = path.join(DATA_DIR, "ucsc.other-tracks.txt");
 
+//  - Track metadata for the dataset this node hosts
+const TRACK_METADATA_PATH = getPrefixedEnvVar("TRACK_METADATA_PATH", path.join(DATA_DIR, "metadata.json"));
+
 //  - This is the input data directory
 const INPUT_FILES_DIR = path.join(__dirname, "./input-files");
 
@@ -77,6 +80,7 @@ module.exports = {
   // Paths and data locations
   DATA_DIR,
   STATIC_TRACKS_PATH,
+  TRACK_METADATA_PATH,
   INPUT_FILES_DIR,
   TRACKS_DIR,
   QTLS_TEMPLATE,

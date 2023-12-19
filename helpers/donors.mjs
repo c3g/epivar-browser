@@ -1,7 +1,7 @@
 import fs from "fs";
-import config from "../config.js";
+import envConfig from "../envConfig.js";
 
-const tracks = JSON.parse(fs.readFileSync(config.source.metadata.path).toString());
+const tracks = JSON.parse(fs.readFileSync(envConfig.TRACK_METADATA_PATH).toString());
 
 const donorLookupSet = new Set();
 tracks.forEach(t => {
