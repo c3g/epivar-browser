@@ -2,11 +2,13 @@ const path = require("node:path");
 
 require("dotenv").config();
 
-const getPrefixedEnvVar = (varName, defaultValue) => (
-  process.env[`EPIVAR_${varName}`] ??
-  process.env[`VARWIG_${varName}`] ??
-  defaultValue
-);
+const getPrefixedEnvVar = (varName, defaultValue = undefined) => {
+  const explicitValue = process.env[`EPIVAR_${varName}`] ?? process.env[`VARWIG_${varName}`];
+  if (explicitValue === undefined && defaultValue === undefined) {
+    throw new Error(`${varName} must be set`);
+  }
+  return explicitValue ?? defaultValue;
+};
 
 // Paths and data locations ============================================================================================
 
@@ -50,10 +52,23 @@ const LOW_COUNT_THRESHOLD = parseInt(getPrefixedEnvVar("LOW_COUNT_THRESHOLD", "5
 //  - Maximum number of merge processes that can run at once; prevents using too many resources.
 const MERGE_SEMAPHORE_LIMIT = parseInt(getPrefixedEnvVar("MERGE_SEMAPHORE_LIMIT", "4"), 10);
 
+// Sessions ============================================================================================================
+
+/** @type string */
+const SESSION_SECRET = getPrefixedEnvVar("SESSION_SECRET");
+
+// Portal connection ===================================================================================================
+
+//  - We must allow the CORS origin of the web portal so that the portal can access the browser
+/** @type string */
+const PORTAL_ORIGIN = getPrefixedEnvVar("PORTAL_ORIGIN", "flu-infection.vhost38.genap.ca");
+
 // Plot settings =======================================================================================================
 
 // TODO
+/** @type number */
 const PLOT_MANHATTAN_MIN_P_VAL = parseFloat(getPrefixedEnvVar("MANHATTAN_MIN_P_VAL", "0.10"));
+/** @type number */
 const PLOT_MANHATTAN_BIN_SIZE = parseInt(getPrefixedEnvVar("MANHATTAN_BIN_SIZE", "100000"));
 
 // Export ==============================================================================================================
@@ -72,6 +87,10 @@ module.exports = {
   IMPORT_MAX_P_VAL,
   LOW_COUNT_THRESHOLD,
   MERGE_SEMAPHORE_LIMIT,
+  // Sessions
+  SESSION_SECRET,
+  // Portal connection
+  PORTAL_ORIGIN,
   // Plot settings
   PLOT_MANHATTAN_MIN_P_VAL,
   PLOT_MANHATTAN_BIN_SIZE,
