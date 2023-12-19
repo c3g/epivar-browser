@@ -15,8 +15,8 @@ import cache from "../helpers/cache.mjs";
 import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";
 import envConfig from "../envConfig.js";
+import Metadata from "./metadata.js";
 import Samples from "./samples.mjs";
-import source from "./source/index.js";
 import {DEFAULT_CONDITIONS} from "../helpers/defaultValues.mjs";
 import {donorLookup} from "../helpers/donors.mjs";
 import {normalizeChrom, GENOTYPE_STATES, GENOTYPE_STATE_NAMES} from "../helpers/genome.mjs";
@@ -51,7 +51,7 @@ function get(peak) {
   const {snp: {chrom, position}} = peak;
   // FIXME remove position - 1 hack (needs clean data)
   return Samples.queryMap(chrom, position - 1)
-    .then(info => source.getTracks(info.samples, peak));
+    .then(info => Metadata.getTracks(info.samples, peak));
 }
 
 async function values(peak, usePrecomputed = false) {

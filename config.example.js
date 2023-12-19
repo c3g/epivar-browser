@@ -20,7 +20,9 @@ require('dotenv').config();
 
 module.exports = {
   source: {
-    type: 'metadata',
+    title: "Aracena 𝘦𝘵 𝘢𝘭.",
+    assembly: "hg19",
+
     metadata: {
       path: path.join(__dirname, 'data/metadata.json'),
     },
@@ -47,10 +49,6 @@ module.exports = {
      * variants that we don't want to see, this removes them without
      * having to clean the database. */
     filter: 'type = "snp"',
-  },
-
-  assembly: {
-    id: 'hg19',
   },
 
   /* Configuration for development related options */
