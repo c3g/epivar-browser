@@ -70,7 +70,6 @@ async function values(peak, usePrecomputed = false) {
     chrom,
     start: peak.feature.start,
     end: peak.feature.end,
-    ...config.merge
   });
 
   if (usePrecomputed) {
