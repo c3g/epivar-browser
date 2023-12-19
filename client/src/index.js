@@ -19,7 +19,6 @@ import {
   fetchAssembly,
   fetchConditions,
   fetchEthnicities,
-  /* fetchChroms, */
   fetchMessages,
   fetchUser
 } from './actions.js'
