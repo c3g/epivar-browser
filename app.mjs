@@ -1,4 +1,5 @@
-const path = await import('path');
+const path = await import('node:path');
+import cors from "cors";
 import express from 'express';
 // const favicon = await import('serve-favicon');
 import logger from 'morgan';
@@ -10,21 +11,29 @@ import { createClient } from "redis";
 
 (await import('dotenv')).config();
 
+import { SESSION_SECRET, PORTAL_ORIGIN } from "./envConfig.js";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
+app.use(cors({
+  origin: PORTAL_ORIGIN,
+  methods: ["GET", "POST"],
+  credentials: true,
+  preflightContinue: true,
+}));
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
-app.use(logger(':req[x-real-ip] [:date[clf]] :method :url :status :response-time ms - :res[content-length]'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(logger(':req[x-real-ip] [:date[clf]] :method :url :status :response-time ms - :res[content-length]'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Set up auth if it's enabled
 if (!process.env.VARWIG_DISABLE_AUTH) {
@@ -40,7 +49,7 @@ if (!process.env.VARWIG_DISABLE_AUTH) {
   redisClient.connect().catch(console.error);
 
   app.use(session({
-    secret: process.env.VARWIG_SESSION_SECRET,
+    secret: SESSION_SECRET,
     httpOnly: false,
     resave: false,
     saveUninitialized: false,
