@@ -1,11 +1,20 @@
 # The EpiVar Browser
 
 A web application to search for eQTL/epigenetic signal-associated variants and 
-merge bigWig tracks by genotype. A production instance with data from 
+merge bigWig tracks by genotype. 
+
+A production instance with data from 
 Aracena *et al.* 
 ([2022 preprint](https://www.biorxiv.org/content/10.1101/2022.05.10.491413v1)) 
 is available at 
 [https://computationalgenomics.ca/tools/epivar](https://computationalgenomics.ca/tools/epivar). 
+
+The tool itself is described in a 2023 preprint:
+
+> **EpiVar Browser: advanced exploration of epigenomics data under controlled access** <br />
+> David R Lougheed, Hanshi Liu, Katherine A Aracena, Romain Grégoire, Alain Pacis, Tomi Pastinen, Luis B Barreiro, 
+> Yann Joly, David Bujold, Guillaume Bourque<br />
+> bioRxiv 2023.08.03.551309; doi: https://doi.org/10.1101/2023.08.03.551309
 
 
 
