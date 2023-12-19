@@ -54,7 +54,7 @@ export function fetchMessages(node) {
 function fetchAPI(node, url, params, options = {}) {
   const {method = "get", ...other} = options;
 
-  const finalURL = `${node}${url}${(method === "get" && params) ? `?${queryString(params)}` : ""}`;
+  const finalURL = `${node}/api${url}${(method === "get" && params) ? `?${queryString(params)}` : ""}`;
 
   const data = (["patch", "post", "put"].includes(method) && params)
     ? params
