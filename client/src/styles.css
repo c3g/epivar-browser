@@ -252,6 +252,21 @@ body {
   font-weight: 500;
   letter-spacing: .025em;
 }
+.Header__dataset {
+  display: flex;
+}
+.Header__dataset > div {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+.Header__dataset > div > select {
+  flex: 1;
+}
 .Header__links {
   display: flex;
   flex-direction: row;
@@ -274,15 +289,6 @@ body {
 }
 .Header__highlight_group button {
   margin-top: 0;
-}
-.Header__highlight_group select {
-  display: inline-block;
-  vertical-align: top;
-  width: auto;
-  height: 2rem;
-  margin-top: 0.2rem;
-  margin-left: 0.75rem;
-  font-size: 0.8rem;
 }
 .Header__links button.active {
   text-decoration: underline;

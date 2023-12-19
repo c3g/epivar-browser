@@ -1,3 +1,4 @@
+export const SET_NODE            = 'SET_NODE';
 export const SET_CHROM           = 'SET_CHROM';
 export const SET_POSITION        = 'SET_POSITION';
 export const SET_OVERVIEW_CHROM  = 'SET_OVERVIEW_CHROM';

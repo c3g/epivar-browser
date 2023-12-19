@@ -4,6 +4,7 @@ import axios from 'axios'
 import * as api from './api'
 import * as k from './constants/ActionTypes.js'
 
+export const setNode           = createAction(k.SET_NODE);  // TODO: need to reset user on node change
 export const setChrom          = createAction(k.SET_CHROM);
 export const setPosition       = createAction(k.SET_POSITION);
 export const setOverviewChrom  = createAction(k.SET_OVERVIEW_CHROM);
@@ -60,7 +61,7 @@ export const mergeTracks = (peak) => (dispatch, getState) => {
 
   const session = {...peak};
 
-  return api.createSession(session)
+  return api.createSession(getState().ui.node, session)
     .then(sessionID => ({ assemblyID, sessionID, session }))
     .catch(err => dispatch(handleError(err)));
 };
@@ -78,11 +79,11 @@ function createFetchActions(namespace) {
 }
 
 function createFetchFunction(fn, actions) {
-  return (params=undefined, meta=undefined, cancelToken=undefined) => dispatch => {
+  return (params=undefined, meta=undefined, cancelToken=undefined) => (dispatch, getState) => {
     const dispatchedAt = Date.now();
     dispatch(withMeta(actions.request(), meta));
 
-    return fn(params, cancelToken)
+    return fn(getState().ui.node, params, cancelToken)
       .then(result => dispatch(withMeta(actions.receive(result), meta)))
       .catch(err => {
         if (axios.isCancel(err)) {
@@ -91,7 +92,7 @@ function createFetchFunction(fn, actions) {
           return dispatch(withMeta(actions.error(err), meta))
         }
       });
-  }
+  };
 }
 
 function withMeta(action, meta) {

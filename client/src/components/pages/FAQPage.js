@@ -14,7 +14,8 @@ const FAQPage = () => {
                target="_blank"
                rel="noreferrer">Gemini database</a> into a box plot on a server, which is
             then sent to the user’s browser if they have signed in and agreed to the terms of use. Plots are generated
-            as needed, rather than in advance, and are derived directly from the track and genotype data.
+            as needed, rather than in advance, and are derived directly from the count matrix or track and genotype
+            data.
           </p>
         </details>
         <details open={true}>
@@ -27,16 +28,20 @@ const FAQPage = () => {
                target="_blank"
                rel="noreferrer">UCSC Genome Browser</a> track hubs upon
             request to visualize averaged track segments for a given genomic feature. These tracks are created on the
-            fly by averaging bigWig regions of samples sharing an experimental treatment and genotype.
+            fly by averaging bigWig regions of samples sharing an experimental treatment and genotype, using our
+            command-line tool:
+            <a href="https://github.com/c3g/bw-merge-window"
+               target="_blank"
+               rel="noreferrer"><code>bw-merge-window</code></a>.
           </p>
         </details>
         <details open={true}>
           <summary>How were the global tracks per ancestry group generated?</summary>
           <p>
-            The dark shaded area denotes the distribution of the average RPM values and the light shaded area denotes 
-            the standard deviation. Signals of various epigenetic marks are shown in blue color for non-infected samples 
-            and red color for infected samples. For RNA-seq, forward and reverse transcripts are shown in blue and green 
-            color separately for non-infected samples; while forward and reverse transcripts are shown in red and brown 
+            The dark shaded area denotes the distribution of the average RPM values and the light shaded area denotes
+            the standard deviation. Signals of various epigenetic marks are shown in blue color for non-infected samples
+            and red color for infected samples. For RNA-seq, forward and reverse transcripts are shown in blue and green
+            color separately for non-infected samples; while forward and reverse transcripts are shown in red and brown
             color separately for infected samples.
           </p>
         </details>

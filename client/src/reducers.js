@@ -1,11 +1,15 @@
-import { combineReducers } from 'redux'
-import * as k from './constants/ActionTypes'
+import { combineReducers } from "redux"
+
+import {EPIVAR_BASE_URL} from "./config";
+import * as k from "./constants/ActionTypes"
 import {makeDataReducer, makeDefaultDataState, makeDefaultListState, makeListReducer} from "./helpers/reducers";
 
 
 const defaultChrom = 'rsID';
 
 const defaultUI = {
+  node: `${EPIVAR_BASE_URL}/api`,  // TODO: first in list
+
   chrom: defaultChrom,
   position: '',
 
@@ -21,6 +25,9 @@ const defaultUI = {
 
 function uiReducer(state = defaultUI, action) {
   switch (action.type) {
+    case k.SET_NODE: {
+      return { ...state, node: action.payload };
+    }
     case k.SET_CHROM: {
       return { ...state, chrom: action.payload };
     }

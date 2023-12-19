@@ -11,15 +11,16 @@ export default function Header({children, onAbout, onDatasets, onOverview, onExp
   const location = useLocation();
   const navigate = useNavigate();
 
+  const node = useSelector(state => state.ui.node);
   const userData = useSelector(state => state.user);
   const messages = useSelector(state => state.messages);
 
   return <div>
     <div className='Header'>
       <div className="Header__auth">
-        {userData.data
+        {node && userData.data
           ? (
-            <span>Authenticated as {userData.data.ip}</span>
+            <span>Authenticated with <code>{node}</code> as {userData.data.ip}</span>
           ) : null
           // <a href="/api/auth/logout">{userData.data?.displayName ?? userData.data?.id} (Log Out)</a>
           // <a href={`${LOGIN_PATH}?redirect=${encodeURIComponent(window.location.pathname)}`}>Log In / Sign Up</a>
@@ -28,6 +29,14 @@ export default function Header({children, onAbout, onDatasets, onOverview, onExp
       <Container>
         <h1 className='Header__title'><Link to="/about" className='Link'>{SITE_TITLE}</Link></h1>
         <h4 className='Header__subtitle'>{SITE_SUBTITLE}</h4>
+        <div className="Header__dataset">
+          <div>
+            <label htmlFor="dataset-selector"></label>
+            <Input type="select" id="dataset-selector">
+              <option>Aracena 𝘦𝘵 𝘢𝘭. (hg19)</option>
+            </Input>
+          </div>
+        </div>
         <div className="Header__links">
           <Button color="link"
                   className={location.pathname.startsWith("/about") ? "active" : ""}
@@ -36,9 +45,6 @@ export default function Header({children, onAbout, onDatasets, onOverview, onExp
                   className={location.pathname.startsWith("/datasets") ? "active" : ""}
                   onClick={onDatasets}><Icon name="table" bootstrap={true} />Datasets</Button>
           <div className="Header__highlight_group">
-            <Input type="select">
-              <option>Aracena 𝘦𝘵 𝘢𝘭. (hg19)</option>
-            </Input>
             <Button color="link"
                     className={location.pathname.startsWith("/overview") ? "active" : ""}
                     onClick={onOverview}><Icon name="graph-up" bootstrap={true} />Overview</Button>

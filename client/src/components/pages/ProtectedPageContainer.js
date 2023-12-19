@@ -3,8 +3,8 @@ import {useSelector} from "react-redux";
 import {useOutletContext} from "react-router-dom";
 import {Container, Spinner} from "reactstrap";
 
-import {LOGIN_PATH} from "../../constants/app";
 import {getHasLoggedIn, setHasLoggedIn} from "../../helpers/localStorage";
+import {useNode} from "../../helpers/node";
 
 import Intro from "../Intro";
 
@@ -16,13 +16,14 @@ const LoadingContainer = React.memo(() => (
   </Container>
 ));
 
-const triggerLogIn = () => {
-  window.location.href = `${LOGIN_PATH}?redirect=${window.location.pathname}`;
-};
-
 const ProtectedPageContainer = React.memo(({children}) => {
+  const node = useNode();
   const {setTermsModal} = useOutletContext();
   const {data: userData, isLoaded} = useSelector(state => state.user);
+
+  const triggerLogIn = useCallback(() => {
+    window.location.href = `${node}/auth/login?redirect=${window.location.pathname}`;
+  }, [node]);
 
   useEffect(() => {
     if (isLoaded && userData) {

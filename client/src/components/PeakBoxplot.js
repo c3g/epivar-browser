@@ -1,15 +1,16 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useSelector} from "react-redux";
+import {useNode} from "../helpers/node";
 
 function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
-  const usePrecomputed = useSelector(state => state.ui.usePrecomputed);
-
   const ethnicities = useSelector(state => state.ethnicities.list);
+  const node = useNode();
+  const usePrecomputed = useSelector(state => state.ui.usePrecomputed);
 
   const [loaded, setLoaded] = useState(false);
   const prevPeakImgRef = useRef("");
 
-  const peakImg = `${process.env.PUBLIC_URL}/api/tracks/plot/${peak?.id}?precomputed=${Number(usePrecomputed)}`;
+  const peakImg = `${node}/tracks/plot/${peak?.id}?precomputed=${Number(usePrecomputed)}`;
 
   useEffect(() => {
     if (prevPeakImgRef.current !== peakImg) {
