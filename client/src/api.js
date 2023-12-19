@@ -18,15 +18,6 @@ export function fetchPeaks(node, params) {
   return get(node, '/peaks/query', params)
 }
 
-// export function fetchChroms() {
-//   return get('/autocomplete/chroms')
-//   .then(chroms => {
-//     const parse = string => +string.slice(3)
-//     chroms.sort((a, b) => parse(a) - parse(b))
-//     return chroms
-//   })
-// }
-
 export function fetchPositions(node, params, cancelToken) {
   return get(node, '/autocomplete/positions', params, {cancelToken})
 }
@@ -38,26 +29,6 @@ export const fetchEthnicities = (node) => get(node, '/ethnicities');
 export const fetchOverviewConfig = (node) => get(node, '/overview/config');
 export const fetchManhattanData = (node, {chrom, assay}) => get(node, `/overview/assays/${assay}/topBinned/${chrom}`);
 
-
-/**
- * @typedef ValuesOptions
- * @type {object}
- * @property {object} variant
- * @property {string} variant.chrom
- * @property {number} variant.position
- * @property {object} feature
- * @property {string} feature.chrom
- * @property {number} feature.start
- * @property {number} feature.end
- * @property {boolean} usePrecomputed
- */
-
-/**
- * @param {ValuesOptions} params
- */
-// export function cacheValues(params) {
-//   return post(`/tracks/values?precomputed=${params.usePrecomputed ? '1' : '0'}`, params)
-// }
 
 export function createSession(node, params) {
   return post(node, '/sessions/create', params)
