@@ -27,7 +27,7 @@ router.get("/perma/hub/other-tracks", (_req, res) => {
     .catch(errorHandler(res));
 });
 router.get("/perma/genome/other-tracks", (_req, res) => {
-  Promise.resolve(Ucsc.generateGenome("other-tracks", config.assembly.id))
+  Promise.resolve(Ucsc.generateGenome("other-tracks", config.source.assembly))
     .then(textHandler(res))
     .catch(errorHandler(res))
 })
@@ -42,7 +42,7 @@ router.get("/perma/track-db/*.html", (_req, res) => {
 // ----------------------------------------------------------------------------
 
 router.get('/genome/:session', ({params}, res) => {
-  Promise.resolve(Ucsc.generateGenome(params.session, config.assembly.id))
+  Promise.resolve(Ucsc.generateGenome(params.session, config.source.assembly))
     .then(textHandler(res))
     .catch(errorHandler(res));
 });

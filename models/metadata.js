@@ -5,8 +5,8 @@
 const fs = require('fs')
 const path = require('path')
 const clone  = require('lodash.clonedeep')
-const config = require('../../config')
-const envConfig = require('../../envConfig')
+const config = require('../config')
+const envConfig = require('../envConfig')
 
 const metadata = JSON.parse(fs.readFileSync(config.source.metadata.path).toString());
 

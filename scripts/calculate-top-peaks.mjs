@@ -7,10 +7,8 @@ import { chromosomeSizesByAssemblyID } from "../data/assemblies/index.mjs";
 // Clear relevant table of existing data
 await db.run("TRUNCATE TABLE binned_most_significant_peaks RESTART IDENTITY CASCADE");
 
-// TODO: get assembly for dataset
-
 // Only calculate top binned peaks by assay for chromosomes whose size has been provided in config.js
-const chromSizes = chromosomeSizesByAssemblyID[config.assembly?.id ?? "hg19"];
+const chromSizes = chromosomeSizesByAssemblyID[config.source.assembly ?? "hg19"];
 const minPValue = envConfig.PLOT_MANHATTAN_MIN_P_VAL;
 const binSize = envConfig.PLOT_MANHATTAN_BIN_SIZE;
 
