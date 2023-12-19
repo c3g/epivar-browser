@@ -20,6 +20,14 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+
+    <script type="text/javascript">
+      // Define an empty global as a fallback for what ends up in the EPIVAR_CONFIG global.
+      // - leave it mutable so public/config.js can override it.
+      let EPIVAR_CONFIG = {};
+    </script>
+    <script src="%PUBLIC_URL%/config.js"></script>
+
     <title>EpiVar Browser | Epigenetic & Expression QTLs</title>
   </head>
   <body>

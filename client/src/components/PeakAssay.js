@@ -21,7 +21,7 @@ import Icon from "./Icon";
 import PeakBoxplot from "./PeakBoxplot";
 
 import {mergeTracks, setUsePrecomputed} from "../actions";
-import {BASE_URL} from "../constants/app";
+import {useNode} from "../helpers/node";
 import {constructUCSCUrl} from "../helpers/ucsc";
 
 
@@ -81,6 +81,8 @@ const PeakAssay = ({peaks}) => {
 };
 
 const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
+  const node = useSelector((state) => state.ui.node);
+
   const {id: assembly} = useSelector(state => state.assembly.data) ?? {};
   const conditions = useSelector(state => state.conditions.list);
 
@@ -194,7 +196,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
           <Button size='sm' color='link' disabled={!!loading} onClick={() => {
             setTrackLoading(row.id, "ucsc");
             onOpenTracks(row).then((res) => {
-              launchInUCSC(res);
+              launchInUCSC(node, res);
               setTrackNotLoading(row.id);
             });
           }}>
@@ -204,7 +206,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       },
       disableSortBy: true,
     },
-  ], [assembly, conditions, setTrackLoading, setTrackNotLoading, onOpenTracks, tooltipsShown]);
+  ], [node, assembly, conditions, setTrackLoading, setTrackNotLoading, onOpenTracks, tooltipsShown]);
 
   // noinspection JSCheckFunctionSignatures
   const tableInstance = useTable(
@@ -333,6 +335,8 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
   const [loadingBrowser, setLoadingBrowser] = useState(false);
   const [sessionTracks, setSessionTracks] = useState(null);
 
+  const node = useNode();
+
   const { assemblyID, sessionID, session } = data ?? {};  // session <=> peak here
   const { assay, feature, snp } = session ?? {};
   const { chrom: fChrom, start: fStart, end: fEnd } = feature ?? {};
@@ -341,7 +345,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
     // Fetch tracks when data is set
     if (data) {
       setLoadingTracks(true);
-      fetch(`${BASE_URL}/api/igvjs/track-db/${sessionID}`)
+      fetch(`${node}/igvjs/track-db/${sessionID}`)
         .then((res) => res.json())
         .then(({data: tracks}) => {
           setSessionTracks(tracks);
@@ -392,9 +396,9 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
   );
 };
 
-const launchInUCSC = ({ assemblyID, sessionID, session: { feature, snp } }) => {
+const launchInUCSC = (node, { assemblyID, sessionID, session: { feature, snp } }) => {
   const position = buildBrowserPosition(feature, snp);
-  const hubURL = `${BASE_URL}/api/ucsc/hub/${sessionID}`;
+  const hubURL = `${node}/ucsc/hub/${sessionID}`;
   const ucscURL = constructUCSCUrl([
     ["db", assemblyID],
     ["hubClear", hubURL],

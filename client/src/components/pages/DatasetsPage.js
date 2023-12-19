@@ -1,18 +1,20 @@
 import React, {useCallback} from "react";
-import {Col, Container, Row} from "reactstrap";
-import {Link} from "react-router-dom";
-import {BASE_URL} from "../../constants/app";
-import {constructUCSCUrl} from "../../helpers/ucsc";
 import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
+import {Col, Container, Row} from "reactstrap";
+
+import {useNode} from "../../helpers/node";
+import {constructUCSCUrl} from "../../helpers/ucsc";
 
 
 const lgColSize = {size: 10, offset: 1};
 
 const DatasetsPage = () => {
+  const node = useNode();
   const {id: assembly} = useSelector(state => state.assembly.data) ?? {};
 
   const openTracks = useCallback(() => {
-    const permaHubURL = `${BASE_URL}/api/ucsc/perma/hub/other-tracks`;
+    const permaHubURL = `${node}/ucsc/perma/hub/other-tracks`;
     const ucscURL = constructUCSCUrl([
       ["db", assembly],
       ["hubClear", permaHubURL],

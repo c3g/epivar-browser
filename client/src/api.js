@@ -10,12 +10,12 @@ import queryString from './helpers/queryString'
  * API functions
  */
 
-export function fetchAssays(params) {
-  return get('/assays/list', params)
+export function fetchAssays(node, params) {
+  return get(node, '/assays/list', params)
 }
 
-export function fetchPeaks(params) {
-  return get('/peaks/query', params)
+export function fetchPeaks(node, params) {
+  return get(node, '/peaks/query', params)
 }
 
 // export function fetchChroms() {
@@ -27,16 +27,16 @@ export function fetchPeaks(params) {
 //   })
 // }
 
-export function fetchPositions(params, cancelToken) {
-  return get('/autocomplete/positions', params, {cancelToken})
+export function fetchPositions(node, params, cancelToken) {
+  return get(node, '/autocomplete/positions', params, {cancelToken})
 }
 
-export const fetchAssembly = () => get('/assembly');
-export const fetchConditions = () => get('/conditions');
-export const fetchEthnicities = () => get('/ethnicities');
+export const fetchAssembly = (node) => get(node, '/assembly');
+export const fetchConditions = (node) => get(node, '/conditions');
+export const fetchEthnicities = (node) => get(node, '/ethnicities');
 
-export const fetchOverviewConfig = () => get('/overview/config');
-export const fetchManhattanData = ({chrom, assay}) => get(`/overview/assays/${assay}/topBinned/${chrom}`);
+export const fetchOverviewConfig = (node) => get(node, '/overview/config');
+export const fetchManhattanData = (node, {chrom, assay}) => get(node, `/overview/assays/${assay}/topBinned/${chrom}`);
 
 
 /**
@@ -59,32 +59,31 @@ export const fetchManhattanData = ({chrom, assay}) => get(`/overview/assays/${as
 //   return post(`/tracks/values?precomputed=${params.usePrecomputed ? '1' : '0'}`, params)
 // }
 
-export function createSession(params) {
-  return post('/sessions/create', params)
+export function createSession(node, params) {
+  return post(node, '/sessions/create', params)
 }
 
-export function fetchUser() {
-  return get('/auth/user');
+export function fetchUser(node) {
+  return get(node, '/auth/user');
 }
 
-export function saveUser(user) {
+export function saveUser(node, user) {
   // Only terms agreement info is actually save-able. Everything else is
   // read-only from the identity provider.
-  return put('/auth/user', user);
+  return put(node, '/auth/user', user);
 }
 
-export function fetchMessages() {
-  return get('/messages/list');
+export function fetchMessages(node) {
+  return get(node, '/messages/list');
 }
 
 
 // Helpers
 
-function fetchAPI(url, params, options = {}) {
+function fetchAPI(node, url, params, options = {}) {
   const {method = "get", ...other} = options;
 
-  const finalURL = process.env.PUBLIC_URL + '/api' + url + (
-    (method === "get" && params) ? `?${queryString(params)}` : "");
+  const finalURL = `${node}${url}${(method === "get" && params) ? `?${queryString(params)}` : ""}`;
 
   const data = (["patch", "post", "put"].includes(method) && params)
     ? params
@@ -105,14 +104,14 @@ function fetchAPI(url, params, options = {}) {
   ));
 }
 
-function get(url, params, options) {
-  return fetchAPI(url, params, options)
+function get(node, url, params, options) {
+  return fetchAPI(node, url, params, options)
 }
 
-function post(url, params, options = {}) {
-  return fetchAPI(url, params, { ...options, method: 'post' })
+function post(node, url, params, options = {}) {
+  return fetchAPI(node, url, params, { ...options, method: 'post' })
 }
 
-function put(url, params, options = {}) {
-  return fetchAPI(url, params, { ...options, method: 'put' })
+function put(node, url, params, options = {}) {
+  return fetchAPI(node, url, params, { ...options, method: 'put' })
 }
