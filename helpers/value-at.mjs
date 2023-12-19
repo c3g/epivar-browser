@@ -21,11 +21,6 @@ const exec = command =>
           : resolve({stdout, stderr})
     ));
 
-const defaultOptions = {
-  bin: "",
-};
-
-
 // Command generation
 
 const CACHE_EXP = 24 * 60 * 60 * 1000;
@@ -41,16 +36,13 @@ const valueCommand = (file, options) => [
 
 /**
  * @param {string} file
- * @param {Object} userOptions
- * @param {string} userOptions.chrom
- * @param {number} userOptions.position
- * @param {number} userOptions.start
- * @param {number} userOptions.end
- * @param {string} [userOptions.bin]
+ * @param {Object} options
+ * @param {string} options.chrom
+ * @param {number} options.start
+ * @param {number} options.end
+ * @param {string} [options.bin]
  */
-export async function valueAt(file, userOptions) {
-  const options = {...defaultOptions, ...userOptions};
-
+export async function valueAt(file, options) {
   await cache.open();
 
   const key = "bws:" + [file, options.chrom, options.start, options.end].join("#");
