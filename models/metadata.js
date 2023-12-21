@@ -2,17 +2,17 @@
  * metadata.js
  */
 
-const fs = require('fs')
-const path = require('path')
-const clone  = require('lodash.clonedeep')
-const config = require('../config')
-const envConfig = require('../envConfig')
+const fs = require('node:fs');
+const path = require('node:path');
+const clone  = require('lodash.clonedeep');
+const config = require('../config');
+const envConfig = require('../envConfig');
 
 const metadata = JSON.parse(fs.readFileSync(envConfig.TRACK_METADATA_PATH).toString());
 
 module.exports = {
   getTracks,
-}
+};
 
 /**
  * @param {Object.<string, Object>} samples
@@ -26,7 +26,8 @@ function getTracks(samples, peak) {
   const samplesByRealName =
     Object.fromEntries(
       Object.entries(samples)
-        .map(([key, value]) => [config.source.geminiSampleNameConverter(key), value]))
+        .map(([key, value]) => [config.samples?.vcfSampleNameConverter(key) ?? undefined, value])
+        .filter((e) => e[0] !== undefined));
 
   const sampleNames = Object.keys(samplesByRealName)
   const assay = peak.assay.toLowerCase()
@@ -35,24 +36,22 @@ function getTracks(samples, peak) {
     metadata
       .filter(track => {
         // TODO test filtering here
-        if (assay !== track.assay.toLowerCase())
-          return false
-        if (!sampleNames.includes(track.donor))
-          return false
+        if (assay !== track.assay.toLowerCase()) return false;
+        if (!sampleNames.includes(track.donor)) return false;
+        // noinspection RedundantIfStatementJS
         if (peak.assay === 'RNA-Seq' &&
-              peak.feature.strand === '+' && track.view !== 'signal_forward')
-          return false
-        return true
+              peak.feature.strand === '+' && track.view !== 'signal_forward') return false;
+        return true;
       })
-      .map(clone)
+      .map(clone);
 
   tracks.forEach(track => {
-    track.path = getLocalPath(track)
-    const sample = samplesByRealName[track.donor]
-    Object.assign(track, sample)
-  })
+    track.path = getLocalPath(track);
+    const sample = samplesByRealName[track.donor];
+    Object.assign(track, sample);
+  });
 
-  return Promise.resolve(tracks)
+  return Promise.resolve(tracks);
 }
 
 function getLocalPath(track) {
