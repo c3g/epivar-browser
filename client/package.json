@@ -11,6 +11,7 @@
     "clsx": "^1.2.1",
     "d3-quadtree": "^3.0.1",
     "d3-scale": "^4.0.2",
+    "dompurify": "^3.0.6",
     "font-awesome": "^4.7.0",
     "igv": "^2.15.11",
     "memoize-one": "^6.0.0",

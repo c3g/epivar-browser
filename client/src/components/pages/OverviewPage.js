@@ -127,7 +127,7 @@ const OverviewPage = () => {
           onPointClick={peak => {
             if (!dispatch) return;
             const snp = peak[SNP_PROP];
-            navigate(`/explore/locus/rsID/${snp}/${assay}`);
+            navigate(`/dataset/explore/locus/rsID/${snp}/${assay}`);
             dispatch(setChrom("rsID"));
             dispatch(setPosition(snp));
             dispatch(doSearch());

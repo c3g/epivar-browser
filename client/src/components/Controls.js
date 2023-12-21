@@ -141,7 +141,7 @@ const Controls = ({toggleHelp}) => {
     // The item assay is the tab with the most significant result - which will be
     // selected first by nature of ordering, thus leading the user to the most interesting
     // detail from the autocomplete.
-    navigate(`/explore/locus/${chrom}/${position}/${item.assay}`, {replace: true});
+    navigate(`/dataset/explore/locus/${chrom}/${position}/${item.assay}`, {replace: true});
     changePosition(position);
     dispatch(doSearch());
     setDidFirstSearch(true);
@@ -192,7 +192,7 @@ const Controls = ({toggleHelp}) => {
 
   const onClickSearch = useCallback(() => {
     if (!chrom || !position) return;
-    navigate(`/explore/locus/${chrom}/${position}`, {replace: true});
+    navigate(`/dataset/explore/locus/${chrom}/${position}`, {replace: true});
     dispatch(doSearch());
     setDidFirstSearch(true);
   }, [navigate, chrom, position]);

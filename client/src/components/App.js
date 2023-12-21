@@ -11,6 +11,7 @@ import TermsModal from "./TermsModal";
 import ContactModal from "./ContactModal";
 import AboutPage from "./pages/AboutPage";
 import ProtectedPageContainer from "./pages/ProtectedPageContainer";
+import DatasetAboutPage from "./pages/DatasetAboutPage";
 import OverviewPage from "./pages/OverviewPage";
 import ExplorePage from "./pages/ExplorePage";
 import DatasetsPage from "./pages/DatasetsPage";
@@ -41,13 +42,14 @@ const RoutedApp = () => {
   const navigateAbout = useCallback(() => navigate("/about"), [navigate]);
   const navigateDatasets = useCallback(() => navigate("/datasets"), [navigate]);
   // TODO: remember chrom and assay:
-  const navigateOverview = useCallback(() => navigate("/overview"), [navigate]);
+  const navigateDatasetAbout = useCallback(() => navigate("/dataset/about"), [navigate]);
+  const navigateOverview = useCallback(() => navigate("/dataset/overview"), [navigate]);
   const navigateExplore = useCallback(() => {
-    if (location.pathname.startsWith("/explore")) return;
+    if (location.pathname.startsWith("/dataset/explore")) return;
     if (chrom && position) {
-      navigate(`/explore/locus/${chrom}/${position}`);
+      navigate(`/dataset/explore/locus/${chrom}/${position}`);
     } else {
-      navigate("/explore");
+      navigate("/dataset/explore");
     }
   }, [location.pathname, chrom, position, navigate]);
   const navigateFAQ = () => navigate("/faq");
@@ -92,6 +94,7 @@ const RoutedApp = () => {
 
       <Header onAbout={navigateAbout}
               onDatasets={navigateDatasets}
+              onDatasetAbout={navigateDatasetAbout}
               onOverview={navigateOverview}
               onExplore={navigateExplore}
               onFAQ={navigateFAQ}
@@ -114,10 +117,11 @@ const App = () => (
         <Route index={true} element={<Navigate to="/about" replace={true} />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="datasets" element={<DatasetsPage />} />
-        <Route path="overview" element={<ProtectedPageContainer>
+        <Route path="dataset/about" element={<DatasetAboutPage />} />
+        <Route path="dataset/overview" element={<ProtectedPageContainer>
           <OverviewPage />
         </ProtectedPageContainer>} />
-        <Route path="explore" element={<ProtectedPageContainer>
+        <Route path="dataset/explore" element={<ProtectedPageContainer>
           <ExplorePage />
         </ProtectedPageContainer>}>
           <Route index={true} element={<PeakResults />} />

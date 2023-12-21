@@ -24,10 +24,11 @@ const Footer = ({/*onContact, */onTerms}) => (
       </div>
       <nav className="Footer__nav">
         <ul>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/datasets">Datasets</Link></li>
-          <li><Link to="/overview">Overview</Link></li>
-          <li><Link to="/explore">Explore</Link></li>
+          {/*<li><Link to="/datasets">Datasets</Link></li>*/}
+          <li><Link to="/dataset/about">About Dataset</Link></li>
+          <li><Link to="/dataset/overview">Overview</Link></li>
+          <li><Link to="/dataset/explore">Explore</Link></li>
+          <li><Link to="/about">About EpiVar</Link></li>
           <li><a href="#" onClick={onTerms}>Terms of Use</a></li>
         </ul>
       </nav>
