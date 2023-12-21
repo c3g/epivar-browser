@@ -8,9 +8,7 @@ export const SET_DEV_MODE        = 'SET_DEV_MODE';
 export const HANDLE_ERROR        = 'HANDLE_ERROR';
 
 export const ASSAYS              = createFetchConstants('ASSAYS');
-export const ASSEMBLY            = createFetchConstants('ASSEMBLY');
-export const CONDITIONS          = createFetchConstants('CONDITIONS');
-export const ETHNICITIES         = createFetchConstants('ETHNICITIES');
+export const DATASET             = createFetchConstants('DATASET');
 export const SAMPLES             = createFetchConstants('SAMPLES');
 export const CHROMS              = createFetchConstants('CHROMS');
 export const POSITIONS           = createFetchConstants('POSITIONS');

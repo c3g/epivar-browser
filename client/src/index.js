@@ -16,9 +16,7 @@ import { rootReducer } from './reducers';
 import App from './components/App';
 import {
   fetchAssays,
-  fetchAssembly,
-  fetchConditions,
-  fetchEthnicities,
+  fetchDataset,
   fetchMessages,
   fetchUser
 } from './actions.js'
@@ -53,9 +51,7 @@ store.dispatch(fetchUser());
 store.dispatch(fetchMessages());  // Server-side messages, e.g. auth errors
 
 store.dispatch(fetchAssays());
-store.dispatch(fetchAssembly());
-store.dispatch(fetchConditions());
-store.dispatch(fetchEthnicities());
+store.dispatch(fetchDataset());
 
 /*
 Re-enable to bring back server-fetched genomic chromosomes. For now, this instead just holds rsID + gene.

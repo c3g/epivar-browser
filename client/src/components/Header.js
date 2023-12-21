@@ -12,6 +12,7 @@ export default function Header({children, onAbout, onDatasets, onOverview, onExp
   const navigate = useNavigate();
 
   const node = useSelector(state => state.ui.node);
+  const dataset = useSelector((state) => state.dataset.data);
   const userData = useSelector(state => state.user);
   const messages = useSelector(state => state.messages);
 
@@ -33,7 +34,7 @@ export default function Header({children, onAbout, onDatasets, onOverview, onExp
           <div>
             <label htmlFor="dataset-selector"></label>
             <Input type="select" id="dataset-selector">
-              <option>Aracena 𝘦𝘵 𝘢𝘭. (hg19)</option>
+              <option>{dataset.title ?? ""} ({dataset.assembly ?? ""})</option>
             </Input>
           </div>
         </div>

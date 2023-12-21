@@ -19,10 +19,8 @@ module.exports = {
  * @param {Object} peak
  */
 function getTracks(samples, peak) {
-  /*
-   * The current gemini database contains names as "Epi_realName_flu_xxx".
-   * We need to extract "realName" to make it easier for the rest.
-   */
+  // Variant sample IDs may not match exactly to donor names. This configured function + map/filter extracts the donor
+  // name from the VCF sample ID.
   const samplesByRealName =
     Object.fromEntries(
       Object.entries(samples)

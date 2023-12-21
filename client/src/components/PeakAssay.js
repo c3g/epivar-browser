@@ -83,8 +83,7 @@ const PeakAssay = ({peaks}) => {
 const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
   const node = useSelector((state) => state.ui.node);
 
-  const {id: assembly} = useSelector(state => state.assembly.data) ?? {};
-  const conditions = useSelector(state => state.conditions.list);
+  const {assembly, conditions} = useSelector(state => state.dataset.data) ?? {};  // dataset metadata
 
   const [tooltipsShown, setTooltipsShown] = useState({});
   const [tracksLoading, setTracksLoading] = useState({});
@@ -161,7 +160,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
       },
       disableSortBy: true,
     },
-    ...conditions.map(({id, name}, idx) => {
+    ...(conditions ?? []).map(({id, name}, idx) => {
       // noinspection JSUnusedGlobalSymbols
       return {
         id: `value${id}`,
