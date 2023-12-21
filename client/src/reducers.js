@@ -145,14 +145,8 @@ const defaultAssays = makeDefaultListState(
 );
 const assaysReducer = makeListReducer(k.ASSAYS, defaultAssays);
 
-const defaultConditions = makeDefaultListState();
-const conditionsReducer = makeListReducer(k.CONDITIONS, defaultConditions);
-
-const defaultEthnicities = makeDefaultListState();
-const ethnicitiesReducer = makeListReducer(k.ETHNICITIES, defaultEthnicities);
-
-const defaultAssembly = makeDefaultDataState();
-const assemblyReducer = makeDataReducer(k.ASSEMBLY, defaultAssembly);
+const defaultDataset = makeDefaultDataState();
+const datasetReducer = makeDataReducer(k.DATASET, defaultDataset);
 
 const defaultOverview = {
   isLoading: false,
@@ -244,9 +238,7 @@ export const rootReducer = combineReducers({
   positions: positionsReducer,
 
   assays: assaysReducer,
-  assembly: assemblyReducer,
-  conditions: conditionsReducer,
-  ethnicities: ethnicitiesReducer,
+  dataset: datasetReducer,
   samples: samplesReducer,
   peaks: peaksReducer,
 

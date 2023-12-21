@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {useNode} from "../helpers/node";
 
 function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
-  const ethnicities = useSelector(state => state.ethnicities.list);
+  const ethnicities = useSelector(state => state.dataset.data?.ethnicities ?? []);
   const node = useNode();
   const usePrecomputed = useSelector(state => state.ui.usePrecomputed);
 

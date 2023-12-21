@@ -22,9 +22,7 @@ export function fetchPositions(node, params, cancelToken) {
   return get(node, '/autocomplete/positions', params, {cancelToken})
 }
 
-export const fetchAssembly = (node) => get(node, '/assembly');
-export const fetchConditions = (node) => get(node, '/conditions');
-export const fetchEthnicities = (node) => get(node, '/ethnicities');
+export const fetchDataset = (node) => get(node, '/dataset');
 
 export const fetchOverviewConfig = (node) => get(node, '/overview/config');
 export const fetchManhattanData = (node, {chrom, assay}) => get(node, `/overview/assays/${assay}/topBinned/${chrom}`);
