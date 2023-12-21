@@ -15,6 +15,9 @@ const getPrefixedEnvVar = (varName, defaultValue = undefined) => {
 //  - This is the application data directory
 const DATA_DIR = path.join(__dirname, "./data");
 
+//  - About Markdown content
+const ABOUT_MD_PATH = path.join(DATA_DIR, "about.md");
+
 //  - Static tracks to put in UCSC track hub. TODO: make this dataset-specific
 const STATIC_TRACKS_PATH = path.join(DATA_DIR, "ucsc.other-tracks.txt");
 
@@ -79,6 +82,7 @@ const PLOT_MANHATTAN_BIN_SIZE = parseInt(getPrefixedEnvVar("MANHATTAN_BIN_SIZE",
 module.exports = {
   // Paths and data locations
   DATA_DIR,
+  ABOUT_MD_PATH,
   STATIC_TRACKS_PATH,
   TRACK_METADATA_PATH,
   INPUT_FILES_DIR,

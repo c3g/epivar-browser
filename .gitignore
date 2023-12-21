@@ -1,10 +1,5 @@
 ~$*
 /.idea
-/data/*
-!/data/.gitkeep
-!/data/assemblies
-!/data/otherData
-!/data/ucsc.other-tracks.txt
 /input-files/*.csv
 !/input-files/flu-infection-gene-peaks.csv
 /config.js

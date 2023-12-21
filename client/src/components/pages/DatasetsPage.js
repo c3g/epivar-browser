@@ -64,7 +64,7 @@ const DatasetsPage = () => {
           Genomic tracks by condition and ancestry are available <a href="#" onClick={openTracks}>here</a>.
         </p>
         <p>
-          We constructed <Link to="/overview">a versatile QTL browser</Link>, which allows users to explore and
+          We constructed <Link to="/dataset/overview">a versatile QTL browser</Link>, which allows users to explore and
           visualize mapped QTLs for gene expression, chromatin accessibility, histone modifications and DNA methylation.
         </p>
       </Col>
