@@ -1,6 +1,6 @@
 import { combineReducers } from "redux"
 
-import {EPIVAR_BASE_URL} from "./config";
+import {EPIVAR_BASE_URL, EPIVAR_NODES} from "./config";
 import * as k from "./constants/ActionTypes"
 import {makeDataReducer, makeDefaultDataState, makeDefaultListState, makeListReducer} from "./helpers/reducers";
 
@@ -146,7 +146,77 @@ const defaultAssays = makeDefaultListState(
 const assaysReducer = makeListReducer(k.ASSAYS, defaultAssays);
 
 const defaultDataset = makeDefaultDataState();
-const datasetReducer = makeDataReducer(k.DATASET, defaultDataset);
+const defaultDatasets = {
+  datasetsByNode: {},
+  isLoading: false,
+  isLoaded: false,
+};
+const datasetsReducer = (state = defaultDatasets, action) => {
+  switch (action.type) {
+    // All-datasets handling
+    case k.DATASETS.REQUEST: {
+      return {...state, isLoading: true};
+    }
+    case k.DATASETS.RECEIVE: {
+      return {
+        ...state,
+        isLoading: false,
+        isLoaded: true,
+        datasetsByNode: Object.fromEntries(action.payload.map((ds, i) => [EPIVAR_NODES[i], ds])),
+      };
+    }
+    case k.DATASETS.ERROR: {
+      return {...state, isLoading: false};
+    }
+
+    // Single-dataset handling
+    case k.DATASET.REQUEST: {
+      const {datasetsByNode} = state;
+      const {node} = action.meta;
+      return {
+        ...state,
+        datasetsByNode: {
+          ...datasetsByNode,
+          [node]: {...defaultDataset, ...(datasetsByNode[node] ?? {}), isLoading: true},
+        },
+      };
+    }
+    case k.DATASET.RECEIVE: {
+      const {datasetsByNode} = state;
+      const {node} = action.meta;
+      return {
+        ...state,
+        datasetsByNode: {
+          ...datasetsByNode,
+          [node]: {
+            ...defaultDataset,
+            ...(datasetsByNode[node] ?? {}),
+            isLoading: false,
+            isLoaded: true,
+            data: action.payload,
+          },
+        },
+      };
+    }
+    case k.DATASET.ERROR: {
+      const {datasetsByNode} = state;
+      const {node} = action.meta;
+      return {
+        ...state,
+        datasetsByNode: {
+          ...datasetsByNode,
+          [node]: {...defaultDataset, ...(datasetsByNode[node] ?? {}), isLoading: false},
+        },
+      };
+    }
+
+    default:
+      return state;
+  }
+};
+
+// const defaultDataset = makeDefaultDataState();
+// const datasetReducer = makeDataReducer(k.DATASET, defaultDataset);
 
 const defaultOverview = {
   isLoading: false,
@@ -237,8 +307,9 @@ export const rootReducer = combineReducers({
   chroms: chromsReducer,
   positions: positionsReducer,
 
+  datasets: datasetsReducer,
+
   assays: assaysReducer,
-  dataset: datasetReducer,
   samples: samplesReducer,
   peaks: peaksReducer,
 

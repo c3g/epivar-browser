@@ -2,4 +2,5 @@
 
 EPIVAR_CONFIG = {
   BASE_URL: "",
+  NODES: [],
 };
