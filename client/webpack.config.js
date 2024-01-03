@@ -25,7 +25,7 @@ const config = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: "public/*", to: "[name].[contenthash][ext]" },
+        { from: "public", to: "" },
       ],
     }),
   ],
