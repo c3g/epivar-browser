@@ -9,6 +9,7 @@ export const HANDLE_ERROR        = 'HANDLE_ERROR';
 
 export const ASSAYS              = createFetchConstants('ASSAYS');
 export const DATASET             = createFetchConstants('DATASET');
+export const DATASETS            = createFetchConstants('DATASETS');
 export const SAMPLES             = createFetchConstants('SAMPLES');
 export const CHROMS              = createFetchConstants('CHROMS');
 export const POSITIONS           = createFetchConstants('POSITIONS');

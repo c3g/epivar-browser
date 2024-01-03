@@ -4,6 +4,7 @@
 
 import axios from 'axios'
 
+import {EPIVAR_NODES} from "./config";
 import queryString from './helpers/queryString'
 
 /*
@@ -23,6 +24,7 @@ export function fetchPositions(node, params, cancelToken) {
 }
 
 export const fetchDataset = (node) => get(node, '/dataset');
+export const fetchDatasets = (_) => Promise.all(EPIVAR_NODES.map((node) => fetchDataset(node)));
 
 export const fetchOverviewConfig = (node) => get(node, '/overview/config');
 export const fetchManhattanData = (node, {chrom, assay}) => get(node, `/overview/assays/${assay}/topBinned/${chrom}`);

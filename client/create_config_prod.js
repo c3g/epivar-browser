@@ -1,5 +1,6 @@
 const siteConfig = {
-  EPIVAR_BASE_URL: process.env.EPIVAR_BASE_URL || "",
+  BASE_URL: process.env.EPIVAR_BASE_URL || "",
+  NODES: (process.env.EPIVAR_NODES ?? "").split(/\s*;\s*/).filter((v) => !!v),
 };
 
 if (typeof require !== "undefined" && require.main === module) {

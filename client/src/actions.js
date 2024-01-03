@@ -4,6 +4,7 @@ import axios from 'axios'
 import * as api from './api'
 import * as k from './constants/ActionTypes.js'
 
+// UI actions
 export const setNode           = createAction(k.SET_NODE);  // TODO: need to reset user on node change
 export const setChrom          = createAction(k.SET_CHROM);
 export const setPosition       = createAction(k.SET_POSITION);
@@ -13,6 +14,10 @@ export const setUsePrecomputed = createAction(k.SET_USE_PRECOMPUTED);
 export const setDevMode        = createAction(k.SET_DEV_MODE);
 export const handleError       = createAction(k.HANDLE_ERROR);
 
+// Federated fetch actions
+export const datasets          = createFetchActions(k.DATASETS);
+
+// Dataset-specific fetch actions
 export const assays            = createFetchActions(k.ASSAYS);
 export const samples           = createFetchActions(k.SAMPLES);
 export const chroms            = createFetchActions(k.CHROMS);
@@ -31,6 +36,7 @@ export const fetchPositions      = createFetchFunction(api.fetchPositions,      
 // export const cacheValues         = createFetchFunction(api.cacheValues,         values);
 export const fetchPeaks          = createFetchFunction(api.fetchPeaks,          peaks);
 export const fetchDataset        = createFetchFunction(api.fetchDataset,        dataset);
+export const fetchDatasets       = createFetchFunction(api.fetchDatasets,       datasets);
 export const fetchOverviewConfig = createFetchFunction(api.fetchOverviewConfig, overviewConfig);
 export const fetchManhattanData  = createFetchFunction(api.fetchManhattanData,  manhattanData);
 export const fetchUser           = createFetchFunction(api.fetchUser,           user);
@@ -77,15 +83,19 @@ function createFetchActions(namespace) {
 function createFetchFunction(fn, actions) {
   return (params=undefined, meta=undefined, cancelToken=undefined) => (dispatch, getState) => {
     const dispatchedAt = Date.now();
-    dispatch(withMeta(actions.request(), meta));
+
+    const node = getState().ui.node;
+    const fullMeta = {...(meta ?? {}), dispatchedAt, node};
+
+    dispatch(withMeta(actions.request(), fullMeta));
 
     return fn(getState().ui.node, params, cancelToken)
-      .then(result => dispatch(withMeta(actions.receive(result), meta)))
+      .then(result => dispatch(withMeta(actions.receive(result), fullMeta)))
       .catch(err => {
         if (axios.isCancel(err)) {
-          return dispatch(withMeta(actions.abort(err), {...(meta ?? {}), dispatchedAt}))
+          return dispatch(withMeta(actions.abort(err), fullMeta));
         } else {
-          return dispatch(withMeta(actions.error(err), meta))
+          return dispatch(withMeta(actions.error(err), fullMeta));
         }
       });
   };
