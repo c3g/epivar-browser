@@ -49,8 +49,7 @@ const lowCountThreshold = envConfig.LOW_COUNT_THRESHOLD;
 
 function get(peak) {
   const {snp: {chrom, position}} = peak;
-  // FIXME remove position - 1 hack (needs clean data)
-  return Samples.queryMap(chrom, position - 1)
+  return Samples.queryMap(chrom, position)
     .then(info => Metadata.getTracks(info.samples, peak));
 }
 
