@@ -27,7 +27,7 @@ const FAQPage = () => {
                rel="noreferrer">UCSC Genome Browser</a> track hubs upon
             request to visualize averaged normalized track segments for a given genomic feature. These averaged tracks
             are created on the fly by averaging bigWig regions of samples sharing an experimental treatment and
-            genotype, using our command-line tool:
+            genotype, using our command-line tool:{" "}
             <a href="https://github.com/c3g/bw-merge-window"
                target="_blank"
                rel="noreferrer"><code>bw-merge-window</code></a>.
