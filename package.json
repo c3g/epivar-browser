@@ -3,11 +3,9 @@
   "version": "0.17.0",
   "private": true,
   "scripts": {
-    "postinstall": "cd client && npm install",
     "start": "npm run watch",
     "server": "node ./bin/www",
-    "watch": "nodemon -i client ./bin/www",
-    "build": "rm -rf ./public && mkdir public && cd client && npm run build && cp -r build/* ../public"
+    "watch": "nodemon -i client ./bin/www"
   },
   "dependencies": {
     "@gmod/bbi": "^1.0.35",
