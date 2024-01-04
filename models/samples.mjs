@@ -7,16 +7,19 @@
 import { TabixIndexedFile } from "@gmod/tabix";
 import VCF from "@gmod/vcf"
 
+import config from "../config.js";
 import envConfig from "../envConfig.js";
 import {
   GENOTYPE_STATE_HET,
   GENOTYPE_STATE_HOM,
   GENOTYPE_STATE_REF,
-  normalizeChrom
+  normalizeChrom,
 } from "../helpers/genome.mjs";
 
 const VCF_TABIX_FILE = new TabixIndexedFile({ path: envConfig.GENOTYPE_VCF_PATH });
 const vcfParser = new VCF({ header: await VCF_TABIX_FILE.getHeader() });
+const vcfFilterFn = config.samples?.vcfFindFn
+  ?? ((line) => line.REF.length === 1 && line.ALT.every((a) => a.length === 1));
 
 export default {
   queryMap,
@@ -36,7 +39,7 @@ export async function vcfQuery(contig, start, end) {
 
 
 export function normalizeSamplesMap(lines) {
-  const variant = lines.find((line) => line.REF.length === 1 && line.ALT.every((a) => a.length === 1));
+  const variant = lines.find(vcfFilterFn);
 
   if (!variant) return undefined;
 
