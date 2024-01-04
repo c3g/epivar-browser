@@ -4,6 +4,7 @@
  * This file configures the dataset that this EpiVar node is responsible for hosting.
  */
 
+// noinspection JSUnusedGlobalSymbols
 module.exports = {
   source: {
     title: "Aracena 𝘦𝘵 𝘢𝘭.",
@@ -20,10 +21,11 @@ module.exports = {
   },
 
   samples: {
-    /* Additional filter for samples. The gemini database might contain
-     * variants that we don't want to see, this removes them without
-     * having to clean the database. */
-    filter: 'type = "snp"',
+    /*
+     * Additional filter for variants - limit to just first SNP. The VCF might contain variants that we don't want to
+     * see, this removes them without having to clean it. The following filter is the default value:
+     */
+    vcfFindFn: (line) => line.REF.length === 1 && line.ALT.every((a) => a.length === 1),
 
     /*
      * The current gemini database for Aracena et al. contains names as "Epi_realName_flu_xxx".
