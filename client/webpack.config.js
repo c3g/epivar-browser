@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -27,6 +28,11 @@ const config = {
       patterns: [
         { from: "public", to: "" },
       ],
+    }),
+    new webpack.EnvironmentPlugin({
+      // Default environment variables to null if not set
+      EPIVAR_BASE_URL: "",
+      EPIVAR_NODES: "",  // ;-separated list
     }),
   ],
   module: {
