@@ -34,12 +34,4 @@ module.exports = {
      */
     vcfSampleNameConverter: name => name.split('_')[1],  // name => name
   },
-
-  /* Configuration for development related options */
-  development: {
-    /** @type Array<String> */
-    chroms: undefined,
-    // Eg
-    //chroms: ['chr1', 'chr2', 'chr3' /* etc */],
-  },
-}
+};
