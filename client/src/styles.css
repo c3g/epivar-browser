@@ -254,6 +254,7 @@ body {
 }
 .Header__dataset {
   display: flex;
+  margin-bottom: 0.6rem;
 }
 .Header__dataset > div {
   max-width: 400px;
@@ -272,6 +273,9 @@ body {
   flex-direction: row;
   justify-content: center;
 }
+.Header__links.disabled {
+  cursor: not-allowed;
+}
 .Header__links button {
   margin-top: 2px;
   font-weight: bold;
@@ -282,6 +286,9 @@ body {
 .Header__links button:active,
 .Header__links button.active {
   color: rgba(255, 255, 255, 0.97);
+}
+.Header__links .btn-link:disabled, .Header__links .btn-link.disabled {
+  color: rgba(255, 255, 255, 0.8);
 }
 .Header__highlight_group {
   border: 2px solid rgba(255, 255, 255, 0.5);

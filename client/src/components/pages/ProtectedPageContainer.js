@@ -4,7 +4,7 @@ import {useOutletContext} from "react-router-dom";
 import {Container, Spinner} from "reactstrap";
 
 import {getHasLoggedIn, setHasLoggedIn} from "../../helpers/localStorage";
-import {useNode} from "../../helpers/node";
+import {useNode} from "../../hooks";
 
 import Intro from "../Intro";
 

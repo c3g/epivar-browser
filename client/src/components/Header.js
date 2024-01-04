@@ -5,17 +5,21 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 
 import Icon from "./Icon";
 
+import {EPIVAR_NODES} from "../config";
 import {SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
+import {useCurrentDataset, useDatasetsByNode, useNode} from "../hooks";
 
 export default function Header({children, onAbout, /*onDatasets, */onDatasetAbout, onOverview, onExplore, onFAQ,
                                  /*, onContact*/}) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const node = useSelector(state => state.ui.node);
-  const dataset = useSelector((state) => state.dataset.data);
+  const node = useNode();
+  const dataset = useCurrentDataset();
   const userData = useSelector(state => state.user);
   const messages = useSelector(state => state.messages);
+
+  const datasetsByNode = useDatasetsByNode();
 
   return <div>
     <div className='Header'>
@@ -33,31 +37,41 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
         <h4 className='Header__subtitle'>{SITE_SUBTITLE}</h4>
         <div className="Header__dataset">
           <div>
-            <label htmlFor="dataset-selector"></label>
-            <Input type="select" id="dataset-selector">
-              <option>{dataset.title ?? ""} ({dataset.assembly ?? ""})</option>
+            <label htmlFor="dataset-selector">Dataset:</label>
+            <Input type="select" id="dataset-selector" value={node ?? undefined}>
+              {EPIVAR_NODES.map((n) => {
+                if (n in datasetsByNode) {
+                  const d = datasetsByNode[n].data;
+                  return <option key={n} >{d?.title ?? ""} ({d?.assembly ?? ""})</option>;
+                } else {
+                  return <option key={n} disabled={true}>{n} (unreachable)</option>;
+                }
+              })}
             </Input>
           </div>
         </div>
-        <div className="Header__links">
+        <div className={"Header__links" + (dataset ? "" : " disabled")}>
           {/*<Button color="link"*/}
           {/*        className={location.pathname.startsWith("/datasets") ? "active" : ""}*/}
           {/*        onClick={onDatasets}><Icon name="table" bootstrap={true} />Datasets</Button>*/}
-          <div className="Header__highlight_group">
-            <Button color="link"
-                    className={location.pathname.startsWith("/dataset/about") ? "active" : ""}
-                    onClick={onDatasetAbout}>
-              <Icon name="info-circle" bootstrap={true}/>About</Button>
-            <Button color="link"
-                    className={location.pathname.startsWith("/dataset/overview") ? "active" : ""}
-                    onClick={onOverview}><Icon name="graph-up" bootstrap={true} />Overview</Button>
-            <Button color="link"
-                    className={"highlight" + (location.pathname.startsWith("/dataset/explore") ? " active" : "")}
-                    onClick={onExplore}><Icon name="search" bootstrap={true} />Explore</Button>
-          </div>
           <Button color="link"
                   className={location.pathname.startsWith("/about") ? "active" : ""}
                   onClick={onAbout}><Icon name="people-fill" bootstrap={true} />About EpiVar</Button>
+          <div className="Header__highlight_group">
+            <Button color="link"
+                    disabled={!dataset}
+                    className={location.pathname.startsWith("/dataset/about") ? "active" : ""}
+                    onClick={onDatasetAbout}>
+              <Icon name="info-circle" bootstrap={true}/>About Dataset</Button>
+            <Button color="link"
+                    disabled={!dataset}
+                    className={location.pathname.startsWith("/dataset/overview") ? "active" : ""}
+                    onClick={onOverview}><Icon name="graph-up" bootstrap={true} />Overview</Button>
+            <Button color="link"
+                    disabled={!dataset}
+                    className={"highlight" + (location.pathname.startsWith("/dataset/explore") ? " active" : "")}
+                    onClick={onExplore}><Icon name="search" bootstrap={true} />Explore</Button>
+          </div>
           <Button color="link"
                   className={location.pathname.startsWith("/faq") ? "active" : ""}
                   onClick={onFAQ}><Icon name="question-circle" bootstrap={true} />FAQ</Button>
