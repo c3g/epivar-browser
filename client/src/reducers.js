@@ -1,6 +1,6 @@
 import { combineReducers } from "redux"
 
-import {EPIVAR_BASE_URL, EPIVAR_NODES} from "./config";
+import {EPIVAR_NODES} from "./config";
 import * as k from "./constants/ActionTypes"
 import {makeDataReducer, makeDefaultDataState, makeDefaultListState, makeListReducer} from "./helpers/reducers";
 
@@ -8,7 +8,7 @@ import {makeDataReducer, makeDefaultDataState, makeDefaultListState, makeListRed
 const defaultChrom = 'rsID';
 
 const defaultUI = {
-  node: `${EPIVAR_BASE_URL}`,  // TODO: first in list
+  node: null,
 
   chrom: defaultChrom,
   position: '',

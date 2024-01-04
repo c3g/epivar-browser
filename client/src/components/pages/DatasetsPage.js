@@ -3,8 +3,8 @@ import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Col, Container, Row} from "reactstrap";
 
-import {useNode} from "../../helpers/node";
 import {constructUCSCUrl} from "../../helpers/ucsc";
+import {useNode} from "../../hooks";
 
 
 const lgColSize = {size: 10, offset: 1};

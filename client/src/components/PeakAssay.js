@@ -21,8 +21,8 @@ import Icon from "./Icon";
 import PeakBoxplot from "./PeakBoxplot";
 
 import {mergeTracks, setUsePrecomputed} from "../actions";
-import {useNode} from "../helpers/node";
 import {constructUCSCUrl} from "../helpers/ucsc";
+import {useCurrentDataset, useNode} from "../hooks";
 
 
 const PAGE_SIZES = [10, 20, 30, 40, 50];
@@ -83,7 +83,8 @@ const PeakAssay = ({peaks}) => {
 const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
   const node = useSelector((state) => state.ui.node);
 
-  const {assembly, conditions} = useSelector(state => state.dataset.data) ?? {};  // dataset metadata
+  const dataset = useCurrentDataset();
+  const {assembly, conditions} = dataset?.data ?? {};  // dataset metadata
 
   const [tooltipsShown, setTooltipsShown] = useState({});
   const [tracksLoading, setTracksLoading] = useState({});

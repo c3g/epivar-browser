@@ -1,9 +1,11 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useSelector} from "react-redux";
-import {useNode} from "../helpers/node";
+import {useNode, useCurrentDataset} from "../hooks";
 
 function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
-  const ethnicities = useSelector(state => state.dataset.data?.ethnicities ?? []);
+  const dataset = useCurrentDataset();
+
+  const ethnicities = useMemo(() => dataset.data?.ethnicities ?? [], [dataset]);
   const node = useNode();
   const usePrecomputed = useSelector(state => state.ui.usePrecomputed);
 
