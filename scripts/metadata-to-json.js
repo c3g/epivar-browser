@@ -9,16 +9,8 @@ const xlsx = require('xlsx');
 
 const envConfig = require("../envConfig");
 
-const sheetNames = [
-  'RNA-Seq',
-  'ATAC-Seq',
-  'H3K27ac',
-  'H3K4me1',
-  'H3K27me3',
-  'H3K4me3',
-  'WGB-Seq',
-  // 'WGS_variants'
-];
+// Sheets to exclude from processing
+const EXCLUDE_SHEETS = new Set(["WGS_variants"]);
 
 const headers = {
   'path':              'file.path',
@@ -28,7 +20,6 @@ const headers = {
   'donor':             'donor',
   'view':              'track.view',
   'type':              'track.track_type',
-  'assembly':          'assembly.name',
   'assay':             'assay.name',
 };
 
@@ -36,25 +27,23 @@ const metadataPath = process.argv[2] || path.join(envConfig.INPUT_FILES_DIR, 'fl
 const output = envConfig.TRACK_METADATA_PATH;
 const workbook = xlsx.readFileSync(metadataPath);
 
-let items = []
+const items = Object.entries(workbook.Sheets).flatMap(([sheetName, sheet]) => {
+  if (EXCLUDE_SHEETS.has(sheetName)) {
+    return [];
+  }
 
-sheetNames.forEach(name => {
-  const sheet = workbook.Sheets[name]
-  const newItems =
-    xlsx.utils.sheet_to_json(sheet)
-      .filter(item => item[headers["ethnicity"]] !== "Exclude sample")
-      .map(item => Object.fromEntries(
-        Object.entries(headers)
-          .filter(([_, oldKey]) => item[oldKey] !== undefined)
-          .map(([key, oldKey]) => (
-            // Preprocess and remove 'Chipmentation' from assay names if necessary
-            oldKey === "assay.name"
-              ? [key, item[oldKey].replace("Chipmentation ", "")]
-              : [key, item[oldKey]]
-          ))
-      ));
-
-  items = items.concat(newItems)
-})
+  return xlsx.utils.sheet_to_json(sheet)
+    .filter(item => item[headers["ethnicity"]] !== "Exclude sample")
+    .map(item => Object.fromEntries(
+      Object.entries(headers)
+        .filter(([_, oldKey]) => item[oldKey] !== undefined)
+        .map(([key, oldKey]) => (
+          // Preprocess and remove 'Chipmentation' from assay names if necessary
+          oldKey === "assay.name"
+            ? [key, item[oldKey].replace("Chipmentation ", "")]
+            : [key, item[oldKey]]
+        ))
+    ));
+});
 
 fs.writeFileSync(output, JSON.stringify(items, null, 2))
