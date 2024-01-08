@@ -16,6 +16,8 @@ RUN python3 -m pipx install bw-merge-window
 
 COPY spec/run_server.bash /
 
+RUN mkdir -p /tracks; \
+    mkdir -p /mergedTracks
 WORKDIR /app
 
 # Copy source code + file directories
@@ -44,6 +46,9 @@ RUN npm install -g pm2
 
 # Install Node dependencies
 RUN npm ci
+
+# Default EpiVar port:
+EXPOSE 3002
 
 # Run the application using PM2 - start multiple instances
 CMD ["/bin/bash", "/run_server.bash"]

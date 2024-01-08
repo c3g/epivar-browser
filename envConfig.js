@@ -28,7 +28,7 @@ const TRACK_METADATA_PATH = getPrefixedEnvVar("TRACK_METADATA_PATH", path.join(D
 const INPUT_FILES_DIR = path.join(__dirname, "./input-files");
 
 //  - This is the storage volume path for Gemini genotypes and tracks (i.e., very large files / raw data)
-const TRACKS_DIR = getPrefixedEnvVar("TRACKS_DIR", "/flu-infection-data");
+const TRACKS_DIR = getPrefixedEnvVar("TRACKS_DIR", "/tracks");
 
 //  - Template for loading QTL files for each assay; $ASSAY is replaced by the assay ID
 const QTLS_TEMPLATE = getPrefixedEnvVar("QTLS_TEMPLATE", `${INPUT_FILES_DIR}/qtls/QTLs_complete_$ASSAY.csv`);
@@ -42,7 +42,7 @@ const POINTS_TEMPLATE = getPrefixedEnvVar(
   "POINTS_TEMPLATE", `${INPUT_FILES_DIR}/matrices/$ASSAY_batch.age.corrected_PCsreg.txt`);
 
 //  - Merged tracks directory path
-const MERGED_TRACKS_DIR = getPrefixedEnvVar("MERGED_TRACKS_DIR", path.join(DATA_DIR, "mergedTracks"));
+const MERGED_TRACKS_DIR = getPrefixedEnvVar("MERGED_TRACKS_DIR", "/mergedTracks");
 
 //  - Genotype VCF file location
 const GENOTYPE_VCF_PATH = getPrefixedEnvVar("GENOTYPE_VCF_PATH", path.join(DATA_DIR, "genotypes.vcf.gz"));

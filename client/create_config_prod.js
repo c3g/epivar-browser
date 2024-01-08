@@ -1,5 +1,4 @@
 const siteConfig = {
-  BASE_URL: process.env.EPIVAR_BASE_URL || "",
   NODES: (process.env.EPIVAR_NODES ?? "").split(/\s*;\s*/).filter((v) => !!v),
 };
 
