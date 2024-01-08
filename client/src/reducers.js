@@ -145,7 +145,7 @@ const defaultAssays = makeDefaultListState(
 );
 const assaysReducer = makeListReducer(k.ASSAYS, defaultAssays);
 
-const defaultDataset = makeDefaultDataState();
+// const defaultDataset = makeDefaultDataState();
 const defaultDatasets = {
   datasetsByNode: {},
   isLoading: false,
@@ -170,45 +170,45 @@ const datasetsReducer = (state = defaultDatasets, action) => {
     }
 
     // Single-dataset handling
-    case k.DATASET.REQUEST: {
-      const {datasetsByNode} = state;
-      const {node} = action.meta;
-      return {
-        ...state,
-        datasetsByNode: {
-          ...datasetsByNode,
-          [node]: {...defaultDataset, ...(datasetsByNode[node] ?? {}), isLoading: true},
-        },
-      };
-    }
-    case k.DATASET.RECEIVE: {
-      const {datasetsByNode} = state;
-      const {node} = action.meta;
-      return {
-        ...state,
-        datasetsByNode: {
-          ...datasetsByNode,
-          [node]: {
-            ...defaultDataset,
-            ...(datasetsByNode[node] ?? {}),
-            isLoading: false,
-            isLoaded: true,
-            data: action.payload,
-          },
-        },
-      };
-    }
-    case k.DATASET.ERROR: {
-      const {datasetsByNode} = state;
-      const {node} = action.meta;
-      return {
-        ...state,
-        datasetsByNode: {
-          ...datasetsByNode,
-          [node]: {...defaultDataset, ...(datasetsByNode[node] ?? {}), isLoading: false},
-        },
-      };
-    }
+    // case k.DATASET.REQUEST: {
+    //   const {datasetsByNode} = state;
+    //   const {node} = action.meta;
+    //   return {
+    //     ...state,
+    //     datasetsByNode: {
+    //       ...datasetsByNode,
+    //       [node]: {...defaultDataset, ...(datasetsByNode[node] ?? {}), isLoading: true},
+    //     },
+    //   };
+    // }
+    // case k.DATASET.RECEIVE: {
+    //   const {datasetsByNode} = state;
+    //   const {node} = action.meta;
+    //   return {
+    //     ...state,
+    //     datasetsByNode: {
+    //       ...datasetsByNode,
+    //       [node]: {
+    //         ...defaultDataset,
+    //         ...(datasetsByNode[node] ?? {}),
+    //         isLoading: false,
+    //         isLoaded: true,
+    //         data: action.payload,
+    //       },
+    //     },
+    //   };
+    // }
+    // case k.DATASET.ERROR: {
+    //   const {datasetsByNode} = state;
+    //   const {node} = action.meta;
+    //   return {
+    //     ...state,
+    //     datasetsByNode: {
+    //       ...datasetsByNode,
+    //       [node]: {...defaultDataset, ...(datasetsByNode[node] ?? {}), isLoading: false},
+    //     },
+    //   };
+    // }
 
     default:
       return state;

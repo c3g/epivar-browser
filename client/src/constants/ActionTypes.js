@@ -8,10 +8,10 @@ export const SET_DEV_MODE        = 'SET_DEV_MODE';
 export const HANDLE_ERROR        = 'HANDLE_ERROR';
 
 export const ASSAYS              = createFetchConstants('ASSAYS');
-export const DATASET             = createFetchConstants('DATASET');
+// export const DATASET             = createFetchConstants('DATASET');
 export const DATASETS            = createFetchConstants('DATASETS');
 export const SAMPLES             = createFetchConstants('SAMPLES');
-export const CHROMS              = createFetchConstants('CHROMS');
+// export const CHROMS              = createFetchConstants('CHROMS');
 export const POSITIONS           = createFetchConstants('POSITIONS');
 export const VALUES              = createFetchConstants('VALUES');
 export const PEAKS               = createFetchConstants('PEAKS');
