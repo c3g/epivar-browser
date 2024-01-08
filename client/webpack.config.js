@@ -30,8 +30,7 @@ const config = {
       ],
     }),
     new webpack.EnvironmentPlugin({
-      // Default environment variables to null if not set
-      EPIVAR_BASE_URL: "",
+      // Default environment variable values if not set
       EPIVAR_NODES: "",  // ;-separated list
     }),
   ],

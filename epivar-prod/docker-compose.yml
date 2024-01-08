@@ -1,0 +1,126 @@
+services:
+  # Common -------------------------------------------------------------------------------------------------------------
+
+  epivar-gateway:
+    image: nginx:1.25-bookworm
+    ports:
+      - 80:80
+    depends_on:
+      - epivar-portal
+      - epivar-node-1-server
+      - epivar-node-2-server
+    networks:
+      - epivar-portal-net
+      - epivar-node-1-server-net
+      - epivar-node-2-server-net
+
+  epivar-portal:
+    user: $USER:$USER
+    image: ghcr.io/c3g/epivar-portal:latest
+    networks:
+      - epivar-portal-net
+    env_file: portal.env
+
+  # Node 1: hg19 data --------------------------------------------------------------------------------------------------
+
+  epivar-node-1-server:
+    user: $USER:$USER
+    image: ghcr.io/c3g/epivar-server:latest
+    networks:
+      - epivar-node-1-server-net
+      - epivar-node-1-redis-net
+      - epivar-node-1-db-net
+    depends_on:
+      - epivar-node-1-redis
+      - epivar-node-1-db
+    env_file:
+      - node1.secrets.env
+    environment:
+      - NODE_ENV=production
+      - IMPORT_MAX_P_VAL=0.05
+      - LOW_COUNT_THRESHOLD=5
+    volumes:
+      - ./node1-about.md:/app/data/about.md
+      - /flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz:/app/data/genotypes.vcf.gz:ro
+      - /flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
+      - /flu-infection-data/node1/tracks:/tracks:ro
+      - /flu-infection-data/node1/mergedTracks:/mergedTracks
+
+  epivar-node-1-redis:
+    image: redis:7.2
+    networks:
+      - epivar-node-1-redis-net
+    volumes:
+      - /opt/epivar/node1/redis:/data
+
+  epivar-node-1-db:
+    image: postgres:16
+    networks:
+      - epivar-node-1-db-net
+    volumes:
+      - /opt/epivar/node1/db:/var/lib/postgresql/data
+
+  # Node 2: hg38 data (lifted over) ------------------------------------------------------------------------------------
+
+  epivar-node-2-server:
+    user: $USER:$USER
+    image: ghcr.io/c3g/epivar-server:latest
+    networks:
+      - epivar-node-2-server-net
+      - epivar-node-2-redis-net
+      - epivar-node-2-db-net
+    depends_on:
+      - epivar-node-2-redis
+      - epivar-node-2-db
+    env_file:
+      - node2.secrets.env
+    environment:
+      - NODE_ENV=production
+      - IMPORT_MAX_P_VAL=0.05
+      - LOW_COUNT_THRESHOLD=5
+    volumes:
+      - ./node2-about.md:/app/data/about.md
+      # TODO
+      - /flu-infection-data/node2/tracks:/tracks:ro
+      - /flu-infection-data/node2/mergedTracks:/mergedTracks
+
+  epivar-node-2-redis:
+    image: redis:7.2
+    networks:
+      - epivar-node-2-redis-net
+    volumes:
+      - /opt/epivar/node2/redis:/data
+
+  epivar-node-2-db:
+    image: postgres:16
+    networks:
+      - epivar-node-2-db-net
+    volumes:
+      - /opt/epivar/node2/db:/var/lib/postgresql/data
+
+  # --------------------------------------------------------------------------------------------------------------------
+
+networks:
+  epivar-portal-net:
+    driver: bridge
+    internal: true
+
+  epivar-node-1-server-net:
+    driver: bridge
+    internal: true
+  epivar-node-1-redis-net:
+    driver: bridge
+    internal: true
+  epivar-node-1-db-net:
+    driver: bridge
+    internal: true
+
+  epivar-node-2-server-net:
+    driver: bridge
+    internal: true
+  epivar-node-2-redis-net:
+    driver: bridge
+    internal: true
+  epivar-node-2-db-net:
+    driver: bridge
+    internal: true

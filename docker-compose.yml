@@ -1,12 +1,7 @@
 services:
-  epivar-gateway:
-    image: ghcr.io/c3g/epivar-browser-gateway:latest
-    networks:
-      - epivar-server-net
-    # volumes: mergedTracks read only
   epivar-server:
     user: $USER:$USER
-    image: ghcr.io/c3g/epivar-browser-server:latest
+    image: ghcr.io/c3g/epivar-server:latest
     networks:
       - epivar-server-net
       - epivar-redis-net
@@ -15,6 +10,10 @@ services:
       - NODE_ENV=production
       - IMPORT_MAX_P_VAL=0.05
       - LOW_COUNT_THRESHOLD=5
+    volumes:
+      - /path/to/about.md:/app/data/about.md  # about file
+      - /path/to/input-files:/app/input-files  # input files directory
+      - /path/to/ucsc.tracks:/app/data/ucsc.other-tracks.txt  # static track hub with other relevant tracks
   epivar-redis:
     image: redis:7.2
     networks:

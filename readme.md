@@ -343,7 +343,7 @@ In development, you'd run:
 
 In production, you may need to set up these to handle persistence & HTTPS:
  - Set up an NGINX or Apache proxy with a LetsEncrypt certificate
-   (see [./nginx.conf](./nginx.conf) for an example.)
+   (see [epivar-prod/nginx.conf](epivar-prod/nginx.conf) for an example.)
     - For the reference deployment, we are using a VM behind a proxy. We needed to set
       the following NGINX configuration values: `real_ip_header X-Forwarded-For;` and 
       `set_real_ip_from ####;`, where `####` is the IP block for the hypervisor from the 
