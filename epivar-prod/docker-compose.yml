@@ -41,9 +41,10 @@ services:
       - EPIVAR_IMPORT_MAX_P_VAL=0.05
       - EPIVAR_LOW_COUNT_THRESHOLD=5
     volumes:
-      # dataset configuration: about Markdown file and EpiVar config.js
+      # dataset configuration: about Markdown file, EpiVar config.js, tracks metadata.json
       - node1/about.md:/app/data/about.md
       - node1/config.js:/app/config.js:ro
+      - node1/metadata.json:/app/data/metadata.json:ro
       # genotypes: VCF + index file
       - /flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz:/app/data/genotypes.vcf.gz:ro
       - /flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
@@ -88,9 +89,10 @@ services:
       - EPIVAR_IMPORT_MAX_P_VAL=0.05
       - EPIVAR_LOW_COUNT_THRESHOLD=5
     volumes:
-      # dataset configuration: about Markdown file and EpiVar config.js
+      # dataset configuration: about Markdown file, EpiVar config.js, tracks metadata.json
       - node2/about.md:/app/data/about.md
       - node2/config.js:/app/config.js:ro
+      - node2/metadata.json:/app/data/metadata.json:ro
       # genotypes: VCF + index file
       - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz:/app/data/genotypes.vcf.gz:ro
       - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
