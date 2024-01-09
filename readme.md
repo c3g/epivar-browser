@@ -236,7 +236,7 @@ The different data sources to generate/prepare are:
    
    Information on the QTL/peak list files:
      - **Import with:** `node ./scripts/import-peaks.js` followed by 
-       `node ./scripts/calculate-peak-groups.js`
+       `node ./scripts/calculate-peak-groups.mjs`
      - **Input:** `./input-files/qtls/QTLS_complete_*.csv` (there are a couple 
        truncated example files in [`./input-files/qtls`](./input-files/qtls))
      - **Config:** Use the `EPIVAR_QTLS_TEMPLATE` environment variable to configure
