@@ -177,13 +177,13 @@ The different data sources to generate/prepare are:
      - `assay`
  
    Information on the track metadata file:
-     - **Generate with:** `node ./scripts/metadata-to-json.js ./input-files/flu-infection.xlsx` 
+     - **Generate with:** `node ./scripts/metadata-to-json.js < ./input-files/flu-infection.xlsx > ./data/metadata.json` 
        - Replace `./input-files/flu-infection.xlsx` with the path to your metadata file
        - Optionally, the resulting JSON can just be generated directly (see above for keys)
      - **Config:** `EPIVAR_TRACK_METADATA_PATH` (environment variable to specify file path)
      - **Input:** One command-line argument specifying a path, e.g., `./input-files/flu-infection.xlsx`.
-     - **Output:** The path specified in `EPIVAR_TRACK_METADATA_PATH`; by default, `./data/metadata.json` 
-       (*or, just generate this file directly*)
+     - **Output:** Prints JSON to `stdout`. This should be redirected into the path specified in 
+       `EPIVAR_TRACK_METADATA_PATH`; by default, `./data/metadata.json` (*or, just generate this file directly*)
      - **Notes:** This is really just an XLSX to JSON transformation. 
        The version of the XLSX used for the Aracena *et al.* portal 
        instance is [available in this repository](./input-files/flu-infection.xlsx) as a reference.

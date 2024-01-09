@@ -1,11 +1,12 @@
 # Setting up an EpiVar node
 
 
-## Dependencies
+## Requirements
 
 * Docker
 * Docker Compose plugin
-* A configurable reverse proxy such as NGINX, Trafik, or similar
+* A reverse proxy such as NGINX, Trafik, or similar (configuring this is out of scope for this guide)
+* A valid HTTPS certificate (configuring this is out of scope for this guide)
 
 
 ## Data and configuration requirements
@@ -50,12 +51,40 @@
   [example configuration file](/config.example.js).
 - [ ] A human-readable dataset description file, to show in the `About Dataset` tab in the portal. TODO
 
-  
+
 ## Deploying
+
+### Creating volume locations for data
+
+TODO
+
+### Configuring the environment instance
+
+TODO
+
+### Pre-processing dataset metadata (if using an `.xlsx` file)
+
+TODO
+
+```bash
+docker run ghcr.io/c3g/epivar-server node /app/scripts/metadata-to-json.js < path/to/metadata.xlsx > data/metadata.json
+```
+
+### Starting the server
+
+TODO
+
+### Importing data
 
 TODO
 
 
 ## Joining the EpiVar Portal federation
 
-TODO
+In order to connect an EpiVar node to the EpiVar Portal, the node must be publicly accessible with a valid HTTPS 
+certificate and a reverse proxy passing traffic to the EpiVar server (the configuration of which is out of scope for 
+this guide.) 
+
+Then, contact us at [epivar@computationalgenomics.ca](mailto:epivar@computationalgenomics.ca), including information 
+about your node, your dataset, and including the domain name + path of your instance, and we will decide whether to
+include your node in the list of nodes available in the EpiVar Portal.
