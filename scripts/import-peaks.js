@@ -303,7 +303,7 @@ console.log("Loading peaks");
       // peak.position = +position;
       // delete peak.snp;
 
-      peak.values = config.source.conditions.map(c => {
+      peak.values = config.conditions.map(c => {
         const k = `pvalue.${c.id}`;
         const val = parseFloat(peak[k]);
         delete peak[k];

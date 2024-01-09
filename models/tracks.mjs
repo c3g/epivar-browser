@@ -39,7 +39,7 @@ const strandToView = {
 const groupByEthnicity = groupBy(prop("ethnicity"));
 const mapToData = map(prop("data"));
 
-const conditions = config.source?.conditions ?? DEFAULT_CONDITIONS;
+const conditions = config.conditions ?? DEFAULT_CONDITIONS;
 
 const TRACK_VALUES_CACHE_EXPIRY = 60 * 60 * 24 * 180;  // 180 days  TODO: config variable
 

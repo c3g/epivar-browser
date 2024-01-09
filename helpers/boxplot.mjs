@@ -1,6 +1,6 @@
 import config from "../config.js";
 
-const {conditions, ethnicities} = config.source;
+const {conditions, ethnicities} = config;
 const nConditions = conditions.length;
 const nEthnicities = ethnicities.length;
 
