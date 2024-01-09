@@ -9,9 +9,7 @@ import passport from "passport";
 import { fileURLToPath } from "url";
 import { createClient } from "redis";
 
-(await import('dotenv')).config();
-
-import { SESSION_SECRET, PORTAL_ORIGIN } from "./envConfig.js";
+import { REDIS_CONNECTION, SESSION_SECRET, PORTAL_ORIGIN } from "./envConfig.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -45,7 +43,7 @@ if (!process.env.VARWIG_DISABLE_AUTH) {
   const RedisStore = connectRedis(session);
 
   // Legacy mode redis client for connect-redis
-  const redisClient = createClient({legacyMode: true});
+  const redisClient = createClient({ url: REDIS_CONNECTION, legacyMode: true });
   redisClient.connect().catch(console.error);
 
   app.use(session({

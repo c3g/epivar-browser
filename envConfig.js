@@ -10,11 +10,14 @@ const getPrefixedEnvVar = (varName, defaultValue = undefined) => {
   return explicitValue ?? defaultValue;
 };
 
-// Database ============================================================================================================
+// Database and cache connections ======================================================================================
 
 //  - Postgres connection URI
 const PG_CONNECTION = getPrefixedEnvVar(
   "PG_CONNECTION", "postgresql://postgres@localhost:5432/postgres");
+
+//  - Redis connection URI
+const REDIS_CONNECTION = getPrefixedEnvVar("REDIS_CONNECTION", "redis://localhost:6379");
 
 // Paths and data locations ============================================================================================
 
@@ -86,8 +89,9 @@ const PLOT_MANHATTAN_BIN_SIZE = parseInt(getPrefixedEnvVar("MANHATTAN_BIN_SIZE",
 // Export ==============================================================================================================
 
 module.exports = {
-  // Database
+  // Database and cache connections
   PG_CONNECTION,
+  REDIS_CONNECTION,
   // Paths and data locations
   DATA_DIR,
   ABOUT_MD_PATH,

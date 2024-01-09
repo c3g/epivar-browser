@@ -8,8 +8,10 @@ services:
       - epivar-db-net
     environment:
       - NODE_ENV=production
-      - IMPORT_MAX_P_VAL=0.05
-      - LOW_COUNT_THRESHOLD=5
+      - EPIVAR_REDIS_CONNECTION=redis://epivar-redis:6379
+      - EPIVAR_IMPORT_MAX_P_VAL=0.05
+      - EPIVAR_LOW_COUNT_THRESHOLD=5
+      - EPIVAR_SESSION_SECRET=some-long-secret-value-do-not-share-me
     volumes:
       - /path/to/about.md:/app/data/about.md  # about file
       - /path/to/input-files:/app/input-files  # input files directory
