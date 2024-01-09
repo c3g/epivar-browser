@@ -14,9 +14,10 @@ services:
       - EPIVAR_IMPORT_MAX_P_VAL=0.05
       - EPIVAR_LOW_COUNT_THRESHOLD=5
     volumes:
-      # dataset configuration: about Markdown file and EpiVar config.js
+      # dataset configuration: about Markdown file, EpiVar config.js, tracks metadata.json
       - /path/to/about.md:/app/data/about.md  # about file
-      - /path/to/config.js:/app/config.js  # dataset configuration file, see config.example.js
+      - /path/to/config.js:/app/config.js:ro  # dataset configuration file, see config.example.js
+      - /path/to/metadata.json:/app/metadata.json:ro
       # genotypes: VCF + index file
       - /path/to/genotypes.vcf.gz:/app/data/genotypes.vcf.gz:ro
       - /path/to/genotypes.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
