@@ -41,16 +41,21 @@ services:
       - EPIVAR_IMPORT_MAX_P_VAL=0.05
       - EPIVAR_LOW_COUNT_THRESHOLD=5
     volumes:
-      # dataset configuration: about Markdown file, EpiVar config.js, tracks metadata.json
+      # dataset configuration: about Markdown file, EpiVar config.js
       - node1/about.md:/app/data/about.md
       - node1/config.js:/app/config.js:ro
-      - node1/metadata.json:/app/data/metadata.json:ro
       # genotypes: VCF + index file
       - /flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz:/app/data/genotypes.vcf.gz:ro
       - /flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
-      # tracks: sample bigWigs and writeable volume for on-the-fly merged tracks
+      # tracks:
+      #  - metadata JSON file,
+      - node1/metadata.json:/app/data/metadata.json:ro
+      #  - sample bigWigs,
       - /flu-infection-data/node1/tracks:/tracks:ro
+      #  - writeable volume for on-the-fly merged tracks,
       - /flu-infection-data/node1/mergedTracks:/mergedTracks
+      #  - other static tracks for showing in the UCSC browser.
+      - node1/ucsc.other-tracks.txt:/app/data/ucsc.other-tracks.txt:ro
 
   epivar-node-1-redis:
     image: redis:7.2
@@ -92,11 +97,11 @@ services:
       # dataset configuration: about Markdown file, EpiVar config.js, tracks metadata.json
       - node2/about.md:/app/data/about.md
       - node2/config.js:/app/config.js:ro
-      - node2/metadata.json:/app/data/metadata.json:ro
       # genotypes: VCF + index file
       - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz:/app/data/genotypes.vcf.gz:ro
       - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
-      # tracks: sample bigWigs and writeable volume for on-the-fly merged tracks
+      # tracks: metadata JSON file, sample bigWigs and writeable volume for on-the-fly merged tracks
+      - node2/metadata.json:/app/data/metadata.json:ro
       - /flu-infection-data/node2/tracks:/tracks:ro
       - /flu-infection-data/node2/mergedTracks:/mergedTracks
 

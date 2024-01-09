@@ -14,19 +14,24 @@ services:
       - EPIVAR_IMPORT_MAX_P_VAL=0.05
       - EPIVAR_LOW_COUNT_THRESHOLD=5
     volumes:
-      # dataset configuration: about Markdown file, EpiVar config.js, tracks metadata.json
+      # dataset configuration: about Markdown file, EpiVar config.js
       - /path/to/about.md:/app/data/about.md  # about file
       - /path/to/config.js:/app/config.js:ro  # dataset configuration file, see config.example.js
-      - /path/to/metadata.json:/app/metadata.json:ro
       # genotypes: VCF + index file
       - /path/to/genotypes.vcf.gz:/app/data/genotypes.vcf.gz:ro
       - /path/to/genotypes.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
-      # TODO
-      - /path/to/input-files:/app/input-files  # input files directory
-      - /path/to/ucsc.tracks:/app/data/ucsc.other-tracks.txt  # static track hub with other relevant tracks
-      # tracks: sample bigWigs and writeable volume for on-the-fly merged tracks
-      - /path/to/tracks:/tracks
+      # peaks files
+      - /path/to/matrices:/app/input-files/matrices:ro
+      - /path/to/qtls:/app/input-files/qtls:ro
+      # tracks:
+      #  - metadata JSON file,
+      - /path/to/metadata.json:/app/data/metadata.json:ro
+      #  - sample bigWigs,
+      - /path/to/tracks:/tracks:ro
+      #  - writeable volume for on-the-fly merged tracks,
       - volumes/mergedTracks:/mergedTracks
+      #  - other static tracks for showing in the UCSC browser.
+      - /path/to/ucsc.other-tracks.txt:/app/data/ucsc.other-tracks.txt:ro
 
   epivar-redis:
     image: redis:7.2
