@@ -6,8 +6,8 @@
 
 // noinspection JSUnusedGlobalSymbols
 module.exports = {
-  title: "Aracena 𝘦𝘵 𝘢𝘭.",
-  assembly: "hg19",
+  title: "Aracena 𝘦𝘵 𝘢𝘭. lift-over",
+  assembly: "hg38",
 
   conditions: [
     {id: "NI", name: "Non-infected"},
