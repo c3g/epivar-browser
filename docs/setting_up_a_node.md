@@ -74,7 +74,8 @@ networks, and environment variables.
 To turn a [metadata XLSX file](/input-files/flu-infection.xlsx) into a JSON file, run the following command:
 
 ```bash
-docker run ghcr.io/c3g/epivar-server node ./scripts/metadata-to-json.js < path/to/metadata.xlsx > data/metadata.json
+# the -i is important here; otherwise, the metadata.json file will be blank!
+docker run -i ghcr.io/c3g/epivar-server node ./scripts/metadata-to-json.js < path/to/metadata.xlsx > data/metadata.json
 ```
 
 Alternatively, generate a metadata JSON matching the [required format](#dataset-metadata) directly.
