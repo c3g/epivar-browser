@@ -91,7 +91,7 @@ container.
 
 ### Configuring the instance environment
 
-TODO: session secret is main one required
+TODO: session secret / database password are main ones required
 
 
 ### Pre-processing dataset metadata (if using an `.xlsx` file)
@@ -99,13 +99,13 @@ TODO: session secret is main one required
 TODO
 
 ```bash
-docker run ghcr.io/c3g/epivar-server node /app/scripts/metadata-to-json.js < path/to/metadata.xlsx > data/metadata.json
+docker run ghcr.io/c3g/epivar-server node ./scripts/metadata-to-json.js < path/to/metadata.xlsx > data/metadata.json
 ```
 
 
 ### Starting the server
 
-Assuming you have set up a Docker Compose file, similar to the one [we provide as an example](/docker-compose.yml),
+Assuming you have set up a Docker Compose file, similar to the one [we provide as an example](/example.docker-compose.yml),
 you can start the node using the following command:
 
 ```bash
@@ -115,7 +115,33 @@ docker compose up -d
 
 ### Importing data
 
-TODO
+First, import the assembly gene list and gene-peak association data into the database using the following command:
+
+```bash
+docker compose exec epivar-server node ./scripts/import-genes.js
+```
+
+Then, import peaks and pre-computed peak matrix values into the database using the following command:
+
+```bash
+docker compose exec epivar-server node ./scripts/import-peaks.js
+```
+
+**Note:** This will take a while.
+
+Then, calculate summary data for the peaks:
+
+```bash
+docker compose exec epivar-server node ./scripts/calculate-peak-groups.mjs
+docker compose exec epivar-server node ./scripts/calculate-top-peaks.mjs
+```
+
+Finally, ensure the cache is clear in case any values have been added accidentally during data ingestion, or are 
+remaining from prior data ingestions:
+
+```bash
+docker compose exec epivar-server node ./scripts/clear-cache.js
+```
 
 
 
