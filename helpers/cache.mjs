@@ -1,6 +1,7 @@
 import {createClient} from "redis";
+import {REDIS_CONNECTION} from "../envConfig.js";
 
-const redisClient = createClient();
+const redisClient = createClient({ url: REDIS_CONNECTION });
 
 redisClient.on("error", err => console.error("[redis]", err.toString()));
 

@@ -85,7 +85,7 @@ container.
 
 - TODO: Tracks (read-only)
 - TODO: Merged tracks
-- TODO: Redis
+- A folder to persist Redis cache data to. This is mounted to the Redis container at `/data`.
 - TODO: DB
 
 
