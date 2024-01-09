@@ -54,7 +54,7 @@ services:
       - /opt/epivar/node1/redis:/data
 
   epivar-node-1-db:
-    image: postgres:16
+    image: postgres:15
     networks:
       - epivar-node-1-db-net
     volumes:
@@ -92,7 +92,7 @@ services:
       - /opt/epivar/node2/redis:/data
 
   epivar-node-2-db:
-    image: postgres:16
+    image: postgres:15
     networks:
       - epivar-node-2-db-net
     volumes:

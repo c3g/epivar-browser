@@ -18,7 +18,7 @@ const DATA_DIR = path.join(__dirname, "./data");
 //  - About Markdown content
 const ABOUT_MD_PATH = path.join(DATA_DIR, "about.md");
 
-//  - Static tracks to put in UCSC track hub. TODO: make this dataset-specific
+//  - Static tracks to put in UCSC track hub.
 const STATIC_TRACKS_PATH = path.join(DATA_DIR, "ucsc.other-tracks.txt");
 
 //  - Track metadata for the dataset this node hosts
@@ -65,7 +65,7 @@ const SESSION_SECRET = getPrefixedEnvVar("SESSION_SECRET");
 
 // Portal connection ===================================================================================================
 
-//  - We must allow the CORS origin of the web portal so that the portal can access the browser
+//  - We must allow the CORS origin of the EpiVar web portal so that the portal can access the browser
 /** @type string */
 const PORTAL_ORIGIN = getPrefixedEnvVar("PORTAL_ORIGIN", "flu-infection.vhost38.genap.ca");
 
