@@ -1,0 +1,5262 @@
+[
+  {
+    "path": "RNAseq/AF02_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF02_Flu.forward.rnaseq",
+    "donor": "AF02",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF02_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF02_NI.forward.rnaseq",
+    "donor": "AF02",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF04_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF04_Flu.forward.rnaseq",
+    "donor": "AF04",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF04_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF04_NI.forward.rnaseq",
+    "donor": "AF04",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF06_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF06_Flu.forward.rnaseq",
+    "donor": "AF06",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF06_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF06_NI.forward.rnaseq",
+    "donor": "AF06",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF08_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF08_Flu.forward.rnaseq",
+    "donor": "AF08",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF08_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF08_NI.forward.rnaseq",
+    "donor": "AF08",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF10_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF10_Flu.forward.rnaseq",
+    "donor": "AF10",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF10_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF10_NI.forward.rnaseq",
+    "donor": "AF10",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF12_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF12_Flu.forward.rnaseq",
+    "donor": "AF12",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF12_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF12_NI.forward.rnaseq",
+    "donor": "AF12",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF14_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF14_Flu.forward.rnaseq",
+    "donor": "AF14",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF14_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF14_NI.forward.rnaseq",
+    "donor": "AF14",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF16_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF16_Flu.forward.rnaseq",
+    "donor": "AF16",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF16_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF16_NI.forward.rnaseq",
+    "donor": "AF16",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF18_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF18_Flu.forward.rnaseq",
+    "donor": "AF18",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF18_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF18_NI.forward.rnaseq",
+    "donor": "AF18",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF20_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF20_Flu.forward.rnaseq",
+    "donor": "AF20",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF20_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF20_NI.forward.rnaseq",
+    "donor": "AF20",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF22_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF22_Flu.forward.rnaseq",
+    "donor": "AF22",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF22_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF22_NI.forward.rnaseq",
+    "donor": "AF22",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF24_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF24_Flu.forward.rnaseq",
+    "donor": "AF24",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF24_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF24_NI.forward.rnaseq",
+    "donor": "AF24",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF26_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF26_Flu.forward.rnaseq",
+    "donor": "AF26",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF26_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF26_NI.forward.rnaseq",
+    "donor": "AF26",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF28_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF28_Flu.forward.rnaseq",
+    "donor": "AF28",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF28_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF28_NI.forward.rnaseq",
+    "donor": "AF28",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF30_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF30_Flu.forward.rnaseq",
+    "donor": "AF30",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF30_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF30_NI.forward.rnaseq",
+    "donor": "AF30",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF32_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF32_Flu.forward.rnaseq",
+    "donor": "AF32",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF32_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF32_NI.forward.rnaseq",
+    "donor": "AF32",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF34_Flu.forward.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF34_Flu.forward.rnaseq",
+    "donor": "AF34",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF34_NI.forward.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF34_NI.forward.rnaseq",
+    "donor": "AF34",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF36_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF36_Flu.forward.rnaseq",
+    "donor": "AF36",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF36_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF36_NI.forward.rnaseq",
+    "donor": "AF36",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF38_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF38_Flu.forward.rnaseq",
+    "donor": "AF38",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF38_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF38_NI.forward.rnaseq",
+    "donor": "AF38",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU01_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU01_Flu.forward.rnaseq",
+    "donor": "EU01",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU01_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU01_NI.forward.rnaseq",
+    "donor": "EU01",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU03_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU03_Flu.forward.rnaseq",
+    "donor": "EU03",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU03_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU03_NI.forward.rnaseq",
+    "donor": "EU03",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU05_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU05_Flu.forward.rnaseq",
+    "donor": "EU05",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU05_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU05_NI.forward.rnaseq",
+    "donor": "EU05",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU07_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU07_Flu.forward.rnaseq",
+    "donor": "EU07",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU07_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU07_NI.forward.rnaseq",
+    "donor": "EU07",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU09_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU09_Flu.forward.rnaseq",
+    "donor": "EU09",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU09_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU09_NI.forward.rnaseq",
+    "donor": "EU09",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU13_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU13_Flu.forward.rnaseq",
+    "donor": "EU13",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU13_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU13_NI.forward.rnaseq",
+    "donor": "EU13",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU15_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU15_Flu.forward.rnaseq",
+    "donor": "EU15",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU15_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU15_NI.forward.rnaseq",
+    "donor": "EU15",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU17_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU17_Flu.forward.rnaseq",
+    "donor": "EU17",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU17_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU17_NI.forward.rnaseq",
+    "donor": "EU17",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU19_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU19_Flu.forward.rnaseq",
+    "donor": "EU19",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU19_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU19_NI.forward.rnaseq",
+    "donor": "EU19",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU21_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU21_Flu.forward.rnaseq",
+    "donor": "EU21",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU21_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU21_NI.forward.rnaseq",
+    "donor": "EU21",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU25_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU25_Flu.forward.rnaseq",
+    "donor": "EU25",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU25_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU25_NI.forward.rnaseq",
+    "donor": "EU25",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU27_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU27_Flu.forward.rnaseq",
+    "donor": "EU27",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU27_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU27_NI.forward.rnaseq",
+    "donor": "EU27",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU29_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU29_Flu.forward.rnaseq",
+    "donor": "EU29",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU29_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU29_NI.forward.rnaseq",
+    "donor": "EU29",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU31_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU31_Flu.forward.rnaseq",
+    "donor": "EU31",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU31_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU31_NI.forward.rnaseq",
+    "donor": "EU31",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU33_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU33_Flu.forward.rnaseq",
+    "donor": "EU33",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU33_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU33_NI.forward.rnaseq",
+    "donor": "EU33",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU37_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU37_Flu.forward.rnaseq",
+    "donor": "EU37",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU37_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU37_NI.forward.rnaseq",
+    "donor": "EU37",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU39_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU39_Flu.forward.rnaseq",
+    "donor": "EU39",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU39_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU39_NI.forward.rnaseq",
+    "donor": "EU39",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU41_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU41_Flu.forward.rnaseq",
+    "donor": "EU41",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU41_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU41_NI.forward.rnaseq",
+    "donor": "EU41",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU43_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU43_Flu.forward.rnaseq",
+    "donor": "EU43",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU43_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU43_NI.forward.rnaseq",
+    "donor": "EU43",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU47_Flu.forward.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU47_Flu.forward.rnaseq",
+    "donor": "EU47",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU47_NI.forward.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU47_NI.forward.rnaseq",
+    "donor": "EU47",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF02_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF02_Flu.reverse.rnaseq",
+    "donor": "AF02",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF02_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF02_NI.reverse.rnaseq",
+    "donor": "AF02",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF04_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF04_Flu.reverse.rnaseq",
+    "donor": "AF04",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF04_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF04_NI.reverse.rnaseq",
+    "donor": "AF04",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF06_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF06_Flu.reverse.rnaseq",
+    "donor": "AF06",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF06_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF06_NI.reverse.rnaseq",
+    "donor": "AF06",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF08_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF08_Flu.reverse.rnaseq",
+    "donor": "AF08",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF08_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF08_NI.reverse.rnaseq",
+    "donor": "AF08",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF10_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF10_Flu.reverse.rnaseq",
+    "donor": "AF10",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF10_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF10_NI.reverse.rnaseq",
+    "donor": "AF10",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF12_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF12_Flu.reverse.rnaseq",
+    "donor": "AF12",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF12_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF12_NI.reverse.rnaseq",
+    "donor": "AF12",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF14_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF14_Flu.reverse.rnaseq",
+    "donor": "AF14",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF14_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF14_NI.reverse.rnaseq",
+    "donor": "AF14",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF16_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF16_Flu.reverse.rnaseq",
+    "donor": "AF16",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF16_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF16_NI.reverse.rnaseq",
+    "donor": "AF16",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF18_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF18_Flu.reverse.rnaseq",
+    "donor": "AF18",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF18_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF18_NI.reverse.rnaseq",
+    "donor": "AF18",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF20_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF20_Flu.reverse.rnaseq",
+    "donor": "AF20",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF20_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF20_NI.reverse.rnaseq",
+    "donor": "AF20",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF22_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF22_Flu.reverse.rnaseq",
+    "donor": "AF22",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF22_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF22_NI.reverse.rnaseq",
+    "donor": "AF22",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF24_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF24_Flu.reverse.rnaseq",
+    "donor": "AF24",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF24_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF24_NI.reverse.rnaseq",
+    "donor": "AF24",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF26_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF26_Flu.reverse.rnaseq",
+    "donor": "AF26",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF26_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF26_NI.reverse.rnaseq",
+    "donor": "AF26",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF28_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF28_Flu.reverse.rnaseq",
+    "donor": "AF28",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF28_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF28_NI.reverse.rnaseq",
+    "donor": "AF28",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF30_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF30_Flu.reverse.rnaseq",
+    "donor": "AF30",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF30_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF30_NI.reverse.rnaseq",
+    "donor": "AF30",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF32_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF32_Flu.reverse.rnaseq",
+    "donor": "AF32",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF32_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF32_NI.reverse.rnaseq",
+    "donor": "AF32",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF34_Flu.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF34_Flu.reverse.rnaseq",
+    "donor": "AF34",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF34_NI.reverse.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF34_NI.reverse.rnaseq",
+    "donor": "AF34",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF36_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF36_Flu.reverse.rnaseq",
+    "donor": "AF36",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF36_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF36_NI.reverse.rnaseq",
+    "donor": "AF36",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF38_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF38_Flu.reverse.rnaseq",
+    "donor": "AF38",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF38_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF38_NI.reverse.rnaseq",
+    "donor": "AF38",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU01_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU01_Flu.reverse.rnaseq",
+    "donor": "EU01",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU01_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU01_NI.reverse.rnaseq",
+    "donor": "EU01",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU03_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU03_Flu.reverse.rnaseq",
+    "donor": "EU03",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU03_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU03_NI.reverse.rnaseq",
+    "donor": "EU03",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU05_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU05_Flu.reverse.rnaseq",
+    "donor": "EU05",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU05_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU05_NI.reverse.rnaseq",
+    "donor": "EU05",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU07_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU07_Flu.reverse.rnaseq",
+    "donor": "EU07",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU07_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU07_NI.reverse.rnaseq",
+    "donor": "EU07",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU09_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU09_Flu.reverse.rnaseq",
+    "donor": "EU09",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU09_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU09_NI.reverse.rnaseq",
+    "donor": "EU09",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU13_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU13_Flu.reverse.rnaseq",
+    "donor": "EU13",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU13_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU13_NI.reverse.rnaseq",
+    "donor": "EU13",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU15_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU15_Flu.reverse.rnaseq",
+    "donor": "EU15",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU15_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU15_NI.reverse.rnaseq",
+    "donor": "EU15",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU17_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU17_Flu.reverse.rnaseq",
+    "donor": "EU17",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU17_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU17_NI.reverse.rnaseq",
+    "donor": "EU17",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU19_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU19_Flu.reverse.rnaseq",
+    "donor": "EU19",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU19_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU19_NI.reverse.rnaseq",
+    "donor": "EU19",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU21_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU21_Flu.reverse.rnaseq",
+    "donor": "EU21",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU21_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU21_NI.reverse.rnaseq",
+    "donor": "EU21",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU25_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU25_Flu.reverse.rnaseq",
+    "donor": "EU25",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU25_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU25_NI.reverse.rnaseq",
+    "donor": "EU25",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU27_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU27_Flu.reverse.rnaseq",
+    "donor": "EU27",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU27_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU27_NI.reverse.rnaseq",
+    "donor": "EU27",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU29_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU29_Flu.reverse.rnaseq",
+    "donor": "EU29",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU29_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU29_NI.reverse.rnaseq",
+    "donor": "EU29",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU31_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU31_Flu.reverse.rnaseq",
+    "donor": "EU31",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU31_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU31_NI.reverse.rnaseq",
+    "donor": "EU31",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU33_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU33_Flu.reverse.rnaseq",
+    "donor": "EU33",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU33_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU33_NI.reverse.rnaseq",
+    "donor": "EU33",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU37_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU37_Flu.reverse.rnaseq",
+    "donor": "EU37",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU37_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU37_NI.reverse.rnaseq",
+    "donor": "EU37",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU39_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU39_Flu.reverse.rnaseq",
+    "donor": "EU39",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU39_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU39_NI.reverse.rnaseq",
+    "donor": "EU39",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU41_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU41_Flu.reverse.rnaseq",
+    "donor": "EU41",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU41_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU41_NI.reverse.rnaseq",
+    "donor": "EU41",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU43_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU43_Flu.reverse.rnaseq",
+    "donor": "EU43",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU43_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU43_NI.reverse.rnaseq",
+    "donor": "EU43",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU47_Flu.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU47_Flu.reverse.rnaseq",
+    "donor": "EU47",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU47_NI.reverse.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU47_NI.reverse.rnaseq",
+    "donor": "EU47",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "ATACseq/AF04_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF04_Flu.atacseq",
+    "donor": "AF04",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF04_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF04_NI.atacseq",
+    "donor": "AF04",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF06_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF06_Flu.atacseq",
+    "donor": "AF06",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF06_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF06_NI.atacseq",
+    "donor": "AF06",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF08_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF08_Flu.atacseq",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF08_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF08_NI.atacseq",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF10_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF10_Flu.atacseq",
+    "donor": "AF10",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF10_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF10_NI.atacseq",
+    "donor": "AF10",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF12_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF12_Flu.atacseq",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF12_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF12_NI.atacseq",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF14_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF14_Flu.atacseq",
+    "donor": "AF14",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF14_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF14_NI.atacseq",
+    "donor": "AF14",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF16_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF16_Flu.atacseq",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF16_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF16_NI.atacseq",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF18_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF18_Flu.atacseq",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF18_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF18_NI.atacseq",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF20_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF20_Flu.atacseq",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF20_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF20_NI.atacseq",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF22_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF22_Flu.atacseq",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF22_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF22_NI.atacseq",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF24_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF24_Flu.atacseq",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF24_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF24_NI.atacseq",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF26_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF26_Flu.atacseq",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF26_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF26_NI.atacseq",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF28_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF28_Flu.atacseq",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF28_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF28_NI.atacseq",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF30_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF30_Flu.atacseq",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF30_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF30_NI.atacseq",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF34_Flu.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF34_Flu.atacseq",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF34_NI.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF34_NI.atacseq",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF36_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF36_Flu.atacseq",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF36_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF36_NI.atacseq",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF38_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF38_Flu.atacseq",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/AF38_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF38_NI.atacseq",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU03_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU03_Flu.atacseq",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU03_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU03_NI.atacseq",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU05_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU05_Flu.atacseq",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU05_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU05_NI.atacseq",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU07_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU07_Flu.atacseq",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU07_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU07_NI.atacseq",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU09_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU09_Flu.atacseq",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU09_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU09_NI.atacseq",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU13_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU13_Flu.atacseq",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU13_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU13_NI.atacseq",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU15_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU15_Flu.atacseq",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU15_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU15_NI.atacseq",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU17_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU17_Flu.atacseq",
+    "donor": "EU17",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU17_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU17_NI.atacseq",
+    "donor": "EU17",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU19_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU19_Flu.atacseq",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU19_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU19_NI.atacseq",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU21_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU21_Flu.atacseq",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU21_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU21_NI.atacseq",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU25_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU25_Flu.atacseq",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU25_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU25_NI.atacseq",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU27_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU27_Flu.atacseq",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU27_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU27_NI.atacseq",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU29_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU29_Flu.atacseq",
+    "donor": "EU29",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU29_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU29_NI.atacseq",
+    "donor": "EU29",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU33_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU33_Flu.atacseq",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU33_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU33_NI.atacseq",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/Eu37_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "Eu37_Flu.atacseq",
+    "donor": "EU37",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU37_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU37_NI.atacseq",
+    "donor": "EU37",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU39_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU39_Flu.atacseq",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/Eu39_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "Eu39_NI.atacseq",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU41_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU41_Flu.atacseq",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU41_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU41_NI.atacseq",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU43_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU43_Flu.atacseq",
+    "donor": "EU43",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU43_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU43_NI.atacseq",
+    "donor": "EU43",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU47_Flu.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU47_Flu.atacseq",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "ATACseq/EU47_NI.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU47_NI.atacseq",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "ATAC-Seq"
+  },
+  {
+    "path": "H3K27ac/AF04_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF04_Flu.H3K27ac",
+    "donor": "AF04",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF04_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF04_NI.H3K27ac",
+    "donor": "AF04",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF06_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF06_Flu.H3K27ac",
+    "donor": "AF06",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF06_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF06_NI.H3K27ac",
+    "donor": "AF06",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF08_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF08_Flu.H3K27ac",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF08_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF08_NI.H3K27ac",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF12_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF12_Flu.H3K27ac",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF12_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF12_NI.H3K27ac",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF16_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF16_Flu.H3K27ac",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF16_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF16_NI.H3K27ac",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF18_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF18_Flu.H3K27ac",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF18_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF18_NI.H3K27ac",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF20_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF20_Flu.H3K27ac",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF20_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF20_NI.H3K27ac",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF22_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF22_Flu.H3K27ac",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF22_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF22_NI.H3K27ac",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF24_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF24_Flu.H3K27ac",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF24_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF24_NI.H3K27ac",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF26_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF26_Flu.H3K27ac",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF26_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF26_NI.H3K27ac",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF28_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF28_Flu.H3K27ac",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF28_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF28_NI.H3K27ac",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF30_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF30_Flu.H3K27ac",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF30_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF30_NI.H3K27ac",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF34_Flu_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF34_Flu.H3K27ac",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF34_NI_H3K27ac.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF34_NI.H3K27ac",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF36_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF36_Flu.H3K27ac",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF36_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF36_NI.H3K27ac",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF38_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF38_Flu.H3K27ac",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/AF38_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF38_NI.H3K27ac",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU03_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU03_Flu.H3K27ac",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU03_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU03_NI.H3K27ac",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU05_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU05_Flu.H3K27ac",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU05_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU05_NI.H3K27ac",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU07_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU07_Flu.H3K27ac",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU07_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU07_NI.H3K27ac",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU09_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU09_Flu.H3K27ac",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU09_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU09_NI.H3K27ac",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU13_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU13_Flu.H3K27ac",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU13_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU13_NI.H3K27ac",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU15_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU15_Flu.H3K27ac",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU15_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU15_NI.H3K27ac",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU19_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU19_Flu.H3K27ac",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU19_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU19_NI.H3K27ac",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU21_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU21_Flu.H3K27ac",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU21_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU21_NI.H3K27ac",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU25_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU25_Flu.H3K27ac",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU25_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU25_NI.H3K27ac",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU27_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU27_Flu.H3K27ac",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU27_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU27_NI.H3K27ac",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU33_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU33_Flu.H3K27ac",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU33_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU33_NI.H3K27ac",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU39_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU39_Flu.H3K27ac",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU39_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU39_NI.H3K27ac",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU41_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU41_Flu.H3K27ac",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU41_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU41_NI.H3K27ac",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU47_Flu_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU47_Flu.H3K27ac",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K27ac/EU47_NI_H3K27ac.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU47_NI.H3K27ac",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27ac"
+  },
+  {
+    "path": "H3K4me1/AF04_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF04_Flu.H3K4me1",
+    "donor": "AF04",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF04_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF04_NI.H3K4me1",
+    "donor": "AF04",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF06_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF06_Flu.H3K4me1",
+    "donor": "AF06",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF06_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF06_NI.H3K4me1",
+    "donor": "AF06",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF08_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF08_Flu.H3K4me1",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF08_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF08_NI.H3K4me1",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF12_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF12_Flu.H3K4me1",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF12_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF12_NI.H3K4me1",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF16_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF16_Flu.H3K4me1",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF16_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF16_NI.H3K4me1",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF18_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF18_Flu.H3K4me1",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF18_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF18_NI.H3K4me1",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF20_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF20_Flu.H3K4me1",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF20_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF20_NI.H3K4me1",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF22_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF22_Flu.H3K4me1",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF22_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF22_NI.H3K4me1",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF24_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF24_Flu.H3K4me1",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF24_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF24_NI.H3K4me1",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF26_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF26_Flu.H3K4me1",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF26_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF26_NI.H3K4me1",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF28_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF28_Flu.H3K4me1",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF28_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF28_NI.H3K4me1",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF30_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF30_Flu.H3K4me1",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF30_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF30_NI.H3K4me1",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF34_Flu_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF34_Flu.H3K4me1",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF34_NI_H3K4me1.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF34_NI.H3K4me1",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF36_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF36_Flu.H3K4me1",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF36_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF36_NI.H3K4me1",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF38_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF38_Flu.H3K4me1",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/AF38_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF38_NI.H3K4me1",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU03_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU03_Flu.H3K4me1",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU03_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU03_NI.H3K4me1",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU05_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU05_Flu.H3K4me1",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU05_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU05_NI.H3K4me1",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU07_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU07_Flu.H3K4me1",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU07_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU07_NI.H3K4me1",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU09_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU09_Flu.H3K4me1",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU09_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU09_NI.H3K4me1",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU13_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU13_Flu.H3K4me1",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU13_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU13_NI.H3K4me1",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU15_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU15_Flu.H3K4me1",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU15_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU15_NI.H3K4me1",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU19_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU19_Flu.H3K4me1",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU19_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU19_NI.H3K4me1",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU21_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU21_Flu.H3K4me1",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU21_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU21_NI.H3K4me1",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU25_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU25_Flu.H3K4me1",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU25_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU25_NI.H3K4me1",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU27_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU27_Flu.H3K4me1",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU27_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU27_NI.H3K4me1",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU29_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU29_Flu.H3K4me1",
+    "donor": "EU29",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU29_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU29_NI.H3K4me1",
+    "donor": "EU29",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU33_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU33_Flu.H3K4me1",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU33_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU33_NI.H3K4me1",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU39_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU39_Flu.H3K4me1",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU39_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU39_NI.H3K4me1",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU41_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU41_Flu.H3K4me1",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU41_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU41_NI.H3K4me1",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU47_Flu_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU47_Flu.H3K4me1",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K4me1/EU47_NI_H3K4me1.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU47_NI.H3K4me1",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me1"
+  },
+  {
+    "path": "H3K27me3/AF08_Flu_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF08_Flu.H3K27me3",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF08_NI_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF08_NI.H3K27me3",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF12_Flu_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF12_Flu.H3K27me3",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF12_NI_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF12_NI.H3K27me3",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF16_Flu_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF16_Flu.H3K27me3",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF16_NI_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF16_NI.H3K27me3",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF18_Flu_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF18_Flu.H3K27me3",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF18_NI_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF18_NI.H3K27me3",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF20_Flu_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF20_Flu.H3K27me3",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF20_NI_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF20_NI.H3K27me3",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF22_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF22_Flu.H3K27me3",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF22_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF22_NI.H3K27me3",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF24_Flu_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF24_Flu.H3K27me3",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF24_NI_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF24_NI.H3K27me3",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF26_Flu_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF26_Flu.H3K27me3",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF26_NI_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF26_NI.H3K27me3",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF28_Flu_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF28_Flu.H3K27me3",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF28_NI_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF28_NI.H3K27me3",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF30_Flu_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF30_Flu.H3K27me3",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF30_NI_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF30_NI.H3K27me3",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF34_Flu_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF34_Flu.H3K27me3",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF34_NI_H3K27me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF34_NI.H3K27me3",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF36_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF36_Flu.H3K27me3",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF36_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF36_NI.H3K27me3",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF38_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF38_Flu.H3K27me3",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/AF38_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF38_NI.H3K27me3",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU03_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU03_Flu.H3K27me3",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU03_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU03_NI.H3K27me3",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU05_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU05_Flu.H3K27me3",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU05_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU05_NI.H3K27me3",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU07_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU07_Flu.H3K27me3",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU07_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU07_NI.H3K27me3",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU09_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU09_Flu.H3K27me3",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU09_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU09_NI.H3K27me3",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU13_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU13_Flu.H3K27me3",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU13_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU13_NI.H3K27me3",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU15_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU15_Flu.H3K27me3",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU15_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU15_NI.H3K27me3",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU19_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU19_Flu.H3K27me3",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU19_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU19_NI.H3K27me3",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU21_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU21_Flu.H3K27me3",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU21_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU21_NI.H3K27me3",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU25_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU25_Flu.H3K27me3",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU25_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU25_NI.H3K27me3",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU27_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU27_Flu.H3K27me3",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU27_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU27_NI.H3K27me3",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU29_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU29_Flu.H3K27me3",
+    "donor": "EU29",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU29_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU29_NI.H3K27me3",
+    "donor": "EU29",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU33_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU33_Flu.H3K27me3",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU33_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU33_NI.H3K27me3",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU39_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU39_Flu.H3K27me3",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU39_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU39_NI.H3K27me3",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU41_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU41_Flu.H3K27me3",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU41_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU41_NI.H3K27me3",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU47_Flu_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU47_Flu.H3K27me3",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K27me3/EU47_NI_H3K27me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU47_NI.H3K27me3",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K27me3"
+  },
+  {
+    "path": "H3K4me3/AF08_Flu_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF08_Flu.H3K4me3",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF08_NI_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF08_NI.H3K4me3",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF12_Flu_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF12_Flu.H3K4me3",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF12_NI_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF12_NI.H3K4me3",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF16_Flu_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF16_Flu.H3K4me3",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF16_NI_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF16_NI.H3K4me3",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF18_Flu_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF18_Flu.H3K4me3",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF18_NI_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF18_NI.H3K4me3",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF20_Flu_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF20_Flu.H3K4me3",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF20_NI_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF20_NI.H3K4me3",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF22_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF22_Flu.H3K4me3",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF22_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF22_NI.H3K4me3",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF24_Flu_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF24_Flu.H3K4me3",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF24_NI_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF24_NI.H3K4me3",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF26_Flu_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF26_Flu.H3K4me3",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF26_NI_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF26_NI.H3K4me3",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF28_Flu_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF28_Flu.H3K4me3",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF28_NI_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF28_NI.H3K4me3",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF30_Flu_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF30_Flu.H3K4me3",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF30_NI_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF30_NI.H3K4me3",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF34_Flu_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF34_Flu.H3K4me3",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF34_NI_H3K4me3.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF34_NI.H3K4me3",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF36_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF36_Flu.H3K4me3",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF36_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF36_NI.H3K4me3",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF38_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF38_Flu.H3K4me3",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/AF38_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF38_NI.H3K4me3",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU03_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU03_Flu.H3K4me3",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU03_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU03_NI.H3K4me3",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU05_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU05_Flu.H3K4me3",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU05_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU05_NI.H3K4me3",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU07_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU07_Flu.H3K4me3",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU07_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU07_NI.H3K4me3",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU09_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU09_Flu.H3K4me3",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU09_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU09_NI.H3K4me3",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU13_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU13_Flu.H3K4me3",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU13_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU13_NI.H3K4me3",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU15_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU15_Flu.H3K4me3",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU15_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU15_NI.H3K4me3",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU19_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU19_Flu.H3K4me3",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU19_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU19_NI.H3K4me3",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU21_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU21_Flu.H3K4me3",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU21_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU21_NI.H3K4me3",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU25_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU25_Flu.H3K4me3",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU25_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU25_NI.H3K4me3",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU27_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU27_Flu.H3K4me3",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU27_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU27_NI.H3K4me3",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU29_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU29_Flu.H3K4me3",
+    "donor": "EU29",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU29_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU29_NI.H3K4me3",
+    "donor": "EU29",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU33_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU33_Flu.H3K4me3",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU33_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU33_NI.H3K4me3",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU39_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU39_Flu.H3K4me3",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU39_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU39_NI.H3K4me3",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU41_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU41_Flu.H3K4me3",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU41_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU41_NI.H3K4me3",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU47_Flu_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU47_Flu.H3K4me3",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "H3K4me3/EU47_NI_H3K4me3.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU47_NI.H3K4me3",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "H3K4me3"
+  },
+  {
+    "path": "WGBS/AF04_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF04_Flu.5mC",
+    "donor": "AF04",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF04_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF04_NI.5mC",
+    "donor": "AF04",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF06_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF06_Flu.5mC",
+    "donor": "AF06",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF06_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF06_NI.5mC",
+    "donor": "AF06",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF08_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF08_Flu.5mC",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF08_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF08_NI.5mC",
+    "donor": "AF08",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF10_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF10_Flu.5mC",
+    "donor": "AF10",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF10_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF10_NI.5mC",
+    "donor": "AF10",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF12_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF12_Flu.5mC",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF12_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF12_NI.5mC",
+    "donor": "AF12",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF14_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF14_Flu.5mC",
+    "donor": "AF14",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF14_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF14_NI.5mC",
+    "donor": "AF14",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF16_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF16_Flu.5mC",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF16_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF16_NI.5mC",
+    "donor": "AF16",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF18_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF18_Flu.5mC",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF18_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF18_NI.5mC",
+    "donor": "AF18",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF20_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF20_Flu.5mC",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF20_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF20_NI.5mC",
+    "donor": "AF20",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF22_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF22_Flu.5mC",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF22_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF22_NI.5mC",
+    "donor": "AF22",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF24_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF24_Flu.5mC",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF24_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF24_NI.5mC",
+    "donor": "AF24",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF26_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF26_Flu.5mC",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF26_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF26_NI.5mC",
+    "donor": "AF26",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF28_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF28_Flu.5mC",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF28_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF28_NI.5mC",
+    "donor": "AF28",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF30_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF30_Flu.5mC",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF30_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF30_NI.5mC",
+    "donor": "AF30",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF34_Flu_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF34_Flu.5mC",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF34_NI_5mC.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF34_NI.5mC",
+    "donor": "AF34",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF36_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF36_Flu.5mC",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF36_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF36_NI.5mC",
+    "donor": "AF36",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF38_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF38_Flu.5mC",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/AF38_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF38_NI.5mC",
+    "donor": "AF38",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU03_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU03_Flu.5mC",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU03_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU03_NI.5mC",
+    "donor": "EU03",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU05_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU05_Flu.5mC",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU05_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU05_NI.5mC",
+    "donor": "EU05",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU07_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU07_Flu.5mC",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU07_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU07_NI.5mC",
+    "donor": "EU07",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU09_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU09_Flu.5mC",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU09_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU09_NI.5mC",
+    "donor": "EU09",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU13_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU13_Flu.5mC",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU13_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU13_NI.5mC",
+    "donor": "EU13",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU15_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU15_Flu.5mC",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU15_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU15_NI.5mC",
+    "donor": "EU15",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU17_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU17_Flu.5mC",
+    "donor": "EU17",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU17_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU17_NI.5mC",
+    "donor": "EU17",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU19_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU19_Flu.5mC",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU19_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU19_NI.5mC",
+    "donor": "EU19",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU21_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU21_Flu.5mC",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU21_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU21_NI.5mC",
+    "donor": "EU21",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU25_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU25_Flu.5mC",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU25_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU25_NI.5mC",
+    "donor": "EU25",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU27_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU27_Flu.5mC",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU27_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU27_NI.5mC",
+    "donor": "EU27",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU29_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU29_Flu.5mC",
+    "donor": "EU29",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU29_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU29_NI.5mC",
+    "donor": "EU29",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU33_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU33_Flu.5mC",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU33_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU33_NI.5mC",
+    "donor": "EU33",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU37_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU37_Flu.5mC",
+    "donor": "EU37",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU37_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU37_NI.5mC",
+    "donor": "EU37",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU39_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU39_Flu.5mC",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU39_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU39_NI.5mC",
+    "donor": "EU39",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU41_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU41_Flu.5mC",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU41_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU41_NI.5mC",
+    "donor": "EU41",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU43_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU43_Flu.5mC",
+    "donor": "EU43",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU43_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU43_NI.5mC",
+    "donor": "EU43",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU47_Flu_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU47_Flu.5mC",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  },
+  {
+    "path": "WGBS/EU47_NI_5mC.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU47_NI.5mC",
+    "donor": "EU47",
+    "view": "signal_unstranded",
+    "type": "bigWig",
+    "assay": "WGB-Seq"
+  }
+]
