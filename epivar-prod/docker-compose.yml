@@ -61,6 +61,8 @@ services:
     image: postgres:15
     networks:
       - epivar-node-1-db-net
+    env_file:
+      - node1/secrets.env
     volumes:
       - /opt/epivar/node1/db:/var/lib/postgresql/data
 
@@ -104,6 +106,8 @@ services:
     image: postgres:15
     networks:
       - epivar-node-2-db-net
+    env_file:
+      - node2/secrets.env
     volumes:
       - /opt/epivar/node2/db:/var/lib/postgresql/data
 
