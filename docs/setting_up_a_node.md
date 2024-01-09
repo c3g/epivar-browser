@@ -1,6 +1,7 @@
 # Setting up an EpiVar node
 
 
+
 ## Requirements
 
 * Docker
@@ -9,14 +10,16 @@
 * A valid HTTPS certificate (configuring this is out of scope for this guide)
 
 
+
 ## Data and configuration requirements
 
 ### Raw data (stored on the node, not revealed publicly)
 
-- [ ] A VCF containing sample variants, using one of two available reference genomes (`hg19`/`hg38`)
+- [ ] A [bgzipped](http://www.htslib.org/doc/bgzip.html), [Tabix-indexed](http://www.htslib.org/doc/tabix.html) VCF 
+  containing sample variants, using one of two available reference genomes (`hg19`/`hg38`).
 - [ ] A set of normalized signal matrices: one per assay, each containing columns of samples and rows of features
-      (see an [example for ATAC-seq](/input-files/matrices/ATAC-seq.example.tsv))
-- [ ] A set of bigWigs, one or two (forward/reverse view) per sample-assay pair
+      (see an [example for ATAC-seq](/input-files/matrices/ATAC-seq.example.tsv).)
+- [ ] A set of bigWigs, one or two (forward/reverse view) per sample-assay pair.
 - [ ] Peak and gene-peak-link CSV files:
   - TODO: PEAK DATA
 
@@ -47,20 +50,49 @@
      - `view`
      - `type`
      - `assay`
+
 - [ ] A dataset configuration file, which takes the form described in the 
   [example configuration file](/config.example.js).
-- [ ] A human-readable dataset description file, to show in the `About Dataset` tab in the portal. TODO
+
+  This file specifies information about the dataset being hosted by the EpiVar node, including dataset title, 
+  sample groups and experimental treatments, assembly ID (`hg19` or `hg38`), and how to find samples in the genotype 
+  VCF file.
+
+- [ ] A human-readable dataset description file, in [Markdown](https://commonmark.org/help/) format, to show in the 
+  `About Dataset` tab in the portal. See [an example for the Aracena *et al.* dataset.](/epivar-prod/node1/about.md) 
+
 
 
 ## Deploying
 
+In order to follow this guide, you should have experience deploying Docker containers, including configuring volumes,
+networks, and environment variables.
+
+
 ### Creating volume locations for data
 
-TODO
+In a production instance, you will need the multiple volumes/bind-mounts from the host filesystem to the server Docker 
+container.
 
-### Configuring the environment instance
+#### File binding
 
-TODO
+- Your dataset's config file should be bound to `/app/config.js` inside the container.
+- Your dataset's about file (in Markdown format) should be bound to `/app/data/about.md` inside the container.
+- The genotype `.vcf.gz` and `.vcf.gz.tbi` should be bound to `/app/data/genotypes.vcf.gz` and
+  `/app/data/genotypes.vcf.gz.tbi`, respectively.
+
+#### Folder binding
+
+- TODO: Tracks (read-only)
+- TODO: Merged tracks
+- TODO: Redis
+- TODO: DB
+
+
+### Configuring the instance environment
+
+TODO: session secret is main one required
+
 
 ### Pre-processing dataset metadata (if using an `.xlsx` file)
 
@@ -70,13 +102,21 @@ TODO
 docker run ghcr.io/c3g/epivar-server node /app/scripts/metadata-to-json.js < path/to/metadata.xlsx > data/metadata.json
 ```
 
+
 ### Starting the server
 
-TODO
+Assuming you have set up a Docker Compose file, similar to the one [we provide as an example](/docker-compose.yml),
+you can start the node using the following command:
+
+```bash
+docker compose up -d
+```
+
 
 ### Importing data
 
 TODO
+
 
 
 ## Joining the EpiVar Portal federation
