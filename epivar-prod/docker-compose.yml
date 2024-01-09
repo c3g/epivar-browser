@@ -65,6 +65,7 @@ services:
     env_file:
       - node1/secrets.env
     volumes:
+      - node1/postgresql.conf:/etc/postgresql/postgresql.conf:ro
       - /opt/epivar/node1/db:/var/lib/postgresql/data
 
   # Node 2: hg38 data (lifted over) ------------------------------------------------------------------------------------
@@ -111,6 +112,7 @@ services:
     env_file:
       - node2/secrets.env
     volumes:
+      - node2/postgresql.conf:/etc/postgresql/postgresql.conf:ro
       - /opt/epivar/node2/db:/var/lib/postgresql/data
 
   # --------------------------------------------------------------------------------------------------------------------
