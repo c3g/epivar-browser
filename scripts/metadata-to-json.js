@@ -22,23 +22,26 @@ const headers = {
 const metadataPath = process.argv[2] || '/dev/stdin';
 const workbook = xlsx.readFileSync(metadataPath);
 
-const items = Object.entries(workbook.Sheets).flatMap(([sheetName, sheet]) => {
-  if (EXCLUDE_SHEETS.has(sheetName)) {
-    return [];
-  }
+const sheets = Object.entries(workbook.Sheets).filter(([s, _]) => !EXCLUDE_SHEETS.has(s));
 
-  return xlsx.utils.sheet_to_json(sheet)
-    .filter(item => item[headers["ethnicity"]] !== "Exclude sample")
-    .map(item => Object.fromEntries(
-      Object.entries(headers)
-        .filter(([_, oldKey]) => item[oldKey] !== undefined)
-        .map(([key, oldKey]) => (
-          // Preprocess and remove 'Chipmentation' from assay names if necessary
-          oldKey === "assay.name"
-            ? [key, item[oldKey].replace("Chipmentation ", "")]
-            : [key, item[oldKey]]
-        ))
-    ));
+process.stderr.write(`Found sheets: ${sheets.map((s) => s[0]).join(', ')}\n`);
+
+const items = sheets.flatMap(([sheetName, sheet]) => {
+  const sheetEntries = xlsx.utils.sheet_to_json(sheet)
+    .filter(item => item[headers["ethnicity"]] !== "Exclude sample");
+
+  process.stderr.write(`    ${sheetName}: found ${sheetEntries.length} rows\n`);
+
+  return sheetEntries.map(item => Object.fromEntries(
+    Object.entries(headers)
+      .filter(([_, oldKey]) => item[oldKey] !== undefined)
+      .map(([key, oldKey]) => (
+        // Preprocess and remove 'Chipmentation' from assay names if necessary
+        oldKey === "assay.name"
+          ? [key, item[oldKey].replace("Chipmentation ", "")]
+          : [key, item[oldKey]]
+      ))
+  ));
 });
 
 process.stdout.write(JSON.stringify(items, null, 2)  + "\n");
