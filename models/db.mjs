@@ -1,9 +1,10 @@
-import fs from "fs";
-
+import fs from "node:fs";
 import pg from "pg";
 
+import envConfig from "../envConfig.js";
+
 const pool = new pg.Pool({
-  connectionString: process.env.VARWIG_PG_CONNECTION ?? undefined,
+  connectionString: envConfig.PG_CONNECTION ?? undefined,
 });
 
 export const ready = new Promise((resolve, reject) => {

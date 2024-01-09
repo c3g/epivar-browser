@@ -10,6 +10,12 @@ const getPrefixedEnvVar = (varName, defaultValue = undefined) => {
   return explicitValue ?? defaultValue;
 };
 
+// Database ============================================================================================================
+
+//  - Postgres connection URI
+const PG_CONNECTION = getPrefixedEnvVar(
+  "PG_CONNECTION", "postgresql://postgres@localhost:5432/postgres");
+
 // Paths and data locations ============================================================================================
 
 //  - This is the application data directory
@@ -80,6 +86,8 @@ const PLOT_MANHATTAN_BIN_SIZE = parseInt(getPrefixedEnvVar("MANHATTAN_BIN_SIZE",
 // Export ==============================================================================================================
 
 module.exports = {
+  // Database
+  PG_CONNECTION,
   // Paths and data locations
   DATA_DIR,
   ABOUT_MD_PATH,
