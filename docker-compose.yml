@@ -14,16 +14,27 @@ services:
       - EPIVAR_SESSION_SECRET=some-long-secret-value-do-not-share-me
     volumes:
       - /path/to/about.md:/app/data/about.md  # about file
+      - /path/to/config.js:/app/config.js  # dataset configuration file, see config.example.js
+
       - /path/to/input-files:/app/input-files  # input files directory
       - /path/to/ucsc.tracks:/app/data/ucsc.other-tracks.txt  # static track hub with other relevant tracks
+
+      - /path/to/tracks:/tracks
+      - volumes/mergedTracks:/mergedTracks
+
   epivar-redis:
     image: redis:7.2
     networks:
       - epivar-redis-net
+    volumes:
+      - volumes/redis:/data
+
   epivar-db:
     image: postgres:16
     networks:
       - epivar-db-net
+    volumes:
+      - volumes/db:/var/lib/postgresql/data
 
 networks:
   epivar-server-net:
