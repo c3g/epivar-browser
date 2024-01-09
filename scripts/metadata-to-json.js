@@ -19,6 +19,8 @@ const headers = {
   'assay':             'assay.name',
 };
 
+process.stderr.write(`Got argv: ${process.argv}`);
+
 const metadataPath = process.argv[2] || '/dev/stdin';
 const workbook = xlsx.readFileSync(metadataPath);
 
