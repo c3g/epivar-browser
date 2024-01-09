@@ -69,6 +69,17 @@ In order to follow this guide, you should have experience deploying Docker conta
 networks, and environment variables.
 
 
+### Pre-processing dataset metadata (if using an `.xlsx` file)
+
+To turn a [metadata XLSX file](/input-files/flu-infection.xlsx) into a JSON file, run the following command:
+
+```bash
+docker run ghcr.io/c3g/epivar-server node ./scripts/metadata-to-json.js < path/to/metadata.xlsx > data/metadata.json
+```
+
+Alternatively, generate a metadata JSON matching the [required format](#dataset-metadata) directly.
+
+
 ### Creating volume locations for data
 
 In a production instance, you will need the multiple volumes/bind-mounts from the host filesystem to the server Docker 
@@ -80,6 +91,7 @@ container.
 - Your dataset's about file (in Markdown format) should be bound to `/app/data/about.md` inside the container.
 - The genotype `.vcf.gz` and `.vcf.gz.tbi` should be bound to `/app/data/genotypes.vcf.gz` and
   `/app/data/genotypes.vcf.gz.tbi`, respectively.
+- Your `metadata.json` file, pre-existing or as created above, should be bound to `/app/data/metadata.json`.
 
 #### Folder binding
 
@@ -92,15 +104,6 @@ container.
 ### Configuring the instance environment
 
 TODO: session secret / database password are main ones required
-
-
-### Pre-processing dataset metadata (if using an `.xlsx` file)
-
-TODO
-
-```bash
-docker run ghcr.io/c3g/epivar-server node ./scripts/metadata-to-json.js < path/to/metadata.xlsx > data/metadata.json
-```
 
 
 ### Starting the server
