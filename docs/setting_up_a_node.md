@@ -110,7 +110,20 @@ container.
 
 ### Configuring the instance environment
 
-TODO: session secret / database password are main ones required
+There are a few required environment variables that do not have default values that must be configured when deploying a 
+node. These required environment variables are secrets, so they should not be shared or made public:
+
+```bash
+EPIVAR_SESSION_SECRET=some-long-secret-value-do-not-share-me
+POSTGRES_PASSWORD=my-secure-password
+EPIVAR_PG_CONNECTION=postgresql://postgres:my-secure-password@epivar-db:5432/postgres
+```
+
+These environment variables can either be configured in a `.env` file and attached to a Docker Compose container via
+the `env_file` directive attached to both the EpiVar server container and the Postgres container, or put into the
+`environment` directive in the Compose file directly - `EPIVAR_SESSION_SECRET` and `EPIVAR_PG_CONNECTION` are for the 
+EpiVar server container, and `POSTGRES_PASSWORD` is for the Postgres container. Either way, **make sure not to commit 
+them to any public repository.**
 
 Several other configuration options are available, and documented in commented code, in the 
 [`/envConfig.js`](/envConfig.js) file. A lot of the default values here match how the Docker container is configured,
