@@ -54,7 +54,12 @@ services:
       #  - metadata JSON file,
       - ./node1/metadata.json:/app/data/metadata.json:ro
       #  - sample bigWigs,
-      - /flu-infection-data/node1/tracks:/tracks:ro
+      - /flu-infection-data/ATACseq:/tracks/ATACseq:ro
+      - /flu-infection-data/H3K27ac:/tracks/H3K27ac:ro
+      - /flu-infection-data/H3K27me3:/tracks/H3K27me3:ro
+      - /flu-infection-data/H3K4me1:/tracks/H3K4me1:ro
+      - /flu-infection-data/H3K4me3:/tracks/H3K4me3:ro
+      - /flu-infection-data/RNAseq:/tracks/RNAseq:ro
       #  - writeable volume for on-the-fly merged tracks,
       - /flu-infection-data/node1/mergedTracks:/mergedTracks
       #  - other static tracks for showing in the UCSC browser.
