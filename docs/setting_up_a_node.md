@@ -13,53 +13,84 @@
 
 ## Data and configuration requirements
 
-### Raw data (stored on the node, not revealed publicly)
+### Available assays
 
-- [ ] A [bgzipped](http://www.htslib.org/doc/bgzip.html), [Tabix-indexed](http://www.htslib.org/doc/tabix.html) VCF 
-  containing sample variants, using one of two available reference genomes (`hg19`/`hg38`).
-- [ ] A set of normalized signal matrices: one per assay, each containing columns of samples and rows of features
-      (see an [example for ATAC-seq](/input-files/matrices/ATAC-seq.example.tsv).)
-- [ ] A set of bigWigs, one or two (forward/reverse view) per sample-assay pair.
-- [ ] Peak and gene-peak-link CSV files:
-  - TODO: PEAK DATA
+The following assay types can be ingested into an EpiVar node:
+
+- RNA-seq
+- ATAC-seq
+- H3K4me1
+- H3K4me3
+- H3K27ac
+- H3K27me3
 
 ### Dataset metadata
 
 - [ ] A metadata file for the bigWig tracks, which can be one of the following:
-  - An XLSX file with one or more sheets 
-    (see [an example for the Aracena *et al.* dataset](/input-files/flu-infection.xlsx)), each with the following 
+  - An XLSX file with one or more sheets
+    (see [an example for the Aracena *et al.* dataset](/input-files/flu-infection.xlsx)), each with the following
     headers:
-     - `file.path`: relative path to `bigWig`, without the `EPIVAR_TRACKS_DIR` environment variable directory prefix
-     - `ethnicity`: ethnicity / population group **ID** (*not* name!)
-           - if set to `Exclude sample`, sample will be skipped
-     - `condition`: condition / experimental group **ID** (*not* name!)
-     - `sample_name`: Full sample name, uniquely indentifying the sample within
-       `assay`, `condition`, `donor`, and `track.view` variables
-     - `donor`: donor ID (i.e., individual ID)
-     - `track.view`: literal value, one of `signal_forward` or `signal_reverse`
-     - `track.track_type`: must be the literal value `bigWig`
-     - `assay.name`: one of `RNA-Seq`, `ATAC-Seq`, `H3K27ac`, `H3K4me1`, `H3K27me3`, `H3K4me3`
-    
+    - `file.path`: relative path to `bigWig`, without the `EPIVAR_TRACKS_DIR` environment variable directory prefix
+    - `ethnicity`: ethnicity / population group **ID** (*not* name!)
+      - if set to `Exclude sample`, sample will be skipped
+    - `condition`: condition / experimental group **ID** (*not* name!)
+    - `sample_name`: Full sample name, uniquely indentifying the sample within
+      `assay`, `condition`, `donor`, and `track.view` variables
+    - `donor`: donor ID (i.e., individual ID)
+    - `track.view`: literal value, one of `signal_forward`, `signal_reverse`, or `signal_unstranded`
+    - `track.track_type`: must be the literal value `bigWig`
+    - `assay.name`: one of the [available assays](#available-assays)
+
     The file may have additional headers, but these will be discarded internally.
   - **OR**, a JSON file containing a list of objects with the following keys, mapping to the above headers in order:
-     - `path`
-     - `ethnicity`
-     - `condition`
-     - `sample_name`
-     - `donor`
-     - `view`
-     - `type`
-     - `assay`
+    - `path`
+    - `ethnicity`
+    - `condition`
+    - `sample_name`
+    - `donor`
+    - `view`
+    - `type`
+    - `assay`
 
-- [ ] A dataset configuration file, which takes the form described in the 
+- [ ] A dataset configuration file, which takes the form described in the
   [example configuration file](/config.example.js).
 
-  This file specifies information about the dataset being hosted by the EpiVar node, including dataset title, 
-  sample groups and experimental treatments, assembly ID (`hg19` or `hg38`), and how to find samples in the genotype 
-  VCF file.
+  This file specifies information about the dataset being hosted by the EpiVar node, including dataset title,
+  sample groups and experimental treatments (in both of these, each entry has an ID and a name), assembly ID (`hg19` or
+  `hg38`), and how to find samples in the genotype VCF file.
 
-- [ ] A human-readable dataset description file, in [Markdown](https://commonmark.org/help/) format, to show in the 
-  `About Dataset` tab in the portal. See [an example for the Aracena *et al.* dataset.](/epivar-prod/node1/about.md) 
+- [ ] A human-readable dataset description file, in [Markdown](https://commonmark.org/help/) format, to show in the
+  `About Dataset` tab in the portal. See [an example for the Aracena *et al.* dataset.](/epivar-prod/node1/about.md)
+
+### Raw data (stored on the node, not revealed publicly)
+
+- [ ] A [bgzipped](http://www.htslib.org/doc/bgzip.html), [Tabix-indexed](http://www.htslib.org/doc/tabix.html) VCF 
+  containing sample variants, using one of two available reference genomes (`hg19`/`hg38`).
+
+- [ ] A set of normalized signal matrices: one per assay, each containing columns of samples and rows of features
+      (see an [example for ATAC-seq](/input-files/matrices/ATAC-seq.example.tsv).)
+
+- [ ] A set of bigWigs, one or two (in the case of RNA-seq; forward/reverse view) per sample-assay pair.
+
+- [ ] Peak and gene-peak-link CSV files, respectively containing the following:
+
+    - Peak files are, by default, named according to the template: `<qtls-directory>/QTLs_complete_$ASSAY.csv`, where 
+      `$ASSAY` is one of the [available assays](#available-assays). This template naming can be changed (keeping the 
+      `$ASSAY` replaceable value) using the `EPIVAR_QTLS_TEMPLATE` environment variable.
+      
+      They are CSVs where each row contains data about the SNP, the *p*-value associations between the genotypes and 
+      each treatment, and the corresponding assay. There are a couple truncated example files in 
+      [`/input-files/qtls`](/input-files/qtls). The required headings are the following:
+
+        - `rsID`: The rsID of the SNP
+        - `snp`: The SNP in the SNP-peak association; formatted like `chr#_######`
+          (UCSC-formatted chromosome name, underscore, position)
+        - `feature`: The feature name - either `chr#_startpos_endpos` or `GENE_NAME`
+        - `pvalue.*` where `*` is the **ID** of the condition, as specified in the `metadata.json` file (see above.)
+          - These are floating point numbers
+        - `feature_type`: The assay the peak is from - e.g., `RNA-seq`
+
+    - TODO: gene-peak-link CSV files
 
 
 
@@ -159,7 +190,10 @@ docker compose exec epivar-server node ./scripts/import-peaks.js
 Then, calculate summary data for the peaks:
 
 ```bash
+# Aggregate data for peaks grouped by SNP and gene, used for autocomplete:
 docker compose exec epivar-server node ./scripts/calculate-peak-groups.mjs
+
+# Used to generate Manhattan plots for chromosome/assay pairs, binned by SNP position:
 docker compose exec epivar-server node ./scripts/calculate-top-peaks.mjs
 ```
 
