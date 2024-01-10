@@ -34,7 +34,7 @@ services:
       - epivar-node-1-redis
       - epivar-node-1-db
     env_file:
-      - node1/secrets.env
+      - ./node1/secrets.env
     environment:
       - NODE_ENV=production
       - EPIVAR_REDIS_CONNECTION=redis://epivar-node-1-redis:6379
@@ -42,8 +42,8 @@ services:
       - EPIVAR_LOW_COUNT_THRESHOLD=5
     volumes:
       # dataset configuration: about Markdown file, EpiVar config.js
-      - node1/about.md:/app/data/about.md
-      - node1/config.js:/app/config.js:ro
+      - ./node1/about.md:/app/data/about.md
+      - ./node1/config.js:/app/config.js:ro
       # genotypes: VCF + index file
       - /flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz:/app/data/genotypes.vcf.gz:ro
       - /flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
@@ -52,20 +52,20 @@ services:
       - /flu-infection-data/node1/qtls:/app/input-files/qtls:ro
       # tracks:
       #  - metadata JSON file,
-      - node1/metadata.json:/app/data/metadata.json:ro
+      - ./node1/metadata.json:/app/data/metadata.json:ro
       #  - sample bigWigs,
       - /flu-infection-data/node1/tracks:/tracks:ro
       #  - writeable volume for on-the-fly merged tracks,
       - /flu-infection-data/node1/mergedTracks:/mergedTracks
       #  - other static tracks for showing in the UCSC browser.
-      - node1/ucsc.other-tracks.txt:/app/data/ucsc.other-tracks.txt:ro
+      - ./node1/ucsc.other-tracks.txt:/app/data/ucsc.other-tracks.txt:ro
 
   epivar-node-1-redis:
     image: redis:7.2
     networks:
       - epivar-node-1-redis-net
     volumes:
-      - /opt/epivar/node1/redis:/data
+      - ./node1/volumes/redis:/data
 
   epivar-node-1-db:
     image: postgres:15
@@ -74,8 +74,8 @@ services:
     env_file:
       - node1/secrets.env
     volumes:
-      - node1/postgresql.conf:/etc/postgresql/postgresql.conf:ro
-      - /opt/epivar/node1/db:/var/lib/postgresql/data
+      - ./node1/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./node1/volumes/db:/var/lib/postgresql/data
 
   # Node 2: hg38 data (lifted over) ------------------------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ services:
   #     - epivar-node-2-redis
   #     - epivar-node-2-db
   #   env_file:
-  #     - node2/secrets.env
+  #     - ./node2/secrets.env
   #   environment:
   #     - NODE_ENV=production
   #     - EPIVAR_REDIS_CONNECTION=redis://epivar-node-2-redis:6379
@@ -98,8 +98,8 @@ services:
   #     - EPIVAR_LOW_COUNT_THRESHOLD=5
   #   volumes:
   #     # dataset configuration: about Markdown file, EpiVar config.js, tracks metadata.json
-  #     - node2/about.md:/app/data/about.md
-  #     - node2/config.js:/app/config.js:ro
+  #     - ./node2/about.md:/app/data/about.md
+  #     - ./node2/config.js:/app/config.js:ro
   #     # genotypes: VCF + index file
   #     - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.GRCh38.vcf.gz:/app/data/genotypes.vcf.gz:ro
   #     - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.GRCh38.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
@@ -121,17 +121,17 @@ services:
   #   networks:
   #     - epivar-node-2-redis-net
   #   volumes:
-  #     - /opt/epivar/node2/redis:/data
+  #     - node2/volumes/redis:/data
   #
   # epivar-node-2-db:
   #   image: postgres:15
   #   networks:
   #     - epivar-node-2-db-net
   #   env_file:
-  #     - node2/secrets.env
+  #     - ./node2/secrets.env
   #   volumes:
-  #     - node2/postgresql.conf:/etc/postgresql/postgresql.conf:ro
-  #     - /opt/epivar/node2/db:/var/lib/postgresql/data
+  #     - ./node2/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+  #     - ./node2/volumes/db:/var/lib/postgresql/data
 
   # --------------------------------------------------------------------------------------------------------------------
 
