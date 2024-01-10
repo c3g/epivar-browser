@@ -89,8 +89,19 @@ The following assay types can be ingested into an EpiVar node:
         - `pvalue.*` where `*` is the **ID** of the condition, as specified in the `metadata.json` file (see above.)
           - These are floating point numbers
         - `feature_type`: The assay the peak is from - e.g., `RNA-seq`
+      
+      As an example, the header row for the Aracena *et al.* dataset's RNA-seq QTLs file is the following:
+      `rsID,snp,feature,pvalue.NI,pvalue.Flu,feature_type`
 
-    - TODO: gene-peak-link CSV files
+    - Some peaks are associated with genes, and their links should be provided in a gene-peak-link CSV file.
+      This takes the form of a CSV *with header row*:
+      `"symbol","peak_ids","feature_type"` where `symbol` is gene symbol, and should be unique; `peak_ids`
+      is a feature string composed of an underscore-separated contig/start position/end position 
+      (e.g., `chr1_9998_11177`); and `feature_type` is the name of the assay 
+      (see [available assays](#available-assays).)
+      
+      See [the version of this file](/input-files/flu-infection-gene-peaks.csv) for the hg19 Aracena *et al.* dataset 
+      for an example.
 
 
 
