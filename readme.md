@@ -205,7 +205,7 @@ The different data sources to generate/prepare are:
 
  - **Genes:** lists of gene names mapped to their characteristics, and features 
    associated with specific genes.
-     - **Import with:** `node ./scripts/import-genes.js`
+     - **Import with:** `node ./scripts/import-genes.mjs`
      - **Input:** `./input-files/flu-infection-genes.txt` and 
        `./input-files/flu-infection-gene-peaks.csv` 
        - Examples for these files / the versions used for the Aracena *et al.* instance 

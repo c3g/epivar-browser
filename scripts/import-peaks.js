@@ -228,7 +228,7 @@ console.log("Loading peaks");
 
               // TODO: move this stuff to normalize
               if (p.feature.startsWith("chr")) {
-                // Get the already-created (by import-genes.js) feature if it exists,
+                // Get the already-created (by import-genes.mjs) feature if it exists,
                 // or make a new one. Pre-created features are associated with genes if
                 // specified in the flu-infection-gene-peaks.csv file.
                 getFeatureIDOrCreate(p.feature.slice(3), p.assay, assays[p.assay].id).then(fID => {
