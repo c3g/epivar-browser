@@ -4,7 +4,7 @@ services:
   epivar-gateway:
     image: nginx:1.25-bookworm
     ports:
-      - 80:80
+      - 8080:80
     depends_on:
       - epivar-portal
       - epivar-node-1-server
