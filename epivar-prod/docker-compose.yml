@@ -16,7 +16,7 @@ services:
 
   epivar-portal:
     user: $USER:$USER
-    image: ghcr.io/c3g/epivar-portal:latest
+    image: ghcr.io/c3g/epivar-portal:pr-13
     networks:
       - epivar-portal-net
     env_file: portal.env
@@ -25,7 +25,7 @@ services:
 
   epivar-node-1-server:
     user: $USER:$USER
-    image: ghcr.io/c3g/epivar-server:latest
+    image: ghcr.io/c3g/epivar-server:pr-13
     networks:
       - epivar-node-1-server-net
       - epivar-node-1-redis-net
