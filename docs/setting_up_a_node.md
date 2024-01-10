@@ -96,15 +96,25 @@ container.
 
 #### Folder binding
 
-- TODO: Tracks (read-only)
-- TODO: Merged tracks
-- A folder to persist Redis cache data to. This is mounted to the Redis container at `/data`.
-- TODO: DB
+- The node must be provided with a tracks folder containing subfolders and bigWig files matching the paths specified
+  in the `metadata.json` file described above. This folder can be bound as read-only, and should be bound to `/tracks`, 
+  e.g.: `/path/to/tracks-dir:/tracks:ro`.
+- The node must be provided with a readable/writable volume in which to place merged tracks, computed on-the-fly for 
+  visualization, bound to `/mergedTracks` inside the container, e.g.: `/volumes/mergedTracks:/mergedTracks`.
+- The Redis container, used for caching, does not strictly require a filesystem mount. However, to preserve the cache
+  across system restarts, a readable/writable volume should be bound to the Redis container's `/data` path, e.g.: 
+  `/volumes/redis:/data`.
+- The database must be persisted to the host filesystem, bound to `/var/lib/postgresql/data` inside the container, e.g.: 
+  `/volumes/db:/var/lib/postgresql/data`.
 
 
 ### Configuring the instance environment
 
 TODO: session secret / database password are main ones required
+
+Several other configuration options are available, and documented in commented code, in the 
+[`/envConfig.js`](/envConfig.js) file. A lot of the default values here match how the Docker container is configured,
+especially the filesystem path options, so change with caution.
 
 
 ### Starting the server
