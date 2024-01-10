@@ -1,16 +1,15 @@
 import fs from "node:fs";
-import path from "node:path";
-
+import process from "node:process";
 import parseCSVSync from "csv-parse/lib/sync";
 
-import envConfig from "../envConfig.js";
+import config from "../config.js";
+
+import {genePathsByAssemblyID} from "../data/assemblies/index.mjs";
 
 const ASSAY_NAME_RNASEQ = "RNA-seq";
 
-// TODO: should be dependent on assembly + a pre-computed list
-const genesPath = path.join(envConfig.INPUT_FILES_DIR, 'flu-infection-genes.txt');
-
-const genesFeaturesPath = path.join(envConfig.INPUT_FILES_DIR, 'flu-infection-gene-peaks.csv');
+const genesPath = genePathsByAssemblyID[config.assembly];
+const genesFeaturesPath = process.argv[2] || "/dev/stdin";
 
 import {precomputedPoints} from "./_common.mjs";
 

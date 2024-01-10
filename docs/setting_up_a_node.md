@@ -187,7 +187,7 @@ docker compose up -d
 First, import the assembly gene list and gene-peak association data into the database using the following command:
 
 ```bash
-docker compose exec epivar-server node ./scripts/import-genes.mjs
+docker compose exec -i epivar-server node ./scripts/import-genes.mjs < ./input-files/flu-infection-gene-peaks.csv
 ```
 
 Then, import peaks and pre-computed peak matrix values into the database using the following command:
