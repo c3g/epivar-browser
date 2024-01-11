@@ -19,7 +19,7 @@ create_gene_list () {
 }
 
 # HG19
-create_gene_list 'hg19' 'human/release_44/GRCh37_mapping' '44lift37'
+create_gene_list 'hg19' 'human/release_23/GRCh37_mapping' '23lift37'
 
 # HG38
-create_gene_list 'hg38' 'human/release_44' '44'
+create_gene_list 'hg38' 'human/release_23' '23'
