@@ -43,6 +43,8 @@ services:
       - EPIVAR_IMPORT_MAX_P_VAL=0.05
       - EPIVAR_LOW_COUNT_THRESHOLD=5
     volumes:
+      # user information
+      - /etc/passwd:/etc/passwd:ro
       # dataset configuration: about Markdown file, EpiVar config.js
       - ./node1/about.md:/app/data/about.md
       - ./node1/config.js:/app/config.js:ro
