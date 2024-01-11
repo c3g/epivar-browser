@@ -155,11 +155,7 @@ console.log("Loading peaks");
      * }
      */
     const peakStreamPush = p => {
-      pgPeakCopyStream.write(Buffer.from([
-        p.snp,
-        p.feature,
-        `{${p.values.join(",")}}`,
-      ].join("\t") + "\n"));
+      pgPeakCopyStream.write(Buffer.from(p.snp + "\t" + p.feature + "\t" + `{${p.values.join(",")}}` + "\n"));
       totalInserted++;
     };
 
