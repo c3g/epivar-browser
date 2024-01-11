@@ -73,7 +73,7 @@ services:
       - ./node1/volumes/redis:/data
 
   epivar-node-1-db:
-    image: postgres:15
+    image: postgres:16
     networks:
       - epivar-node-1-db-net
     env_file:
@@ -129,7 +129,7 @@ services:
   #     - node2/volumes/redis:/data
   #
   # epivar-node-2-db:
-  #   image: postgres:15
+  #   image: postgres:16
   #   networks:
   #     - epivar-node-2-db-net
   #   env_file:
