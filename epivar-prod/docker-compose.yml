@@ -15,11 +15,13 @@ services:
 #      - epivar-node-2-server-net
 
   epivar-portal:
-    user: $UID:$UID
+    user: $USER:$USER
     image: ghcr.io/c3g/epivar-portal:pr-13
     networks:
       - epivar-portal-net
     env_file: portal.env
+    volumes:
+      - /etc/passwd:/etc/passwd:ro
 
   # Node 1: hg19 data --------------------------------------------------------------------------------------------------
 
