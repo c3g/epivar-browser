@@ -19,7 +19,6 @@ COPY spec/run_server.bash /
 RUN mkdir -p /tracks; \
     mkdir -p /mergedTracks
 
-HOME=/app
 WORKDIR /app
 
 # Copy source code + file directories
