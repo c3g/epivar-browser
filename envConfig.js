@@ -10,6 +10,11 @@ const getPrefixedEnvVar = (varName, defaultValue = undefined) => {
   return explicitValue ?? defaultValue;
 };
 
+// Node Base URL =======================================================================================================
+
+const NODE_BASE_URL = getPrefixedEnvVar("NODE_BASE_URL", "http://localhost:3002")
+  .replace(/\/$/, "");
+
 // Database and cache connections ======================================================================================
 
 //  - Postgres connection URI
@@ -89,6 +94,8 @@ const PLOT_MANHATTAN_BIN_SIZE = parseInt(getPrefixedEnvVar("MANHATTAN_BIN_SIZE",
 // Export ==============================================================================================================
 
 module.exports = {
+  // Node Base URL
+  NODE_BASE_URL,
   // Database and cache connections
   PG_CONNECTION,
   REDIS_CONNECTION,

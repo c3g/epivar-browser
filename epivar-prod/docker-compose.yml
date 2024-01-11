@@ -1,8 +1,8 @@
 services:
   # Common -------------------------------------------------------------------------------------------------------------
 
-  epivar-gateway:
-    image: nginx:1.25-bookworm
+  epivar-portal:
+    image: ghcr.io/c3g/epivar-portal:pr-13
     ports:
       - 8080:80
     depends_on:
@@ -10,18 +10,11 @@ services:
       - epivar-node-1-server
 #      - epivar-node-2-server
     networks:
-      - epivar-portal-net
       - epivar-node-1-server-net
 #      - epivar-node-2-server-net
-
-  epivar-portal:
-    user: $EPIVAR_UID:$EPIVAR_UID
-    image: ghcr.io/c3g/epivar-portal:pr-13
-    networks:
-      - epivar-portal-net
     env_file: portal.env
     volumes:
-      - /etc/passwd:/etc/passwd:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
 
   # Node 1: hg19 data --------------------------------------------------------------------------------------------------
 
@@ -39,6 +32,7 @@ services:
       - ./node1/secrets.env
     environment:
       - NODE_ENV=production
+      - EPIVAR_NODE_BASE_URL=https://flu-infection.vhost38.genap.ca/aracena-hg19
       - EPIVAR_REDIS_CONNECTION=redis://epivar-node-1-redis:6379
       - EPIVAR_IMPORT_MAX_P_VAL=0.05
       - EPIVAR_LOW_COUNT_THRESHOLD=5
@@ -102,6 +96,7 @@ services:
   #     - ./node2/secrets.env
   #   environment:
   #     - NODE_ENV=production
+  #     - EPIVAR_NODE_BASE_URL=https://flu-infection.vhost38.genap.ca/aracena-hg38
   #     - EPIVAR_REDIS_CONNECTION=redis://epivar-node-2-redis:6379
   #     - EPIVAR_IMPORT_MAX_P_VAL=0.05
   #     - EPIVAR_LOW_COUNT_THRESHOLD=5
@@ -147,10 +142,6 @@ services:
   # --------------------------------------------------------------------------------------------------------------------
 
 networks:
-  epivar-portal-net:
-    driver: bridge
-    internal: true
-
   epivar-node-1-server-net:
     driver: bridge
     internal: true

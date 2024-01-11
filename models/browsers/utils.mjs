@@ -5,6 +5,7 @@
 import Color from "color-js";
 
 import {GENOTYPE_STATE_HET, GENOTYPE_STATE_HOM, GENOTYPE_STATE_REF} from "../../helpers/genome.mjs";
+import {NODE_BASE_URL} from "../../envConfig.js";
 
 // Thanks to Google Charts
 const COLORS = {

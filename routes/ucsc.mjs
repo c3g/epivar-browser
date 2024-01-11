@@ -3,6 +3,7 @@ import express from "express";
 import config from "../config.js";
 import {errorHandler, textHandler} from "../helpers/handlers.mjs";
 import unindent from "../helpers/unindent.mjs";
+import {buildApiPath} from "../helpers/paths.mjs";
 import Ucsc from "../models/browsers/ucsc.mjs";
 import Sessions from "../models/sessions.mjs";
 import Tracks from "../models/tracks.mjs";
@@ -21,7 +22,7 @@ router.get("/perma/hub/other-tracks", (_req, res) => {
     hub EpiVar_Hub
     shortLabel EpiVar Browser Track Hub
     longLabel EpiVar Browser Track Hub
-    genomesFile ../genome/other-tracks
+    genomesFile ${buildApiPath("/api/ucsc/genome/other-tracks")}
     email epivar@computationalgenomics.ca
   `).then(textHandler(res))
     .catch(errorHandler(res));

@@ -1,5 +1,6 @@
-import {getColor} from "./utils.mjs";
 import {GENOTYPE_STATES} from "../../helpers/genome.mjs";
+import {buildApiPath} from "../../helpers/paths.mjs";
+import {getColor} from "./utils.mjs";
 
 const generateTracks = (mergedTracks) => {
   const tracks = [];
@@ -42,7 +43,7 @@ const generateTracks = (mergedTracks) => {
     name: `Legend: ${t}`,
     type: "annotation",
     format: "bigBed",
-    url: "/otherData/legendItem.bb",
+    url: buildApiPath("/otherData/legendItem.bb"),
     color: getColor(t)[0],
     displayMode: "COLLAPSED",
     height: 40,
