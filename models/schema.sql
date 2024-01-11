@@ -50,8 +50,8 @@ on conflict on constraint assays_name_key do nothing;
 create table if not exists genes
 (
     "id"        serial       primary key,  -- use an integer rather than a gene name for space
-    "name_norm" varchar(22)  not null unique,
-    "name"      varchar(22)  not null unique
+    "name_norm" varchar(31)  not null unique,
+    "name"      varchar(31)  not null unique
 );
 create table if not exists features
 (
@@ -59,7 +59,7 @@ create table if not exists features
     -- save on storage.
     "id"     serial      primary key,  -- use an integer rather than a gene name for space   TODO: small serial?
     "nat_id" varchar(50) not null unique,
-    "chrom"  varchar(22) not null,
+    "chrom"  varchar(31) not null,
     "start"  integer     not null,
     "end"    integer     not null,
     "strand" varchar(1),
@@ -84,7 +84,7 @@ create table if not exists snps
 (
     "id"       serial      primary key,
     "nat_id"   varchar(32) unique,
-    "chrom"    varchar(22) not null,
+    "chrom"    varchar(31) not null,
     "position" integer     not null  -- 32 bit - enough to contain
 );
 
@@ -150,7 +150,7 @@ create table if not exists features_by_gene
 create table if not exists binned_most_significant_peaks
 (
     "id"         serial      primary key,
-    "chrom"      varchar(22) not null,
+    "chrom"      varchar(31) not null,
     "pos_bin"    integer     not null,  -- binned by SNP position
     "peak"       integer,               -- nullable -> if null, no significant peak
 
