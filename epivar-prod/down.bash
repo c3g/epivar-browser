@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-export UID=$UID
+export EPIVAR_UID=$UID
 docker compose down
