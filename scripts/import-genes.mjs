@@ -26,7 +26,7 @@ const parseGene = line => {
   const fields = line.trim().split('\t');
   return [
     Gene.normalizeGeneName(fields[0]),  // id
-    Gene.renameGeneIfNeeded(fields[0]),  // name
+    fields[0],  // name
   ];
 };
 
