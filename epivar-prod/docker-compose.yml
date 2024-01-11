@@ -15,7 +15,7 @@ services:
 #      - epivar-node-2-server-net
 
   epivar-portal:
-    user: $USER:$USER
+    user: $UID:$UID
     image: ghcr.io/c3g/epivar-portal:pr-13
     networks:
       - epivar-portal-net
