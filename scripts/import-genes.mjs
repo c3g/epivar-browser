@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import process from "node:process";
-import parseCSVSync from "csv-parse/lib/sync";
+import parseCSVSync from "csv-parse/lib/sync.js";
 
 import config from "../config.js";
 
