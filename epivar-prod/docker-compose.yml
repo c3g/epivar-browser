@@ -6,7 +6,6 @@ services:
     ports:
       - 8080:80
     depends_on:
-      - epivar-portal
       - epivar-node-1-server
 #      - epivar-node-2-server
     networks:
