@@ -12,12 +12,18 @@ console.log("Loading peaks");
 // --------------------------------------------------------------------------
 
 (async () => {
-  const {ASSAYS, loadingPrecomputedPoints, precomputedPoints} = await import('./_common.mjs');
+  const {loadingPrecomputedPoints, precomputedPoints} = await import('./_common.mjs');
 
   const db = await import("../models/db.mjs");
   const Gene = await import('../models/genes.mjs');
 
-  const datasetPaths = ASSAYS.map(assay => envConfig.QTLS_TEMPLATE.replace(/\$ASSAY/g, assay));
+  const client = await db.connect();
+
+  const assays = Object.fromEntries(
+    (await client.query("SELECT * FROM assays")).rows.map(r => [r.name, r]));
+
+  const datasetPaths = Object.keys(assays).map(assay => envConfig.QTLS_TEMPLATE.replace(/\$ASSAY/g, assay));
+  console.log(`Found paths:`, datasetPaths);
 
   // Clear relevant tables of existing data
   await db.run("TRUNCATE TABLE snps RESTART IDENTITY CASCADE");
@@ -26,11 +32,7 @@ console.log("Loading peaks");
   const featureCache = Object.fromEntries(
     (await db.findAll("SELECT * FROM features")).map(row => [row.nat_id, row.id]));
 
-  const client = await db.connect();
   try {
-    const assays = Object.fromEntries(
-      (await client.query("SELECT * FROM assays")).rows.map(r => [r.name, r]));
-
     // Preload all gene features
     process.stdout.write("Preloading gene features...");
     const geneCache = Object.fromEntries(
