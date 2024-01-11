@@ -18,7 +18,7 @@ services:
   # Node 1: hg19 data --------------------------------------------------------------------------------------------------
 
   epivar-node-1-server:
-    user: $EPIVAR_UID:$EPIVAR_UID
+    # user: $EPIVAR_UID:$EPIVAR_UID
     image: ghcr.io/c3g/epivar-server:pr-13
     networks:
       - epivar-node-1-server-net
@@ -82,7 +82,7 @@ services:
   # Node 2: hg38 data (lifted over) ------------------------------------------------------------------------------------
 
   # epivar-node-2-server:
-  #   user: $USER:$USER
+  #   # user: $USER:$USER
   #   image: ghcr.io/c3g/epivar-server:latest
   #   networks:
   #     - epivar-node-2-server-net
@@ -143,7 +143,6 @@ services:
 networks:
   epivar-node-1-server-net:
     driver: bridge
-    internal: true
   epivar-node-1-redis-net:
     driver: bridge
     internal: true

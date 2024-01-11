@@ -18,6 +18,8 @@ COPY spec/run_server.bash /
 
 RUN mkdir -p /tracks; \
     mkdir -p /mergedTracks
+
+HOME=/app
 WORKDIR /app
 
 # Copy source code + file directories
@@ -41,6 +43,9 @@ RUN wget https://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/bigWigSummary -O
 
 # Uninstall compilation dependencies + wget since we don't need them anymore
 RUN apt-get purge -y build-essential python3-dev wget
+
+# Install PM2 to manage multiple processes
+RUN npm install -g pm2
 
 # Install Node dependencies
 RUN npm ci
