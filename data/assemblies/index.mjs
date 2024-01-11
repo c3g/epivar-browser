@@ -1,4 +1,7 @@
 import path from "node:path";
+import {fileURLToPath} from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 import hg19Sizes from "./hg19/chromosomeSizes.mjs";
 import hg38Sizes from "./hg38/chromosomeSizes.mjs";
