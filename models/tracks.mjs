@@ -14,7 +14,7 @@ import {boxPlot, getDomain, PLOT_HEIGHT, PLOT_WIDTH} from "../helpers/boxplot.mj
 import cache from "../helpers/cache.mjs";
 import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";
-import envConfig from "../envConfig.js";
+import {NODE_BASE_URL, MERGED_TRACKS_DIR, LOW_COUNT_THRESHOLD} from "../envConfig.js";
 import Metadata from "./metadata.js";
 import Samples from "./samples.mjs";
 import {DEFAULT_CONDITIONS} from "../helpers/defaultValues.mjs";
@@ -42,8 +42,6 @@ const mapToData = map(prop("data"));
 const conditions = config.conditions ?? DEFAULT_CONDITIONS;
 
 const TRACK_VALUES_CACHE_EXPIRY = 60 * 60 * 24 * 180;  // 180 days  TODO: config variable
-
-const lowCountThreshold = envConfig.LOW_COUNT_THRESHOLD;
 
 // Methods
 
@@ -133,7 +131,7 @@ function merge(tracks, session) {
       GENOTYPE_STATES
         .map(g => tracksByType[g] ?? [])
         .map(async tracks => {
-          if (tracks.length < lowCountThreshold) {
+          if (tracks.length < LOW_COUNT_THRESHOLD) {
             return undefined;
           }
 
@@ -174,7 +172,7 @@ function plot(tracksByCondition) {
       data: data[ci],
       domain: domains[ci],
       transform: `translate(${((PLOT_WIDTH / conditions.length) * ci).toFixed(0)} 0)`,
-      lowCountThreshold,
+      lowCountThreshold: LOW_COUNT_THRESHOLD,
     }))
   ).then(plots =>
     `<svg width="${PLOT_WIDTH}" height="${PLOT_HEIGHT}">
@@ -198,8 +196,8 @@ function mergeFiles(paths, { chrom, start, end }) {
   // TODO: add dataset ID to hash
   const mergeHash = md5(JSON.stringify({ paths, chrom, start, end }));
   const mergeName = `${mergeHash}.bw`;
-  const url = `/merged/${mergeName}`;
-  const mergePath = path.join(envConfig.MERGED_TRACKS_DIR, mergeName);
+  const url = `${NODE_BASE_URL}/api/merged/${mergeName}`;
+  const mergePath = path.join(MERGED_TRACKS_DIR, mergeName);
 
   return new Promise((resolve) => {
     fs.access(mergePath, fs.constants.F_OK, (err) => {

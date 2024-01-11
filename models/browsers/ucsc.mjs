@@ -4,14 +4,12 @@
 
 import fs from "fs";
 
-import envConfig from "../../envConfig.js";
+import {STATIC_TRACKS_PATH} from "../../envConfig.js";
 import {GENOTYPE_STATES} from "../../helpers/genome.mjs";
 import unindent from "../../helpers/unindent.mjs";
+import {buildApiPath} from "../../helpers/paths.mjs";
 import {getColor, indent} from "./utils.mjs";
 
-const {STATIC_TRACKS_PATH} = envConfig;
-
-// TODO: specific to dataset
 export const otherTracks = fs.existsSync(STATIC_TRACKS_PATH) ? fs.readFileSync(STATIC_TRACKS_PATH).toString() : "";
 
 export default {
@@ -21,12 +19,14 @@ export default {
   generateTracks,
 };
 
+const buildUcscApiPath = (path) => buildApiPath(`/ucsc${path}`);
+
 function generateHub(session) {
   return unindent`
     hub EpiVar_Dyn_Hub
     shortLabel EpiVar Browser Dynamic Track Hub (Session ID: ${session})
     longLabel EpiVar Browser Dynamic Track Hub (Session ID: ${session})
-    genomesFile ../genome/${session}
+    genomesFile ${buildUcscApiPath("/genome/")}${session}
     email epivar@computationalgenomics.ca
   `;
 }
@@ -34,7 +34,7 @@ function generateHub(session) {
 function generateGenome(session, assembly) {
   return unindent`
     genome ${assembly}
-    trackDb ../track-db/${session}
+    trackDb ${buildUcscApiPath("/track-db/")}${session}
   `;
 }
 
@@ -90,7 +90,7 @@ function generateTracks(mergedTracks) {
     shortLabel Legend: ${t}
     longLabel Legend: ${t}
     type bigBed
-    bigDataUrl /otherData/legendItem.bb
+    bigDataUrl ${buildApiPath("/otherData/legendItem.bb")}
     color ${getColor(t)[0]}
     visibility dense
     priority 0.${i+mergedTracks.length+1}

@@ -9,7 +9,7 @@ import passport from "passport";
 import { fileURLToPath } from "url";
 import { createClient } from "redis";
 
-import { REDIS_CONNECTION, SESSION_SECRET, PORTAL_ORIGIN } from "./envConfig.js";
+import { REDIS_CONNECTION, MERGED_TRACKS_DIR, SESSION_SECRET, PORTAL_ORIGIN } from "./envConfig.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -76,6 +76,11 @@ app.use('/api/tracks',       (await import('./routes/tracks.mjs')).default);
 app.use('/api/igvjs',        (await import('./routes/igvjs.mjs')).default);
 app.use('/api/ucsc',         (await import('./routes/ucsc.mjs')).default);
 
+// Data static file hosting
+// - merged tracks
+app.use('/api/merged',    express.static(MERGED_TRACKS_DIR));
+// - other data
+app.use('/api/otherData', express.static(MERGED_TRACKS_DIR));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -27,8 +27,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
 COPY LICENSE /
 COPY client/create_config_prod.js /
 COPY spec/run_portal.bash /
-COPY data /data
-COPY spec/nginx-docker.conf /etc/nginx/nginx.conf
 COPY --from=client-build /client/build /usr/share/nginx/html
+
+# Need to mount in /etc/nginx/nginx.conf
 
 CMD ["bash", "/run_portal.bash"]
