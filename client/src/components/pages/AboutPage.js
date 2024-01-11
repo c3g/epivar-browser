@@ -18,12 +18,13 @@ const AboutPage = () => {
         <h2>About the EpiVar Browser</h2>
         <h3>Approach</h3>
         <p>
-          The EpiVar Browser is a federated portal that enables exploration of controlled-access to genetic and
-          epigenetic datasets, allowing researchers to explore the interaction between genomic variants and epigenetic
-          features, such as histone tail modifications, chromatin accessibility, and the transcriptome. Because the
-          information about individual genotypes is not accessible, identifiable data is not released. We believe our
-          approach can accelerate analyses that would otherwise require a lengthy multi-step approval process and
-          provides a generalisable strategy to facilitate responsible access to sensitive epigenomics data.
+          The EpiVar Browser is a portal that enables the exploration of genetic and epigenetic datasets, generally
+          under controlled access, and distributed at multiple locations. It allows researchers to explore the
+          interaction between genomic variants and epigenetic features, such as histone tail modifications, chromatin
+          accessibility, and the transcriptome. Because the information about individual genotypes is not accessible,
+          identifiable data is not released. We believe our approach can accelerate analyses that would otherwise
+          require a lengthy multi-step approval process and provides a generalisable strategy to facilitate responsible
+          access to sensitive epigenomics data.
         </p>
         <p>
           The browser is described in the following preprint:
@@ -40,9 +41,9 @@ const AboutPage = () => {
         </p>
         <h3>EpiVar Architecture</h3>
         <p>
-          We employ a federated approach to build a multi-dataset portal where data processing can, as much as possible,
-          occur alongside the data location. Our front end contains a list of nodes, each of which hosts a single
-          dataset:
+          We employ a federated approach to build a multi-dataset portal where data processing can, when possible, occur
+          at the data location. The portal’s interface contains a list of nodes, each of which hosts a single dataset,
+          as shown in the figure below.
         </p>
         <img
           src="/epivar_arch.png"
@@ -53,7 +54,7 @@ const AboutPage = () => {
         />
         <h3>Contact</h3>
         <p>
-          If you have any questions about the browser or would like to report a bug or other issue, contact us at
+          If you have any questions about the EpiVar Browser or would like to report any issue, please contact us at
           <a href="mailto:epivar@computationalgenomics.ca">epivar@computationalgenomics.ca</a>.
         </p>
       </Col>
