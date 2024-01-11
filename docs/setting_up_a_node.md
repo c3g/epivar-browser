@@ -60,7 +60,7 @@ The following assay types can be ingested into an EpiVar node:
   `hg38`), and how to find samples in the genotype VCF file.
 
 - [ ] A human-readable dataset description file, in [Markdown](https://commonmark.org/help/) format, to show in the
-  `About Dataset` tab in the portal. See [an example for the Aracena *et al.* dataset.](/epivar-prod/node1/about.md)
+  `About Dataset` tab in the browser. See [an example for the Aracena *et al.* dataset.](/epivar-prod/node1/about.md)
 
 ### Raw data (stored on the node, not revealed publicly)
 
@@ -217,12 +217,12 @@ docker compose exec epivar-server node ./scripts/clear-cache.js
 
 
 
-## Joining the EpiVar Portal federation
+## Joining the EpiVar Browser federation
 
-In order to connect an EpiVar node to the EpiVar Portal, the node must be publicly accessible with a valid HTTPS 
+In order to connect an EpiVar node to the EpiVar Browser portal, the node must be publicly accessible with a valid HTTPS 
 certificate and a reverse proxy passing traffic to the EpiVar server (the configuration of which is out of scope for 
 this guide.) 
 
 Then, contact us at [epivar@computationalgenomics.ca](mailto:epivar@computationalgenomics.ca), including information 
 about your node, your dataset, and including the domain name + path of your instance, and we will decide whether to
-include your node in the list of nodes available in the EpiVar Portal.
+include your node in the list of nodes available in the EpiVar Browser.
