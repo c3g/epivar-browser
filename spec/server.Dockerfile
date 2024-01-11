@@ -25,6 +25,7 @@ COPY bin bin
 COPY data data
 COPY helpers helpers
 COPY input-files input-files
+COPY models models
 COPY routes routes
 COPY scripts scripts
 COPY views views
