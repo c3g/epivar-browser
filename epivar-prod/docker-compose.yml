@@ -15,7 +15,7 @@ services:
 #      - epivar-node-2-server-net
 
   epivar-portal:
-    user: $USER:$USER
+    user: $UID:$UID
     image: ghcr.io/c3g/epivar-portal:pr-13
     networks:
       - epivar-portal-net
@@ -26,7 +26,7 @@ services:
   # Node 1: hg19 data --------------------------------------------------------------------------------------------------
 
   epivar-node-1-server:
-    user: $USER:$USER
+    user: $UID:$UID
     image: ghcr.io/c3g/epivar-server:pr-13
     networks:
       - epivar-node-1-server-net
@@ -106,6 +106,8 @@ services:
   #     - EPIVAR_IMPORT_MAX_P_VAL=0.05
   #     - EPIVAR_LOW_COUNT_THRESHOLD=5
   #   volumes:
+  #     # user information
+  #     - /etc/passwd:/etc/passwd:ro
   #     # dataset configuration: about Markdown file, EpiVar config.js, tracks metadata.json
   #     - ./node2/about.md:/app/data/about.md
   #     - ./node2/config.js:/app/config.js:ro
