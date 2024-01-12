@@ -4,7 +4,7 @@
  * samples.js
  */
 
-import { TabixIndexedFile } from "@gmod/tabix";
+import Tabix from "@gmod/tabix";
 import VCF from "@gmod/vcf"
 
 import config from "../config.js";
@@ -15,6 +15,8 @@ import {
   GENOTYPE_STATE_REF,
   normalizeChrom,
 } from "../helpers/genome.mjs";
+
+const { TabixIndexedFile } = Tabix;
 
 const VCF_TABIX_FILE = new TabixIndexedFile({ path: envConfig.GENOTYPE_VCF_PATH });
 const vcfParser = new VCF({ header: await VCF_TABIX_FILE.getHeader() });
