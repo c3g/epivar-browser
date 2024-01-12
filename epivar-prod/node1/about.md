@@ -4,13 +4,15 @@ Humans display remarkable immune response variation when exposed to identical im
 carried out in-depth genetic, epigenetic, and transcriptional profiles on primary macrophages derived from a panel of
 European and African-ancestry individuals, before and after infection with influenza A virus (IAV) (see below).
 
+<div style="text-align: center;">
 <img 
   src="https://flu-infection.vhost38.genap.ca/figure1A.png" 
   alt="Flu infection study visual flowchart" 
   width="1600" 
   height="1032" 
-  style="width: 100%; height: auto; max-width: 800px; margin: 0 auto;"
+  style="width: 100%; height: auto; max-width: 800px;"
 />
+</div>
 
 The results of this project are summarized in 3 papers:
 
