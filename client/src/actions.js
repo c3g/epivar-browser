@@ -53,7 +53,7 @@ export const doSearch = () => (dispatch, getState) => {
 };
 
 export const mergeTracks = (peak) => (dispatch, getState) => {
-  const assemblyID = getState().assembly.data?.id;
+  const assemblyID = getState().datasets.datasetsByNode[getState().ui.node]?.assemblyID;
 
   if (!assemblyID) {
     console.error(`Could not retrieve assembly ID - got ${assemblyID}`);
