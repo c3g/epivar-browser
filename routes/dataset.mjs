@@ -9,5 +9,7 @@ import {dataHandler} from "../helpers/handlers.mjs";
 const aboutContent = marked.parse(await fs.readFile(envConfig.ABOUT_MD_PATH, {encoding: "utf-8"}));
 
 export default express.Router().get("", (req, res) => {
-  dataHandler(res)({...config, aboutContent});
+  const data = {...config, aboutContent};
+  delete data["samples"];
+  dataHandler(res)(data);
 });
