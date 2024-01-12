@@ -1,9 +1,9 @@
 import React, {useEffect, useMemo} from "react";
-import {useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
 import {Container} from "reactstrap";
 
 import * as DOMPurify from "dompurify";
+import {useCurrentDataset} from "../../hooks";
 
 const DatasetAboutPage = () => {
   const location = useLocation();
@@ -15,9 +15,10 @@ const DatasetAboutPage = () => {
     element.scrollIntoView();
   }, [location]);
 
-  // noinspection JSUnresolvedReference
+  const dataset = useCurrentDataset();
+
   /** @type string */
-  const datasetAboutContent = useSelector((state) => state.dataset.data?.aboutContent ?? "<em>Loading...</em>");
+  const datasetAboutContent = useMemo(() => dataset?.aboutContent ?? "<em>Loading...</em>", [dataset]);
   const sanitizedHTMLContent = useMemo(
     () => ({__html: DOMPurify.sanitize(datasetAboutContent, {USE_PROFILES: {html: true}})}),
     [datasetAboutContent]);
