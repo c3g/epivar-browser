@@ -15,6 +15,7 @@ import {
   setOverviewChrom,
   setOverviewAssay,
 } from '../../actions.js'
+import {useCurrentDataset} from "../../hooks";
 
 const SNP_PROP = "snp_nat_id";
 
@@ -32,7 +33,7 @@ const OverviewPage = () => {
 
   const {width} = useWindowDimensions();
 
-  const {chromosomeSizes} = useSelector(state => state.assembly.data) ?? {};
+  const {chromosomeSizes} = useCurrentDataset();
 
   const {
     isLoading: configIsLoading,
