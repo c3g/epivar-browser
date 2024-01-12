@@ -270,6 +270,8 @@ console.log("Loading peaks");
 
       endStreams();
       await copyTempTables();
+
+      console.log("Done.");
     }
 
     // ------------------------------------------------------------------------
