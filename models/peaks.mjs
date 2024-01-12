@@ -6,7 +6,6 @@
 import db from "./db.mjs";
 
 import cache from "../helpers/cache.mjs";
-import config from "../config.js";
 import Gene from "./genes.mjs";
 import {CHROM_ORDER} from "../helpers/genome.mjs";
 
@@ -16,7 +15,6 @@ export default {
   queryByRsID: queryBySNP,
   queryByGene,
   chroms,
-  rsIDs,
   positions,
   autocompleteWithDetail,
   topBinnedForAssayAndChrom,
@@ -124,12 +122,7 @@ function queryByGene(gene) {
   ).then(normalizePeaks);
 }
 
-const cachedDevChroms = config.development?.chroms;
 async function chroms() {
-  if (cachedDevChroms) {
-    return cachedDevChroms;
-  }
-
   await cache.open();
 
   // Technically this is SNP chrom, not Peaks chrom...
@@ -147,24 +140,6 @@ async function chroms() {
   await cache.setJSON(k, cs, 60 * 60 * 24 * 180);
 
   return cs;
-}
-
-const cachedRsIDs = config.development.rsIDs || undefined;
-function rsIDs(query) {
-  if (cachedRsIDs) {
-    return Promise.resolve(cachedRsIDs);
-  }
-
-  return db.findAll(
-    `
-     SELECT DISTINCT("nat_id")
-       FROM snps
-      WHERE "nat_id" LIKE $1
-      LIMIT 200
-    `,
-    [String(query) + '%']
-  )
-  .then(rows => rows.map(r => r.nat_id))
 }
 
 function positions(chrom, position) {
