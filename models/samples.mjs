@@ -36,12 +36,15 @@ export function queryMap(chrom, start, end = start + 1) {
 export async function vcfQuery(contig, start, end) {
   const lines = [];
   await VCF_TABIX_FILE.getLines(contig, start, end, line => lines.push(vcfParser.parseLine(line)));
+  console.debug(contig, start, end, lines);
   return lines;
 }
 
 
 export function normalizeSamplesMap(lines) {
   const variant = lines.find(vcfFilterFn);
+
+  console.debug(variant);
 
   if (!variant) return undefined;
 
