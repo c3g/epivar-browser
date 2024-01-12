@@ -5,7 +5,7 @@
  */
 
 import Tabix from "@gmod/tabix";
-import VCF from "@gmod/vcf"
+import VCF from "@gmod/vcf";
 
 import config from "../config.js";
 import envConfig from "../envConfig.js";
@@ -19,7 +19,7 @@ import {
 const { TabixIndexedFile } = Tabix;
 
 const VCF_TABIX_FILE = new TabixIndexedFile({ path: envConfig.GENOTYPE_VCF_PATH });
-const vcfParser = new VCF({ header: await VCF_TABIX_FILE.getHeader() });
+const vcfParser = new VCF.default({ header: await VCF_TABIX_FILE.getHeader() });
 const vcfFilterFn = config.samples?.vcfFindFn
   ?? ((line) => line.REF.length === 1 && line.ALT.every((a) => a.length === 1));
 
