@@ -12,7 +12,7 @@ function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
   const [loaded, setLoaded] = useState(false);
   const prevPeakImgRef = useRef("");
 
-  const peakImg = `${node}/tracks/plot/${peak?.id}?precomputed=${Number(usePrecomputed)}`;
+  const peakImg = `${node}/api/tracks/plot/${peak?.id}?precomputed=${Number(usePrecomputed)}`;
 
   useEffect(() => {
     if (prevPeakImgRef.current !== peakImg) {
