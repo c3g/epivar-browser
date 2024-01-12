@@ -21,6 +21,8 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
 
   const datasetsByNode = useDatasetsByNode();
 
+  console.debug("Datasets by node:", datasetsByNode);
+
   return <div>
     <div className='Header'>
       <div className="Header__auth">
@@ -41,6 +43,7 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
             <Input type="select" id="dataset-selector" value={node ?? undefined}>
               {EPIVAR_NODES.map((n) => {
                 if (n in datasetsByNode) {
+                  console.debug("Adding option for dataset", n, datasetsByNode[n]);
                   const d = datasetsByNode[n].data;
                   return <option key={n} >{d?.title ?? ""} ({d?.assembly ?? ""})</option>;
                 } else {
