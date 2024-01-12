@@ -2,4 +2,4 @@
 
 pipx ensurepath
 source /root/.profile
-pm2-runtime /app/bin/www --name epivar -i 0
+pm2-runtime /app/bin/www --name epivar -i 8
