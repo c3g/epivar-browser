@@ -23,3 +23,13 @@ Peaks:
 docker compose exec epivar-node-1-server node ./scripts/import-peaks.js
 docker compose exec epivar-node-2-server node ./scripts/import-peaks.js
 ```
+
+Calculate summary data:
+
+```bash
+docker compose exec epivar-node-1-server node ./scripts/calculate-peak-groups.mjs
+docker compose exec epivar-node-2-server node ./scripts/calculate-peak-groups.mjs
+
+docker compose exec epivar-node-1-server node ./scripts/calculate-top-peaks.mjs
+docker compose exec epivar-node-2-server node ./scripts/calculate-top-peaks.mjs
+```
