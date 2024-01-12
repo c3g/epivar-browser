@@ -22,7 +22,7 @@ const ProtectedPageContainer = React.memo(({children}) => {
   const {data: userData, isLoaded} = useSelector(state => state.user);
 
   const triggerLogIn = useCallback(() => {
-    window.location.href = `${node}/auth/login?redirect=${window.location.pathname}`;
+    window.location.href = `${node}/api/auth/login?redirect=${window.location.pathname}`;
   }, [node]);
 
   useEffect(() => {
