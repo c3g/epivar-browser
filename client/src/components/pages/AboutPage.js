@@ -54,8 +54,8 @@ const AboutPage = () => {
         />
         <h3>Contact</h3>
         <p>
-          If you have any questions about the EpiVar Browser or would like to report any issue, please contact us at
-          <a href="mailto:epivar@computationalgenomics.ca">epivar@computationalgenomics.ca</a>.
+          If you have any questions about the EpiVar Browser or would like to report any issue, please contact us
+          at <a href="mailto:epivar@computationalgenomics.ca">epivar@computationalgenomics.ca</a>.
         </p>
       </Col>
     </Row>
