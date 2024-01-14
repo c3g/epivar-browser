@@ -53,7 +53,7 @@ function get(peak) {
 
 async function values(peak, usePrecomputed = false) {
   const k = `values:${peak.id}${usePrecomputed ? ':pre' : ''}`;
-  const chrom = normalizeChrom(peak.feature.chrom);
+  const chrom = normalizeChrom(peak.feature.chrom);  // TODO: bigWigChrTransform
 
   await cache.open();
 

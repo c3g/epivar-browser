@@ -31,5 +31,10 @@ module.exports = {
      * the metadata.json "donor" property).
      */
     vcfSampleNameConverter: name => name.split('_')[1],  // name => name
+
+    /*
+     * VCF contigs have correct format, use identity function (default value)
+     */
+    // vcfChrTransform: (chr) => chr,
   },
 };

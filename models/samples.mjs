@@ -13,7 +13,6 @@ import {
   GENOTYPE_STATE_HET,
   GENOTYPE_STATE_HOM,
   GENOTYPE_STATE_REF,
-  normalizeChrom,
 } from "../helpers/genome.mjs";
 
 const { TabixIndexedFile } = Tabix;
@@ -22,13 +21,14 @@ const VCF_TABIX_FILE = new TabixIndexedFile({ path: envConfig.GENOTYPE_VCF_PATH 
 const vcfParser = new VCF.default({ header: await VCF_TABIX_FILE.getHeader() });
 const vcfFilterFn = config.samples?.vcfFindFn
   ?? ((line) => line.REF.length === 1 && line.ALT.every((a) => a.length === 1));
+const vcfChrTransform = config.samples?.vcfChrTransform ?? ((chr) => chr);
 
 export default {
   queryMap,
 };
 
 export function queryMap(chrom, start, end = start + 1) {
-  return vcfQuery(normalizeChrom(chrom), parseInt(start.toString(), 10), parseInt(end.toString(), 10))
+  return vcfQuery(vcfChrTransform(chrom), parseInt(start.toString(), 10), parseInt(end.toString(), 10))
     .then(normalizeSamplesMap);
 }
 

@@ -31,5 +31,15 @@ module.exports = {
      * the metadata.json "donor" property).
      */
     vcfSampleNameConverter: name => name.split('_')[1],  // name => name
+
+    /*
+     * When given a contig from a peak as input, produce a contig compatible with the genotype VCF.
+     * For example, peak contigs may be in the format chr1, chr2, ..., whereas VCF contigs may be
+     * formatted without the 'chr' prefix (1, 2, ...). Stripping the chr prefix gives the correct
+     * VCF contig value.
+     */
+    vcfChrTransform: (chr) => chr.replace(/^chr/, ""),  // e.g., chr1 => 1
+
+    // bigWigChrTransform: TODO,
   },
 };
