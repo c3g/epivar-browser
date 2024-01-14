@@ -2,4 +2,4 @@
 
 export EPIVAR_UID=$UID
 docker system prune -a
-docker compose pull
+docker compose pull -y
