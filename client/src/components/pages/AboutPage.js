@@ -30,7 +30,7 @@ const AboutPage = () => {
           The browser is described in the following preprint:
         </p>
         <p>
-          <a href="" target="_blank" rel="nofollow">
+          <a href="https://www.biorxiv.org/content/10.1101/2023.08.03.551309v1" target="_blank" rel="nofollow">
             EpiVar Browser: advanced exploration of epigenomics data under controlled access
           </a><br />
           David R Lougheed, Hanshi Liu, Katherine A Aracena, Romain Grégoire, Alain Pacis, Tomi Pastinen,
