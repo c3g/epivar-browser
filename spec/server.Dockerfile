@@ -1,10 +1,12 @@
 FROM node:20-bookworm-slim
 
+#  - bigWigSummary needs libcurl
 RUN apt-get update -y; \
     apt-get upgrade -y; \
     apt-get install -y \
       bash \
       build-essential \
+      libcurl4-openssl-dev \
       python3 \
       python3-dev \
       pipx \
