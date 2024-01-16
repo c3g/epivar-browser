@@ -14,7 +14,7 @@ const DatasetsPage = () => {
   const {id: assembly} = useSelector(state => state.assembly.data) ?? {};
 
   const openTracks = useCallback(() => {
-    const permaHubURL = `${node}/ucsc/perma/hub/other-tracks`;
+    const permaHubURL = `${node}/api/ucsc/perma/hub/other-tracks`;
     const ucscURL = constructUCSCUrl([
       ["db", assembly],
       ["hubClear", permaHubURL],
