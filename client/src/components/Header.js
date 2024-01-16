@@ -7,13 +7,14 @@ import Icon from "./Icon";
 
 import {EPIVAR_NODES} from "../config";
 import {SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
-import {useCurrentDataset, useDatasetsByNode, useNode} from "../hooks";
+import {useCurrentDataset, useDatasetsByNode, useDevMode, useNode} from "../hooks";
 
 export default function Header({children, onAbout, /*onDatasets, */onDatasetAbout, onOverview, onExplore, onFAQ,
                                  /*, onContact*/}) {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const devMode = useDevMode();
   const node = useNode();
   const dataset = useCurrentDataset();
   const userData = useSelector(state => state.user);
@@ -28,7 +29,9 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
       <div className="Header__auth">
         {node && userData.data
           ? (
-            <span>Authenticated with <code>{node}</code> as {userData.data.ip}</span>
+            devMode
+              ? <span>Authenticated with <code>{node}</code> as {userData.data.ip}</span>
+              : <span>Authenticated</span>
           ) : null
           // <a href="/api/auth/logout">{userData.data?.displayName ?? userData.data?.id} (Log Out)</a>
           // <a href={`${LOGIN_PATH}?redirect=${encodeURIComponent(window.location.pathname)}`}>Log In / Sign Up</a>
