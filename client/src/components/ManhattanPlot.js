@@ -222,7 +222,7 @@ const ManhattanPlot = React.memo(
 
         bind: {
           mouseup: (u, t, h) => e => {
-            console.debug("Manhattan plot received mouseup event:", e);
+            console.info("Manhattan plot received mouseup event:", e);
             if (
               onPointClick &&
               e.button === 0 &&
@@ -252,7 +252,17 @@ const ManhattanPlot = React.memo(
       textAlign: "center",
       minHeight: height + 27 + 16,  // plot height + title height (27 in Firefox) + top padding
     }} {...props}>
-      <UplotReact options={uPlotOptions} data={finalData} />
+      <UplotReact options={uPlotOptions} data={finalData} onCreate={(u) => {
+        Array.from(u.root.querySelectorAll(".u-cursor-pt")).forEach((pt) => {
+          // Should be only one u-cursor-pt, so don't do any series index logic
+          pt.addEventListener("click", (e) => {
+            console.info("Manhattan plot u-cursor-pt received click event:", e);
+            if (onPointClick && e.button === 0 && hoveredItem.current && !u.cursor.drag.x) {
+              onPointClick(dataNoNulls[hoveredItem.current]);
+            }
+          });
+        });
+      }} />
       <em style={{color: "#888"}}>
         Click on a point to see more information about a particular peak.
         Click and drag to zoom in on a region. Double-click to reset.
