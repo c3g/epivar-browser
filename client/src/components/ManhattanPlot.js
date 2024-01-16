@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef} from "react";
+import React, {useCallback, useMemo, useRef} from "react";
 
 import uPlot from "uplot";
 import UplotReact from "uplot-react";
@@ -24,7 +24,6 @@ const ManhattanPlot = React.memo(
 
     title,
     data,
-    group,
 
     positionProp,
     pValueProp,
@@ -40,12 +39,6 @@ const ManhattanPlot = React.memo(
     height = height ?? 275;
 
     const qt = useRef(null);
-
-    const sync = useRef(group ? uPlot.sync(group) : null);
-    useEffect(() => {
-      if (!group) return;
-      sync.current = uPlot.sync(group);
-    }, [group]);
 
     const dataNoNulls = useMemo(() => data.filter(d => !!d[pValueProp]), [data]);
 
@@ -178,12 +171,6 @@ const ManhattanPlot = React.memo(
       ],
       cursor: {
         lock: true,
-        ...(sync.current ? {
-          sync: {
-            key: sync.current.key,
-            setSeries: true,
-          },
-        } : {}),
 
         y: false,
         drag: {y: false},
@@ -220,20 +207,24 @@ const ManhattanPlot = React.memo(
               : 0,
         },
 
-        // bind: {
-        //   mouseup: (u, t, h) => e => {
-        //     console.info("Manhattan plot received mouseup event:", e);
-        //     if (
-        //       onPointClick &&
-        //       e.button === 0 &&
-        //       hoveredItem.current &&
-        //       Array.from(e.target.classList).includes("u-cursor-pt") && !u.cursor.drag._x
-        //     ) {
-        //       onPointClick(dataNoNulls[hoveredItem.current]);
-        //     }
-        //     h(e);
-        //   },
-        // },
+        bind: {
+          mousedown: (u, t, h) => e => {
+            console.info("Manhattan plot received mousedown event:", e);
+            h(e);
+          },
+          mouseup: (u, t, h) => e => {
+            console.info("Manhattan plot received mouseup event:", e);
+            // if (
+            //   onPointClick &&
+            //   e.button === 0 &&
+            //   hoveredItem.current &&
+            //   Array.from(e.target.classList).includes("u-cursor-pt") && !u.cursor.drag._x
+            // ) {
+            //   onPointClick(dataNoNulls[hoveredItem.current]);
+            // }
+            h(e);
+          },
+        },
       },
       hooks: {
         drawClear: [u => {
