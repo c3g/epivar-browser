@@ -33,3 +33,19 @@ docker compose exec epivar-node-2-server node ./scripts/calculate-peak-groups.mj
 docker compose exec epivar-node-1-server node ./scripts/calculate-top-peaks.mjs
 docker compose exec epivar-node-2-server node ./scripts/calculate-top-peaks.mjs
 ```
+
+## Clearing cache
+
+All cache:
+
+```bash
+docker compose exec epivar-node-1-server node ./scripts/clear-cache.mjs
+docker compose exec epivar-node-2-server node ./scripts/clear-cache.mjs
+```
+
+Values cache:
+
+```bash
+docker compose exec epivar-node-1-server node ./scripts/clear-values-cache.mjs
+docker compose exec epivar-node-2-server node ./scripts/clear-values-cache.mjs
+```
