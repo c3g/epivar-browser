@@ -84,7 +84,7 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
   const node = useSelector((state) => state.ui.node);
 
   const dataset = useCurrentDataset();
-  const {assembly, conditions} = dataset?.data ?? {};  // dataset metadata
+  const {assembly, conditions} = dataset ?? {};  // dataset metadata
 
   const [tooltipsShown, setTooltipsShown] = useState({});
   const [tracksLoading, setTracksLoading] = useState({});
