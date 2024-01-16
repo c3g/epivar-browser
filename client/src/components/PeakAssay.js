@@ -345,7 +345,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
     // Fetch tracks when data is set
     if (data) {
       setLoadingTracks(true);
-      fetch(`${node}/igvjs/track-db/${sessionID}`)
+      fetch(`${node}/api/igvjs/track-db/${sessionID}`)
         .then((res) => res.json())
         .then(({data: tracks}) => {
           setSessionTracks(tracks);
@@ -398,7 +398,7 @@ const PeakIGVModal = ({ data, isOpen, toggle }) => {
 
 const launchInUCSC = (node, { assemblyID, sessionID, session: { feature, snp } }) => {
   const position = buildBrowserPosition(feature, snp);
-  const hubURL = `${node}/ucsc/hub/${sessionID}`;
+  const hubURL = `${node}/api/ucsc/hub/${sessionID}`;
   const ucscURL = constructUCSCUrl([
     ["db", assemblyID],
     ["hubClear", hubURL],
