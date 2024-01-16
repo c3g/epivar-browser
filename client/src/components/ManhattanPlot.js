@@ -256,7 +256,10 @@ const ManhattanPlot = React.memo(
         Array.from(u.root.querySelectorAll(".u-cursor-pt")).forEach((pt) => {
           // Should be only one u-cursor-pt, so don't do any series index logic
           pt.addEventListener("click", (e) => {
-            console.info("Manhattan plot u-cursor-pt received click event:", e);
+            console.info(
+              "Manhattan plot u-cursor-pt received click event:", e,
+              "hoveredItem.current", hoveredItem.current,
+              "u.cursor.drag.x", u.cursor.drag.x);
             if (onPointClick && e.button === 0 && hoveredItem.current && !u.cursor.drag.x) {
               onPointClick(dataNoNulls[hoveredItem.current]);
             }
