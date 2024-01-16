@@ -66,10 +66,9 @@ function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
               match the distributions visible in the box plots.
             </p>
             : <p>
-              When not using precomputed values, box plots are generated from normalised signals (read count per base
-              pair per 10 million reads), without any batch correction, whereas <em>p</em>-values are calculated from
-              the corrected signal values. The <em>p</em>-values thus may not precisely match the distributions visible
-              in the box plots.
+              When not using precomputed values, box plots are generated from normalised signals, without any batch
+              correction, whereas <em>p</em>-values are calculated from the corrected signal values.
+              The <em>p</em>-values thus may not precisely match the distributions visible in the box plots.
             </p>
         }
       </div>
