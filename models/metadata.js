@@ -44,9 +44,7 @@ function getTracks(samples, peak) {
       .map(clone);
 
   tracks.forEach(track => {
-    console.debug("track path before", track.path);
     track.path = getLocalPath(track);
-    console.debug("track path after", track.path);
     const sample = samplesByRealName[track.donor];
     Object.assign(track, sample);
   });

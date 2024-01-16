@@ -27,6 +27,7 @@ async function bigWigMerge(files, output, chrom, start, end) {
   const release = await semaphore.acquire();
 
   try {
+    console.debug("bigWigMerge called:", command);
     result = await exec(command);
   } catch(err) {
     result = Promise.reject(err);
