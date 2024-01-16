@@ -12,7 +12,7 @@ const chromSizes = chromosomeSizesByAssemblyID[config.assembly ?? "hg19"];
 const minPValue = envConfig.PLOT_MANHATTAN_MIN_P_VAL;
 const binSize = envConfig.PLOT_MANHATTAN_BIN_SIZE;
 
-const BINS_CHUNK_SIZE = 30;
+const BINS_CHUNK_SIZE = 50;
 
 for (const chrom in chromSizes) {
   const size = chromSizes[chrom];
@@ -63,7 +63,7 @@ for (const chrom in chromSizes) {
       })();
     }));
 
-    console.log(`chr${chrom}: processed ${bins.length}/${nBins} bins`);
+    console.log(`chr${chrom}: processed ${nBins - bins.length}/${nBins} bins`);
   }
 
   console.log(`done chr${chrom}`);
