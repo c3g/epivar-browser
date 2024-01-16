@@ -26,7 +26,7 @@ const exec = command =>
 const CACHE_EXP = 24 * 60 * 60 * 1000;
 
 const valueCommand = (file, options) => [
-    path.join(options.bin, "bigWigSummary"),
+    path.join(options.bin ?? "", "bigWigSummary"),
     file,
     options.chrom,
     options.start,
