@@ -78,17 +78,20 @@ const OverviewPage = () => {
     dispatch(fetchManhattanData(params, params)).catch(console.error);
   }, [dispatch, assaysIsLoaded, assays, chrom, assay, assayRecord]);
 
+  const onPointClick = useCallback((peak) => {
+    console.info("onPointClick triggered on peak:", peak);
+    const snp = peak[SNP_PROP];
+    navigate(`/dataset/explore/locus/rsID/${snp}/${assay}`);
+    dispatch(setChrom("rsID"));
+    dispatch(setPosition(snp));
+    dispatch(doSearch());
+  }, [dispatch, navigate]);
+
   // noinspection JSValidateTypes
   return <div className="Page">
-    <div style={{maxWidth: PLOT_MAX_WIDTH, margin: "auto"}}
+    <div style={{maxWidth: PLOT_MAX_WIDTH}}
          className={"Overview" + (assaysIsLoading ? " loading" : "")}>
-      <div style={{
-        display: "flex",
-        gap: 12,
-        flexDirection: "row",
-        alignItems: "baseline",
-        padding: "0 12px",
-      }}>
+      <div className="Overview__inputs">
         <label htmlFor="Manhattan__chrom-selector">Chromosome:</label>
         <Input
           type="select"
@@ -125,14 +128,7 @@ const OverviewPage = () => {
           snpProp={SNP_PROP}
           featureProp="feature_nat_id"
           geneProp="gene_name"
-          onPointClick={peak => {
-            if (!dispatch) return;
-            const snp = peak[SNP_PROP];
-            navigate(`/dataset/explore/locus/rsID/${snp}/${assay}`);
-            dispatch(setChrom("rsID"));
-            dispatch(setPosition(snp));
-            dispatch(doSearch());
-          }}
+          onPointClick={onPointClick}
           className={assayRecord?.isLoading ? 'loading' : ''}
         />
       }
