@@ -259,8 +259,8 @@ const ManhattanPlot = React.memo(
             console.info(
               "Manhattan plot u-cursor-pt received click event:", e,
               "hoveredItem.current", hoveredItem.current,
-              "u.cursor.drag.x", u.cursor.drag.x);
-            if (onPointClick && e.button === 0 && hoveredItem.current && !u.cursor.drag.x) {
+              "data point", dataNoNulls[hoveredItem.current]);
+            if (onPointClick && e.button === 0 && hoveredItem.current) {
               onPointClick(dataNoNulls[hoveredItem.current]);
             }
           });
