@@ -14,12 +14,13 @@ import {boxPlot, getDomain, PLOT_HEIGHT, PLOT_WIDTH} from "../helpers/boxplot.mj
 import cache from "../helpers/cache.mjs";
 import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";
-import {NODE_BASE_URL, MERGED_TRACKS_DIR, LOW_COUNT_THRESHOLD} from "../envConfig.js";
+import {NODE_BASE_URL, MERGED_TRACKS_DIR} from "../envConfig.js";
 import Metadata from "./metadata.js";
 import Samples from "./samples.mjs";
 import {DEFAULT_CONDITIONS} from "../helpers/defaultValues.mjs";
 import {donorLookup} from "../helpers/donors.mjs";
 import {normalizeChrom, GENOTYPE_STATES, GENOTYPE_STATE_NAMES} from "../helpers/genome.mjs";
+import {belowThreshold} from "../helpers/censorship.mjs";
 
 
 export default {
@@ -131,7 +132,7 @@ function merge(tracks, session) {
       GENOTYPE_STATES
         .map(g => tracksByType[g] ?? [])
         .map(async tracks => {
-          if (tracks.length < LOW_COUNT_THRESHOLD) {
+          if (belowThreshold(tracks.length)) {
             return undefined;
           }
 
@@ -172,7 +173,6 @@ function plot(tracksByCondition) {
       data: data[ci],
       domain: domains[ci],
       transform: `translate(${((PLOT_WIDTH / conditions.length) * ci).toFixed(0)} 0)`,
-      lowCountThreshold: LOW_COUNT_THRESHOLD,
     }))
   ).then(plots =>
     `<svg width="${PLOT_WIDTH}" height="${PLOT_HEIGHT}">
