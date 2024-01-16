@@ -193,7 +193,6 @@ function getDataFromValues(values) {
 
 function mergeFiles(paths, { chrom, start, end }) {
   paths.sort(Intl.Collator().compare);
-  // TODO: add dataset ID to hash
   const mergeHash = md5(JSON.stringify({ paths, chrom, start, end }));
   const mergeName = `${mergeHash}.bw`;
   const url = `${NODE_BASE_URL}/api/merged/${mergeName}`;
@@ -203,7 +202,9 @@ function mergeFiles(paths, { chrom, start, end }) {
 
   return new Promise((resolve) => {
     fs.access(mergePath, fs.constants.F_OK, (err) => {
-      resolve(err ? true : bigWigMerge(paths, mergePath, chrom, start, end));
+      // If the file doesn't exist yet, we'll get an error. Otherwise, we won't and we can resolve 'vacuously' in order
+      // to reuse the existing file.
+      resolve(err ? bigWigMerge(paths, mergePath, chrom, start, end) : true);
     });
   }).then(() => ({ path: mergePath, url }));
 }
