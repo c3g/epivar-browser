@@ -76,7 +76,9 @@ router.get(
               <text x="20" y="30" fill="#C33" style="font-size: 16px; font-family: sans-serif; font-weight: bold;">
                 Error while plotting:
               </text>
-              <text x="20" y="50" fill="#933" style="font-size: 16px; font-family: sans-serif">${err.toString()}</text>
+              <text x="20" y="50" fill="#933" style="font-size: 16px; font-family: sans-serif">
+                An error occurred while generating this plot. Check the server logs for details.
+              </text>
             </svg>`
           ).then(pngHandler(res.status(500)));
         });
