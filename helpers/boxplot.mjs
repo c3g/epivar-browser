@@ -1,4 +1,5 @@
 import config from "../config.js";
+import {belowThreshold} from "./censorship.mjs";
 
 const {conditions, ethnicities} = config;
 const nConditions = conditions.length;
@@ -120,7 +121,7 @@ async function boxPlotYAxis({domain, step, x, y, height}) {
   </g>`;
 }
 
-function boxPlotXAxis({data, scale, x, height, width, lowCountThreshold}) {
+function boxPlotXAxis({data, scale, x, height, width}) {
   const inner = data.map((d, i) => {
     return `<g>
         ${boxPlotLine({position: [[scale(i), height], [scale(i), height + 5]]})}
@@ -128,7 +129,7 @@ function boxPlotXAxis({data, scale, x, height, width, lowCountThreshold}) {
           ${d.name}
         </text>
         <text y="${height + 5}" x="${scale(i)}" dy="${FONT_SIZE * 2}" style="${TEXT_STYLES}">
-          (n ${(d.data.n ?? 0) <= lowCountThreshold ? "≈ 0" : ("= " + d.data.n.toFixed(0))})
+          (n ${belowThreshold(d.data.n ?? 0) ? "≈ 0" : ("= " + d.data.n.toFixed(0))})
         </text>
       </g>`;
   }).join("");
@@ -165,7 +166,7 @@ function boxPlotInnerBar({xStart, xStop, yScale, stats, fill}) {
   </g>`;
 }
 
-async function boxPlotBar({data, x, y, height, domain, lowCountThreshold}) {
+async function boxPlotBar({data, x, y, height, domain}) {
   // const min = data.min
   // const max = data.max
 
@@ -199,7 +200,7 @@ async function boxPlotBar({data, x, y, height, domain, lowCountThreshold}) {
 
   const yScale = (await scaleLinear()).range([height, y]).domain(domain);
 
-  if (data.n <= lowCountThreshold) {
+  if (belowThreshold(data.n)) {
     // Censor small genotype group counts to be 'empty'
 
     const delta = domain[1] - domain[0]
@@ -257,7 +258,7 @@ async function boxPlotBar({data, x, y, height, domain, lowCountThreshold}) {
   </g>`;
 }
 
-export async function boxPlot({title, data, domain, transform, lowCountThreshold}) {
+export async function boxPlot({title, data, domain, transform}) {
   if (!data) {
     return "<svg />";
   }
@@ -275,7 +276,7 @@ export async function boxPlot({title, data, domain, transform, lowCountThreshold
 
   const axes = await Promise.all([
     boxPlotYAxis({domain: yDomain, step: yAxis.step, ...plotDimensions}),
-    boxPlotXAxis({data, scale: xScale, lowCountThreshold, ...plotDimensions}),
+    boxPlotXAxis({data, scale: xScale, ...plotDimensions}),
   ]);
 
   const bars = await Promise.all(
@@ -284,7 +285,6 @@ export async function boxPlot({title, data, domain, transform, lowCountThreshold
       ...plotDimensions,
       x: xScale(i),
       domain: yDomain,
-      lowCountThreshold,
     }))
   );
 
