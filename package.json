@@ -28,6 +28,7 @@
     "lodash": "^4.17.21",
     "lodash.clonedeep": "^4.5.0",
     "marked": "^11.1.0",
+    "marked-gfm-heading-id": "^3.1.2",
     "md5": "^2.3.0",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
