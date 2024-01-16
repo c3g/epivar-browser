@@ -199,6 +199,8 @@ function mergeFiles(paths, { chrom, start, end }) {
   const url = `${NODE_BASE_URL}/api/merged/${mergeName}`;
   const mergePath = path.join(MERGED_TRACKS_DIR, mergeName);
 
+  console.info(`mergeFiles called with ${paths.length} files; start=${start}; end=${end}`);
+
   return new Promise((resolve) => {
     fs.access(mergePath, fs.constants.F_OK, (err) => {
       resolve(err ? true : bigWigMerge(paths, mergePath, chrom, start, end));
