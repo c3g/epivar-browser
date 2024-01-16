@@ -220,20 +220,20 @@ const ManhattanPlot = React.memo(
               : 0,
         },
 
-        bind: {
-          mouseup: (u, t, h) => e => {
-            console.info("Manhattan plot received mouseup event:", e);
-            if (
-              onPointClick &&
-              e.button === 0 &&
-              hoveredItem.current &&
-              Array.from(e.target.classList).includes("u-cursor-pt") && !u.cursor.drag._x
-            ) {
-              onPointClick(dataNoNulls[hoveredItem.current]);
-            }
-            h(e);
-          },
-        },
+        // bind: {
+        //   mouseup: (u, t, h) => e => {
+        //     console.info("Manhattan plot received mouseup event:", e);
+        //     if (
+        //       onPointClick &&
+        //       e.button === 0 &&
+        //       hoveredItem.current &&
+        //       Array.from(e.target.classList).includes("u-cursor-pt") && !u.cursor.drag._x
+        //     ) {
+        //       onPointClick(dataNoNulls[hoveredItem.current]);
+        //     }
+        //     h(e);
+        //   },
+        // },
       },
       hooks: {
         drawClear: [u => {
