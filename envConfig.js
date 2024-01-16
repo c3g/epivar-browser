@@ -35,6 +35,9 @@ const ABOUT_MD_PATH = path.join(DATA_DIR, "about.md");
 //  - Static tracks to put in UCSC track hub.
 const STATIC_TRACKS_PATH = path.join(DATA_DIR, "ucsc.other-tracks.txt");
 
+//  - Other tracks data (legend tracks)
+const OTHER_DATA_PATH = path.join(DATA_DIR, "./otherData");
+
 //  - Track metadata for the dataset this node hosts
 const TRACK_METADATA_PATH = getPrefixedEnvVar("TRACK_METADATA_PATH", path.join(DATA_DIR, "metadata.json"));
 
@@ -103,6 +106,7 @@ module.exports = {
   DATA_DIR,
   ABOUT_MD_PATH,
   STATIC_TRACKS_PATH,
+  OTHER_DATA_PATH,
   TRACK_METADATA_PATH,
   INPUT_FILES_DIR,
   TRACKS_DIR,
