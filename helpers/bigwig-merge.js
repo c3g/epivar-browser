@@ -30,6 +30,7 @@ async function bigWigMerge(files, output, chrom, start, end) {
     console.debug("bigWigMerge called:", command);
     result = await exec(command);
   } catch(err) {
+    console.error("bigWigMerge error:", err.toString());
     result = Promise.reject(err);
   } finally {
     release();
