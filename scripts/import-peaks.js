@@ -20,9 +20,9 @@ console.log("Loading peaks");
 
   const client = await db.connect();
 
-  const assays = await Assays.list();
+  const assayIDsByName = await Assays.idsByName();
 
-  const datasetPaths = Object.keys(assays).map(assay => envConfig.QTLS_TEMPLATE.replace(/\$ASSAY/g, assay));
+  const datasetPaths = Object.keys(assayIDsByName).map(assay => envConfig.QTLS_TEMPLATE.replace(/\$ASSAY/g, assay));
   console.log(`Found paths:`, datasetPaths);
 
   // Clear relevant tables of existing data
@@ -229,7 +229,7 @@ console.log("Loading peaks");
                 // Get the already-created (by import-genes.mjs) feature if it exists,
                 // or make a new one. Pre-created features are associated with genes if
                 // specified in the flu-infection-gene-peaks.csv file.
-                getFeatureIDOrCreate(p.feature.slice(3), p.assay, assays[p.assay].id).then(fID => {
+                getFeatureIDOrCreate(p.feature.slice(3), p.assay, assayIDsByName[p.assay]).then(fID => {
                   p.feature = fID;
                   peakStreamPush(p);
                   parseStream.resume();
