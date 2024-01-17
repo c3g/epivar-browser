@@ -17,12 +17,12 @@
 
 The following assay types can be ingested into an EpiVar node:
 
-- RNA-seq
-- ATAC-seq
-- H3K4me1
-- H3K4me3
-- H3K27ac
-- H3K27me3
+- `RNA-seq`
+- `ATAC-seq`
+- `H3K4me1`
+- `H3K4me3`
+- `H3K27ac`
+- `H3K27me3`
 
 ### Dataset metadata
 
@@ -53,7 +53,8 @@ The following assay types can be ingested into an EpiVar node:
     - `assay`
 
 - [ ] A dataset configuration file, which takes the form described in the
-  [example configuration file](/config.example.js).
+  [example configuration file](/config.example.js). Here, assays available in this node can be specified, as well as 
+  experimental conditions, population groups, and functions for interacting with the genotype VCF file.
 
   This file specifies information about the dataset being hosted by the EpiVar node, including dataset title,
   sample groups and experimental treatments (in both of these, each entry has an ID and a name), assembly ID (`hg19` or

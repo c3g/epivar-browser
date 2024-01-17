@@ -4,10 +4,15 @@
  * This file configures the dataset that this EpiVar node is responsible for hosting.
  */
 
+const ASSAY_RNA_SEQ = "RNA-seq";
+
 // noinspection JSUnusedGlobalSymbols
 module.exports = {
   title: "Aracena 𝘦𝘵 𝘢𝘭. RNA-seq liftover",
   assembly: "hg38",
+
+  // availableAssays must be a subset or the set of assays supported by EpiVar:
+  availableAssays: [ASSAY_RNA_SEQ],
 
   conditions: [
     {id: "NI", name: "Non-infected"},

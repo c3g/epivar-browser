@@ -6,21 +6,19 @@ import config from "../config.js";
 
 import {genePathsByAssemblyID} from "../data/assemblies/index.mjs";
 
-const ASSAY_NAME_RNASEQ = "RNA-seq";
-
 const genesPath = genePathsByAssemblyID[config.assembly];
 const genesFeaturesPath = process.argv[2] || "/dev/stdin";
 
 import {precomputedPoints} from "./_common.mjs";
 
+import {ASSAY_RNA_SEQ} from "../helpers/assays.mjs";
 import db from "../models/db.mjs";
 import Gene from "../models/genes.mjs";
 
-const rnaSeqPrecomputed = precomputedPoints[ASSAY_NAME_RNASEQ];
+const rnaSeqPrecomputed = precomputedPoints[ASSAY_RNA_SEQ];
 
 const assaysByName = Object.fromEntries((await db.findAll("SELECT * FROM assays")).map(r => [r.name, r.id]));
-
-const rnaSeq = assaysByName[ASSAY_NAME_RNASEQ];
+const rnaSeq = assaysByName[ASSAY_RNA_SEQ];
 
 const parseGene = line => {
   const fields = line.trim().split('\t');

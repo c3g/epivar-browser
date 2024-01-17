@@ -69,7 +69,7 @@ create table if not exists features
     -- optional:
     --  pre-computed, (presumably batch-corrected etc.) array of treatment-arrays of points for the peak to render in
     --  the box plot, instead of pulling live from the bigWigs. treatments and samples MUST be in alphabetical order of
-    --  their IDs, eg [Flu: [<value for AF01>, ..., <value for EU01>], NI: [...]]
+    --  their IDs, e.g., [Flu: [<value for AF01>, ..., <value for EU01>], NI: [...]]
     -- if the array is NULL, points SHOULD be pulled from bigWigs instead
     "points" real[]      default null,
 
@@ -94,7 +94,7 @@ create table if not exists peaks
     "snp"       integer  not null,
     "feature"   integer  not null,
 
-    -- values as array of treatments (in alphabetical order): [<p_Flu>, <p_NI>]
+    -- values as array of treatments (in alphabetical order), e.g., [<p_Flu>, <p_NI>]
     "values"    real[]   not null,
 
     foreign key ("snp")     references snps     ("id"),
