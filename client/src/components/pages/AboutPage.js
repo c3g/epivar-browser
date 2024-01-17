@@ -33,8 +33,9 @@ const AboutPage = () => {
           <a href="https://www.biorxiv.org/content/10.1101/2023.08.03.551309v1" target="_blank" rel="nofollow">
             EpiVar Browser: advanced exploration of epigenomics data under controlled access
           </a><br />
-          David R Lougheed, Hanshi Liu, Katherine A Aracena, Romain Grégoire, Alain Pacis, Tomi Pastinen,
-          Luis B Barreiro, Yann Joly, David Bujold, Guillaume Bourque.<br />
+          David&nbsp;R&nbsp;Lougheed, Hanshi&nbsp;Liu, Katherine&nbsp;A&nbsp;Aracena, Romain&nbsp;Grégoire,
+          Alain&nbsp;Pacis, Tomi&nbsp;Pastinen, Luis&nbsp;B&nbsp;Barreiro, Yann&nbsp;Joly, David&nbsp;Bujold,
+          Guillaume&nbsp;Bourque.<br />
           bioRxiv 2023.08.03.551309; doi:{" "}
           <a href="https://doi.org/10.1101/2023.08.03.551309" target="_blank" rel="nofollow">
             10.1101/2023.08.03.551309</a>
