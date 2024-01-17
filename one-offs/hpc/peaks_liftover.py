@@ -123,6 +123,7 @@ def main():
 
     with open("./flu-infection-gene-peaks-hg38.csv", "w") as fh:
         writer = csv.DictWriter(fh, ("symbol", "peak_ids", "feature_type"), delimiter=",", quotechar='"')
+        writer.writeheader()
         for gp in gene_peaks:
             if (lifted_over_peak := lifted_over_peaks.get(gp["peak_ids"])) is not None:
                 writer.writerow({**gp, "peak_ids": lifted_over_peak})
@@ -133,6 +134,7 @@ def main():
             ("rsID", "snp", "feature", "pvalue.NI", "pvalue.Flu", "feature_type"),
             delimiter=",",
             quotechar='"')
+        writer.writeheader()
         for row in tqdm.tqdm(lift_over_qtl_rows(qtl_rows, snps_to_lift_over, lifted_over_peaks), desc="qtl writer"):
             writer.writerow(row)
 
