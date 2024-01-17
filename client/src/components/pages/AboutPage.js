@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {Col, Container, Row} from "reactstrap";
-import {Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 const AboutPage = () => {
   const location = useLocation();
@@ -45,13 +45,15 @@ const AboutPage = () => {
           at the data location. The portal’s interface contains a list of nodes, each of which hosts a single dataset,
           as shown in the figure below.
         </p>
-        <img
-          src="/epivar_arch.png"
-          alt="A workflow diagram of the EpiVar Browser, showing how the browser connects to multiple nodes."
-          width="3829"
-          height="2591"
-          style={{ width: "100%", height: "auto" }}
-        />
+        <p style={{ textAlign: "center" }}>
+          <img
+            src="/epivar_arch.png"
+            alt="A workflow diagram of the EpiVar Browser, showing how the browser connects to multiple nodes."
+            width="3829"
+            height="2591"
+            style={{ width: "100%", height: "auto", maxWidth: "960px" }}
+          />
+        </p>
         <h3>Contact</h3>
         <p>
           If you have any questions about the EpiVar Browser or would like to report any issue, please contact us
