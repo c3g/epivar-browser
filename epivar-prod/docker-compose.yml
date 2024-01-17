@@ -113,7 +113,7 @@ services:
       - /flu-infection-data/node2/qtls:/app/input-files/qtls:ro
       # tracks:
       #  - metadata JSON file,
-      - node2/metadata.json:/app/data/metadata.json:ro
+      - ./node2/metadata.json:/app/data/metadata.json:ro
       #  - sample bigWigs,
       - /flu-infection-data/node2/tracks:/tracks:ro
       #  - writeable volume for on-the-fly merged tracks,
