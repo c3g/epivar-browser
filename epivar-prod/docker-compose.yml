@@ -2,7 +2,7 @@ services:
   # Common -------------------------------------------------------------------------------------------------------------
 
   epivar-portal:
-    image: ghcr.io/c3g/epivar-portal:pr-13
+    image: ghcr.io/c3g/epivar-portal:edge
     ports:
       - 8080:80
     depends_on:
@@ -19,7 +19,7 @@ services:
 
   epivar-node-1-server:
     # user: $EPIVAR_UID:$EPIVAR_UID
-    image: ghcr.io/c3g/epivar-server:pr-13
+    image: ghcr.io/c3g/epivar-server:edge
     networks:
       - epivar-node-1-server-net
       - epivar-node-1-redis-net
@@ -83,7 +83,7 @@ services:
 
   epivar-node-2-server:
     # user: $USER:$USER
-    image: ghcr.io/c3g/epivar-server:latest
+    image: ghcr.io/c3g/epivar-server:edge
     networks:
       - epivar-node-2-server-net
       - epivar-node-2-redis-net
