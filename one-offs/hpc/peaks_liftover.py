@@ -35,7 +35,7 @@ def lift_over_peaks(peaks_to_lift_over: Set[str]) -> Dict[str, str]:  # return d
     with open(lift_over_out_bed, "r") as fh:
         for line in fh:
             line_data = line.strip().split("\t")
-            lifted_over_peaks.append(("\t".join(line_data[:3]), line_data[3]))
+            lifted_over_peaks.append(("_".join(line_data[:3]), line_data[3]))
 
     res: Dict[str, str] = {}
 
@@ -133,7 +133,7 @@ def main():
             ("rsID", "snp", "feature", "pvalue.NI", "pvalue.Flu", "feature_type"),
             delimiter=",",
             quotechar='"')
-        for row in lift_over_qtl_rows(qtl_rows, snps_to_lift_over, lifted_over_peaks):
+        for row in tqdm.tqdm(lift_over_qtl_rows(qtl_rows, snps_to_lift_over, lifted_over_peaks), desc="qtl writer"):
             writer.writerow(row)
 
 
