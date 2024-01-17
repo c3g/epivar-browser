@@ -14,7 +14,7 @@ Genes and gene-peak pairs:
 
 ```bash
 docker compose exec -iT epivar-node-1-server node ./scripts/import-genes.mjs < /opt/epivar/input-files/flu-infection-gene-peaks.csv
-docker compose exec -iT epivar-node-2-server node ./scripts/import-genes.mjs < TODO
+docker compose exec -iT epivar-node-2-server node ./scripts/import-genes.mjs < /flu-infection-data/node2/flu-infection-gene-peaks-hg38.csv
 ```
 
 Peaks:
