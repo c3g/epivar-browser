@@ -4,10 +4,27 @@
  * This file configures the dataset that this EpiVar node is responsible for hosting.
  */
 
+const ASSAY_RNA_SEQ = "RNA-seq";
+const ASSAY_ATAC_SEQ = "ATAC-seq";
+const ASSAY_H3K4ME1 = "H3K4me1";
+const ASSAY_H3K4ME3 = "H3K4me3";
+const ASSAY_H3K27AC = "H3K27ac";
+const ASSAY_H3K27ME3 = "H3K27me3";
+
 // noinspection JSUnusedGlobalSymbols
 module.exports = {
   title: "Aracena 𝘦𝘵 𝘢𝘭.",
   assembly: "hg19",
+
+  // availableAssays must be a subset or the set of assays supported by EpiVar:
+  availableAssays: [
+    ASSAY_RNA_SEQ,
+    ASSAY_ATAC_SEQ,
+    ASSAY_H3K4ME1,
+    ASSAY_H3K4ME3,
+    ASSAY_H3K27AC,
+    ASSAY_H3K27ME3,
+  ],
 
   conditions: [
     {id: "NI", name: "Non-infected"},
