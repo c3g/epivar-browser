@@ -2,7 +2,7 @@
 #SBATCH --mem=8G
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --time=24:00:00
+#SBATCH --time=1:00:00
 #SBATCH --account=rrg-bourqueg-ad
 
 module load nixpkgs/16.09 gcc/7.3.0

@@ -135,7 +135,7 @@ def main():
             delimiter=",",
             quotechar='"')
         writer.writeheader()
-        for row in tqdm.tqdm(lift_over_qtl_rows(qtl_rows, snps_to_lift_over, lifted_over_peaks), desc="qtl writer"):
+        for row in lift_over_qtl_rows(qtl_rows, snps_to_lift_over, lifted_over_peaks):
             writer.writerow(row)
 
 
