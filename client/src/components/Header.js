@@ -26,12 +26,20 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
 
   console.debug("Datasets by node:", datasetsByNode);
 
+  const isLoadingData = useSelector((state) =>
+    state.samples.isLoading ||
+    state.positions.isLoading ||
+    state.overview.isLoading ||
+    state.user.isLoading);
+
   const onDatasetChange = useCallback((e) => {
+    if (isLoadingData) return;
+
     const newNode = e.target.value;
     if (newNode !== node) {
       dispatch(setNode(newNode));
     }
-  }, [dispatch]);
+  }, [dispatch, isLoadingData]);
 
   return <div>
     <div className='Header'>
