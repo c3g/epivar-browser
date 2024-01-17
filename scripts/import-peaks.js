@@ -14,13 +14,13 @@ console.log("Loading peaks");
 (async () => {
   const {loadingPrecomputedPoints, precomputedPoints} = await import('./_common.mjs');
 
+  const Assays = await import("../models/assays.mjs");
   const db = await import("../models/db.mjs");
   const Gene = await import('../models/genes.mjs');
 
   const client = await db.connect();
 
-  const assays = Object.fromEntries(
-    (await client.query("SELECT * FROM assays")).rows.map(r => [r.name, r]));
+  const assays = await Assays.list();
 
   const datasetPaths = Object.keys(assays).map(assay => envConfig.QTLS_TEMPLATE.replace(/\$ASSAY/g, assay));
   console.log(`Found paths:`, datasetPaths);
