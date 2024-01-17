@@ -4,13 +4,13 @@ services:
   epivar-portal:
     image: ghcr.io/c3g/epivar-portal:edge
     ports:
-      - 8080:80
+      - 80:80
     depends_on:
       - epivar-node-1-server
-#      - epivar-node-2-server
+      - epivar-node-2-server
     networks:
       - epivar-node-1-server-net
-#      - epivar-node-2-server-net
+      - epivar-node-2-server-net
     env_file: portal.env
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
@@ -150,12 +150,12 @@ networks:
     driver: bridge
     internal: true
 
-#  epivar-node-2-server-net:
-#    driver: bridge
-#    internal: true
-#  epivar-node-2-redis-net:
-#    driver: bridge
-#    internal: true
-#  epivar-node-2-db-net:
-#    driver: bridge
-#    internal: true
+  epivar-node-2-server-net:
+    driver: bridge
+    internal: true
+  epivar-node-2-redis-net:
+    driver: bridge
+    internal: true
+  epivar-node-2-db-net:
+    driver: bridge
+    internal: true
