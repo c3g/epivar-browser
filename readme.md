@@ -21,7 +21,7 @@ The tool itself is described in a 2023 preprint:
 ## Documentation
 
 * [Setting up an EpiVar node](/docs/setting_up_a_node.md) 
-* Working with the EpiVar Browser production instance (for C3G employees)
+* [Working with the EpiVar Browser production instance (for C3G employees)](/epivar-prod/README.md)
 * [Developing EpiVar](/docs/development.md)
 * [Old setup guide (deprecated)](/docs/old_setup_guide.md)
 
