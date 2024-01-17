@@ -1,0 +1,1562 @@
+[
+  {
+    "path": "RNAseq/AF02_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF02_Flu.forward.rnaseq",
+    "donor": "AF02",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF02_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF02_NI.forward.rnaseq",
+    "donor": "AF02",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF04_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF04_Flu.forward.rnaseq",
+    "donor": "AF04",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF04_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF04_NI.forward.rnaseq",
+    "donor": "AF04",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF06_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF06_Flu.forward.rnaseq",
+    "donor": "AF06",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF06_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF06_NI.forward.rnaseq",
+    "donor": "AF06",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF08_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF08_Flu.forward.rnaseq",
+    "donor": "AF08",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF08_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF08_NI.forward.rnaseq",
+    "donor": "AF08",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF10_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF10_Flu.forward.rnaseq",
+    "donor": "AF10",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF10_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF10_NI.forward.rnaseq",
+    "donor": "AF10",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF12_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF12_Flu.forward.rnaseq",
+    "donor": "AF12",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF12_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF12_NI.forward.rnaseq",
+    "donor": "AF12",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF14_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF14_Flu.forward.rnaseq",
+    "donor": "AF14",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF14_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF14_NI.forward.rnaseq",
+    "donor": "AF14",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF16_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF16_Flu.forward.rnaseq",
+    "donor": "AF16",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF16_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF16_NI.forward.rnaseq",
+    "donor": "AF16",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF18_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF18_Flu.forward.rnaseq",
+    "donor": "AF18",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF18_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF18_NI.forward.rnaseq",
+    "donor": "AF18",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF20_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF20_Flu.forward.rnaseq",
+    "donor": "AF20",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF20_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF20_NI.forward.rnaseq",
+    "donor": "AF20",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF22_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF22_Flu.forward.rnaseq",
+    "donor": "AF22",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF22_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF22_NI.forward.rnaseq",
+    "donor": "AF22",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF24_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF24_Flu.forward.rnaseq",
+    "donor": "AF24",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF24_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF24_NI.forward.rnaseq",
+    "donor": "AF24",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF26_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF26_Flu.forward.rnaseq",
+    "donor": "AF26",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF26_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF26_NI.forward.rnaseq",
+    "donor": "AF26",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF28_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF28_Flu.forward.rnaseq",
+    "donor": "AF28",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF28_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF28_NI.forward.rnaseq",
+    "donor": "AF28",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF30_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF30_Flu.forward.rnaseq",
+    "donor": "AF30",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF30_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF30_NI.forward.rnaseq",
+    "donor": "AF30",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF32_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF32_Flu.forward.rnaseq",
+    "donor": "AF32",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF32_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF32_NI.forward.rnaseq",
+    "donor": "AF32",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF34_Flu.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF34_Flu.forward.rnaseq",
+    "donor": "AF34",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF34_NI.forward.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF34_NI.forward.rnaseq",
+    "donor": "AF34",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF36_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF36_Flu.forward.rnaseq",
+    "donor": "AF36",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF36_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF36_NI.forward.rnaseq",
+    "donor": "AF36",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF38_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF38_Flu.forward.rnaseq",
+    "donor": "AF38",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF38_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF38_NI.forward.rnaseq",
+    "donor": "AF38",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU01_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU01_Flu.forward.rnaseq",
+    "donor": "EU01",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU01_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU01_NI.forward.rnaseq",
+    "donor": "EU01",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU03_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU03_Flu.forward.rnaseq",
+    "donor": "EU03",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU03_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU03_NI.forward.rnaseq",
+    "donor": "EU03",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU05_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU05_Flu.forward.rnaseq",
+    "donor": "EU05",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU05_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU05_NI.forward.rnaseq",
+    "donor": "EU05",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU07_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU07_Flu.forward.rnaseq",
+    "donor": "EU07",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU07_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU07_NI.forward.rnaseq",
+    "donor": "EU07",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU09_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU09_Flu.forward.rnaseq",
+    "donor": "EU09",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU09_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU09_NI.forward.rnaseq",
+    "donor": "EU09",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU13_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU13_Flu.forward.rnaseq",
+    "donor": "EU13",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU13_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU13_NI.forward.rnaseq",
+    "donor": "EU13",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU15_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU15_Flu.forward.rnaseq",
+    "donor": "EU15",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU15_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU15_NI.forward.rnaseq",
+    "donor": "EU15",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU17_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU17_Flu.forward.rnaseq",
+    "donor": "EU17",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU17_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU17_NI.forward.rnaseq",
+    "donor": "EU17",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU19_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU19_Flu.forward.rnaseq",
+    "donor": "EU19",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU19_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU19_NI.forward.rnaseq",
+    "donor": "EU19",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU21_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU21_Flu.forward.rnaseq",
+    "donor": "EU21",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU21_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU21_NI.forward.rnaseq",
+    "donor": "EU21",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU25_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU25_Flu.forward.rnaseq",
+    "donor": "EU25",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU25_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU25_NI.forward.rnaseq",
+    "donor": "EU25",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU27_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU27_Flu.forward.rnaseq",
+    "donor": "EU27",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU27_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU27_NI.forward.rnaseq",
+    "donor": "EU27",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU29_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU29_Flu.forward.rnaseq",
+    "donor": "EU29",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU29_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU29_NI.forward.rnaseq",
+    "donor": "EU29",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU31_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU31_Flu.forward.rnaseq",
+    "donor": "EU31",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU31_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU31_NI.forward.rnaseq",
+    "donor": "EU31",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU33_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU33_Flu.forward.rnaseq",
+    "donor": "EU33",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU33_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU33_NI.forward.rnaseq",
+    "donor": "EU33",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU37_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU37_Flu.forward.rnaseq",
+    "donor": "EU37",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU37_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU37_NI.forward.rnaseq",
+    "donor": "EU37",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU39_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU39_Flu.forward.rnaseq",
+    "donor": "EU39",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU39_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU39_NI.forward.rnaseq",
+    "donor": "EU39",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU41_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU41_Flu.forward.rnaseq",
+    "donor": "EU41",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU41_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU41_NI.forward.rnaseq",
+    "donor": "EU41",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU43_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU43_Flu.forward.rnaseq",
+    "donor": "EU43",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU43_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU43_NI.forward.rnaseq",
+    "donor": "EU43",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU47_Flu.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU47_Flu.forward.rnaseq",
+    "donor": "EU47",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU47_NI.forward.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU47_NI.forward.rnaseq",
+    "donor": "EU47",
+    "view": "signal_forward",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF02_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF02_Flu.reverse.rnaseq",
+    "donor": "AF02",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF02_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF02_NI.reverse.rnaseq",
+    "donor": "AF02",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF04_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF04_Flu.reverse.rnaseq",
+    "donor": "AF04",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF04_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF04_NI.reverse.rnaseq",
+    "donor": "AF04",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF06_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF06_Flu.reverse.rnaseq",
+    "donor": "AF06",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF06_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF06_NI.reverse.rnaseq",
+    "donor": "AF06",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF08_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF08_Flu.reverse.rnaseq",
+    "donor": "AF08",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF08_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF08_NI.reverse.rnaseq",
+    "donor": "AF08",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF10_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF10_Flu.reverse.rnaseq",
+    "donor": "AF10",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF10_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF10_NI.reverse.rnaseq",
+    "donor": "AF10",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF12_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF12_Flu.reverse.rnaseq",
+    "donor": "AF12",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF12_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF12_NI.reverse.rnaseq",
+    "donor": "AF12",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF14_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF14_Flu.reverse.rnaseq",
+    "donor": "AF14",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF14_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF14_NI.reverse.rnaseq",
+    "donor": "AF14",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF16_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF16_Flu.reverse.rnaseq",
+    "donor": "AF16",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF16_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF16_NI.reverse.rnaseq",
+    "donor": "AF16",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF18_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF18_Flu.reverse.rnaseq",
+    "donor": "AF18",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF18_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF18_NI.reverse.rnaseq",
+    "donor": "AF18",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF20_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF20_Flu.reverse.rnaseq",
+    "donor": "AF20",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF20_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF20_NI.reverse.rnaseq",
+    "donor": "AF20",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF22_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF22_Flu.reverse.rnaseq",
+    "donor": "AF22",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF22_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF22_NI.reverse.rnaseq",
+    "donor": "AF22",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF24_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF24_Flu.reverse.rnaseq",
+    "donor": "AF24",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF24_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF24_NI.reverse.rnaseq",
+    "donor": "AF24",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF26_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF26_Flu.reverse.rnaseq",
+    "donor": "AF26",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF26_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF26_NI.reverse.rnaseq",
+    "donor": "AF26",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF28_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF28_Flu.reverse.rnaseq",
+    "donor": "AF28",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF28_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF28_NI.reverse.rnaseq",
+    "donor": "AF28",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF30_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF30_Flu.reverse.rnaseq",
+    "donor": "AF30",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF30_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF30_NI.reverse.rnaseq",
+    "donor": "AF30",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF32_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF32_Flu.reverse.rnaseq",
+    "donor": "AF32",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF32_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF32_NI.reverse.rnaseq",
+    "donor": "AF32",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF34_Flu.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "Flu",
+    "sample_name": "AF34_Flu.reverse.rnaseq",
+    "donor": "AF34",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF34_NI.reverse.hg38.bw",
+    "ethnicity": "AF",
+    "condition": "NI",
+    "sample_name": "AF34_NI.reverse.rnaseq",
+    "donor": "AF34",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF36_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF36_Flu.reverse.rnaseq",
+    "donor": "AF36",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF36_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF36_NI.reverse.rnaseq",
+    "donor": "AF36",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF38_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "AF38_Flu.reverse.rnaseq",
+    "donor": "AF38",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/AF38_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "AF38_NI.reverse.rnaseq",
+    "donor": "AF38",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU01_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU01_Flu.reverse.rnaseq",
+    "donor": "EU01",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU01_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU01_NI.reverse.rnaseq",
+    "donor": "EU01",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU03_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU03_Flu.reverse.rnaseq",
+    "donor": "EU03",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU03_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU03_NI.reverse.rnaseq",
+    "donor": "EU03",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU05_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU05_Flu.reverse.rnaseq",
+    "donor": "EU05",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU05_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU05_NI.reverse.rnaseq",
+    "donor": "EU05",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU07_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU07_Flu.reverse.rnaseq",
+    "donor": "EU07",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU07_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU07_NI.reverse.rnaseq",
+    "donor": "EU07",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU09_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU09_Flu.reverse.rnaseq",
+    "donor": "EU09",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU09_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU09_NI.reverse.rnaseq",
+    "donor": "EU09",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU13_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU13_Flu.reverse.rnaseq",
+    "donor": "EU13",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU13_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU13_NI.reverse.rnaseq",
+    "donor": "EU13",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU15_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU15_Flu.reverse.rnaseq",
+    "donor": "EU15",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU15_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU15_NI.reverse.rnaseq",
+    "donor": "EU15",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU17_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU17_Flu.reverse.rnaseq",
+    "donor": "EU17",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU17_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU17_NI.reverse.rnaseq",
+    "donor": "EU17",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU19_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU19_Flu.reverse.rnaseq",
+    "donor": "EU19",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU19_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU19_NI.reverse.rnaseq",
+    "donor": "EU19",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU21_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU21_Flu.reverse.rnaseq",
+    "donor": "EU21",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU21_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU21_NI.reverse.rnaseq",
+    "donor": "EU21",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU25_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU25_Flu.reverse.rnaseq",
+    "donor": "EU25",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU25_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU25_NI.reverse.rnaseq",
+    "donor": "EU25",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU27_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU27_Flu.reverse.rnaseq",
+    "donor": "EU27",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU27_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU27_NI.reverse.rnaseq",
+    "donor": "EU27",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU29_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU29_Flu.reverse.rnaseq",
+    "donor": "EU29",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU29_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU29_NI.reverse.rnaseq",
+    "donor": "EU29",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU31_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU31_Flu.reverse.rnaseq",
+    "donor": "EU31",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU31_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU31_NI.reverse.rnaseq",
+    "donor": "EU31",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU33_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU33_Flu.reverse.rnaseq",
+    "donor": "EU33",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU33_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU33_NI.reverse.rnaseq",
+    "donor": "EU33",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU37_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU37_Flu.reverse.rnaseq",
+    "donor": "EU37",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU37_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU37_NI.reverse.rnaseq",
+    "donor": "EU37",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU39_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU39_Flu.reverse.rnaseq",
+    "donor": "EU39",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU39_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU39_NI.reverse.rnaseq",
+    "donor": "EU39",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU41_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU41_Flu.reverse.rnaseq",
+    "donor": "EU41",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU41_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU41_NI.reverse.rnaseq",
+    "donor": "EU41",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU43_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU43_Flu.reverse.rnaseq",
+    "donor": "EU43",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU43_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU43_NI.reverse.rnaseq",
+    "donor": "EU43",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU47_Flu.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "Flu",
+    "sample_name": "EU47_Flu.reverse.rnaseq",
+    "donor": "EU47",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  },
+  {
+    "path": "RNAseq/EU47_NI.reverse.hg38.bw",
+    "ethnicity": "EU",
+    "condition": "NI",
+    "sample_name": "EU47_NI.reverse.rnaseq",
+    "donor": "EU47",
+    "view": "signal_reverse",
+    "type": "bigWig",
+    "assay": "RNA-Seq"
+  }
+]

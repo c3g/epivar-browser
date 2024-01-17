@@ -6,7 +6,7 @@
 
 // noinspection JSUnusedGlobalSymbols
 module.exports = {
-  title: "Aracena 𝘦𝘵 𝘢𝘭. lift-over",
+  title: "Aracena 𝘦𝘵 𝘢𝘭. RNA-seq liftover",
   assembly: "hg38",
 
   conditions: [
