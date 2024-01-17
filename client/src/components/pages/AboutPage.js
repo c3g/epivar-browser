@@ -14,7 +14,7 @@ const AboutPage = () => {
 
   return <Container className="Page">
     <Row>
-      <Col md="12" lg={{size: 10, offset: 1}}>
+      <Col md="12">
         <h2>About the EpiVar Browser</h2>
         <h3>Approach</h3>
         <p>
@@ -62,10 +62,10 @@ const AboutPage = () => {
       </Col>
     </Row>
     <Row>
-      <Col md="12" lg={{size: 10, offset: 1}}>
+      <Col md="12">
         <h3>Team</h3>
       </Col>
-      <Col sm="12" md="5" lg={{size: 4, offset: 1}}>
+      <Col sm="12" md="5">
         <h4>McGill University / Kyoto University</h4>
         <ul>
           <li>Alain Pacis</li>
@@ -83,7 +83,7 @@ const AboutPage = () => {
           <li>Guillaume Bourque</li>
         </ul>
       </Col>
-      <Col sm="12" md="7" lg="6">
+      <Col sm="12" md="7">
         <h4>University of Chicago / Universit&eacute; de Montr&eacute;al</h4>
         <ul>
           <li>Katherine A Aracena</li>
@@ -100,7 +100,7 @@ const AboutPage = () => {
       </Col>
     </Row>
     <Row>
-      <Col md="12" lg={{size: 10, offset: 1}}>
+      <Col md="12">
         <h3>Funding and Support</h3>
         <p>
           This work was supported by a Canada Institute of Health Research (CIHR) program grant (CEE-151618) for the
