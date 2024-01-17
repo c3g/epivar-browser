@@ -17,3 +17,4 @@ export const ALL_ASSAYS = [
 ];
 
 export const AVAILABLE_ASSAYS = config.availableAssays ?? ALL_ASSAYS;
+export const AVAILABLE_ASSAYS_SET = new Set(AVAILABLE_ASSAYS);

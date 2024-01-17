@@ -1,7 +1,5 @@
-import {AVAILABLE_ASSAYS} from "../helpers/assays.mjs";
+import {AVAILABLE_ASSAYS_SET} from "../helpers/assays.mjs";
 import db from "./db.mjs";
-
-const AVAILABLE_ASSAYS_SET = new Set(AVAILABLE_ASSAYS);
 
 export const list = () => {
   return db.findAll("SELECT id, name FROM assays ORDER BY id")

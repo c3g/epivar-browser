@@ -11,7 +11,7 @@ const genesFeaturesPath = process.argv[2] || "/dev/stdin";
 
 import {precomputedPoints} from "./_common.mjs";
 
-import {ASSAY_RNA_SEQ} from "../helpers/assays.mjs";
+import {ASSAY_RNA_SEQ, AVAILABLE_ASSAYS_SET} from "../helpers/assays.mjs";
 import db from "../models/db.mjs";
 import Gene from "../models/genes.mjs";
 
@@ -82,25 +82,27 @@ console.log("Done genes.txt");
  */
 const geneAssayFeatures = parseCSVSync(fs.readFileSync(genesFeaturesPath), {columns: true});
 
-const assayFeatures = geneAssayFeatures.flatMap(row => {
-  const featureStr = row.peak_ids.slice(3);
-  const feature = featureStr.split("_");
+const assayFeatures = geneAssayFeatures
+  .filter((row) => AVAILABLE_ASSAYS_SET.has(row.feature_type))
+  .flatMap(row => {
+    const featureStr = row.peak_ids.slice(3);
+    const feature = featureStr.split("_");
 
-  const assayID = assaysByName[row.feature_type];
-  const assayPoints = precomputedPoints[row.feature_type];
+    const assayID = assaysByName[row.feature_type];
+    const assayPoints = precomputedPoints[row.feature_type];
 
-  const gene = genesByNormName[Gene.normalizeGeneName(row.symbol)];
-  if (!gene) return [];
-  return [[
-    `${featureStr}:${assayID}`,
-    feature.slice(0, feature.length-2).join("_"),  // Some unknown chromosomes have _ in them, how annoying
-    +feature.at(-2),
-    +feature.at(-1),
-    assayID,
-    gene,
-    assayPoints[featureStr],  // Pre-computed points
-  ]];
-});
+    const gene = genesByNormName[Gene.normalizeGeneName(row.symbol)];
+    if (!gene) return [];
+    return [[
+      `${featureStr}:${assayID}`,
+      feature.slice(0, feature.length-2).join("_"),  // Some unknown chromosomes have _ in them, how annoying
+      +feature.at(-2),
+      +feature.at(-1),
+      assayID,
+      gene,
+      assayPoints[featureStr],  // Pre-computed points
+    ]];
+  });
 
 await db.insertMany(
   `
