@@ -126,7 +126,7 @@ services:
     networks:
       - epivar-node-2-redis-net
     volumes:
-      - node2/volumes/redis:/data
+      - ./node2/volumes/redis:/data
 
   epivar-node-2-db:
     image: postgres:16
