@@ -1,5 +1,5 @@
-import React from 'react'
-import {useSelector} from "react-redux";
+import React, {useCallback} from 'react'
+import {useDispatch, useSelector} from "react-redux";
 import {Alert, Button, Container, Input} from 'reactstrap'
 import {Link, useLocation, useNavigate} from "react-router-dom";
 
@@ -8,9 +8,11 @@ import Icon from "./Icon";
 import {EPIVAR_NODES} from "../config";
 import {SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
 import {useCurrentDataset, useDatasetsByNode, useDevMode, useNode} from "../hooks";
+import {setNode} from "../actions";
 
 export default function Header({children, onAbout, /*onDatasets, */onDatasetAbout, onOverview, onExplore, onFAQ,
                                  /*, onContact*/}) {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -23,6 +25,13 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
   const datasetsByNode = useDatasetsByNode();
 
   console.debug("Datasets by node:", datasetsByNode);
+
+  const onDatasetChange = useCallback((e) => {
+    const newNode = e.target.value;
+    if (newNode !== node) {
+      dispatch(setNode(newNode));
+    }
+  }, [dispatch]);
 
   return <div>
     <div className='Header'>
@@ -43,7 +52,7 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
         <div className="Header__dataset">
           <div>
             <label htmlFor="dataset-selector">Dataset:</label>
-            <Input type="select" id="dataset-selector" value={node ?? undefined}>
+            <Input type="select" id="dataset-selector" value={node ?? undefined} onChange={onDatasetChange}>
               {EPIVAR_NODES.map((n) => {
                 if (n in datasetsByNode) {
                   const d = datasetsByNode[n];

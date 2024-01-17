@@ -2,7 +2,7 @@ import { combineReducers } from "redux"
 
 import {EPIVAR_NODES} from "./config";
 import * as k from "./constants/ActionTypes"
-import {makeDataReducer, makeDefaultDataState, makeDefaultListState, makeListReducer} from "./helpers/reducers";
+import {makeDefaultListState, makeListReducer} from "./helpers/reducers";
 
 
 const defaultChrom = 'rsID';
@@ -62,7 +62,7 @@ const defaultSamples = {
     end: undefined,
     ref: undefined,
   }
-}
+};
 function samplesReducer(state = defaultSamples, action) {
   switch (action.type) {
     case k.SAMPLES.REQUEST: {
@@ -74,6 +74,12 @@ function samplesReducer(state = defaultSamples, action) {
     case k.SAMPLES.ERROR: {
       return { ...state, isLoading: false }
     }
+
+    // TODO: this can create a race condition with samples fetching
+    case k.SET_NODE: {
+      return defaultSamples;
+    }
+
     default:
       return state;
   }
@@ -114,7 +120,7 @@ const defaultPositions = {
   isLoaded: false,
   lastRequestDispatched: 0,
   list: [],
-}
+};
 function positionsReducer(state = defaultPositions, action) {
   switch (action.type) {
     case k.POSITIONS.REQUEST: {
@@ -132,6 +138,12 @@ function positionsReducer(state = defaultPositions, action) {
       // TODO: Should this use cancel token?
       return {...state, isLoading: action.meta.dispatchedAt >= state.lastRequestDispatched ? false : state.isLoading}
     }
+
+    // TODO: this can create a race condition with positions fetching
+    case k.SET_NODE: {
+      return defaultPositions;
+    }
+
     default:
       return state;
   }
@@ -234,6 +246,12 @@ const overviewReducer = (state = defaultOverview, action) => {
     case k.OVERVIEW_CONFIG.ERROR: {
       return {...state, isLoading: false};
     }
+
+    // TODO: this can create a race condition with overview config loading
+    case k.SET_NODE: {
+      return defaultOverview;
+    }
+
     default:
       return state;
   }
@@ -289,13 +307,40 @@ const manhattanReducer = (state = defaultManhattan, action) => {
       };
     }
 
+    // TODO: this can create a race condition with manhattan data loading
+    case k.SET_NODE: {
+      return defaultManhattan;
+    }
+
     default:
       return state;
   }
 };
 
-const defaultUser = makeDefaultDataState();
-const userReducer = makeDataReducer(k.USER, defaultUser);
+const defaultUser = {
+  isLoading: false,
+  isLoaded: false,
+  data: null,
+};
+const userReducer = (state = defaultUser, action) => {
+  switch (action.type) {
+    case k.USER.REQUEST:
+      return {...state, isLoading: true};
+    case k.USER.RECEIVE:
+      return {...state, isLoading: false, isLoaded: true, data: action.payload};
+    case k.USER.ERROR:
+      return {...state, isLoading: false};
+
+    // TODO: this can create a race condition with user fetching
+    case k.SET_NODE: {
+      return defaultUser;
+    }
+
+    default:
+      return state;
+  }
+};
+
 
 const defaultMessages = makeDefaultListState();
 const messagesReducer = makeListReducer(k.MESSAGES, defaultMessages);
