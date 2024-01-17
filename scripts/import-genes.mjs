@@ -15,10 +15,7 @@ import {ASSAY_RNA_SEQ, AVAILABLE_ASSAYS_SET} from "../helpers/assays.mjs";
 import db from "../models/db.mjs";
 import Gene from "../models/genes.mjs";
 
-const rnaSeqPrecomputed = precomputedPoints[ASSAY_RNA_SEQ];
-
 const assaysByName = Object.fromEntries((await db.findAll("SELECT * FROM assays")).map(r => [r.name, r.id]));
-const rnaSeq = assaysByName[ASSAY_RNA_SEQ];
 
 const parseGene = line => {
   const fields = line.trim().split('\t');
@@ -36,41 +33,47 @@ console.log(genes.length, 'records');
 await db.run("TRUNCATE TABLE genes RESTART IDENTITY CASCADE");
 await db.run("TRUNCATE TABLE features RESTART IDENTITY CASCADE");
 
-// Add genes and corresponding features
+// Add genes
 await db.insertMany(`INSERT INTO genes ("name_norm", "name") VALUES ($1, $2)`, genes);
 
-const genesByNormName = Object.fromEntries(
-  (await db.findAll(`SELECT * FROM genes`)).map(row => [row.name_norm, row.id]));
+// If RNA-seq is enabled, add RNA-seq gene features
+if (AVAILABLE_ASSAYS_SET.has(ASSAY_RNA_SEQ)) {
+  const rnaSeqAssayID = assaysByName[ASSAY_RNA_SEQ];
+  const rnaSeqPrecomputed = precomputedPoints[ASSAY_RNA_SEQ];
 
-const parseGeneFeature = line => {
-  const fields = line.trim().split("\t");
-  const chrom = fields[1].slice(3);
-  const start = +fields[2];
-  const end = +fields[3];
-  const strand = fields[4];
-  const geneNameNorm = Gene.normalizeGeneName(fields[0]);
-  const gene = genesByNormName[geneNameNorm];
-  if (!gene) return [];
-  return [[
-    `${chrom}_${start}_${end}_${strand}:${rnaSeq}`,
-    chrom, // chrom
-    start, // start
-    end, // end
-    strand, // strand
-    rnaSeq,
-    gene,
-    rnaSeqPrecomputed[fields[0]] ?? rnaSeqPrecomputed[geneNameNorm],  // Pre-computed points
-  ]];
-};
+  const genesByNormName = Object.fromEntries(
+    (await db.findAll(`SELECT * FROM genes`)).map(row => [row.name_norm, row.id]));
 
-await db.insertMany(
-  `
+  const parseGeneFeature = line => {
+    const fields = line.trim().split("\t");
+    const chrom = fields[1].slice(3);
+    const start = +fields[2];
+    const end = +fields[3];
+    const strand = fields[4];
+    const geneNameNorm = Gene.normalizeGeneName(fields[0]);
+    const gene = genesByNormName[geneNameNorm];
+    if (!gene) return [];
+    return [[
+      `${chrom}_${start}_${end}_${strand}:${rnaSeqAssayID}`,
+      chrom, // chrom
+      start, // start
+      end, // end
+      strand, // strand
+      rnaSeqAssayID,
+      gene,
+      rnaSeqPrecomputed[fields[0]] ?? rnaSeqPrecomputed[geneNameNorm],  // Pre-computed points
+    ]];
+  };
+
+  await db.insertMany(
+    `
   INSERT INTO features ("nat_id", "chrom", "start", "end", "strand", "assay", "gene", "points")
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
   ON CONFLICT DO NOTHING
   `,
-  geneLines.flatMap(parseGeneFeature),
-);
+    geneLines.flatMap(parseGeneFeature),
+  );
+}
 
 console.log("Done genes.txt");
 
