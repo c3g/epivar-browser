@@ -8,19 +8,21 @@ import fs from "node:fs";
 import md5 from "md5";
 import {groupBy, map, path as prop} from "rambda";
 
-import bigWigMerge from "../helpers/bigwig-merge.js";
-import bigWigChromosomeLength from "../helpers/bigwig-chromosome-length.js";
-import {boxPlot, getDomain, PLOT_HEIGHT, PLOT_WIDTH} from "../helpers/boxplot.mjs";
-import cache from "../helpers/cache.mjs";
-import valueAt from "../helpers/value-at.mjs";
 import config from "../config.js";
 import {NODE_BASE_URL, MERGED_TRACKS_DIR} from "../envConfig.js";
 import Metadata from "./metadata.js";
 import Samples from "./samples.mjs";
+
+import {ASSAY_RNA_SEQ} from "../helpers/assays.mjs";
+import bigWigMerge from "../helpers/bigwig-merge.js";
+import bigWigChromosomeLength from "../helpers/bigwig-chromosome-length.js";
+import {boxPlot, getDomain, PLOT_HEIGHT, PLOT_WIDTH} from "../helpers/boxplot.mjs";
+import cache from "../helpers/cache.mjs";
+import {belowThreshold} from "../helpers/censorship.mjs";
 import {DEFAULT_CONDITIONS} from "../helpers/defaultValues.mjs";
 import {donorLookup} from "../helpers/donors.mjs";
 import {normalizeChrom, GENOTYPE_STATES, GENOTYPE_STATE_NAMES} from "../helpers/genome.mjs";
-import {belowThreshold} from "../helpers/censorship.mjs";
+import valueAt from "../helpers/value-at.mjs";
 
 
 export default {
@@ -84,7 +86,7 @@ async function values(peak, usePrecomputed = false) {
     // RNA-seq results are either forward or reverse strand; we only want tracks from the direction
     // of the selected peak (otherwise results will appear incorrectly, and we'll have 2x the # of
     // values we should in some cases.)
-    track.assay !== "RNA-Seq" || track.view === strandToView[peak.feature.strand]
+    track.assay !== ASSAY_RNA_SEQ || track.view === strandToView[peak.feature.strand]
   ).map(track =>
     getValueForTrack(track).then(value => (value === undefined ? undefined : {
       donor: track.donor,

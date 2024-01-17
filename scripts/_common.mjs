@@ -2,19 +2,10 @@ import fs from "fs";
 
 import envConfig from "../envConfig.js";
 
+import {AVAILABLE_ASSAYS} from "../helpers/assays.mjs";
 import {donorLookup} from "../helpers/donors.mjs";
 
 export const stripQuotes = str => str.replace(/"/g, "").trim();
-
-// TODO: configurable
-export const ASSAYS = [
-  'RNA-seq',
-  'ATAC-seq',
-  'H3K4me1',
-  'H3K4me3',
-  'H3K27ac',
-  'H3K27me3',
-];
 
 export const loadingPrecomputedPoints = !!envConfig.POINTS_TEMPLATE;
 export const precomputedPoints = {};
@@ -22,7 +13,7 @@ export const precomputedPoints = {};
 if (loadingPrecomputedPoints) {
   console.log("Pre-loading precomputed point matrices");
 
-  ASSAYS.forEach(assay => {
+  AVAILABLE_ASSAYS.forEach(assay => {
     const fc = fs.readFileSync(envConfig.POINTS_TEMPLATE.replace(/\$ASSAY/g, assay))
       .toString()
       .split("\n");

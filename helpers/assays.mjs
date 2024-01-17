@@ -1,3 +1,5 @@
+import config from "../config.js";
+
 export const ASSAY_RNA_SEQ = "RNA-seq";
 export const ASSAY_ATAC_SEQ = "ATAC-seq";
 export const ASSAY_H3K4ME1 = "H3K4me1";
@@ -13,3 +15,5 @@ export const ALL_ASSAYS = [
   ASSAY_H3K27AC,
   ASSAY_H3K27ME3,
 ];
+
+export const AVAILABLE_ASSAYS = config.availableAssays ?? ALL_ASSAYS;
