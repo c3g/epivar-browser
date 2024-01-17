@@ -37,7 +37,7 @@ services:
       - EPIVAR_LOW_COUNT_THRESHOLD=5
     volumes:
       # user information
-      - /etc/passwd:/etc/passwd:ro
+#      - /etc/passwd:/etc/passwd:ro
       # dataset configuration: about Markdown file, EpiVar config.js
       - ./node1/about.md:/app/data/about.md
       - ./node1/config.js:/app/config.js:ro
@@ -81,62 +81,62 @@ services:
 
   # Node 2: hg38 data (lifted over) ------------------------------------------------------------------------------------
 
-  # epivar-node-2-server:
-  #   # user: $USER:$USER
-  #   image: ghcr.io/c3g/epivar-server:latest
-  #   networks:
-  #     - epivar-node-2-server-net
-  #     - epivar-node-2-redis-net
-  #     - epivar-node-2-db-net
-  #   depends_on:
-  #     - epivar-node-2-redis
-  #     - epivar-node-2-db
-  #   env_file:
-  #     - ./node2/secrets.env
-  #   environment:
-  #     - NODE_ENV=production
-  #     - EPIVAR_NODE_BASE_URL=https://flu-infection.vhost38.genap.ca/aracena-hg38
-  #     - EPIVAR_REDIS_CONNECTION=redis://epivar-node-2-redis:6379
-  #     - EPIVAR_IMPORT_MAX_P_VAL=0.05
-  #     - EPIVAR_LOW_COUNT_THRESHOLD=5
-  #   volumes:
-  #     # user information
-  #     - /etc/passwd:/etc/passwd:ro
-  #     # dataset configuration: about Markdown file, EpiVar config.js, tracks metadata.json
-  #     - ./node2/about.md:/app/data/about.md
-  #     - ./node2/config.js:/app/config.js:ro
-  #     # genotypes: VCF + index file
-  #     - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.GRCh38.vcf.gz:/app/data/genotypes.vcf.gz:ro
-  #     - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.GRCh38.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
-  #     # peaks files
-  #     - /flu-infection-data/node2/matrices:/app/input-files/matrices:ro
-  #     - /flu-infection-data/node2/qtls:/app/input-files/qtls:ro
-  #     # tracks:
-  #     #  - metadata JSON file,
-  #     - node1/metadata.json:/app/data/metadata.json:ro
-  #     #  - sample bigWigs,
-  #     - /flu-infection-data/node1/tracks:/tracks:ro
-  #     #  - writeable volume for on-the-fly merged tracks,
-  #     - /flu-infection-data/node1/mergedTracks:/mergedTracks
-  #     #  - other static tracks for showing in the UCSC browser.
-  #     #    *** NONE FOR NODE 2 ***
-  #
-  # epivar-node-2-redis:
-  #   image: redis:7.2
-  #   networks:
-  #     - epivar-node-2-redis-net
-  #   volumes:
-  #     - node2/volumes/redis:/data
-  #
-  # epivar-node-2-db:
-  #   image: postgres:16
-  #   networks:
-  #     - epivar-node-2-db-net
-  #   env_file:
-  #     - ./node2/secrets.env
-  #   volumes:
-  #     - ./node2/postgresql.conf:/etc/postgresql/postgresql.conf:ro
-  #     - ./node2/volumes/db:/var/lib/postgresql/data
+  epivar-node-2-server:
+    # user: $USER:$USER
+    image: ghcr.io/c3g/epivar-server:latest
+    networks:
+      - epivar-node-2-server-net
+      - epivar-node-2-redis-net
+      - epivar-node-2-db-net
+    depends_on:
+      - epivar-node-2-redis
+      - epivar-node-2-db
+    env_file:
+      - ./node2/secrets.env
+    environment:
+      - NODE_ENV=production
+      - EPIVAR_NODE_BASE_URL=https://flu-infection.vhost38.genap.ca/aracena-hg38
+      - EPIVAR_REDIS_CONNECTION=redis://epivar-node-2-redis:6379
+      - EPIVAR_IMPORT_MAX_P_VAL=0.05
+      - EPIVAR_LOW_COUNT_THRESHOLD=5
+    volumes:
+      # user information
+#      - /etc/passwd:/etc/passwd:ro
+      # dataset configuration: about Markdown file, EpiVar config.js, tracks metadata.json
+      - ./node2/about.md:/app/data/about.md
+      - ./node2/config.js:/app/config.js:ro
+      # genotypes: VCF + index file
+      - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.GRCh38.vcf.gz:/app/data/genotypes.vcf.gz:ro
+      - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.GRCh38.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
+      # peaks files
+      - /flu-infection-data/node2/matrices:/app/input-files/matrices:ro
+      - /flu-infection-data/node2/qtls:/app/input-files/qtls:ro
+      # tracks:
+      #  - metadata JSON file,
+      - node2/metadata.json:/app/data/metadata.json:ro
+      #  - sample bigWigs,
+      - /flu-infection-data/node2/tracks:/tracks:ro
+      #  - writeable volume for on-the-fly merged tracks,
+      - /flu-infection-data/node2/mergedTracks:/mergedTracks
+      #  - other static tracks for showing in the UCSC browser.
+      #    *** NONE FOR NODE 2 ***
+
+  epivar-node-2-redis:
+    image: redis:7.2
+    networks:
+      - epivar-node-2-redis-net
+    volumes:
+      - node2/volumes/redis:/data
+
+  epivar-node-2-db:
+    image: postgres:16
+    networks:
+      - epivar-node-2-db-net
+    env_file:
+      - ./node2/secrets.env
+    volumes:
+      - ./node2/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./node2/volumes/db:/var/lib/postgresql/data
 
   # --------------------------------------------------------------------------------------------------------------------
 
