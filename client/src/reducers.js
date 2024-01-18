@@ -26,7 +26,8 @@ const defaultUI = {
 function uiReducer(state = defaultUI, action) {
   switch (action.type) {
     case k.SET_NODE: {
-      return { ...state, node: action.payload };
+      // Reset other state too when node changes
+      return { ...state, node: action.payload, chrom: defaultChrom, position: '', overview: defaultUI.overview };
     }
     case k.SET_CHROM: {
       return { ...state, chrom: action.payload };
