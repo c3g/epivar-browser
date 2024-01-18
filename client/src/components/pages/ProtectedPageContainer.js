@@ -22,18 +22,22 @@ const ProtectedPageContainer = React.memo(({children}) => {
   const {data: userData, isLoaded} = useSelector(state => state.user);
 
   const triggerLogIn = useCallback(() => {
+    if (!node) {
+      console.warn("no node selected; cannot trigger log in");
+      return;
+    }
     window.location.href = `${node}/api/auth/login?redirect=${window.location.pathname}`;
   }, [node]);
 
   useEffect(() => {
-    if (isLoaded && userData) {
+    if (node && isLoaded && userData) {
       setHasLoggedIn();
-    } else if (isLoaded && !userData) {
+    } else if (node && isLoaded && !userData) {
       if (getHasLoggedIn()) {
         triggerLogIn();
       }
     }
-  }, [userData, isLoaded]);
+  }, [node, isLoaded, userData]);
 
   const onAccess = useCallback(() => {
     if (!userData) {
