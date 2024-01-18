@@ -44,7 +44,10 @@ export async function vcfQuery(contig, start, end) {
 export function normalizeSamplesMap(lines) {
   const variant = lines.find(vcfFilterFn);
 
-  if (!variant) return undefined;
+  if (!variant) {
+    console.error(`could not find any variants (got ${lines?.length ?? 'undefined'} lines)`);
+    return undefined;
+  }
 
   const variantData = {
     chrom: variant.CHROM,
