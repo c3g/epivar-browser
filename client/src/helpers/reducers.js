@@ -1,3 +1,5 @@
+import * as k from "../constants/ActionTypes"
+
 export const makeDefaultListState = (defaultList = undefined) => ({
   isLoading: false,
   isLoaded: false,
@@ -12,13 +14,12 @@ export const makeListReducer = (types, defaultState) => (state = defaultState, a
       return {...state, isLoading: false, isLoaded: true, list: action.payload};
     case types.ERROR:
       return {...state, isLoading: false};
+
+    // TODO: this can create a race condition with fetching
+    case k.SET_NODE:
+      return defaultState;
+
     default:
       return state;
   }
 };
-
-export const makeDefaultDataState = (defaultData = undefined) => ({
-  isLoading: false,
-  isLoaded: false,
-  data: defaultData,
-});
