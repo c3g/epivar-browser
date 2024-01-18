@@ -50,8 +50,9 @@ router.get("/login",
     if (returnTo) {
       console.info(`/api/auth/login: redirecting to ${returnTo}`);
       res.redirect(returnTo);
+    } else {
+      next();
     }
-    next();
   });
 
 // router.get("/callback", passport.authenticate("openidconnect", {
