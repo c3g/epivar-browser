@@ -9,6 +9,7 @@ import cx from 'clsx'
 import Icon from './Icon'
 import PeakAssay from './PeakAssay'
 import {doSearch, setChrom, setPosition} from "../actions";
+import {useUrlEncodedNode} from "../hooks";
 
 const groupAndSortPeaks = memoizeOne(groupBy(prop('assay')));
 
@@ -17,7 +18,9 @@ const PeakResults = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const {node, chrom, position, assay: activeAssay} = params;
+  const {chrom, position, assay: activeAssay} = params;
+
+  const urlEncodedNode = useUrlEncodedNode();
 
   const assays = useSelector(state => state.assays.list || []);
 
@@ -37,12 +40,12 @@ const PeakResults = () => {
 
     if (activeAssay && !(activeAssay in peaksByAssay) && peaksLoaded) {
       // Assay isn't valid for the position in question
-      const url = `/datasets/${node}/explore/locus/${chrom}/${position}` +
+      const url = `/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}` +
         (assaysWithFeatures.length ? `/${assays[0]}` : "");
       console.info(`assay ${activeAssay} isn't valid for the locus in question; navigating to ${url}`);
       navigate(url, {replace: true});
     } else if (!activeAssay && assaysWithFeatures.length && peaksLoaded) {
-      const url = `/datasets/${node}/explore/locus/${chrom}/${position}/${assaysWithFeatures[0]}`;
+      const url = `/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}/${assaysWithFeatures[0]}`;
       console.info(`no assay selected; navigating to ${url}`);
       navigate(url, {replace: true});
     }
@@ -93,7 +96,7 @@ const PeakResults = () => {
                   className={cx({active: activeAssay === assay})}
                   onClick={() =>
                     nPeaks && navigate(
-                      `/datasets/${node}/explore/locus/${chrom}/${position}/${assay}`,
+                      `/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}/${assay}`,
                       {replace: true})}
                   disabled={!nPeaks}
                   aria-disabled={true}

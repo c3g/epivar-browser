@@ -21,7 +21,7 @@ import {
   fetchPositions,
 } from '../actions.js'
 import {useNavigate, useParams} from "react-router-dom";
-import {useDatasetIndex, useUrlEncodedNode} from "../hooks";
+import {useUrlEncodedNode} from "../hooks";
 
 const defaultChrom = "rsID";
 
@@ -48,6 +48,7 @@ const Controls = ({toggleHelp}) => {
   const params = useParams();
   const navigate = useNavigate();
 
+  const urlEncodedNode = useUrlEncodedNode();
   const chroms = useSelector(state => state.chroms);
   const {chrom, position} = useSelector(state => state.ui);
   const positions = useSelector(state => state.positions);
@@ -55,7 +56,7 @@ const Controls = ({toggleHelp}) => {
 
   const dispatch = useDispatch();
 
-  const {node: urlEncodedNode, chrom: paramsChrom, position: paramsPosition} = params;
+  const {chrom: paramsChrom, position: paramsPosition} = params;
   const {isLoading, list} = positions;
 
   const [didFirstSearch, setDidFirstSearch] = useState(false);
