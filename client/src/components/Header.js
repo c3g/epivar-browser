@@ -37,6 +37,7 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
 
     const newNode = e.target.value;
     if (newNode !== node) {
+      console.info("selecting node", newNode);
       dispatch(setNode(newNode));
     }
   }, [dispatch, isLoadingData]);
@@ -65,9 +66,9 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
                 if (n in datasetsByNode) {
                   const d = datasetsByNode[n];
                   console.debug("Adding option for dataset", n, d);
-                  return <option key={n} >{d?.title ?? ""} ({d?.assembly ?? ""})</option>;
+                  return <option key={n} value={n}>{d?.title ?? ""} ({d?.assembly ?? ""})</option>;
                 } else {
-                  return <option key={n} disabled={true}>{n} (unreachable)</option>;
+                  return <option key={n} value={n} disabled={true}>{n} (unreachable)</option>;
                 }
               })}
             </Input>
