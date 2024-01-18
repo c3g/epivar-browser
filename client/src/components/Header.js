@@ -39,8 +39,9 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
     if (newNode !== node) {
       console.info("selecting node", newNode);
       dispatch(setNode(newNode));
+      navigate(`/datasets/${encodeURIComponent(newNode)}/about`);
     }
-  }, [dispatch, isLoadingData]);
+  }, [dispatch, isLoadingData, navigate]);
 
   return <div>
     <div className='Header'>
