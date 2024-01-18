@@ -87,15 +87,13 @@ const RoutedApp = () => {
     if (!node && firstNode && datasetsByNode[firstNode]) {
       // Select first node if we haven't already done so
       dispatch(setNode(firstNode));
-    } else if (node) {
-      // TODO: report error to users
-      console.error("Either no nodes are configured, or dataset information was not fetched successfully");
     }
-  }, [datasetsByNode]);
+  }, [node, datasetsByNode]);
 
   useEffect(() => {
     if (node) {
       // When the node is set / changed, load relevant data:
+      console.info("node changed to: ", node, "re-fetching user/messages/assays");
       dispatch(fetchUser());
       dispatch(fetchMessages());  // Server-side messages, e.g. auth errors
       dispatch(fetchAssays());
