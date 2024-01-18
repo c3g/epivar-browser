@@ -24,8 +24,6 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
 
   const datasetsByNode = useDatasetsByNode();
 
-  console.debug("Datasets by node:", datasetsByNode);
-
   const isLoadingData = useSelector((state) =>
     state.assays.isLoading ||
     state.samples.isLoading ||

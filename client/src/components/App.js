@@ -35,7 +35,6 @@ const RoutedApp = () => {
   const [contactModal, setContactModal] = useState(false);
   const [termsModal, setTermsModal] = useState(false);
 
-  const node = useNode();
   const urlEncodedNode = useUrlEncodedNode();
 
   const chrom = useSelector(state => state.ui.chrom);
@@ -66,39 +65,6 @@ const RoutedApp = () => {
     }
   }, [location.pathname, urlEncodedNode, chrom, position, navigate]);
   const navigateFAQ = () => navigate("/faq");
-
-  useEffect(() => {
-    document.title = `${SITE_TITLE} | ${SITE_SUBTITLE}`;
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "~") {
-        dispatch(setDevMode(true));
-      }
-    });
-
-    // On first initialization, load datasets:
-    dispatch(fetchDatasets());
-  }, [dispatch]);
-
-  const datasetsByNode = useSelector((state) => state.datasets.datasetsByNode);
-
-  useEffect(() => {
-    const firstNode = EPIVAR_NODES[0];
-    if (!node && firstNode && datasetsByNode[firstNode]) {
-      // Select first node if we haven't already done so
-      dispatch(setNode(firstNode));
-    }
-  }, [node, datasetsByNode]);
-
-  useEffect(() => {
-    if (node) {
-      // When the node is set / changed, load relevant data:
-      console.info("node changed to: ", node, "re-fetching user/messages/assays");
-      dispatch(fetchUser());
-      dispatch(fetchMessages());  // Server-side messages, e.g. auth errors
-      dispatch(fetchAssays());
-    }
-  }, [dispatch, node]);
 
   useEffect(() => {
     if (userData.isLoaded && userData.data && !userData.data.consentedToTerms) {
@@ -146,29 +112,67 @@ const RoutedApp = () => {
 };
 
 
-const App = () => (
-  <div className='App'>
-    <Routes>
-      <Route path="/" element={<RoutedApp />}>
-        <Route index={true} element={<Navigate to="/about" replace={true} />} />
-        <Route path="about" element={<AboutPage />} />
-        {/*<Route path="datasets" element={<DatasetsPage />} />*/}
-        <Route path="datasets/:node" element={<DatasetPage />}>
-          <Route path="about" element={<DatasetAboutPage />} />
-          <Route path="overview" element={<ProtectedPageContainer><OverviewPage /></ProtectedPageContainer>} />
-          <Route path="explore" element={<ProtectedPageContainer><ExplorePage /></ProtectedPageContainer>}>
-            <Route index={true} element={<PeakResults />} />
-            <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
-            <Route path="locus/:chrom/:position" element={<PeakResults />} />
+const App = () => {
+  const dispatch = useDispatch();
+  const node = useNode();
+
+  const datasetsByNode = useSelector((state) => state.datasets.datasetsByNode);
+
+  useEffect(() => {
+    document.title = `${SITE_TITLE} | ${SITE_SUBTITLE}`;
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "~") {
+        dispatch(setDevMode(true));
+      }
+    });
+
+    // On first initialization, load datasets:
+    dispatch(fetchDatasets());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const firstNode = EPIVAR_NODES[0];
+    if (!node && firstNode && datasetsByNode[firstNode]) {
+      // Select first node if we haven't already done so
+      dispatch(setNode(firstNode));
+    }
+  }, [node, datasetsByNode]);
+
+  useEffect(() => {
+    if (node) {
+      // When the node is set / changed, load relevant data:
+      console.info("node changed to: ", node, "re-fetching user/messages/assays");
+      dispatch(fetchUser());
+      dispatch(fetchMessages());  // Server-side messages, e.g. auth errors
+      dispatch(fetchAssays());
+    }
+  }, [dispatch, node]);
+
+  return (
+    <div className='App'>
+      <Routes>
+        <Route path="/" element={<RoutedApp />}>
+          <Route index={true} element={<Navigate to="/about" replace={true} />} />
+          <Route path="about" element={<AboutPage />} />
+          {/*<Route path="datasets" element={<DatasetsPage />} />*/}
+          <Route path="datasets/:node" element={<DatasetPage />}>
+            <Route path="about" element={<DatasetAboutPage />} />
+            <Route path="overview" element={<ProtectedPageContainer><OverviewPage /></ProtectedPageContainer>} />
+            <Route path="explore" element={<ProtectedPageContainer><ExplorePage /></ProtectedPageContainer>}>
+              <Route index={true} element={<PeakResults />} />
+              <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
+              <Route path="locus/:chrom/:position" element={<PeakResults />} />
+            </Route>
           </Route>
+          <Route path="faq" element={<FAQPage />} />
+          <Route path="auth-failure" element={<div />} />
         </Route>
-        <Route path="faq" element={<FAQPage />} />
-        <Route path="auth-failure" element={<div />} />
-      </Route>
-      <Route path="*" element={<Navigate to="/" />}/>
-    </Routes>
-  </div>
-);
+        <Route path="*" element={<Navigate to="/" />}/>
+      </Routes>
+    </div>
+  );
+}
 
 
 export default App;
