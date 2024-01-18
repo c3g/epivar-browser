@@ -37,10 +37,14 @@ const PeakResults = () => {
 
     if (activeAssay && !(activeAssay in peaksByAssay) && peaksLoaded) {
       // Assay isn't valid for the position in question
-      navigate(`/datasets/${node}/explore/locus/${chrom}/${position}` +
-        (assaysWithFeatures.length ? `/${assays[0]}` : ""), {replace: true});
+      const url = `/datasets/${node}/explore/locus/${chrom}/${position}` +
+        (assaysWithFeatures.length ? `/${assays[0]}` : "");
+      console.info(`assay ${activeAssay} isn't valid for the locus in question; navigating to ${url}`);
+      navigate(url, {replace: true});
     } else if (!activeAssay && assaysWithFeatures.length && peaksLoaded) {
-      navigate(`/datasets/${node}/explore/locus/${chrom}/${position}/${assaysWithFeatures[0]}`, {replace: true});
+      const url = `/datasets/${node}/explore/locus/${chrom}/${position}/${assaysWithFeatures[0]}`;
+      console.info(`no assay selected; navigating to ${url}`);
+      navigate(url, {replace: true});
     }
   }, [activeAssay, chrom, position, peaksLoaded]);
 

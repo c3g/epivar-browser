@@ -57,11 +57,13 @@ const RoutedApp = () => {
       return;
     }
     if (chrom && position) {
-      console.debug("navigate explore - have URL-encoded node, chrom, and position", urlEncodedNode, chrom, position);
-      navigate(`/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}`);
+      const url = `/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}`;
+      console.debug("navigate explore - have URL-encoded node, chrom, and position", url);
+      navigate(url);
     } else {
-      console.debug("navigate explore - have URL-encoded node only", urlEncodedNode);
-      navigate(`/datasets/${urlEncodedNode}/explore`);
+      const url = `/datasets/${urlEncodedNode}/explore`;
+      console.debug("navigate explore - have URL-encoded node only", url);
+      navigate(url);
     }
   }, [location.pathname, urlEncodedNode, chrom, position, navigate]);
   const navigateFAQ = () => navigate("/faq");
