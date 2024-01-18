@@ -26,7 +26,7 @@ const ProtectedPageContainer = React.memo(({children}) => {
       console.warn("no node selected; cannot trigger log in");
       return;
     }
-    window.location.href = `${node}/api/auth/login?redirect=${window.location.href}`;
+    window.location.href = `${node}/api/auth/login?redirect=${encodeURIComponent(window.location.href)}`;
   }, [node]);
 
   useEffect(() => {
