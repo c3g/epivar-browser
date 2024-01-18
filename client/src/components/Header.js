@@ -86,16 +86,16 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
           <div className="Header__highlight_group">
             <Button color="link"
                     disabled={!dataset}
-                    className={location.pathname.startsWith("/dataset/about") ? "active" : ""}
+                    className={location.pathname.match(/^datasets\/.*\/about/) ? "active" : ""}
                     onClick={onDatasetAbout}>
               <Icon name="info-circle" bootstrap={true}/>About Dataset</Button>
             <Button color="link"
                     disabled={!dataset}
-                    className={location.pathname.startsWith("/dataset/overview") ? "active" : ""}
+                    className={location.pathname.match(/^datasets\/.*\/overview/) ? "active" : ""}
                     onClick={onOverview}><Icon name="graph-up" bootstrap={true} />Overview</Button>
             <Button color="link"
                     disabled={!dataset}
-                    className={"highlight" + (location.pathname.startsWith("/dataset/explore") ? " active" : "")}
+                    className={"highlight" + (location.pathname.match(/^datasets\/.*\/explore/) ? " active" : "")}
                     onClick={onExplore}><Icon name="search" bootstrap={true} />Explore</Button>
           </div>
           <Button color="link"

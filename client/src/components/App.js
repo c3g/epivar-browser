@@ -14,13 +14,14 @@ import ProtectedPageContainer from "./pages/ProtectedPageContainer";
 import DatasetAboutPage from "./pages/DatasetAboutPage";
 import OverviewPage from "./pages/OverviewPage";
 import ExplorePage from "./pages/ExplorePage";
-import DatasetsPage from "./pages/DatasetsPage";
+// import DatasetsPage from "./pages/DatasetsPage";
 import FAQPage from "./pages/FAQPage";
 
 import {setDevMode, saveUser, fetchDatasets, setNode, fetchUser, fetchMessages, fetchAssays} from "../actions";
 import {SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
 import {EPIVAR_NODES} from "../config";
-import {useNode} from "../hooks";
+import {useNode, useUrlEncodedNode} from "../hooks";
+import DatasetPage from "./pages/DatasetPage";
 
 
 const RoutedApp = () => {
@@ -34,6 +35,9 @@ const RoutedApp = () => {
   const [contactModal, setContactModal] = useState(false);
   const [termsModal, setTermsModal] = useState(false);
 
+  const node = useNode();
+  const urlEncodedNode = useUrlEncodedNode();
+
   const chrom = useSelector(state => state.ui.chrom);
   const position = useSelector(state => state.ui.position);
 
@@ -44,14 +48,16 @@ const RoutedApp = () => {
   const navigateAbout = useCallback(() => navigate("/about"), [navigate]);
   const navigateDatasets = useCallback(() => navigate("/datasets"), [navigate]);
   // TODO: remember chrom and assay:
-  const navigateDatasetAbout = useCallback(() => navigate("/dataset/about"), [navigate]);
-  const navigateOverview = useCallback(() => navigate("/dataset/overview"), [navigate]);
+  const navigateDatasetAbout = useCallback(() => navigate(`/datasets/${urlEncodedNode}/about`),
+    [navigate, urlEncodedNode]);
+  const navigateOverview = useCallback(() => navigate(`/datasets/${urlEncodedNode}/overview`),
+    [navigate, urlEncodedNode]);
   const navigateExplore = useCallback(() => {
-    if (location.pathname.startsWith("/dataset/explore")) return;
+    if (location.pathname.startsWith(`/datasets/${urlEncodedNode}/explore`)) return;
     if (chrom && position) {
-      navigate(`/dataset/explore/locus/${chrom}/${position}`);
+      navigate(`/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}`);
     } else {
-      navigate("/dataset/explore");
+      navigate(`/datasets/${urlEncodedNode}/explore`);
     }
   }, [location.pathname, chrom, position, navigate]);
   const navigateFAQ = () => navigate("/faq");
@@ -69,7 +75,6 @@ const RoutedApp = () => {
     dispatch(fetchDatasets());
   }, [dispatch]);
 
-  const node = useNode();
   const datasetsByNode = useSelector((state) => state.datasets.datasetsByNode);
 
   useEffect(() => {
@@ -144,17 +149,15 @@ const App = () => (
       <Route path="/" element={<RoutedApp />}>
         <Route index={true} element={<Navigate to="/about" replace={true} />} />
         <Route path="about" element={<AboutPage />} />
-        <Route path="datasets" element={<DatasetsPage />} />
-        <Route path="dataset/about" element={<DatasetAboutPage />} />
-        <Route path="dataset/overview" element={<ProtectedPageContainer>
-          <OverviewPage />
-        </ProtectedPageContainer>} />
-        <Route path="dataset/explore" element={<ProtectedPageContainer>
-          <ExplorePage />
-        </ProtectedPageContainer>}>
-          <Route index={true} element={<PeakResults />} />
-          <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
-          <Route path="locus/:chrom/:position" element={<PeakResults />} />
+        {/*<Route path="datasets" element={<DatasetsPage />} />*/}
+        <Route path="datasets/:node" element={<DatasetPage />}>
+          <Route path="about" element={<DatasetAboutPage />} />
+          <Route path="overview" element={<ProtectedPageContainer><OverviewPage /></ProtectedPageContainer>} />
+          <Route path="explore" element={<ProtectedPageContainer><ExplorePage /></ProtectedPageContainer>}>
+            <Route index={true} element={<PeakResults />} />
+            <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
+            <Route path="locus/:chrom/:position" element={<PeakResults />} />
+          </Route>
         </Route>
         <Route path="faq" element={<FAQPage />} />
         <Route path="auth-failure" element={<div />} />

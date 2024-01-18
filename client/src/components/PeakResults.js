@@ -17,7 +17,7 @@ const PeakResults = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const {chrom, position, assay: activeAssay} = params;
+  const {node, chrom, position, assay: activeAssay} = params;
 
   const assays = useSelector(state => state.assays.list || []);
 
@@ -37,10 +37,10 @@ const PeakResults = () => {
 
     if (activeAssay && !(activeAssay in peaksByAssay) && peaksLoaded) {
       // Assay isn't valid for the position in question
-      navigate(`/dataset/explore/locus/${chrom}/${position}` +
+      navigate(`/datasets/${node}/explore/locus/${chrom}/${position}` +
         (assaysWithFeatures.length ? `/${assays[0]}` : ""), {replace: true});
     } else if (!activeAssay && assaysWithFeatures.length && peaksLoaded) {
-      navigate(`/dataset/explore/locus/${chrom}/${position}/${assaysWithFeatures[0]}`, {replace: true});
+      navigate(`/datasets/${node}/explore/locus/${chrom}/${position}/${assaysWithFeatures[0]}`, {replace: true});
     }
   }, [activeAssay, chrom, position, peaksLoaded]);
 
@@ -88,7 +88,9 @@ const PeakResults = () => {
                 <NavLink
                   className={cx({active: activeAssay === assay})}
                   onClick={() =>
-                    nPeaks && navigate(`/dataset/explore/locus/${chrom}/${position}/${assay}`, {replace: true})}
+                    nPeaks && navigate(
+                      `/datasets/${node}/explore/locus/${chrom}/${position}/${assay}`,
+                      {replace: true})}
                   disabled={!nPeaks}
                   aria-disabled={true}
                 >
