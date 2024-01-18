@@ -17,8 +17,10 @@ import ExplorePage from "./pages/ExplorePage";
 import DatasetsPage from "./pages/DatasetsPage";
 import FAQPage from "./pages/FAQPage";
 
-import {setDevMode, saveUser} from "../actions";
+import {setDevMode, saveUser, fetchDatasets, setNode, fetchUser, fetchMessages, fetchAssays} from "../actions";
 import {SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
+import {EPIVAR_NODES} from "../config";
+import {useNode} from "../hooks";
 
 
 const RoutedApp = () => {
@@ -62,7 +64,33 @@ const RoutedApp = () => {
         dispatch(setDevMode(true));
       }
     });
-  }, []);
+
+    // On first initialization, load datasets:
+    dispatch(fetchDatasets());
+  }, [dispatch]);
+
+  const node = useNode();
+  const datasetsByNode = useSelector((state) => state.datasets.datasetsByNode);
+
+  useEffect(() => {
+    const firstNode = EPIVAR_NODES[0];
+    if (!node && firstNode && datasetsByNode[firstNode]) {
+      // Select first node if we haven't already done so
+      dispatch(setNode(firstNode));
+    } else if (node) {
+      // TODO: report error to users
+      console.error("Either no nodes are configured, or dataset information was not fetched successfully");
+    }
+  }, [datasetsByNode]);
+
+  useEffect(() => {
+    if (node) {
+      // When the node is set / changed, load relevant data:
+      dispatch(fetchUser());
+      dispatch(fetchMessages());  // Server-side messages, e.g. auth errors
+      dispatch(fetchAssays());
+    }
+  }, [dispatch, node]);
 
   useEffect(() => {
     if (userData.isLoaded && userData.data && !userData.data.consentedToTerms) {
