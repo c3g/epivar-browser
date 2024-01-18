@@ -48,6 +48,7 @@ router.get("/login",
   (req, res, next) => {
     const returnTo = req.query.redirect;
     if (returnTo) {
+      console.info(`/api/auth/login: redirecting to ${returnTo}`);
       res.redirect(returnTo);
     }
     next();
