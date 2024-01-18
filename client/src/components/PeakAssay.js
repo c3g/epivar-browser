@@ -184,10 +184,14 @@ const PeaksTable = ({peaks, selectedPeak, onChangeFeature, onOpenTracks}) => {
           <Button size="sm" color="link" disabled={!!loading} onClick={() => {
             setTrackLoading(row.id, "igv");
             onOpenTracks(row).then((res) => {
-              console.debug("opening igv.js with", res);
-              setIgvData(res);
+              if (res.error) {
+                console.error("could not open igv.js browser:", res);
+              } else {
+                console.debug("opening igv.js with", res);
+                setIgvData(res);
+                setIgvModalOpen(true);
+              }
               setTrackNotLoading(row.id);
-              setIgvModalOpen(true);
             });
           }}>
             <span style={{ fontFamily: "monospace" }}>{loading === "igv" ? "Loading" : "igv.js"}</span>
