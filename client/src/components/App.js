@@ -139,6 +139,8 @@ const App = () => {
     if (!window.location.pathname.match(/^\/datasets\/.+/) && !node && firstNode && datasetsByNode[firstNode]) {
       // Select first node if we haven't already done so, and we're not on a URL which will set a node for us via the
       // DatasetPage component effect.
+      console.info(
+        `setting node to the first one in the list (pathname=${window.location.pathname}; firstNode=${firstNode})`);
       dispatch(setNode(firstNode));
     }
   }, [node, datasetsByNode]);
