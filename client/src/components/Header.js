@@ -67,7 +67,6 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
               {EPIVAR_NODES.map((n) => {
                 if (n in datasetsByNode) {
                   const d = datasetsByNode[n];
-                  console.debug("Adding option for dataset", n, d);
                   return <option key={n} value={n}>{d?.title ?? ""} ({d?.assembly ?? ""})</option>;
                 } else {
                   return <option key={n} value={n} disabled={true}>{n} (unreachable)</option>;
