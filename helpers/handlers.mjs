@@ -3,15 +3,27 @@
  */
 
 
+const GENERIC_MESSAGE =
+  "An error was encountered while processing this request. See the server logs for more information.";
+
 export const errorHandler = (res, status=500) => err => {
   if (status) {
     res.status(status);
   }
 
   if (err instanceof Error) {
-    res.json({ok: false, status, message: err.toString(), stack: err.stack.split('\n')});
+    let message = err.toString();
+    console.error(`Error encountered (status=${status}): ${message}; stack:\n`, err.stack);
+    if (message.startsWith("Error: Command failed:")) {
+      message = GENERIC_MESSAGE;
+    }
+    res.json({ok: false, status, message});
   } else {
-    res.json({ok: false, status, message: err});
+    let message = err;
+    if (message.startsWith("Error: Command failed:")) {
+      message = GENERIC_MESSAGE;
+    }
+    res.json({ok: false, status, message});
   }
   res.end();
 };
