@@ -4,17 +4,20 @@ import {Outlet, useOutletContext, useParams} from "react-router-dom";
 
 import {setNode} from "../../actions";
 import {EPIVAR_NODES} from "../../config";
+import {useNode} from "../../hooks";
 
 const DatasetPage = () => {
   const dispatch = useDispatch();
-  const {node} = useParams();
+  const {node: urlNode} = useParams();
+  const node = useNode();
 
   useEffect(() => {
-    const decodedNode = decodeURIComponent(node);
-    if (!EPIVAR_NODES.find((n) => n === decodedNode)) return;
+    const decodedNode = decodeURIComponent(urlNode);
+    if (!EPIVAR_NODES.find((n) => n === decodedNode)) return;  // Node doesn't exist in our list
+    if (node === urlNode) return;  // Node is already set in the Redux store
     console.info("setting node based on URL:", decodedNode);
     dispatch(setNode(decodedNode));
-  }, [dispatch, node]);
+  }, [dispatch, urlNode]);
 
   const existingOutletContext = useOutletContext();
 
