@@ -30,10 +30,12 @@ const ProtectedPageContainer = React.memo(({children}) => {
   }, [node]);
 
   useEffect(() => {
-    if (node && isLoaded && userData) {
+    if (!node) return;
+    if (isLoaded && userData) {
       setHasLoggedIn(node);
-    } else if (node && isLoaded && !userData) {
+    } else if (isLoaded && !userData) {
       if (getHasLoggedIn(node)) {
+        console.info("triggering log-in (has logged in before)");
         triggerLogIn();
       }
     }
@@ -42,6 +44,7 @@ const ProtectedPageContainer = React.memo(({children}) => {
   const onAccess = useCallback(() => {
     if (!userData) {
       // Redirect to sign in, so we can capture some information about their identity (IP address).
+      console.info("triggering log-in (onAccess)");
       triggerLogIn();
     } else {
       // Signed in but terms not accepted yet; show the modal.
