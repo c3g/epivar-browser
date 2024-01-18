@@ -37,6 +37,7 @@ export async function vcfQuery(contig, start, end) {
   const lines = [];
   // tabix JS takes in 0-based half-open coordinates, which we convert from queryMap taking 1-based closed coordinates
   await VCF_TABIX_FILE.getLines(contig, start - 1, end, line => lines.push(vcfParser.parseLine(line)));
+  console.info(`queried vcf: ${contig}:${start}-${end}; got ${lines.length} lines`);
   return lines;
 }
 
