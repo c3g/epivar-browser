@@ -5,7 +5,7 @@ import {useNode, useCurrentDataset} from "../hooks";
 function PeakBoxplot({ title, peak, /*values = defaultValues*/ }) {
   const dataset = useCurrentDataset();
 
-  const ethnicities = useMemo(() => dataset.data?.ethnicities ?? [], [dataset]);
+  const ethnicities = useMemo(() => dataset?.ethnicities ?? [], [dataset]);
   const node = useNode();
   const usePrecomputed = useSelector(state => state.ui.usePrecomputed);
 
