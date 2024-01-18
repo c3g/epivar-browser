@@ -38,8 +38,8 @@ module.exports = {
     vcfSampleNameConverter: name => name.split('_')[1],  // name => name
 
     /*
-     * VCF contigs have correct format, use identity function (default value)
+     * VCF contigs have chr prefix; ensure we prepend this without duplication.
      */
-    // vcfChrTransform: (chr) => chr,
+    vcfChrTransform: (chr) => "chr" + chr.replace(/^chr/, ""),
   },
 };

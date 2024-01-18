@@ -22,22 +22,29 @@ const ProtectedPageContainer = React.memo(({children}) => {
   const {data: userData, isLoaded} = useSelector(state => state.user);
 
   const triggerLogIn = useCallback(() => {
-    window.location.href = `${node}/api/auth/login?redirect=${window.location.pathname}`;
+    if (!node) {
+      console.warn("no node selected; cannot trigger log in");
+      return;
+    }
+    window.location.href = `${node}/api/auth/login?redirect=${encodeURIComponent(window.location.href)}`;
   }, [node]);
 
   useEffect(() => {
+    if (!node) return;
     if (isLoaded && userData) {
-      setHasLoggedIn();
+      setHasLoggedIn(node);
     } else if (isLoaded && !userData) {
-      if (getHasLoggedIn()) {
+      if (getHasLoggedIn(node)) {
+        console.info("triggering log-in (has logged in before)");
         triggerLogIn();
       }
     }
-  }, [userData, isLoaded]);
+  }, [node, isLoaded, userData]);
 
   const onAccess = useCallback(() => {
     if (!userData) {
       // Redirect to sign in, so we can capture some information about their identity (IP address).
+      console.info("triggering log-in (onAccess)");
       triggerLogIn();
     } else {
       // Signed in but terms not accepted yet; show the modal.

@@ -21,6 +21,7 @@ import {
   fetchPositions,
 } from '../actions.js'
 import {useNavigate, useParams} from "react-router-dom";
+import {useUrlEncodedNode} from "../hooks";
 
 const defaultChrom = "rsID";
 
@@ -47,6 +48,7 @@ const Controls = ({toggleHelp}) => {
   const params = useParams();
   const navigate = useNavigate();
 
+  const urlEncodedNode = useUrlEncodedNode();
   const chroms = useSelector(state => state.chroms);
   const {chrom, position} = useSelector(state => state.ui);
   const positions = useSelector(state => state.positions);
@@ -141,11 +143,11 @@ const Controls = ({toggleHelp}) => {
     // The item assay is the tab with the most significant result - which will be
     // selected first by nature of ordering, thus leading the user to the most interesting
     // detail from the autocomplete.
-    navigate(`/dataset/explore/locus/${chrom}/${position}/${item.assay}`, {replace: true});
+    navigate(`/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}/${item.assay}`, {replace: true});
     changePosition(position);
     dispatch(doSearch());
     setDidFirstSearch(true);
-  }, [list, dispatch, navigate, changePosition]);
+  }, [urlEncodedNode, list, dispatch, navigate, changePosition]);
 
   const moveSelection = useCallback(n => {
     const {length} = list;
@@ -192,10 +194,10 @@ const Controls = ({toggleHelp}) => {
 
   const onClickSearch = useCallback(() => {
     if (!chrom || !position) return;
-    navigate(`/dataset/explore/locus/${chrom}/${position}`, {replace: true});
+    navigate(`/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}`, {replace: true});
     dispatch(doSearch());
     setDidFirstSearch(true);
-  }, [navigate, chrom, position]);
+  }, [navigate, urlEncodedNode, chrom, position]);
 
   return <div className={cx('Controls', { didFirstSearch })}>
     <div className='Controls__content'>

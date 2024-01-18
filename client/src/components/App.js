@@ -14,11 +14,15 @@ import ProtectedPageContainer from "./pages/ProtectedPageContainer";
 import DatasetAboutPage from "./pages/DatasetAboutPage";
 import OverviewPage from "./pages/OverviewPage";
 import ExplorePage from "./pages/ExplorePage";
-import DatasetsPage from "./pages/DatasetsPage";
+// import DatasetsPage from "./pages/DatasetsPage";
 import FAQPage from "./pages/FAQPage";
 
-import {setDevMode, saveUser} from "../actions";
+import {setDevMode, saveUser, fetchDatasets, setNode, fetchUser, fetchMessages, fetchAssays} from "../actions";
 import {SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
+import {EPIVAR_NODES} from "../config";
+import {useNode, useUrlEncodedNode} from "../hooks";
+import DatasetPage from "./pages/DatasetPage";
+import NotFound from "./NotFound";
 
 
 const RoutedApp = () => {
@@ -32,6 +36,8 @@ const RoutedApp = () => {
   const [contactModal, setContactModal] = useState(false);
   const [termsModal, setTermsModal] = useState(false);
 
+  const urlEncodedNode = useUrlEncodedNode();
+
   const chrom = useSelector(state => state.ui.chrom);
   const position = useSelector(state => state.ui.position);
 
@@ -42,27 +48,26 @@ const RoutedApp = () => {
   const navigateAbout = useCallback(() => navigate("/about"), [navigate]);
   const navigateDatasets = useCallback(() => navigate("/datasets"), [navigate]);
   // TODO: remember chrom and assay:
-  const navigateDatasetAbout = useCallback(() => navigate("/dataset/about"), [navigate]);
-  const navigateOverview = useCallback(() => navigate("/dataset/overview"), [navigate]);
+  const navigateDatasetAbout = useCallback(() => navigate(`/datasets/${urlEncodedNode}/about`),
+    [navigate, urlEncodedNode]);
+  const navigateOverview = useCallback(() => navigate(`/datasets/${urlEncodedNode}/overview`),
+    [navigate, urlEncodedNode]);
   const navigateExplore = useCallback(() => {
-    if (location.pathname.startsWith("/dataset/explore")) return;
-    if (chrom && position) {
-      navigate(`/dataset/explore/locus/${chrom}/${position}`);
-    } else {
-      navigate("/dataset/explore");
+    if (location.pathname.startsWith(`/datasets/${urlEncodedNode}/explore`)) {
+      console.debug("navigate explore - already on explore URL:", location.pathname);
+      return;
     }
-  }, [location.pathname, chrom, position, navigate]);
+    if (chrom && position) {
+      const url = `/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}`;
+      console.debug("navigate explore - have URL-encoded node, chrom, and position", url);
+      navigate(url);
+    } else {
+      const url = `/datasets/${urlEncodedNode}/explore`;
+      console.debug("navigate explore - have URL-encoded node only", url);
+      navigate(url);
+    }
+  }, [location.pathname, urlEncodedNode, chrom, position, navigate]);
   const navigateFAQ = () => navigate("/faq");
-
-  useEffect(() => {
-    document.title = `${SITE_TITLE} | ${SITE_SUBTITLE}`;
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "~") {
-        dispatch(setDevMode(true));
-      }
-    });
-  }, []);
 
   useEffect(() => {
     if (userData.isLoaded && userData.data && !userData.data.consentedToTerms) {
@@ -110,31 +115,71 @@ const RoutedApp = () => {
 };
 
 
-const App = () => (
-  <div className='App'>
-    <Routes>
-      <Route path="/" element={<RoutedApp />}>
-        <Route index={true} element={<Navigate to="/about" replace={true} />} />
-        <Route path="about" element={<AboutPage />} />
-        <Route path="datasets" element={<DatasetsPage />} />
-        <Route path="dataset/about" element={<DatasetAboutPage />} />
-        <Route path="dataset/overview" element={<ProtectedPageContainer>
-          <OverviewPage />
-        </ProtectedPageContainer>} />
-        <Route path="dataset/explore" element={<ProtectedPageContainer>
-          <ExplorePage />
-        </ProtectedPageContainer>}>
-          <Route index={true} element={<PeakResults />} />
-          <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
-          <Route path="locus/:chrom/:position" element={<PeakResults />} />
+const App = () => {
+  const dispatch = useDispatch();
+  const node = useNode();
+
+  const datasetsByNode = useSelector((state) => state.datasets.datasetsByNode);
+
+  useEffect(() => {
+    document.title = `${SITE_TITLE} | ${SITE_SUBTITLE}`;
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "~") {
+        dispatch(setDevMode(true));
+      }
+    });
+
+    // On first initialization, load datasets:
+    dispatch(fetchDatasets());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const firstNode = EPIVAR_NODES[0];
+    if (!window.location.pathname.match(/^\/datasets\/.+/) && !node && firstNode && datasetsByNode[firstNode]) {
+      // Select first node if we haven't already done so, and we're not on a URL which will set a node for us via the
+      // DatasetPage component effect.
+      console.info(
+        `setting node to the first one in the list (pathname=${window.location.pathname}; firstNode=${firstNode})`);
+      dispatch(setNode(firstNode));
+    }
+  }, [node, datasetsByNode]);
+
+  useEffect(() => {
+    if (node) {
+      // When the node is set / changed, load relevant data:
+      console.info("node changed to: ", node, "re-fetching user/messages/assays");
+      dispatch(fetchUser());
+      dispatch(fetchMessages());  // Server-side messages, e.g. auth errors
+      dispatch(fetchAssays());
+    }
+  }, [dispatch, node]);
+
+  return (
+    <div className='App'>
+      <Routes>
+        <Route path="/" element={<RoutedApp />}>
+          <Route index={true} element={<Navigate to="/about" replace={true} />} />
+          <Route path="about" element={<AboutPage />} />
+          {/*<Route path="datasets" element={<DatasetsPage />} />*/}
+          <Route path="datasets/:node" element={<DatasetPage />}>
+            <Route path="about" element={<DatasetAboutPage />} />
+            <Route path="overview" element={<ProtectedPageContainer><OverviewPage /></ProtectedPageContainer>} />
+            <Route path="explore" element={<ProtectedPageContainer><ExplorePage /></ProtectedPageContainer>}>
+              <Route index={true} element={<PeakResults />} />
+              <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
+              <Route path="locus/:chrom/:position" element={<PeakResults />} />
+              <Route path="*" element={<NotFound context="no explore route" />} />
+            </Route>
+          </Route>
+          <Route path="faq" element={<FAQPage />} />
+          <Route path="auth-failure" element={<div />} />
         </Route>
-        <Route path="faq" element={<FAQPage />} />
-        <Route path="auth-failure" element={<div />} />
-      </Route>
-      <Route path="*" element={<Navigate to="/" />}/>
-    </Routes>
-  </div>
-);
+        <Route path="*" element={<Navigate to="/" />}/>
+      </Routes>
+    </div>
+  );
+}
 
 
 export default App;

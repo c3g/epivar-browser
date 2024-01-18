@@ -1,5 +1,5 @@
-import React from 'react'
-import {useSelector} from "react-redux";
+import React, {useCallback} from 'react'
+import {useDispatch, useSelector} from "react-redux";
 import {Alert, Button, Container, Input} from 'reactstrap'
 import {Link, useLocation, useNavigate} from "react-router-dom";
 
@@ -8,9 +8,11 @@ import Icon from "./Icon";
 import {EPIVAR_NODES} from "../config";
 import {SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
 import {useCurrentDataset, useDatasetsByNode, useDevMode, useNode} from "../hooks";
+import {setNode} from "../actions";
 
 export default function Header({children, onAbout, /*onDatasets, */onDatasetAbout, onOverview, onExplore, onFAQ,
                                  /*, onContact*/}) {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,7 +24,24 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
 
   const datasetsByNode = useDatasetsByNode();
 
-  console.debug("Datasets by node:", datasetsByNode);
+  const isLoadingData = useSelector((state) =>
+    state.assays.isLoading ||
+    state.samples.isLoading ||
+    state.peaks.isLoading ||
+    state.positions.isLoading ||
+    state.overview.isLoading ||
+    state.user.isLoading);
+
+  const onDatasetChange = useCallback((e) => {
+    if (isLoadingData) return;
+
+    const newNode = e.target.value;
+    if (newNode !== node) {
+      console.info("selecting node", newNode);
+      dispatch(setNode(newNode));
+      navigate(`/datasets/${encodeURIComponent(newNode)}/about`);
+    }
+  }, [dispatch, isLoadingData, navigate]);
 
   return <div>
     <div className='Header'>
@@ -43,14 +62,13 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
         <div className="Header__dataset">
           <div>
             <label htmlFor="dataset-selector">Dataset:</label>
-            <Input type="select" id="dataset-selector" value={node ?? undefined}>
+            <Input type="select" id="dataset-selector" value={node ?? undefined} onChange={onDatasetChange}>
               {EPIVAR_NODES.map((n) => {
                 if (n in datasetsByNode) {
                   const d = datasetsByNode[n];
-                  console.debug("Adding option for dataset", n, d);
-                  return <option key={n} >{d?.title ?? ""} ({d?.assembly ?? ""})</option>;
+                  return <option key={n} value={n}>{d?.title ?? ""} ({d?.assembly ?? ""})</option>;
                 } else {
-                  return <option key={n} disabled={true}>{n} (unreachable)</option>;
+                  return <option key={n} value={n} disabled={true}>{n} (unreachable)</option>;
                 }
               })}
             </Input>
@@ -66,16 +84,16 @@ export default function Header({children, onAbout, /*onDatasets, */onDatasetAbou
           <div className="Header__highlight_group">
             <Button color="link"
                     disabled={!dataset}
-                    className={location.pathname.startsWith("/dataset/about") ? "active" : ""}
+                    className={location.pathname.match(/^\/datasets\/.*\/about/) ? "active" : ""}
                     onClick={onDatasetAbout}>
               <Icon name="info-circle" bootstrap={true}/>About Dataset</Button>
             <Button color="link"
                     disabled={!dataset}
-                    className={location.pathname.startsWith("/dataset/overview") ? "active" : ""}
+                    className={location.pathname.match(/^\/datasets\/.*\/overview/) ? "active" : ""}
                     onClick={onOverview}><Icon name="graph-up" bootstrap={true} />Overview</Button>
             <Button color="link"
                     disabled={!dataset}
-                    className={"highlight" + (location.pathname.startsWith("/dataset/explore") ? " active" : "")}
+                    className={"highlight" + (location.pathname.match(/^\/datasets\/.*\/explore/) ? " active" : "")}
                     onClick={onExplore}><Icon name="search" bootstrap={true} />Explore</Button>
           </div>
           <Button color="link"

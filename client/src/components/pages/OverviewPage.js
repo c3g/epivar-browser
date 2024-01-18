@@ -15,7 +15,7 @@ import {
   setOverviewChrom,
   setOverviewAssay,
 } from '../../actions.js'
-import {useCurrentDataset} from "../../hooks";
+import {useCurrentDataset, useUrlEncodedNode} from "../../hooks";
 
 const SNP_PROP = "snp_nat_id";
 
@@ -33,7 +33,8 @@ const OverviewPage = () => {
 
   const {width} = useWindowDimensions();
 
-  const {chromosomeSizes} = useCurrentDataset();
+  const urlEncodedNode = useUrlEncodedNode();
+  const {chromosomeSizes} = useCurrentDataset() ?? {};
 
   const {
     isLoading: configIsLoading,
@@ -81,11 +82,11 @@ const OverviewPage = () => {
   const onPointClick = useCallback((peak) => {
     console.info("onPointClick triggered on peak:", peak);
     const snp = peak[SNP_PROP];
-    navigate(`/dataset/explore/locus/rsID/${snp}/${assay}`);
+    navigate(`/datasets/${urlEncodedNode}/explore/locus/rsID/${snp}/${assay}`);
     dispatch(setChrom("rsID"));
     dispatch(setPosition(snp));
     dispatch(doSearch());
-  }, [dispatch, navigate]);
+  }, [dispatch, assay, navigate, urlEncodedNode]);
 
   // noinspection JSValidateTypes
   return <div className="Page">

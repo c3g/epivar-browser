@@ -9,6 +9,7 @@ import cx from 'clsx'
 import Icon from './Icon'
 import PeakAssay from './PeakAssay'
 import {doSearch, setChrom, setPosition} from "../actions";
+import {useUrlEncodedNode} from "../hooks";
 
 const groupAndSortPeaks = memoizeOne(groupBy(prop('assay')));
 
@@ -18,6 +19,8 @@ const PeakResults = () => {
   const params = useParams();
 
   const {chrom, position, assay: activeAssay} = params;
+
+  const urlEncodedNode = useUrlEncodedNode();
 
   const assays = useSelector(state => state.assays.list || []);
 
@@ -37,10 +40,14 @@ const PeakResults = () => {
 
     if (activeAssay && !(activeAssay in peaksByAssay) && peaksLoaded) {
       // Assay isn't valid for the position in question
-      navigate(`/dataset/explore/locus/${chrom}/${position}` +
-        (assaysWithFeatures.length ? `/${assays[0]}` : ""), {replace: true});
+      const url = `/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}` +
+        (assaysWithFeatures.length ? `/${assays[0]}` : "");
+      console.info(`assay ${activeAssay} isn't valid for the locus in question; navigating to ${url}`);
+      navigate(url, {replace: true});
     } else if (!activeAssay && assaysWithFeatures.length && peaksLoaded) {
-      navigate(`/dataset/explore/locus/${chrom}/${position}/${assaysWithFeatures[0]}`, {replace: true});
+      const url = `/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}/${assaysWithFeatures[0]}`;
+      console.info(`no assay selected; navigating to ${url}`);
+      navigate(url, {replace: true});
     }
   }, [activeAssay, chrom, position, peaksLoaded]);
 
@@ -88,7 +95,9 @@ const PeakResults = () => {
                 <NavLink
                   className={cx({active: activeAssay === assay})}
                   onClick={() =>
-                    nPeaks && navigate(`/dataset/explore/locus/${chrom}/${position}/${assay}`, {replace: true})}
+                    nPeaks && navigate(
+                      `/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}/${assay}`,
+                      {replace: true})}
                   disabled={!nPeaks}
                   aria-disabled={true}
                 >

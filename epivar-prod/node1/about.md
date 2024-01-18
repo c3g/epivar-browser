@@ -24,7 +24,7 @@ All the datasets that have been generated as part of this project are summarized
 [made available here](#datasets). Access to some of the raw datasets require a formal data access request but all
 resources are available freely. Please cite the appropriate paper(s) if you use the data.
 
-We have also built a [browser tool](https://flu-infection.vhost38.genap.ca/dataset/overview) that allows navigation of
+We have also built a [browser tool](https://flu-infection.vhost38.genap.ca/about) that allows navigation of
 these rich datasets by condition, ancestry and, importantly, haplotype. This allows an in-depth exploration of the
 quantitative trait loci and other key results reported in the studies above. Using this tool requires a terms-of-use
 agreement to ensure data privacy conditions are respected.
@@ -113,7 +113,7 @@ access number [GSE225708](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE
 
 Genomic tracks by condition and ancestry are available [here](https://flu-infection.vhost38.genap.ca/explore).
 
-We constructed [a versatile QTL browser](https://flu-infection.vhost38.genap.ca/dataset/overview), which allows users to
+We constructed [a versatile QTL browser](https://flu-infection.vhost38.genap.ca/about), which allows users to
 explore and visualize mapped QTLs for gene expression, chromatin accessibility, histone modifications and DNA
 methylation.
 

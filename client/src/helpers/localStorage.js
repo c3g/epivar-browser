@@ -1,9 +1,10 @@
-const LS_HAS_LOGGED_IN_BEFORE = 'EPIVAR_HAS_LOGGED_IN_BEFORE';
+const LS_HAS_LOGGED_IN_BEFORE = "EPIVAR_HAS_LOGGED_IN_BEFORE";
 
-export const setHasLoggedIn = () => {
-  localStorage.setItem(LS_HAS_LOGGED_IN_BEFORE, "1");
+const getLoggedInObject = () => JSON.parse(localStorage.getItem(LS_HAS_LOGGED_IN_BEFORE) || "{}");
+
+export const setHasLoggedIn = (node) => {
+  const existing = getLoggedInObject();
+  localStorage.setItem(LS_HAS_LOGGED_IN_BEFORE, JSON.stringify({...existing, [node]: true}));
 }
 
-export const getHasLoggedIn = () => {
-  return localStorage.getItem(LS_HAS_LOGGED_IN_BEFORE) === "1";
-}
+export const getHasLoggedIn = (node) => (getLoggedInObject()[node]) ?? false;
