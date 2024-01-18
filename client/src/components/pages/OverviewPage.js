@@ -34,7 +34,7 @@ const OverviewPage = () => {
   const {width} = useWindowDimensions();
 
   const urlEncodedNode = useUrlEncodedNode();
-  const {chromosomeSizes} = useCurrentDataset();
+  const {chromosomeSizes} = useCurrentDataset() ?? {};
 
   const {
     isLoading: configIsLoading,
