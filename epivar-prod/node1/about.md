@@ -113,7 +113,7 @@ access number [GSE225708](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE
 
 Genomic tracks by condition and ancestry are available [here](https://flu-infection.vhost38.genap.ca/explore).
 
-We constructed [a versatile QTL browser](https://flu-infection.vhost38.genap.ca/dataset/overview), which allows users to
+We constructed [a versatile QTL browser](https://flu-infection.vhost38.genap.ca/about), which allows users to
 explore and visualize mapped QTLs for gene expression, chromatin accessibility, histone modifications and DNA
 methylation.
 
