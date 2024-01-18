@@ -22,6 +22,7 @@ import {SITE_SUBTITLE, SITE_TITLE} from "../constants/app";
 import {EPIVAR_NODES} from "../config";
 import {useNode, useUrlEncodedNode} from "../hooks";
 import DatasetPage from "./pages/DatasetPage";
+import NotFound from "./NotFound";
 
 
 const RoutedApp = () => {
@@ -165,6 +166,7 @@ const App = () => {
               <Route index={true} element={<PeakResults />} />
               <Route path="locus/:chrom/:position/:assay" element={<PeakResults />} />
               <Route path="locus/:chrom/:position" element={<PeakResults />} />
+              <Route path="*" element={<NotFound context="no explore route" />} />
             </Route>
           </Route>
           <Route path="faq" element={<FAQPage />} />
