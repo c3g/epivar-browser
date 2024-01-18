@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {Outlet, useParams} from "react-router-dom";
+import {Outlet, useOutletContext, useParams} from "react-router-dom";
 
 import {setNode} from "../../actions";
 import {EPIVAR_NODES} from "../../config";
@@ -15,8 +15,10 @@ const DatasetPage = () => {
     dispatch(setNode(decodedNode));
   }, [dispatch, node]);
 
+  const existingOutletContext = useOutletContext();
+
   return <div>
-    <Outlet />
+    <Outlet context={existingOutletContext} />
   </div>;
 };
 
