@@ -53,13 +53,18 @@ const RoutedApp = () => {
   const navigateOverview = useCallback(() => navigate(`/datasets/${urlEncodedNode}/overview`),
     [navigate, urlEncodedNode]);
   const navigateExplore = useCallback(() => {
-    if (location.pathname.startsWith(`/datasets/${urlEncodedNode}/explore`)) return;
+    if (location.pathname.startsWith(`/datasets/${urlEncodedNode}/explore`)) {
+      console.debug("navigate explore - already on explore URL:", location.pathname);
+      return;
+    }
     if (chrom && position) {
+      console.debug("navigate explore - have URL-encoded node, chrom, and position", urlEncodedNode, chrom, position);
       navigate(`/datasets/${urlEncodedNode}/explore/locus/${chrom}/${position}`);
     } else {
+      console.debug("navigate explore - have URL-encoded node only", urlEncodedNode);
       navigate(`/datasets/${urlEncodedNode}/explore`);
     }
-  }, [location.pathname, chrom, position, navigate]);
+  }, [location.pathname, urlEncodedNode, chrom, position, navigate]);
   const navigateFAQ = () => navigate("/faq");
 
   useEffect(() => {
