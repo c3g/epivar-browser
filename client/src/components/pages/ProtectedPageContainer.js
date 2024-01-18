@@ -31,9 +31,9 @@ const ProtectedPageContainer = React.memo(({children}) => {
 
   useEffect(() => {
     if (node && isLoaded && userData) {
-      setHasLoggedIn();
+      setHasLoggedIn(node);
     } else if (node && isLoaded && !userData) {
-      if (getHasLoggedIn()) {
+      if (getHasLoggedIn(node)) {
         triggerLogIn();
       }
     }
