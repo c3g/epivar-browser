@@ -31,6 +31,7 @@ const Footer = ({/*onContact, */onTerms}) => {
             <li><Link to={`/datasets/${urlEncodedNode}/about`}>About Dataset</Link></li>
             <li><Link to={`/datasets/${urlEncodedNode}/overview`}>Overview</Link></li>
             <li><Link to={`/datasets/${urlEncodedNode}/explore`}>Explore</Link></li>
+            <li>&#65372;</li>
             <li><Link to="/about">About EpiVar</Link></li>
             <li><a href="#" onClick={onTerms}>Terms of Use</a></li>
           </ul>
