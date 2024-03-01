@@ -4,8 +4,7 @@ A federated web application to search for eQTL/epigenetic signal-associated vari
 merge bigWig tracks by genotype. 
 
 A production instance with data from 
-Aracena *et al.* 
-([2022 preprint](https://www.biorxiv.org/content/10.1101/2022.05.10.491413v1)) 
+[Aracena *et al.* (2024)](https://www.nature.com/articles/s41588-024-01668-z)
 is available at 
 [https://computationalgenomics.ca/tools/epivar](https://computationalgenomics.ca/tools/epivar). 
 
