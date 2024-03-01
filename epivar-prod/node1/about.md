@@ -16,7 +16,7 @@ European and African-ancestry individuals, before and after infection with influ
 
 The results of this project are summarized in 3 papers:
 
-1. [Aracena et al. Epigenetic variation impacts ancestry-associated differences in the transcriptional response to influenza infection.](https://www.biorxiv.org/content/10.1101/2022.05.10.491413v1)
+1. [Aracena et al. Epigenetic variation impacts ancestry-associated differences in the transcriptional response to influenza infection.](https://doi.org/10.1038/s41588-024-01668-z)
 2. [Chen et al. Transposable elements are associated with the variable response to influenza infection.](https://doi.org/10.1016/j.xgen.2023.100292)
 3. [Groza et al. Genome graphs detect human polymorphisms in active epigenomic state during influenza infection.](https://doi.org/10.1016/j.xgen.2023.100294)
 
