@@ -2,7 +2,7 @@ services:
   # Common -------------------------------------------------------------------------------------------------------------
 
   epivar-portal:
-    image: ghcr.io/c3g/epivar-portal:0.18
+    image: ghcr.io/c3g/epivar-portal:1.0
     ports:
       - 80:80
     depends_on:
@@ -18,7 +18,7 @@ services:
   # Node 1: hg19 data --------------------------------------------------------------------------------------------------
 
   epivar-node-1-server:
-    image: ghcr.io/c3g/epivar-server:0.18
+    image: ghcr.io/c3g/epivar-server:1.0
     networks:
       - epivar-node-1-server-net
       - epivar-node-1-redis-net
@@ -79,7 +79,7 @@ services:
   # Node 2: hg38 data (lifted over) ------------------------------------------------------------------------------------
 
   epivar-node-2-server:
-    image: ghcr.io/c3g/epivar-server:0.18
+    image: ghcr.io/c3g/epivar-server:1.0
     networks:
       - epivar-node-2-server-net
       - epivar-node-2-redis-net
