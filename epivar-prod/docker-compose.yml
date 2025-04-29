@@ -39,23 +39,23 @@ services:
       - ./node1/about.md:/app/data/about.md
       - ./node1/config.js:/app/config.js:ro
       # genotypes: VCF + index file
-      - /flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz:/app/data/genotypes.vcf.gz:ro
-      - /flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
+      - /data/flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz:/app/data/genotypes.vcf.gz:ro
+      - /data/flu-infection-data/node1/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
       # peaks files
-      - /flu-infection-data/node1/matrices:/app/input-files/matrices:ro
-      - /flu-infection-data/node1/qtls:/app/input-files/qtls:ro
+      - /data/flu-infection-data/node1/matrices:/app/input-files/matrices:ro
+      - /data/flu-infection-data/node1/qtls:/app/input-files/qtls:ro
       # tracks:
       #  - metadata JSON file,
       - ./node1/metadata.json:/app/data/metadata.json:ro
       #  - sample bigWigs,
-      - /flu-infection-data/ATACseq:/tracks/ATACseq:ro
-      - /flu-infection-data/H3K27ac:/tracks/H3K27ac:ro
-      - /flu-infection-data/H3K27me3:/tracks/H3K27me3:ro
-      - /flu-infection-data/H3K4me1:/tracks/H3K4me1:ro
-      - /flu-infection-data/H3K4me3:/tracks/H3K4me3:ro
-      - /flu-infection-data/RNAseq:/tracks/RNAseq:ro
+      - /data/flu-infection-data/ATACseq:/tracks/ATACseq:ro
+      - /data/flu-infection-data/H3K27ac:/tracks/H3K27ac:ro
+      - /data/flu-infection-data/H3K27me3:/tracks/H3K27me3:ro
+      - /data/flu-infection-data/H3K4me1:/tracks/H3K4me1:ro
+      - /data/flu-infection-data/H3K4me3:/tracks/H3K4me3:ro
+      - /data/flu-infection-data/RNAseq:/tracks/RNAseq:ro
       #  - writeable volume for on-the-fly merged tracks,
-      - /flu-infection-data/node1/mergedTracks:/mergedTracks
+      - /data/flu-infection-data/node1/mergedTracks:/mergedTracks
       #  - other static tracks for showing in the UCSC browser.
       - ./node1/ucsc.other-tracks.txt:/app/data/ucsc.other-tracks.txt:ro
 
@@ -100,18 +100,18 @@ services:
       - ./node2/about.md:/app/data/about.md
       - ./node2/config.js:/app/config.js:ro
       # genotypes: VCF + index file
-      - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.GRCh38.vcf.gz:/app/data/genotypes.vcf.gz:ro
-      - /flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.GRCh38.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
+      - /data/flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.GRCh38.vcf.gz:/app/data/genotypes.vcf.gz:ro
+      - /data/flu-infection-data/node2/allSamples.hc.vqsr.mil.snpId.snpeff.dbnsfp.GRCh38.vcf.gz.tbi:/app/data/genotypes.vcf.gz.tbi:ro
       # peaks files
-      - /flu-infection-data/node2/matrices:/app/input-files/matrices:ro
-      - /flu-infection-data/node2/qtls:/app/input-files/qtls:ro
+      - /data/flu-infection-data/node2/matrices:/app/input-files/matrices:ro
+      - /data/flu-infection-data/node2/qtls:/app/input-files/qtls:ro
       # tracks:
       #  - metadata JSON file,
       - ./node2/metadata.json:/app/data/metadata.json:ro
       #  - sample bigWigs,
-      - /flu-infection-data/node2/tracks:/tracks:ro
+      - /data/flu-infection-data/node2/tracks:/tracks:ro
       #  - writeable volume for on-the-fly merged tracks,
-      - /flu-infection-data/node2/mergedTracks:/mergedTracks
+      - /data/flu-infection-data/node2/mergedTracks:/mergedTracks
       #  - other static tracks for showing in the UCSC browser.
       #    *** NONE FOR NODE 2 ***
 
