@@ -8,12 +8,12 @@ A production instance with data from
 is available at 
 [https://computationalgenomics.ca/tools/epivar](https://computationalgenomics.ca/tools/epivar). 
 
-The tool itself is described in a 2023 preprint:
+The tool itself is described in a 2024 application note:
 
 > **EpiVar Browser: advanced exploration of epigenomics data under controlled access** <br />
 > David R Lougheed, Hanshi Liu, Katherine A Aracena, Romain Grégoire, Alain Pacis, Tomi Pastinen, Luis B Barreiro, 
 > Yann Joly, David Bujold, Guillaume Bourque<br />
-> bioRxiv 2023.08.03.551309; doi: https://doi.org/10.1101/2023.08.03.551309
+> *Bioinformatics*; doi: [10.1093/bioinformatics/btae136](https://doi.org/10.1093/bioinformatics/btae136)
 
 
 
