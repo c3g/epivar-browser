@@ -2,7 +2,7 @@ import React, {useEffect, useMemo} from "react";
 import {useLocation} from "react-router-dom";
 import {Container} from "reactstrap";
 
-import * as DOMPurify from "dompurify";
+import DOMPurify from "dompurify";
 import {useCurrentDataset} from "../../hooks";
 
 const DatasetAboutPage = () => {
