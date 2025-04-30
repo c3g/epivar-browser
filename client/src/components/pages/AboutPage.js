@@ -27,18 +27,18 @@ const AboutPage = () => {
           access to sensitive epigenomics data.
         </p>
         <p>
-          The browser is described in the following preprint:
+          The browser is described in the following application note:
         </p>
         <p>
-          <a href="https://www.biorxiv.org/content/10.1101/2023.08.03.551309v1" target="_blank" rel="nofollow">
+          <a href="https://academic.oup.com/bioinformatics/article/40/3/btae136/7623587" target="_blank" rel="nofollow">
             EpiVar Browser: advanced exploration of epigenomics data under controlled access
           </a><br />
           David&nbsp;R&nbsp;Lougheed, Hanshi&nbsp;Liu, Katherine&nbsp;A&nbsp;Aracena, Romain&nbsp;Grégoire,
           Alain&nbsp;Pacis, Tomi&nbsp;Pastinen, Luis&nbsp;B&nbsp;Barreiro, Yann&nbsp;Joly, David&nbsp;Bujold,
           Guillaume&nbsp;Bourque.<br />
           bioRxiv 2023.08.03.551309; doi:{" "}
-          <a href="https://doi.org/10.1101/2023.08.03.551309" target="_blank" rel="nofollow">
-            10.1101/2023.08.03.551309</a>
+          <a href="https://doi.org/10.1093/bioinformatics/btae136" target="_blank" rel="nofollow">
+            10.1093/bioinformatics/btae136</a>
         </p>
         <h3>EpiVar Architecture</h3>
         <p>
